@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>10.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputType>winexe</OutputType>
+    <AssemblyName>Bannerlord.BLSE.Standalone</AssemblyName>
+    <ApplicationIcon>../../resources/Butter.ico</ApplicationIcon>
+
+    <ILRepackTargetConfigurations>$(Configurations);</ILRepackTargetConfigurations>
+    <ILRepackMergeDebugSymbols>true</ILRepackMergeDebugSymbols>
+    <ILRepackPerformInternalize>false</ILRepackPerformInternalize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" />
+
+    <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+    <PackageReference Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" />
+    <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+
+    <PackageReference Include="ILRepack.FullAuto" Version="1.2.0" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bannerlord.BLSE\Bannerlord.BLSE.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="CopyFilesToOutputDirectory" Condition="Exists($(GameFolder))">
+    <ItemGroup>
+      <Files Include="$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).exe" />
+    </ItemGroup>
+    <Copy SourceFiles="@(Files)" DestinationFolder="$(GameFolder)\bin\Win64_Shipping_Client" />
+  </Target>
+  
+</Project>

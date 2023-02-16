@@ -1,0 +1,10 @@
+﻿<Prefab>
+  <Window>
+    <LauncherSearchBoxWidget EditableTextWidget="EditableTextWidget" Brush="Launcher.Input.TextBox.Input" >
+      <Children>
+        <EditableTextWidget Id="EditableTextWidget" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center" Brush="Launcher.Input.TextBox.Text" IsObfuscationEnabled="false" Command.FocusGained="StartTyping" Command.FocusLost="StopTyping" />
+        <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="20" SuggestedHeight="20" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="10" Brush="Launcher.Search" IsDisabled="true" />
+      </Children>
+    </LauncherSearchBoxWidget>
+  </Window>
+</Prefab>

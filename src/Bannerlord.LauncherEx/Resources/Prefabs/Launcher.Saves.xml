@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Prefab>
+  <Constants>
+    <Constant Name="ModToggle.Width" BrushName="Launcher.Mods.ModToggle" BrushLayer="Default" BrushValueType="Width" />
+    <Constant Name="ModToggle.Height" BrushName="Launcher.Mods.ModToggle" BrushLayer="Default" BrushValueType="Height" />
+
+    <Constant Name="Name.Width" Value="200" />
+    <Constant Name="Version.Width" Value="80" />
+    <Constant Name="Character.Width" Value="200" />
+    <Constant Name="Level.Width" Value="90" />
+    <Constant Name="Days.Width" Value="80" />
+    <Constant Name="CreatedAt.Width" Value="120" />
+  </Constants>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsDisabled="@IsDisabled2">
+      <Children>
+
+        <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="26" MarginTop="10" MarginLeft="30">
+          <Children>
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!ModToggle.Width" SuggestedHeight="!ModToggle.Height" VerticalAlignment="Center" Brush="Launcher.Refresh" Command.Click="ExecuteRefresh" MarginLeft="50" />
+            <TextWidget Text="@NameCategoryText"           WidthSizePolicy="StretchToParent"  SuggestedWidth="!Name.Width" HeightSizePolicy="StretchToParent" PositionYOffset="2" Brush="Launcher.Mods.ModNameText" MarginLeft="10" />
+            <Launcher.SearchBox                            WidthSizePolicy="Fixed"  SuggestedWidth="150"              HeightSizePolicy="StretchToParent" PositionYOffset="2" SearchText="@SearchText" />
+            <TextWidget Text="@VersionCategoryText"        WidthSizePolicy="Fixed"  SuggestedWidth="!Version.Width"   HeightSizePolicy="StretchToParent" PositionYOffset="2" Brush="Launcher.Mods.ModNameText" />
+            <TextWidget Text="@CharacterNameCategoryText"  WidthSizePolicy="Fixed"  SuggestedWidth="!Character.Width" HeightSizePolicy="StretchToParent" PositionYOffset="2" Brush="Launcher.Mods.ModNameText" />
+            <TextWidget Text="@LevelCategoryText"          WidthSizePolicy="Fixed"  SuggestedWidth="!Level.Width"     HeightSizePolicy="StretchToParent" PositionYOffset="2" Brush="Launcher.Mods.ModNameText" />
+            <TextWidget Text="@DaysCategoryText"           WidthSizePolicy="Fixed"  SuggestedWidth="!Days.Width"      HeightSizePolicy="StretchToParent" PositionYOffset="2" Brush="Launcher.Mods.ModNameText" />
+            <TextWidget Text="@CreatedAtCategoryText"      WidthSizePolicy="Fixed"  SuggestedWidth="!CreatedAt.Width" HeightSizePolicy="StretchToParent" PositionYOffset="2" Brush="Launcher.Mods.ModNameText" MarginRight="45" />
+          </Children>
+        </ListPanel>
+
+        <ScrollablePanel Id="ScrollablePanel" HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" InnerPanel="MyClipRect\InnerPanel" ClipRect="MyClipRect" MarginLeft="30" MarginTop="46" VerticalScrollbar="..\Scrollbar" AutoHideScrollBars="true" AcceptDrop="true" Command.Drop="ChangeLoadingOrderOf" CommandParameter.Drop="Mod">
+          <Children>
+            <Widget Id="MyClipRect" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" ClipContents="true">
+              <Children>
+                <ListPanel Id="InnerPanel" DataSource="{Saves}" LayoutImp.LayoutMethod="VerticalBottomToTop" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren">
+                  <ItemTemplate>
+                    <Launcher.Saves.SaveTuple />
+                  </ItemTemplate>
+                </ListPanel>
+              </Children>
+            </Widget>
+          </Children>
+        </ScrollablePanel>
+
+        <Launcher.Scrollbar Id="Scrollbar" MarginTop="46" MarginBottom="23" MarginRight="@ScrollbarOffset" />
+
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

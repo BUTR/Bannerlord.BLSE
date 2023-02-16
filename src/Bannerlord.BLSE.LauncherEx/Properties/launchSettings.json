@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "BLSE Launcher": {
+      "commandName": "Executable",
+      "executablePath": "$(GameFolder)\\bin\\Win64_Shipping_Client\\$(AssemblyName).exe",
+      "workingDirectory": "$(GameFolder)\\bin\\Win64_Shipping_Client"
+    }
+  }
+}

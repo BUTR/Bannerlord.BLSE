@@ -1,0 +1,11 @@
+GetForegroundWindow
+GetWindowThreadProcessId
+GetKeyboardState
+GetKeyboardLayout
+MapVirtualKeyEx
+ToUnicodeEx
+DeleteFile
+CreateToolhelp32Snapshot
+Process32First
+Process32Next
+CloseHandle

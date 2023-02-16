@@ -1,0 +1,75 @@
+<Prefab>
+  <Constants>
+
+  </Constants>
+  <VisualDefinitions>
+
+  </VisualDefinitions>
+  <Window>
+    <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Launcher.CautionPopup.CanvasAndFrame" AlphaFactor="0.95" IsVisible="@IsEnabled">
+      <Children>
+        <ListPanel WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="700" VerticalAlignment="Bottom" HorizontalAlignment="Center" LayoutImp.LayoutMethod="VerticalBottomToTop" MarginRight="25" MarginBottom="25">
+          <Children>
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" Brush="Launcher.CautionPopup.TitleText" Brush.FontColor="#F4E1C4FF" Text="@Title" MarginTop="25"/>
+
+
+            <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="400">
+              <Children>
+
+                <ScrollablePanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" AutoHideScrollBars="true" ClipRect="ClipRect" InnerPanel="ClipRect\InnerList" VerticalScrollbar="..\VerticalScrollbar" MarginLeft="10" MarginRight="10">
+                  <Children>
+
+                    <Widget Id="ClipRect" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
+                      <Children>
+
+                        <ListPanel Id="InnerList" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" LayoutImp.LayoutMethod="VerticalBottomToTop" >
+                          <Children>
+                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" Brush="Launcher.CautionPopup.ParagraphText" Brush.FontColor="#F4E1C4FF" Text="@Description" MarginTop="50" MarginBottom="50"/>
+                          </Children>
+                        </ListPanel>
+                      </Children>
+                    </Widget>
+
+                    <!--Scroll Gradient-->
+                    <Widget DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedWidth="576" SuggestedHeight="57" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalFlip="true" Sprite="launcher_news_grid_shadow" PositionYOffset="-2"/>
+
+                    <!--Scroll Gradient-->
+                    <Widget DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedWidth="576" SuggestedHeight="57" HorizontalAlignment="Right" VerticalAlignment="Bottom" Sprite="launcher_news_grid_shadow" PositionYOffset="2"/>
+
+                  </Children>
+                </ScrollablePanel>
+
+                <ScrollbarWidget Id="VerticalScrollbar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" VerticalAlignment="Center" MarginTop="15" MarginBottom="15" AlignmentAxis="Vertical" Handle="VerticalScrollbarHandle" MaxValue="100" MinValue="0" >
+                  <Children>
+                    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="4" HorizontalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#5A4033FF" AlphaFactor="0.2" />
+                    <ImageWidget Id="VerticalScrollbarHandle" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedHeight="10" SuggestedWidth="8" HorizontalAlignment="Center" Brush="FaceGen.Scrollbar.Handle" />
+                  </Children>
+                </ScrollbarWidget>
+
+              </Children>
+            </ListPanel>
+
+            <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" MarginTop="25" HorizontalAlignment="Center">
+              <Children>
+                <!--Cancel-->
+                <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" SuggestedHeight="50" Command.Click="ExecuteCancel" UpdateChildrenStates="true">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Launcher.CautionPopup.Button.CancelText" Text="@CancelText"/>
+                  </Children>
+                </ButtonWidget>
+
+                <!--Confirm-->
+                <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" SuggestedHeight="50" Command.Click="ExecuteConfirm" UpdateChildrenStates="true">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Launcher.CautionPopup.Button.ConfirmText" Text="@ConfirmText"/>
+                  </Children>
+                </ButtonWidget>
+              </Children>
+            </ListPanel>
+          </Children>
+        </ListPanel>
+
+      </Children>
+    </BrushWidget>
+  </Window>
+</Prefab>

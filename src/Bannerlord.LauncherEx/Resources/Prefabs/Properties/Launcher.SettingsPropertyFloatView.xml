@@ -1,0 +1,17 @@
+﻿<Prefab>
+  <Window>
+    <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" SuggestedWidth="150" VerticalAlignment="Center"
+            MarginRight="15" IsVisible="@IsFloatVisible">
+      <Children>
+        <FloatInputTextWidget HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center"
+                              Brush="Launcher.Input.TextBox.Text" Command.HoverEnd="OnEditBoxHoverEnd"
+                              FloatText="@FloatValue"
+                              ClipContents="false" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+          <Children>
+            <ImageWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Launcher.Input.TextBox.Input"/>
+          </Children>
+        </FloatInputTextWidget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

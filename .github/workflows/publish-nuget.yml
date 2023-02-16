@@ -1,0 +1,40 @@
+name: Publish BLSE NuGet
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - '.github/workflows/publish-nuget.yml'
+      - 'src/Bannerlord.BLSE/**.*'
+  workflow_dispatch:
+
+env:
+  # Disable the .NET logo in the console output.
+  DOTNET_NOLOGO: true
+  # Disable the .NET first time experience to skip caching NuGet packages and speed up the build.
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  # Disable sending .NET CLI telemetry to Microsoft.
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  publish:
+    name: Publish BLSE NuGet
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Pack Bannerlord.BLSE
+        run: dotnet pack src/Bannerlord.BLSE/Bannerlord.BLSE.csproj --configuration Release -o "./packages";
+        shell: pwsh
+
+      - name: Push to NuGet
+        run: dotnet nuget push "./packages/*.nupkg" -k ${{secrets.NUGET_API_KEY}} -s https://www.nuget.org
+        shell: pwsh
+
+      - name: Push to GPR
+        run: |
+          for f in ./packages/*.nupkg
+          do
+            curl -vX PUT -u "vslee:${{secrets.GITHUB_TOKEN}}" -F package=@$f https://nuget.pkg.github.com/BUTR/
+          done

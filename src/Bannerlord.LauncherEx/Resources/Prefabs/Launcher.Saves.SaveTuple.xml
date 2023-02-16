@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Prefab>
+  <Constants>
+    <Constant Name="PresetButton.Background.Width" BrushName="Launcher.Mods.PresetButton.Background" BrushLayer="Default" BrushValueType="Width" />
+    <Constant Name="PresetButton.Background.Height" BrushName="Launcher.Mods.PresetButton.Background" BrushLayer="Default" BrushValueType="Height" />
+    <Constant Name="ModToggle.Width" BrushName="Launcher.Mods.ModToggle" BrushLayer="Default" BrushValueType="Width" />
+    <Constant Name="ModToggle.Height" BrushName="Launcher.Mods.ModToggle" BrushLayer="Default" BrushValueType="Height" />
+    <Constant Name="ModSorter.Width" BrushName="Launcher.Mods.ModSorter" BrushLayer="Default" BrushValueType="Width" />
+    <Constant Name="ModSorter.Height" BrushName="Launcher.Mods.ModSorter" BrushLayer="Default" BrushValueType="Height" />
+
+    <Constant Name="Name.Width" Value="200" />
+    <Constant Name="Version.Width" Value="80" />
+    <Constant Name="Character.Width" Value="250" />
+    <Constant Name="Level.Width" Value="60" />
+    <Constant Name="Days.Width" Value="60" />
+    <Constant Name="CreatedAt.Width" Value="120" />
+
+    <Constant Name="Icon.Size" Value="20" />
+  </Constants>
+  <Window>
+    <ListPanel LayoutImp.LayoutMethod="VerticalBottomToTop" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren">
+      <Children>
+
+        <ListPanel Id="EntryPanel" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="26" MarginBottom="5" IsVisible="@IsVisible">
+          <Children>
+
+            <Launcher.ToggleButton             WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!ModToggle.Width" SuggestedHeight="!ModToggle.Height" Command.Click="ExecuteSelect" IsSelected="@IsSelected" ManualToggle="true" />
+
+            <Widget                            WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!Icon.Size" SuggestedHeight="!Icon.Size" VerticalAlignment="Center" MarginLeft="3" Sprite="caution" Color="#EB8634FF">
+              <Children>
+                <LauncherHintTriggerWidget DataSource="{LoadOrderHint}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Command.HoverBegin="ExecuteBeginHint" Command.HoverEnd="ExecuteEndHint" IsDisabled="true" />
+              </Children>
+            </Widget>
+
+            <Widget                            WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!Icon.Size" SuggestedHeight="!Icon.Size" VerticalAlignment="Center" MarginLeft="3" Sprite="caution" Color="#99EB34FF" IsVisible="@HasWarning">
+              <Children>
+                <LauncherHintTriggerWidget DataSource="{WarningHint}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Command.HoverBegin="ExecuteBeginHint" Command.HoverEnd="ExecuteEndHint" IsDisabled="true" />
+              </Children>
+            </Widget>
+
+            <Widget                            WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!Icon.Size" SuggestedHeight="!Icon.Size" VerticalAlignment="Center" MarginLeft="3" Sprite="caution" Color="#FF0000FF" IsVisible="@HasError">
+              <Children>
+                <LauncherHintTriggerWidget DataSource="{ErrorHint}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Command.HoverBegin="ExecuteBeginHint" Command.HoverEnd="ExecuteEndHint" IsDisabled="true" />
+              </Children>
+            </Widget>
+
+            <TextWidget Text="@Name"           WidthSizePolicy="StretchToParent" SuggestedWidth="!Name.Width"      HeightSizePolicy="StretchToParent" Brush="Launcher.Mods.ModNameText" IsDisabled="true" Brush.FontSize="26" MarginLeft="10" />
+            <TextWidget Text="@Version"        WidthSizePolicy="Fixed" SuggestedWidth="!Version.Width"   HeightSizePolicy="StretchToParent" Brush="Launcher.Mods.ModNameText" IsDisabled="true" Brush.FontSize="26" />
+            <TextWidget Text="@CharacterName"  WidthSizePolicy="Fixed" SuggestedWidth="!Character.Width" HeightSizePolicy="StretchToParent" Brush="Launcher.Mods.ModNameText" IsDisabled="true" Brush.FontSize="26" />
+            <TextWidget Text="@Level"          WidthSizePolicy="Fixed" SuggestedWidth="!Level.Width"     HeightSizePolicy="StretchToParent" Brush="Launcher.Mods.ModNameText" IsDisabled="true" Brush.FontSize="26" />
+            <TextWidget Text="@Days"           WidthSizePolicy="Fixed" SuggestedWidth="!Days.Width"      HeightSizePolicy="StretchToParent" Brush="Launcher.Mods.ModNameText" IsDisabled="true" Brush.FontSize="26" />
+            <TextWidget Text="@CreatedAt"      WidthSizePolicy="Fixed" SuggestedWidth="!CreatedAt.Width" HeightSizePolicy="StretchToParent" Brush="Launcher.Mods.ModNameText" IsDisabled="true" Brush.FontSize="26" />
+            <ButtonWidget                      WidthSizePolicy="Fixed" SuggestedWidth="!ModToggle.Width" HeightSizePolicy="Fixed" SuggestedHeight="!ModToggle.Height" Brush="Launcher.Folder" Command.Click="ExecuteOpen" MarginRight="20"/>
+
+          </Children>
+        </ListPanel>
+
+      </Children>
+    </ListPanel>
+  </Window>
+</Prefab>

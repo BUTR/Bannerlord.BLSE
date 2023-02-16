@@ -1,0 +1,9 @@
+﻿<Prefab>
+  <Window>
+    <LauncherToggleButtonWidget Brush="Launcher.Mods.ModToggle" ToggleIndicator="ToggleIndicator" DoNotPassEventsToChildren="true">
+      <Children>
+        <ImageWidget Id="ToggleIndicator" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Launcher.Mods.ModToggle.Checkmark" />
+      </Children>
+    </LauncherToggleButtonWidget>
+  </Window>
+</Prefab>

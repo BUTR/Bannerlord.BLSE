@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Prefab>
+  <Window>
+    <ListPanel LayoutImp.LayoutMethod="VerticalBottomToTop" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren">
+      <Children>
+
+        <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="26" MarginBottom="5">
+          <Children>
+
+            <!-- Boolean switch widget -->
+            <Launcher.SettingsPropertyBoolView />
+
+            <!-- Float Slider -->
+            <Launcher.SettingsPropertyFloatView />
+
+            <!-- Int Slider -->
+            <Launcher.SettingsPropertyIntView />
+
+            <!-- String TextBox -->
+            <Launcher.SettingsPropertyStringView />
+
+            <!-- Button -->
+            <Launcher.SettingsPropertyButtonView />
+
+            <!-- Value text/button -->
+            <!-- Show the formatted values of Int/Float -->
+            <!--
+            <SettingsPropertyDisplayValueView />
+            -->
+
+            <!-- Property Name Section -->
+            <TextWidget HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Left" SuggestedWidth="200"
+                        Brush="Launcher.Mods.ModNameText" Text="@Name">
+              <Children>
+                <HintWidget HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" Command.HoverBegin="OnHover" Command.HoverEnd="OnHoverEnd"/>
+              </Children>
+            </TextWidget>
+
+          </Children>
+        </ListPanel>
+
+      </Children>
+    </ListPanel>
+  </Window>
+</Prefab>

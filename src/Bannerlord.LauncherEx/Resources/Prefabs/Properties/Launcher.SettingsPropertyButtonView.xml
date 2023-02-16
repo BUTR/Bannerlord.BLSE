@@ -1,0 +1,17 @@
+﻿<Prefab>
+  <Window>
+
+    <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" SuggestedWidth="150" VerticalAlignment="Center"
+            MarginRight="15" IsVisible="@IsButtonVisible">
+      <Children>
+        <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Left"
+                      Brush="Launcher.PlayButton.Inner.Singleplayer" Command.Click="OnValueClick" DoNotPassEventsToChildren="true">
+          <Children>
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center"
+                        Text="@ButtonValue" Brush="Launcher.Input.TextBox.Text" />
+          </Children>
+        </ButtonWidget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

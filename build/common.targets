@@ -1,0 +1,10 @@
+<!--EXTERNAL_PROPERTIES: BANNERLORD_GAME_DIR;BANNERLORD_STABLE_DIR;BANNERLORD_BETA_DIR-->
+<Project>
+
+  <Target Name="WarningsForEnvs" BeforeTargets="BeforeCompile">
+    <Warning Condition="$(BANNERLORD_GAME_DIR) == '' AND $(BANNERLORD_STABLE_DIR) == '' AND $(BANNERLORD_BETA_DIR) == ''" Text="Environment variable 'BANNERLORD_GAME_DIR' is not set!"></Warning>
+    <Warning Condition="$(BANNERLORD_GAME_DIR) == '' AND $(BANNERLORD_STABLE_DIR) == ''" Text="Environment variable 'BANNERLORD_STABLE_DIR' is not set!"></Warning>
+    <Warning Condition="$(BANNERLORD_GAME_DIR) == '' AND $(BANNERLORD_BETA_DIR) == ''" Text="Environment variable 'BANNERLORD_BETA_DIR' is not set!"></Warning>
+  </Target>
+
+</Project>

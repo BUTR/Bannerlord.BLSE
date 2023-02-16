@@ -1,0 +1,16 @@
+﻿<Prefab>
+  <Window>
+    <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" SuggestedWidth="150" VerticalAlignment="Center"
+            MarginRight="15" IsVisible="@IsStringVisible">
+      <Children>
+        <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center"
+                     Brush="Launcher.Input.TextBox.Input">
+          <Children>
+            <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center"
+                                RealText="@StringValue" IsObfuscationEnabled="false" Brush="Launcher.Input.TextBox.Text" />
+          </Children>
+        </BrushWidget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>
