@@ -115,7 +115,7 @@ namespace Bannerlord.LauncherEx.Helpers
 #elif v110
             ViewModel?.OnPropertyChangedWithValue<T>(value, propertyName);
 #endif
-            
+
         }
 
         protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)

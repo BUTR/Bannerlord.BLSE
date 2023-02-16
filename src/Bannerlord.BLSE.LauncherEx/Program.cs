@@ -32,7 +32,7 @@ namespace Bannerlord.BLSE.BUTRLoader
             ContinueSaveFileFeature.Enable(_featureHarmony);
             CommandsFeature.Enable(_featureHarmony);
 
-            Manager.Initialize();   
+            Manager.Initialize();
             Manager.Enable();
 
             TaleWorlds.MountAndBlade.Launcher.Library.Program.Main(args);
