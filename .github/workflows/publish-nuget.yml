@@ -1,4 +1,4 @@
-name: Publish BLSE NuGet
+name: Publish NuGet
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
     paths:
       - '.github/workflows/publish-nuget.yml'
       - 'src/Bannerlord.BLSE/**.*'
+      - 'src/Bannerlord.LauncherEx/**.*'
   workflow_dispatch:
 
 env:
@@ -19,13 +20,17 @@ env:
 
 jobs:
   publish:
-    name: Publish BLSE NuGet
+    name: Publish NuGet
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
       - name: Pack Bannerlord.BLSE
         run: dotnet pack src/Bannerlord.BLSE/Bannerlord.BLSE.csproj --configuration Release -o "./packages";
+        shell: pwsh
+        
+      - name: Pack Bannerlord.LauncherEx
+        run: dotnet pack src/Bannerlord.LauncherEx/Bannerlord.LauncherEx.csproj --configuration Release -o "./packages";
         shell: pwsh
 
       - name: Push to NuGet

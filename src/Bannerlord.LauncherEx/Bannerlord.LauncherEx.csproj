@@ -16,6 +16,15 @@
     <GameVersionConstant>v$(GameVersionFlat)</GameVersionConstant>
     <DefineConstants>$(DefineConstants);$(GameVersionConstant)</DefineConstants>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Bannerlord.LauncherEx</PackageId>
+    <Title>Bannerlord.LauncherEx</Title>
+    <Description>Bannerlord.LauncherEx. Built for $(GameVersion).</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/BUTR/Bannerlord.BLSE</PackageProjectUrl>
+    <PackageTags>butr bannerlord launcherex</PackageTags>
+  </PropertyGroup>
   
   <ItemGroup>
     <EmbeddedResource Include="Resources\Brushes\Launcher.xml" />
