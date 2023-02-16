@@ -11,6 +11,7 @@
     <ILRepackTargetConfigurations>$(Configurations);</ILRepackTargetConfigurations>
     <ILRepackMergeDebugSymbols>true</ILRepackMergeDebugSymbols>
     <ILRepackPerformInternalize>false</ILRepackPerformInternalize>
+    <ILRepackCopyAttributes>true</ILRepackCopyAttributes>
     <RootNamespace>Bannerlord.BLSE.BUTRLoader</RootNamespace>
   </PropertyGroup>
 

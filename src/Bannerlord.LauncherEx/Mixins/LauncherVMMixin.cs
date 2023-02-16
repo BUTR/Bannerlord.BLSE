@@ -9,6 +9,8 @@ using Bannerlord.LauncherManager.Utils;
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 
@@ -182,11 +184,11 @@ namespace Bannerlord.LauncherEx.Mixins
 
         [BUTRDataSourceProperty]
         public string BLSEVersionText { get => _blseVersionText; set => SetField(ref _blseVersionText, value); }
-        private string _blseVersionText = $"BLSE v{typeof(FeatureIds).Assembly.GetName().Version.ToString(3)}";
+        private string _blseVersionText;
 
         [BUTRDataSourceProperty]
         public string BUTRLoaderVersionText { get => _butrLoaderVersionText; set => SetField(ref _butrLoaderVersionText, value); }
-        private string _butrLoaderVersionText = $"BUTRLoader v{typeof(LauncherVMMixin).Assembly.GetName().Version.ToString(3)}";
+        private string _butrLoaderVersionText;
 
         [BUTRDataSourceProperty]
         public BUTRLauncherOptionsVM OptionsLauncherData { get => _optionsLauncherData; set => SetField(ref _optionsLauncherData, value); }
@@ -280,6 +282,11 @@ namespace Bannerlord.LauncherEx.Mixins
             _launcherManagerHandler.RegisterStateProvider(() => new LauncherState(isSingleplayer: IsSingleplayer2));
 
             _userDataManager = UserDataManagerFieldRef?.Invoke(launcherVM);
+            
+            var blseMetadata = typeof(FeatureIds).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>();
+            var launcherExMetadata = typeof(LauncherVMMixin).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>();
+            _blseVersionText = $"BLSE v{blseMetadata.FirstOrDefault(x => x.Key == "BLSEVersion")?.Value ?? "0.0.0.0"}";
+            _butrLoaderVersionText = $"BUTRLoader v{launcherExMetadata.FirstOrDefault(x => x.Key == "LauncherExVersion")?.Value ?? "0.0.0.0"}";
 
             _optionsEngineData = new BUTRLauncherOptionsVM(OptionsType.Engine, SaveUserData, RefreshOptions);
             _optionsGameData = new BUTRLauncherOptionsVM(OptionsType.Game, SaveUserData, RefreshOptions);
