@@ -282,7 +282,7 @@ namespace Bannerlord.LauncherEx.Mixins
             _launcherManagerHandler.RegisterStateProvider(() => new LauncherState(isSingleplayer: IsSingleplayer2));
 
             _userDataManager = UserDataManagerFieldRef?.Invoke(launcherVM);
-            
+
             var blseMetadata = typeof(FeatureIds).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>();
             var launcherExMetadata = typeof(LauncherVMMixin).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>();
             _blseVersionText = $"BLSE v{blseMetadata.FirstOrDefault(x => x.Key == "BLSEVersion")?.Value ?? "0.0.0.0"}";
