@@ -93,7 +93,7 @@ namespace Bannerlord.LauncherEx.TPac
             _ => throw new Exception("Unsupported format:" + format.ToString())
         };
 
-        private static byte FloatToByte(float v) => (byte) MathF.Min(Math.Max(MathF.Round(v * 255f), 0), 255);
+        private static byte FloatToByte(float v) => (byte) TaleWorlds.Library.MathF.Min(Math.Max(TaleWorlds.Library.MathF.Round(v * 255f), 0), 255);
 
         private static void DecodeTextureDataToWriter(byte[] data, int width, int height, TextureFormat format, PipelineWriter writer, bool silentlyFail = false)
         {

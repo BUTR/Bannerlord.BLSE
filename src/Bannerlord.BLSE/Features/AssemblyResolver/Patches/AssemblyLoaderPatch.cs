@@ -28,12 +28,19 @@ namespace Bannerlord.BLSE.Features.AssemblyResolver.Patches
         {
             try
             {
+                //var configName = Common.ConfigName;
+                // We have Gaming.Desktop.x64_Shipping_Client for MSStore/Xbox, but in reality, it doesn't work.
+                var configName = "Win64_Shipping_Client";
+                
                 var isInGame = GameUtils.GetModulesNames() is not null;
 
                 var name = args.Name.Contains(',') ? $"{args.Name.Split(',')[0]}.dll" : args.Name;
 
-                var assemblies = (isInGame ? ModuleInfoHelper.GetLoadedModules() : ModuleInfoHelper.GetModules())
-                    .Select(x => Directory.GetFiles(Path.Combine(x.Path, "bin", Common.ConfigName), "*.dll")).ToArray();
+                var assemblies = (isInGame ? ModuleInfoHelper.GetLoadedModules() : ModuleInfoHelper.GetModules()).Select(x =>
+                {
+                    var directory = Path.Combine(x.Path, "bin", configName);
+                    return Directory.Exists(directory) ? Directory.GetFiles(directory, "*.dll") : Array.Empty<string>();
+                }).ToArray();
 
                 var assembly = assemblies
                     .SelectMany(x => x)

@@ -21,7 +21,7 @@ namespace Bannerlord.LauncherEx
 {
     public static class Manager
     {
-        internal static readonly AssemblyCompatibilityChecker _compatibilityChecker = new();
+        //internal static readonly AssemblyCompatibilityChecker _compatibilityChecker = new();
         private static readonly Harmony _launcherHarmony = new("Bannerlord.LauncherEx");
 
         public static event Action? OnDisable;
@@ -133,7 +133,7 @@ namespace Bannerlord.LauncherEx
         public static void Disable()
         {
             OnDisable?.Invoke();
-            _compatibilityChecker.Dispose();
+            //_compatibilityChecker.Dispose();
             GraphicsContextManager.Clear();
             SpriteDataManager.Clear();
             BrushFactoryManager.Clear();
