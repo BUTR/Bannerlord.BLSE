@@ -9,11 +9,11 @@
   <PropertyGroup>
     <Version>1.0.0</Version>
     <HarmonyVersion>2.2.2</HarmonyVersion>
-    <BUTRSharedVersion>3.0.0.132</BUTRSharedVersion>
+    <BUTRSharedVersion>3.0.0.134</BUTRSharedVersion>
     <BUTRModuleManagerVersion>5.0.198</BUTRModuleManagerVersion>
-    <HarmonyExtensionsVersion>3.2.0.73</HarmonyExtensionsVersion>
+    <HarmonyExtensionsVersion>3.2.0.75</HarmonyExtensionsVersion>
     <HarmonyAnalyzerVersion>1.0.1.44</HarmonyAnalyzerVersion>
-    <LauncherManagerVersion>1.0.38</LauncherManagerVersion>
+    <LauncherManagerVersion>1.0.46</LauncherManagerVersion>
     <DebugType>full</DebugType>
   </PropertyGroup>
 
@@ -25,13 +25,20 @@
   <PropertyGroup>
     <!--Bannerlord's Root Folder. Leave empty if you want it to be tried to be autoresolved.-->
     <GameFolder>$(BANNERLORD_GAME_DIR)</GameFolder>
+    <GameFolder>C:\Users\vitalii.mikhailov\Git\Level0\Bannerlord</GameFolder>
   </PropertyGroup>
 
-  <ItemGroup Condition="true OR $(GITHUB_ACTIONS) == 'true'">
+  <ItemGroup Condition="$(GITHUB_ACTIONS) == 'true'">
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
   </ItemGroup>
-  <ItemGroup Condition="false AND $(GITHUB_ACTIONS) != 'true'">
+  <ItemGroup Condition="$(GITHUB_ACTIONS) != 'true' AND $(TargetFramework) == 'net472'">
     <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\TaleWorlds.*.dll" Exclude="$(GameFolder)\bin\Win64_Shipping_Client\TaleWorlds.Native.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="$(GITHUB_ACTIONS) != 'true' AND $(TargetFramework) == 'netcoreapp3.1'">
+    <Reference Include="$(GameFolder)\bin\Gaming.Desktop.x64_Shipping_Client\TaleWorlds.*.dll" Exclude="$(GameFolder)\bin\Gaming.Desktop.x64_Shipping_Client\TaleWorlds.Native.dll">
       <HintPath>%(Identity)</HintPath>
       <Private>false</Private>
     </Reference>

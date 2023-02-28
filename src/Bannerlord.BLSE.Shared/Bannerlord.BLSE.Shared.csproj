@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
+    <LangVersion>10.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputType>library</OutputType>
+
+    <ILRepackTargetConfigurations>$(Configurations);</ILRepackTargetConfigurations>
+    <ILRepackMergeDebugSymbols>true</ILRepackMergeDebugSymbols>
+    <ILRepackPerformInternalize>false</ILRepackPerformInternalize>
+    <ILRepackCopyAttributes>true</ILRepackCopyAttributes>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="$(TargetFramework) == 'net472'">
+    <AssemblyName>Bannerlord.BLSE.Shared.NETFX</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(TargetFramework) == 'netcoreapp3.1'">
+    <AssemblyName>Bannerlord.BLSE.Shared.NET</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup Condition="$(TargetFramework) == 'net472'">
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="ILRepack.FullAuto" Version="1.2.0" PrivateAssets="all" />
+    
+    <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+    <PackageReference Include="Bannerlord.ModuleManager.Source" PrivateAssets="all" Version="$(BUTRModuleManagerVersion)" />
+    <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Bannerlord.BLSE\Bannerlord.BLSE.csproj" />
+    <ProjectReference Include="..\Bannerlord.LauncherEx\Bannerlord.LauncherEx.csproj" />
+  </ItemGroup>
+  
+  <Target Name="PostBuildFramework" AfterTargets="CopyFilesToOutputDirectory" Condition="Exists($(GameFolder)) AND $(TargetFramework) == 'net472'">
+    <ItemGroup>
+      <Files Include="$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(Files)" DestinationFolder="$(GameFolder)\bin\Win64_Shipping_Client" />
+  </Target>
+  <Target Name="PostBuildCore" AfterTargets="CopyFilesToOutputDirectory" Condition="Exists($(GameFolder)) AND $(TargetFramework) == 'netcoreapp3.1'">
+    <ItemGroup>
+      <Files Include="$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(Files)" DestinationFolder="$(GameFolder)\bin\Gaming.Desktop.x64_Shipping_Client" />
+  </Target>
+  
+</Project>

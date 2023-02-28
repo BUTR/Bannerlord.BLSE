@@ -132,16 +132,17 @@ namespace Bannerlord.LauncherEx.ViewModels
             if (missingNames.Length > 0 || loadOrderIssues.Count > 0)
             {
                 var text = string.Empty;
-                text += loadOrderIssues.Count > 0
-                    ? string.Format("{0}{1}",
-                        new BUTRTextObject("{=HvvA78sZ}Load Order Issues:{NL}{LOADORDERISSUES}")
-                            .SetTextVariable("LOADORDERISSUES", string.Join("\n\n", loadOrderIssues)),
-                        missingNames.Length > 0 ? "\n\n\n" : string.Empty)
-                    : string.Empty;
-                text += missingNames.Length > 0
-                    ? new BUTRTextObject("{=GtDRbC3m}Missing Modules:{NL}{MODULES}")
-                        .SetTextVariable("MODULES", string.Join("\n", missingNames)).ToString()
-                    : string.Empty;
+                if (loadOrderIssues.Count > 0)
+                {
+                    text += new BUTRTextObject("{=HvvA78sZ}Load Order Issues:{NL}{LOADORDERISSUES}")
+                        .SetTextVariable("LOADORDERISSUES", string.Join("\n\n", loadOrderIssues));
+                    text += missingNames.Length > 0 ? "\n\n\n" : string.Empty;
+                }
+                if (missingNames.Length > 0)
+                {
+                    text += new BUTRTextObject("{=GtDRbC3m}Missing Modules:{NL}{MODULES}")
+                        .SetTextVariable("MODULES", string.Join("\n", missingNames)).ToString();
+                }
 
                 HasError = true;
                 ErrorHint = new LauncherHintVM(text);

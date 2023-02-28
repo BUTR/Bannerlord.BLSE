@@ -95,7 +95,7 @@ namespace Bannerlord.LauncherEx.ResourceManagers
             var res4 = harmony.TryPatch(
                 AccessTools2.Method(typeof(WidgetFactory), "OnUnload"),
                 prefix: AccessTools2.DeclaredMethod(typeof(WidgetFactoryManager), nameof(OnUnloadPrefix)));
-            //if (!res4) return false;
+            if (!res4) return false;
 
             var res5 = harmony.TryPatch(
                 AccessTools2.Method(typeof(WidgetFactory), "Initialize"),
@@ -157,7 +157,7 @@ namespace Bannerlord.LauncherEx.ResourceManagers
                 __result = widgetPrefab;
                 return false;
             }
-
+            
             return true;
         }
 

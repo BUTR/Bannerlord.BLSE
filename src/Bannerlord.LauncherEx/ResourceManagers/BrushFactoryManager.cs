@@ -59,13 +59,15 @@ namespace Bannerlord.LauncherEx.ResourceManagers
         {
             _harmony = harmony;
 
-            harmony.Patch(
+            var res1 = harmony.TryPatch(
                 AccessTools2.PropertyGetter(typeof(BrushFactory), "Brushes"),
-                postfix: new HarmonyMethod(AccessTools2.DeclaredMethod(typeof(BrushFactoryManager), nameof(GetBrushesPostfix))));
+                postfix: AccessTools2.DeclaredMethod(typeof(BrushFactoryManager), nameof(GetBrushesPostfix)));
+            if (!res1) return false;
 
-            harmony.Patch(
+            var res2 = harmony.TryPatch(
                 AccessTools2.DeclaredMethod(typeof(BrushFactory), "GetBrush"),
-                new HarmonyMethod(AccessTools2.DeclaredMethod(typeof(BrushFactoryManager), nameof(GetBrushPrefix))));
+                AccessTools2.DeclaredMethod(typeof(BrushFactoryManager), nameof(GetBrushPrefix)));
+            if (!res2) return false;
 
             var res3 = harmony.TryPatch(
                 AccessTools2.Method(typeof(BrushFactory), "LoadBrushes"),

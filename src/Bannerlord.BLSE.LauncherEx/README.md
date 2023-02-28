@@ -1,1 +1,1 @@
-Executable that injects BUTRLoader features and launches the game's launcher.
+Executable that has enables BLSE and the game's launcher with BUTRLoader (LauncherEx).

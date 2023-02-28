@@ -160,7 +160,7 @@ namespace Bannerlord.LauncherEx.Patches
 
         // We can call a slightly modified native game call this way
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static WidgetPrefab LoadFromDocument(PrefabExtensionContext prefabExtensionContext, WidgetAttributeContext widgetAttributeContext, string path, XmlDocument document)
+        public static WidgetPrefab? LoadFromDocument(PrefabExtensionContext prefabExtensionContext, WidgetAttributeContext widgetAttributeContext, string path, XmlDocument document)
         {
             // Replaces reading XML from file with assigning it from the new local variable `XmlDocument document`
             [MethodImpl(MethodImplOptions.NoInlining)]

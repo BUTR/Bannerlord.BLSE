@@ -20,13 +20,15 @@ namespace Bannerlord.LauncherEx.ResourceManagers
         {
             _harmony = harmony;
 
-            harmony.Patch(
+            var res1 = harmony.TryPatch(
                 AccessTools2.Method(typeof(FontFactory), "LoadAllFonts"),
-                postfix: new HarmonyMethod(AccessTools2.DeclaredMethod(typeof(FontFactoryManager), nameof(LoadAllFontsPostfix))));
+                postfix: AccessTools2.DeclaredMethod(typeof(FontFactoryManager), nameof(LoadAllFontsPostfix)));
+            if (!res1) return false;
 
-            harmony.Patch(
+            var res2 = harmony.TryPatch(
                 AccessTools2.Method(typeof(FontFactory), "GetMappedFontForLocalization"),
-                prefix: new HarmonyMethod(AccessTools2.DeclaredMethod(typeof(FontFactoryManager), nameof(GetMappedFontForLocalizationPrefix))));
+                prefix: AccessTools2.DeclaredMethod(typeof(FontFactoryManager), nameof(GetMappedFontForLocalizationPrefix)));
+            if (!res2) return false;
 
             return true;
         }

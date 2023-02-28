@@ -8,8 +8,6 @@ using Bannerlord.ModuleManager;
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
-using Ookii.Dialogs.WinForms;
-
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -108,25 +106,19 @@ namespace Bannerlord.LauncherEx
                         case DialogType.Warning:
                         {
                             var split = message.Split(new[] { "--CONTENT-SPLIT--" }, StringSplitOptions.RemoveEmptyEntries);
-                            using var okButton = new TaskDialogButton(ButtonType.Yes);
-                            using var cancelButton = new TaskDialogButton(ButtonType.No);
-                            using var dialog = new TaskDialog
-                            {
-                                MainIcon = TaskDialogIcon.Warning,
-                                WindowTitle = new BUTRTextObject(title).ToString(),
-                                MainInstruction = split[0],
-                                Content = split.Length > 1 ? split[1] : string.Empty,
-                                Buttons = { okButton, cancelButton },
-                                CenterParent = true,
-                                AllowDialogCancellation = true,
-                            };
-                            onResult(dialog.ShowDialog() == okButton ? "true" : "false");
+                            var result = MessageBox.Show(
+                                string.Join("\n", split),
+                                new BUTRTextObject(title).ToString(),
+                                MessageBoxButtons.OKCancel,
+                                MessageBoxIcon.Warning
+                            );
+                            onResult(result == DialogResult.OK ? "true" : "false");
                             return;
                         }
                         case DialogType.FileOpen:
                         {
                             var filter = string.Join("|", filters.Select(x => $"{x.Name} ({string.Join(", ", x.Extensions)}|{string.Join(", ", x.Extensions)}"));
-                            var dialog = new VistaOpenFileDialog
+                            var dialog = new OpenFileDialog
                             {
                                 Title = title,
                                 Filter = filter,
@@ -144,7 +136,7 @@ namespace Bannerlord.LauncherEx
                         {
                             var fileName = message;
                             var filter = string.Join("|", filters.Select(x => $"{x.Name} ({string.Join(", ", x.Extensions)}|{string.Join(", ", x.Extensions)}"));
-                            var dialog = new VistaSaveFileDialog
+                            var dialog = new SaveFileDialog
                             {
                                 Title = title,
                                 Filter = filter,

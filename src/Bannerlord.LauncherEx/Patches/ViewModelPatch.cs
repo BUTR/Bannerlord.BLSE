@@ -14,11 +14,14 @@ namespace Bannerlord.LauncherEx.Patches
 {
     internal static class ViewModelPatch
     {
-        public static void Enable(Harmony harmony)
+        public static bool Enable(Harmony harmony)
         {
-            harmony.TryPatch(
+            var res1 = harmony.TryPatch(
                 AccessTools2.DeclaredConstructor(typeof(ViewModel)),
                 prefix: AccessTools2.DeclaredMethod(typeof(ViewModelPatch), nameof(ViewModelCtorPrefix)));
+            if (!res1) return false;
+            
+            return true;
         }
 
         private static bool ViewModelCtorPrefix(ViewModel __instance, ref Type ____type, ref object ____propertiesAndMethods)
