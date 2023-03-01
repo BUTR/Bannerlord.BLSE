@@ -2,6 +2,7 @@
 using Bannerlord.BLSE.Features.Commands;
 using Bannerlord.BLSE.Features.ContinueSaveFile;
 using Bannerlord.BLSE.Features.Interceptor;
+using Bannerlord.BLSE.Features.Xbox;
 using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.ModuleManager;
 
@@ -100,6 +101,7 @@ Press Yes to exit, press No to continue loading";
         AssemblyResolverFeature.Enable(_featureHarmony);
         ContinueSaveFileFeature.Enable(_featureHarmony);
         CommandsFeature.Enable(_featureHarmony);
+        XboxFeature.Enable(_featureHarmony);
 
         ModuleInitializer.Disable();
         TaleWorlds.Starter.Library.Program.Main(args);

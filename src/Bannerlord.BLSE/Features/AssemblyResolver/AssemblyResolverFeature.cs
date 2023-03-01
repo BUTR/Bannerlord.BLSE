@@ -44,7 +44,7 @@ namespace Bannerlord.BLSE.Features.AssemblyResolver
 
             try
             {
-                var configName = Common.ConfigName;
+                var configName = new DirectoryInfo(Directory.GetCurrentDirectory()).Name;
 
                 var isInGame = GameUtils.GetModulesNames() is not null;
 
@@ -54,10 +54,14 @@ namespace Bannerlord.BLSE.Features.AssemblyResolver
                     return Directory.Exists(directory) ? Directory.GetFiles(directory, "*.dll") : Array.Empty<string>();
                 }).ToArray();
 
-                var assembly = assemblies
-                    .SelectMany(x => x)
-                    .FirstOrDefault(x => Path.GetFileNameWithoutExtension(x) == name.Name);
-
+                var assembly = assemblies.SelectMany(x => x).FirstOrDefault(x => Path.GetFileNameWithoutExtension(x) == name.Name);
+                
+                if (assembly is not null)
+                {
+                    return Assembly.LoadFrom(assembly);
+                }
+                
+                assembly = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.dll").FirstOrDefault(x => Path.GetFileNameWithoutExtension(x) == name.Name);
                 if (assembly is not null)
                 {
                     return Assembly.LoadFrom(assembly);

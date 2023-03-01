@@ -2,6 +2,7 @@
 using Bannerlord.BLSE.Features.Commands;
 using Bannerlord.BLSE.Features.ContinueSaveFile;
 using Bannerlord.BLSE.Features.Interceptor;
+using Bannerlord.BLSE.Features.Xbox;
 
 using HarmonyLib;
 
@@ -26,6 +27,7 @@ public static class Launcher
         AssemblyResolverFeature.Enable(_featureHarmony);
         ContinueSaveFileFeature.Enable(_featureHarmony);
         CommandsFeature.Enable(_featureHarmony);
+        XboxFeature.Enable(_featureHarmony);
 
         ModuleInitializer.Disable();
         TaleWorlds.MountAndBlade.Launcher.Library.Program.Main(args);

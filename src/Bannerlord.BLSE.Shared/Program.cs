@@ -20,12 +20,6 @@ public static class Program
         //var handle = GetConsoleWindow();
         //ShowWindow(handle, SW_HIDE);
 
-        if (args.Length < 1)
-        {
-            Launcher.Launch(args);
-            return;
-        }
-        
         switch (args[0])
         {
             case "launcher":

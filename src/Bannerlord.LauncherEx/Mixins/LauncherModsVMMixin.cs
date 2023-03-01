@@ -100,6 +100,7 @@ namespace Bannerlord.LauncherEx.Mixins
                     SetViewModels(orderedModules);
                 //TryOrderByLoadOrder(Enumerable.Empty<string>(), x => loadOrder.TryGetValue(x, out var isSelected) && isSelected);
             }
+            _launcherManagerHandler.SetGameParametersLoadOrder(Modules2);
         }
 
         private void SetViewModels(IEnumerable<IModuleViewModel> orderedModuleViewModels)
@@ -114,10 +115,19 @@ namespace Bannerlord.LauncherEx.Mixins
         }
 
         private IEnumerable<string> ValidateModule(BUTRLauncherModuleVM moduleVM) => SortHelper.ValidateModule(Modules2, _modulesLookup, moduleVM);
-        private void ToggleModuleSelection(BUTRLauncherModuleVM moduleVM) => SortHelper.ToggleModuleSelection(Modules2, _modulesLookup, moduleVM);
+        private void ToggleModuleSelection(BUTRLauncherModuleVM moduleVM)
+        {
+            SortHelper.ToggleModuleSelection(Modules2, _modulesLookup, moduleVM);
+            _launcherManagerHandler.SetGameParametersLoadOrder(Modules2);
+        }
 
-        private void ChangeModulePosition(BUTRLauncherModuleVM targetModuleVM, int insertIndex, Action<IReadOnlyCollection<string>>? onIssues = null) =>
-            SortHelper.ChangeModulePosition(Modules2, _modulesLookup, targetModuleVM, insertIndex, onIssues);
+        private void ChangeModulePosition(BUTRLauncherModuleVM targetModuleVM, int insertIndex, Action<IReadOnlyCollection<string>>? onIssues = null)
+        {
+            if (SortHelper.ChangeModulePosition(Modules2, _modulesLookup, targetModuleVM, insertIndex, onIssues))
+            {
+                _launcherManagerHandler.SetGameParametersLoadOrder(Modules2);
+            }
+        }
 
         private void SearchTextChanged()
         {
@@ -137,7 +147,8 @@ namespace Bannerlord.LauncherEx.Mixins
             }
         }
 
-        private static void SortByDefault(MBBindingList<BUTRLauncherModuleVM> modules)
+        [BUTRDataSourceMethod]
+        public void ExecuteRefresh()
         {
             static IEnumerable<ModuleInfoExtended> Sort(IEnumerable<ModuleInfoExtended> source)
             {
@@ -149,14 +160,12 @@ namespace Bannerlord.LauncherEx.Mixins
                 return ModuleSorter.TopologySort(orderedModules, module => ModuleUtilities.GetDependencies(orderedModules, module));
             }
 
-            var sorted = Sort(modules.Select(x => x.ModuleInfoExtended)).Select((x, i) => new { Item = x.Id, Index = i }).ToDictionary(x => x.Item, x => x.Index);
-            modules.Sort(new ByIndexComparer<BUTRLauncherModuleVM>(x => sorted.TryGetValue(x.ModuleInfoExtended.Id, out var idx) ? idx : -1));
+            var sorted = Sort(Modules2.Select(x => x.ModuleInfoExtended)).Select((x, i) => new { Item = x.Id, Index = i }).ToDictionary(x => x.Item, x => x.Index);
+            Modules2.Sort(new ByIndexComparer<BUTRLauncherModuleVM>(x => sorted.TryGetValue(x.ModuleInfoExtended.Id, out var idx) ? idx : -1));
             //var sorted = Sort(Modules2.Select(x => x.ModuleInfoExtended)).Select(x => x.Id).ToList();
             //SortBy(sorted);
+            _launcherManagerHandler.SetGameParametersLoadOrder(Modules2);
         }
-
-        [BUTRDataSourceMethod]
-        public void ExecuteRefresh() => SortByDefault(Modules2);
 
         [BUTRDataSourceMethod]
         public void OnDrop(BUTRLauncherModuleVM targetModuleVM, int insertIndex, string type)

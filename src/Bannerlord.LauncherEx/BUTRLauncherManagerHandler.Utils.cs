@@ -9,6 +9,9 @@ namespace Bannerlord.LauncherEx
 {
     internal partial class BUTRLauncherManagerHandler
     {
+        public void SetGameParametersLoadOrder(IEnumerable<IModuleViewModel> modules) => SaveLoadOrder(GetFromViewModel(modules));
+
+        
         public override string GetGameVersion() => ApplicationVersionHelper.GameVersionStr();
 
         public override int GetChangeset() => typeof(TaleWorlds.Library.ApplicationVersion).GetField("DefaultChangeSet")?.GetValue(null) as int? ?? 0;

@@ -10,6 +10,7 @@ namespace Bannerlord.BLSE
         private static string AssemblyResolverId2 => "BUTRLoader.BUTRAssemblyResolver";
         public static string ContinueSaveFileId => "BLSE.ContinueSaveFile";
         public static string CommandsId => "BLSE.Commands";
+        public static string XboxId => "BLSE.Xbox";
 
         public static readonly HashSet<string> Features = new()
         {

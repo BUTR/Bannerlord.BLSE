@@ -2,6 +2,7 @@
 using Bannerlord.BLSE.Features.Commands;
 using Bannerlord.BLSE.Features.ContinueSaveFile;
 using Bannerlord.BLSE.Features.Interceptor;
+using Bannerlord.BLSE.Features.Xbox;
 using Bannerlord.LauncherEx;
 
 using HarmonyLib;
@@ -31,6 +32,7 @@ public static class LauncherEx
         AssemblyResolverFeature.Enable(_featureHarmony);
         ContinueSaveFileFeature.Enable(_featureHarmony);
         CommandsFeature.Enable(_featureHarmony);
+        XboxFeature.Enable(_featureHarmony);
 
         Manager.Initialize();
         Manager.Enable();
