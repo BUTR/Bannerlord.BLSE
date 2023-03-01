@@ -8,6 +8,7 @@
     <DebugType>full</DebugType>
     <Version>1.22.0</Version>
     <PolySharpExcludeGeneratedTypes>System.Diagnostics.CodeAnalysis.UnscopedRefAttribute</PolySharpExcludeGeneratedTypes>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
 
     <GameVersion>1.0.0</GameVersion>
     <BUTRBaseUrl>$(BANNERLORD_BUTR_BASE_URL)</BUTRBaseUrl>
