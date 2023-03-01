@@ -27,6 +27,7 @@ public static class Launcher
         ContinueSaveFileFeature.Enable(_featureHarmony);
         CommandsFeature.Enable(_featureHarmony);
 
+        ModuleInitializer.Disable();
         TaleWorlds.MountAndBlade.Launcher.Library.Program.Main(args);
     }
 }

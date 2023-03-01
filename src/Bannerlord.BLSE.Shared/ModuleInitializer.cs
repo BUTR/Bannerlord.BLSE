@@ -70,5 +70,10 @@ namespace Bannerlord.BLSE.Shared
             
             return Assembly.LoadFile(assemblyFile);
         }
+
+        public static void Disable()
+        {
+            AppDomain.CurrentDomain.AssemblyResolve -= ResolveAssembly;
+        }
     }
 }

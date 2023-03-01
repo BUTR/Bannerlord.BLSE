@@ -101,6 +101,7 @@ Press Yes to exit, press No to continue loading";
         ContinueSaveFileFeature.Enable(_featureHarmony);
         CommandsFeature.Enable(_featureHarmony);
 
+        ModuleInitializer.Disable();
         TaleWorlds.Starter.Library.Program.Main(args);
     }
 }

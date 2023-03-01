@@ -36,7 +36,7 @@ namespace Bannerlord.LauncherEx.ResourceManagers
             if (!BrushFactoryReference.TryGetTarget(out var brushFactory) || brushFactory is null)
                 yield break;
 
-            foreach (XmlNode brushNode in xmlDocument.SelectSingleNode("Brushes")!.ChildNodes)
+            foreach (var brushNode in xmlDocument.SelectSingleNode("Brushes")!.ChildNodes.OfType<XmlNode>())
             {
                 var brush = LoadBrushFrom?.Invoke(brushFactory, brushNode);
                 if (brush is not null)

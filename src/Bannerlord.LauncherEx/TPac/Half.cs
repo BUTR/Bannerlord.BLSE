@@ -429,7 +429,7 @@ namespace SystemHalf
         /// than value. -or- value is null.
         /// </returns>
         /// <exception cref="System.ArgumentException">value is not a System.Half</exception>
-        public int CompareTo(object obj)
+        public int CompareTo(object? obj)
         {
             var result = 0;
             if (obj == null)
@@ -465,12 +465,11 @@ namespace SystemHalf
         /// </summary>
         /// <param name="obj">An System.Object.</param>
         /// <returns>true if value is a System.Half and equal to this instance; otherwise, false.</returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             var result = false;
-            if (obj is Half)
+            if (obj is Half half)
             {
-                var half = (Half) obj;
                 if ((half == this) || (IsNaN(half) && IsNaN(this)))
                 {
                     result = true;
@@ -815,14 +814,14 @@ namespace SystemHalf
         /// <param name="formatProvider">An System.IFormatProvider that supplies culture-specific formatting information.</param>
         /// <returns>The string representation of the value of this instance as specified by format and provider.</returns>
         /// <exception cref="System.FormatException">format is invalid.</exception>
-        public string ToString(string format, IFormatProvider formatProvider)
+        public string ToString(string? format, IFormatProvider? formatProvider)
         {
             return ((float) this).ToString(format, formatProvider);
         }
         #endregion
 
         #region IConvertible Members
-        float IConvertible.ToSingle(IFormatProvider provider)
+        float IConvertible.ToSingle(IFormatProvider? provider)
         {
             return this;
         }
@@ -830,63 +829,63 @@ namespace SystemHalf
         {
             return GetTypeCode();
         }
-        bool IConvertible.ToBoolean(IFormatProvider provider)
+        bool IConvertible.ToBoolean(IFormatProvider? provider)
         {
             return Convert.ToBoolean(this);
         }
-        byte IConvertible.ToByte(IFormatProvider provider)
+        byte IConvertible.ToByte(IFormatProvider? provider)
         {
             return Convert.ToByte(this);
         }
-        char IConvertible.ToChar(IFormatProvider provider)
+        char IConvertible.ToChar(IFormatProvider? provider)
         {
             throw new InvalidCastException(string.Format(CultureInfo.CurrentCulture, "Invalid cast from '{0}' to '{1}'.", "Half", "Char"));
         }
-        DateTime IConvertible.ToDateTime(IFormatProvider provider)
+        DateTime IConvertible.ToDateTime(IFormatProvider? provider)
         {
             throw new InvalidCastException(string.Format(CultureInfo.CurrentCulture, "Invalid cast from '{0}' to '{1}'.", "Half", "DateTime"));
         }
-        decimal IConvertible.ToDecimal(IFormatProvider provider)
+        decimal IConvertible.ToDecimal(IFormatProvider? provider)
         {
             return Convert.ToDecimal(this);
         }
-        double IConvertible.ToDouble(IFormatProvider provider)
+        double IConvertible.ToDouble(IFormatProvider? provider)
         {
             return Convert.ToDouble(this);
         }
-        short IConvertible.ToInt16(IFormatProvider provider)
+        short IConvertible.ToInt16(IFormatProvider? provider)
         {
             return Convert.ToInt16(this);
         }
-        int IConvertible.ToInt32(IFormatProvider provider)
+        int IConvertible.ToInt32(IFormatProvider? provider)
         {
             return Convert.ToInt32(this);
         }
-        long IConvertible.ToInt64(IFormatProvider provider)
+        long IConvertible.ToInt64(IFormatProvider? provider)
         {
             return Convert.ToInt64(this);
         }
-        sbyte IConvertible.ToSByte(IFormatProvider provider)
+        sbyte IConvertible.ToSByte(IFormatProvider? provider)
         {
             return Convert.ToSByte(this);
         }
-        string IConvertible.ToString(IFormatProvider provider)
+        string IConvertible.ToString(IFormatProvider? provider)
         {
             return Convert.ToString(this, CultureInfo.InvariantCulture);
         }
-        object IConvertible.ToType(Type conversionType, IFormatProvider provider)
+        object IConvertible.ToType(Type conversionType, IFormatProvider? provider)
         {
             return (((float) this) as IConvertible).ToType(conversionType, provider);
         }
-        ushort IConvertible.ToUInt16(IFormatProvider provider)
+        ushort IConvertible.ToUInt16(IFormatProvider? provider)
         {
             return Convert.ToUInt16(this);
         }
-        uint IConvertible.ToUInt32(IFormatProvider provider)
+        uint IConvertible.ToUInt32(IFormatProvider? provider)
         {
             return Convert.ToUInt32(this);
         }
-        ulong IConvertible.ToUInt64(IFormatProvider provider)
+        ulong IConvertible.ToUInt64(IFormatProvider? provider)
         {
             return Convert.ToUInt64(this);
         }

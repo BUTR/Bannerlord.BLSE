@@ -65,7 +65,7 @@ namespace Bannerlord.LauncherEx.ResourceManagers
             return true;
         }
 
-        private static bool GetTexturePrefix(string textureName, ref OpenGLTexture __result)
+        private static bool GetTexturePrefix(string textureName, ref OpenGLTexture? __result)
         {
             if (!Textures.TryGetValue(textureName, out __result))
                 return true;

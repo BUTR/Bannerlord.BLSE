@@ -30,7 +30,7 @@ namespace Bannerlord.LauncherEx
 
         public static void Initialize()
         {
-            AssemblyLoaderPatch.Enable(_launcherHarmony);
+            //AssemblyLoaderPatch.Enable(_launcherHarmony);
         }
 
         public static void Enable()

@@ -8,6 +8,7 @@
     <OutputType>library</OutputType>
 
     <ILRepackTargetConfigurations>$(Configurations);</ILRepackTargetConfigurations>
+    <ILRepackAllowDuplicateResources>false</ILRepackAllowDuplicateResources>
     <ILRepackMergeDebugSymbols>true</ILRepackMergeDebugSymbols>
     <ILRepackPerformInternalize>false</ILRepackPerformInternalize>
     <ILRepackCopyAttributes>true</ILRepackCopyAttributes>

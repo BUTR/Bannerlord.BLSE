@@ -27,11 +27,16 @@ namespace Bannerlord.BLSE.Features.AssemblyResolver
             AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
         }
         
-        private static Assembly? OnAssemblyResolve(object sender, ResolveEventArgs args)
+        private static Assembly? OnAssemblyResolve(object? sender, ResolveEventArgs args)
         {
+            if (args.Name is null) return null;
+
+            var name = new AssemblyName(args.Name);
+            if (name.Name is null) return null;
+
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
-                if (assembly.FullName == args.Name)
+                if (assembly.FullName == name.FullName)
                 {
                     return assembly;
                 }
@@ -43,8 +48,6 @@ namespace Bannerlord.BLSE.Features.AssemblyResolver
 
                 var isInGame = GameUtils.GetModulesNames() is not null;
 
-                var name = args.Name.Contains(',') ? $"{args.Name.Split(',')[0]}.dll" : args.Name;
-
                 var assemblies = (isInGame ? ModuleInfoHelper.GetLoadedModules() : ModuleInfoHelper.GetModules()).Select(x =>
                 {
                     var directory = Path.Combine(x.Path, "bin", configName);
@@ -53,7 +56,7 @@ namespace Bannerlord.BLSE.Features.AssemblyResolver
 
                 var assembly = assemblies
                     .SelectMany(x => x)
-                    .FirstOrDefault(x => x.Contains(name));
+                    .FirstOrDefault(x => Path.GetFileNameWithoutExtension(x) == name.Name);
 
                 if (assembly is not null)
                 {

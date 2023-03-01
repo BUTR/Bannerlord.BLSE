@@ -1,4 +1,5 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
+﻿/*
+using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.LauncherEx.Helpers;
 
 using HarmonyLib;
@@ -62,7 +63,7 @@ namespace Bannerlord.LauncherEx.Patches
                     }
                 }
             }
-            catch (Exception) { /* ignore */ }
+            catch (Exception) { }
 
             return true;
         }
@@ -70,27 +71,32 @@ namespace Bannerlord.LauncherEx.Patches
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool OnAssemblyResolvePrefix(ref Assembly? __result, object sender, ResolveEventArgs args)
         {
+            if (args.Name is null) return true;
+
+            var name = new AssemblyName(args.Name);
+            if (name.Name is null) return true;
+
             try
             {
                 if (sender is AppDomain { FriendlyName: "Compatibility Checker" } domain)
                 {
                     foreach (var assembly in domain.GetAssemblies())
                     {
-                        if (assembly.FullName == args.Name)
+                        if (assembly.FullName == name.FullName)
                         {
                             __result = assembly;
                             return false;
                         }
                     }
 
-                    var name = args.Name.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                    __result = Assembly.LoadFrom(name[0]);
+                    __result = Assembly.LoadFrom(name.Name);
                     return false;
                 }
             }
-            catch (Exception) { /* ignore */ }
+            catch (Exception) { }
 
             return true;
         }
     }
 }
+*/

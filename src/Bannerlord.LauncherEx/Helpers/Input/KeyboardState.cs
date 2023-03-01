@@ -124,7 +124,7 @@ namespace Bannerlord.LauncherEx.Helpers
 
         public static bool operator !=(KeyboardState a, KeyboardState b) => !(a == b);
 
-        public override bool Equals(object obj) => obj is KeyboardState state && this == state;
+        public override bool Equals(object? obj) => obj is KeyboardState state && this == state;
 
         public unsafe string AsString(Keys key)
         {

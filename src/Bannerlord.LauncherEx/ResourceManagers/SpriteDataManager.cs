@@ -219,7 +219,7 @@ namespace Bannerlord.LauncherEx.ResourceManagers
             return true;
         }
 
-        private static bool GetSpritePrefix(string name, ref Sprite __result)
+        private static bool GetSpritePrefix(string name, ref Sprite? __result)
         {
             if (!SpriteNames.TryGetValue(name, out __result))
                 return true;

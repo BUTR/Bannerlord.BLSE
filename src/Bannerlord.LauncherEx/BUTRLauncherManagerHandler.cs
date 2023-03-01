@@ -41,7 +41,7 @@ namespace Bannerlord.LauncherEx
         private Action<IEnumerable<IModuleViewModel>>? _setModuleViewModels;
 
         private readonly UserDataManager _userDataManager;
-        private readonly string _installPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../", "../"));
+        private readonly string _installPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory!, "../", "../"));
 
         private BUTRLauncherManagerHandler(UserDataManager userDataManager)
         {

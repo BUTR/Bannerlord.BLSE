@@ -35,6 +35,7 @@ public static class LauncherEx
         Manager.Initialize();
         Manager.Enable();
 
+        ModuleInitializer.Disable();
         TaleWorlds.MountAndBlade.Launcher.Library.Program.Main(args);
     }
 

@@ -24,7 +24,7 @@ namespace Bannerlord.BLSE.Features.ContinueSaveFile
             AppDomain.CurrentDomain.AssemblyLoad += CurrentDomainOnAssemblyLoad;
         }
 
-        private static void CurrentDomainOnAssemblyLoad(object sender, AssemblyLoadEventArgs args)
+        private static void CurrentDomainOnAssemblyLoad(object? sender, AssemblyLoadEventArgs args)
         {
             if (_harmony is null) return;
 
