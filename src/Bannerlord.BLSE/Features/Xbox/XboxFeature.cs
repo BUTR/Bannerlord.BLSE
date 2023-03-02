@@ -17,7 +17,7 @@ namespace Bannerlord.BLSE.Features.Xbox
         {
             if (new DirectoryInfo(Directory.GetCurrentDirectory()).Name != "Gaming.Desktop.x64_Shipping_Client")
                 return;
-            
+
             ModulePatch.Enable(harmony);
         }
     }

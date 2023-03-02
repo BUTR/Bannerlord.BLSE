@@ -10,7 +10,7 @@ namespace Bannerlord.BLSE.Shared;
 internal static class ModuleInitializer
 {
     private static int isAttached;
-        
+
     [ModuleInitializer]
     internal static void Action()
     {
@@ -26,7 +26,7 @@ internal static class ModuleInitializer
     {
         if (e.Name is null)
             return null;
-            
+
         var assemblyName = new AssemblyName(e.Name);
 #if NET472
         // On .NET Framework, keep the Mono.Cecil up to date.
@@ -37,7 +37,7 @@ internal static class ModuleInitializer
             if (assemblyName.Name is not "0Harmony" and not "Mono.Cecil" and not "Mono.Cecil.Mdb" and not "Mono.Cecil.Mdb" and not "Mono.Cecil.Rocks" and not "MonoMod.Common")
                 return null;
 #endif
-        
+
         foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
         {
             if (assembly.FullName == assemblyName.FullName)
@@ -71,7 +71,7 @@ internal static class ModuleInitializer
             Environment.Exit(1);
             return null;
         }
-            
+
         return Assembly.LoadFrom(assemblyFile);
     }
 
