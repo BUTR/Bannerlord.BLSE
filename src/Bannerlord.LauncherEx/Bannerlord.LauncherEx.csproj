@@ -10,7 +10,7 @@
     <PolySharpExcludeGeneratedTypes>System.Diagnostics.CodeAnalysis.UnscopedRefAttribute</PolySharpExcludeGeneratedTypes>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     
-    <DefineConstants>$(DefineConstants);$(GameVersionConstant)</DefineConstants>
+    <DefineConstants>$(DefineConstants);$(GameVersionConstant);HARMONYEXTENSIONS_HARMONYX</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(DoILRepack) == 'true'">
