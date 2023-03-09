@@ -24,8 +24,8 @@ env:
 
 jobs:
   build:
-    name: Publish NuGet
-    runs-on: ubuntu-latest
+    name: Publish
+    runs-on: windows-latest
     outputs:
       mod_version: ${{ steps.changelog.outputs.mod_version }}
       mod_description: ${{ steps.changelog.outputs.mod_description }}
