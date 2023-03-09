@@ -66,7 +66,7 @@ namespace Bannerlord.LauncherEx.Mixins
 
         public LauncherModsVMMixin(LauncherModsVM launcherModsVM) : base(launcherModsVM)
         {
-            _launcherManagerHandler.RegisterModuleViewModelProvider(() => _modules, SetViewModels);
+            _launcherManagerHandler.RegisterModuleViewModelProvider(() => _modules, () => Modules2, SetViewModels);
 
             _launcherManagerHandler.RefreshModules();
             foreach (var moduleInfoExtended in _launcherManagerHandler.ExtendedModuleInfoCache.Values.OfType<ModuleInfoExtendedWithPath>())
@@ -96,8 +96,9 @@ namespace Bannerlord.LauncherEx.Mixins
                 ForceSortedHint = new LauncherHintVM(new BUTRTextObject("{=pZVVdI5d}The Load Order was re-sorted with the default algorithm!{NL}Reasons:{NL}{REASONS}").SetTextVariable("REASONS", string.Join("\n", issues)).ToString());
 
                 // Beta sorting algorithm will fail currently in some cases, use the TW fallback
-                if (_launcherManagerHandler.TryOrderByLoadOrderTW(Enumerable.Empty<string>(), x => loadOrder.TryGetValue(x, out var isSelected) && isSelected, out _, out orderedModules, true))
-                    SetViewModels(orderedModules);
+                _launcherManagerHandler.TryOrderByLoadOrderTW(Enumerable.Empty<string>(), x => loadOrder.TryGetValue(x, out var isSelected) && isSelected, out _, out orderedModules, true);
+                SetViewModels(orderedModules); // Set the ViewModels regarding the result
+
                 //TryOrderByLoadOrder(Enumerable.Empty<string>(), x => loadOrder.TryGetValue(x, out var isSelected) && isSelected);
             }
             _launcherManagerHandler.SetGameParametersLoadOrder(Modules2);

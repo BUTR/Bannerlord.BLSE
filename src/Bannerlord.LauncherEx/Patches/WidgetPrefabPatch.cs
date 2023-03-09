@@ -24,6 +24,7 @@ namespace Bannerlord.LauncherEx.Patches
             PrefabExtensionManager.RegisterPatch(UILauncherPrefabExtension31.Movie, UILauncherPrefabExtension31.XPath, new UILauncherPrefabExtension31());
             PrefabExtensionManager.RegisterPatch(UILauncherPrefabExtension32.Movie, UILauncherPrefabExtension32.XPath, new UILauncherPrefabExtension32());
             PrefabExtensionManager.RegisterPatch(UILauncherPrefabExtension34.Movie, UILauncherPrefabExtension34.XPath, new UILauncherPrefabExtension34());
+            PrefabExtensionManager.RegisterPatch(UILauncherPrefabExtension35.Movie, UILauncherPrefabExtension35.XPath, new UILauncherPrefabExtension35());
 
             // Options
             PrefabExtensionManager.RegisterPatch(UILauncherPrefabExtension3.Movie, UILauncherPrefabExtension3.XPath, new UILauncherPrefabExtension3());
@@ -164,7 +165,7 @@ namespace Bannerlord.LauncherEx.Patches
         {
             // Replaces reading XML from file with assigning it from the new local variable `XmlDocument document`
             [MethodImpl(MethodImplOptions.NoInlining)]
-            static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, MethodBase method)
+            static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
             {
                 var returnNull = new List<CodeInstruction>
                 {
@@ -174,6 +175,7 @@ namespace Bannerlord.LauncherEx.Patches
 
                 var instructionsList = instructions.ToList();
 
+                var method = AccessTools2.DeclaredMethod(typeof(WidgetPrefab), "LoadFrom");
                 var locals = method.GetMethodBody()?.LocalVariables;
                 var xmlDocumentLocal = locals?.FirstOrDefault(x => x.LocalType == typeof(XmlDocument));
 
@@ -205,7 +207,7 @@ namespace Bannerlord.LauncherEx.Patches
             }
 
             // make compiler happy
-            _ = Transpiler(null!, null!);
+            _ = Transpiler(null!);
 
             // make analyzer happy
             prefabExtensionContext.AddExtension(null);

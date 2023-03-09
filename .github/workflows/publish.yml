@@ -23,9 +23,12 @@ env:
   DOTNET_CLI_TELEMETRY_OPTOUT: true
 
 jobs:
-  publish:
+  build:
     name: Publish NuGet
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
+    outputs:
+      mod_version: ${{ steps.changelog.outputs.mod_version }}
+      mod_description: ${{ steps.changelog.outputs.mod_description }}
     steps:
       - uses: actions/checkout@v3
 
@@ -37,6 +40,19 @@ jobs:
           dotnet build src/Bannerlord.BLSE.Launcher/Bannerlord.BLSE.Launcher.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
           dotnet build src/Bannerlord.BLSE.LauncherEx/Bannerlord.BLSE.LauncherEx.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
         shell: pwsh
+
+      - name: Install and Run ChangelogParser
+        id: changelog
+        run: |
+          dotnet tool install -g Bannerlord.ChangelogParser
+          vers="$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")"
+          echo "::set-output name=mod_version::$vers"
+          desc="$(bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt")"
+          desc="${desc//'%'/'%25'}"
+          desc="${desc//$'\n'/'%0A'}"
+          desc="${desc//$'\r'/'%0D'}"
+          echo "::set-output name=mod_description::$desc"
+        shell: sh
         
       - name: Upload Bannerlord folder
         uses: actions/upload-artifact@v3

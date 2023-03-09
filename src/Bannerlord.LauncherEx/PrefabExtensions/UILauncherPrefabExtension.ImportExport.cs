@@ -14,7 +14,7 @@ namespace Bannerlord.LauncherEx.PrefabExtensions
 
         public UILauncherPrefabExtension14()
         {
-            XmlDocument.LoadXml(@$"
+            XmlDocument.LoadXml(@"
 <ListPanel WidthSizePolicy=""CoverChildren"" HeightSizePolicy=""CoverChildren""
            VerticalAlignment=""Bottom""
            MarginLeft =""5"" MarginBottom=""35""

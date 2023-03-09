@@ -20,7 +20,7 @@ namespace Bannerlord.LauncherEx.Patches
                 AccessTools2.DeclaredConstructor(typeof(ViewModel)),
                 prefix: AccessTools2.DeclaredMethod(typeof(ViewModelPatch), nameof(ViewModelCtorPrefix)));
             if (!res1) return false;
-            
+
             return true;
         }
 

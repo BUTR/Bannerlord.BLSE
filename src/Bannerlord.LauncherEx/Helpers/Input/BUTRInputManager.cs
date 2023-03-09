@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using System.Windows.Forms;
 
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
@@ -54,7 +53,7 @@ namespace Bannerlord.LauncherEx.Helpers
 
         public void SetClipboardText(string text)
         {
-            var thread = new Thread(() => Clipboard.SetText(text));
+            var thread = new Thread(() => WindowsClipboard.SetText(text));
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
             thread.Join();
@@ -63,7 +62,7 @@ namespace Bannerlord.LauncherEx.Helpers
         public string GetClipboardText()
         {
             var text = string.Empty;
-            var thread = new Thread(() => text = Clipboard.GetText());
+            var thread = new Thread(() => text = WindowsClipboard.GetText());
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
             thread.Join();

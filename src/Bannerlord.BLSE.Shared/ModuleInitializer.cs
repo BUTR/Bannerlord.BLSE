@@ -1,49 +1,82 @@
-﻿using System;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+using Bannerlord.ModuleManager;
+
+using System;
 using System.IO;
+using System.IO.Compression;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using System.Windows.Forms;
 
-namespace Bannerlord.BLSE.Shared;
+using TaleWorlds.Core;
 
 internal static class ModuleInitializer
 {
-    private static int isAttached;
-        
+    private static int _isAttached;
+
     [ModuleInitializer]
     internal static void Action()
     {
-        if (Interlocked.Exchange(ref isAttached, 1) == 1)
-        {
+        if (Interlocked.Exchange(ref _isAttached, 1) == 1)
             return;
-        }
         AppDomain.CurrentDomain.AssemblyResolve += ResolveAssembly;
-
     }
 
     private static Assembly? ResolveAssembly(object? sender, ResolveEventArgs e)
     {
         if (e.Name is null)
             return null;
-            
+
         var assemblyName = new AssemblyName(e.Name);
-#if NET472
-        // On .NET Framework, keep the Mono.Cecil up to date.
-        if (assemblyName.Name is not "0Harmony" and not "Mono.Cecil")
-            return null;
-#elif NETCOREAPP3_1_OR_GREATER
-            // On .NET Core, harmony has split MonoMod.Common as a separate dependency.
-            if (assemblyName.Name is not "0Harmony" and not "Mono.Cecil" and not "Mono.Cecil.Mdb" and not "Mono.Cecil.Mdb" and not "Mono.Cecil.Rocks" and not "MonoMod.Common")
-                return null;
-#endif
-        
+        if (assemblyName.Name is "0Harmony" or "Mono.Cecil" or "Mono.Cecil.Mdb" or "Mono.Cecil.Mdb" or "Mono.Cecil.Rocks" or "MonoMod.Utils" or "MonoMod.RuntimeDetour")
+            return ResolveHarmonyAssemblies(assemblyName);
+        if (assemblyName.Name is "Bannerlord.LauncherEx")
+            return ResolveLauncherExAssemblies(assemblyName);
+
+        return null;
+    }
+
+    private static Assembly? ResolveLauncherExAssemblies(AssemblyName assemblyName)
+    {
+        var @namespace = "Bannerlord.BLSE.Shared.";
+        var resources = typeof(ModuleInitializer).Assembly.GetManifestResourceNames().Select(x => x.Remove(0, @namespace.Length));
+        var versions = resources.Where(x => x.StartsWith("Bannerlord.LauncherEx_")).Select(x =>
+        {
+            var split = x.Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries);
+            return (@namespace + x, ApplicationVersion.TryParse(split[1], out var v) ? v : ApplicationVersion.Empty);
+        }).ToArray();
+        var gv = ApplicationVersionHelper.GameVersion() ?? TaleWorlds.Library.ApplicationVersion.Empty;
+        var gameVersion = new ApplicationVersion((ApplicationVersionType) gv.ApplicationVersionType, gv.Major, gv.Minor, gv.Revision, gv.ChangeSet);
+
+        string? toLoad = null;
+
+        var exactVersion = versions.FirstOrDefault(x => x.Item2.IsSame(gameVersion));
+        if (exactVersion.Item2 != ApplicationVersion.Empty)
+            toLoad = exactVersion.Item1;
+
+        var comparer = new ApplicationVersionComparer();
+        var closestVersion = versions.Where(x => comparer.Compare(x.Item2, gameVersion) <= 0).MaxBy(x => x.Item2, comparer, out var maxKey);
+        if (closestVersion.Item2 != ApplicationVersion.Empty)
+            toLoad = closestVersion.Item1;
+
+        if (toLoad is not null)
+        {
+            using var resourceStream = typeof(ModuleInitializer).Assembly.GetManifestResourceStream(toLoad);
+            using var decompressStream = new GZipStream(resourceStream, CompressionMode.Decompress);
+            using var ms = new MemoryStream();
+            decompressStream.CopyTo(ms);
+            return Assembly.Load(ms.ToArray());
+        }
+
+        return null;
+    }
+    private static Assembly? ResolveHarmonyAssemblies(AssemblyName assemblyName)
+    {
         foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
         {
             if (assembly.FullName == assemblyName.FullName)
-            {
                 return assembly;
-            }
         }
 
         var assemblyNameFull = $"{assemblyName.Name}.dll";
@@ -52,14 +85,14 @@ internal static class ModuleInitializer
         var harmonyModuleFolder = Path.Combine(Directory.GetCurrentDirectory(), "../", "../", "Modules", "Bannerlord.Harmony");
         if (!Directory.Exists(harmonyModuleFolder))
         {
-            MessageBox.Show("The Harmony module is missing!\nCan't launch with 'Bannerlord.Harmony' module missing!", "Error from BLSE!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBoxWrapper.Show("The Harmony module is missing!\nCan't launch with 'Bannerlord.Harmony' module missing!", "Error from BLSE!", MessageBoxButtons.OK, MessageBoxIcon.Error, 0, 0);
             Environment.Exit(1);
             return null;
         }
         var harmonyFolder = Path.Combine(harmonyModuleFolder, "bin", configName);
         if (!Directory.Exists(harmonyFolder))
         {
-            MessageBox.Show($"The Harmony module is corrupted!\nCan't find '{Path.Combine("bin", configName)}' in 'Bannerlord.Harmony'!", "Error from BLSE!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBoxWrapper.Show($"The Harmony module is corrupted!\nCan't find '{Path.Combine("bin", configName)}' in 'Bannerlord.Harmony'!", "Error from BLSE!", MessageBoxButtons.OK, MessageBoxIcon.Error, 0, 0);
             Environment.Exit(1);
             return null;
         }
@@ -67,11 +100,11 @@ internal static class ModuleInitializer
         var assemblyFile = Path.Combine(harmonyFolder, assemblyNameFull);
         if (!File.Exists(assemblyFile))
         {
-            MessageBox.Show($"The Harmony module is corrupted!\nCan't find '{assemblyNameFull}' in 'Bannerlord.Harmony'!", "Error from BLSE!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBoxWrapper.Show($"The Harmony module is corrupted!\nCan't find '{assemblyNameFull}' in 'Bannerlord.Harmony'!", "Error from BLSE!", MessageBoxButtons.OK, MessageBoxIcon.Error, 0, 0);
             Environment.Exit(1);
             return null;
         }
-            
+
         return Assembly.LoadFrom(assemblyFile);
     }
 

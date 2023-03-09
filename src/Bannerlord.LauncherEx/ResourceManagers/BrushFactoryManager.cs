@@ -61,25 +61,36 @@ namespace Bannerlord.LauncherEx.ResourceManagers
 
             var res1 = harmony.TryPatch(
                 AccessTools2.PropertyGetter(typeof(BrushFactory), "Brushes"),
-                postfix: AccessTools2.DeclaredMethod(typeof(BrushFactoryManager), nameof(GetBrushesPostfix)));
+                postfix: AccessTools2.DeclaredMethod(typeof(BrushFactoryManager), nameof(BrushesPostfix)));
             if (!res1) return false;
 
             var res2 = harmony.TryPatch(
-                AccessTools2.DeclaredMethod(typeof(BrushFactory), "GetBrush"),
-                AccessTools2.DeclaredMethod(typeof(BrushFactoryManager), nameof(GetBrushPrefix)));
+                AccessTools2.DeclaredMethod(typeof(BrushFactory), "CheckForUpdates"),
+                prefix: AccessTools2.DeclaredMethod(typeof(BrushFactoryManager), nameof(CheckForUpdatesPrefix)));
             if (!res2) return false;
 
             var res3 = harmony.TryPatch(
+                AccessTools2.DeclaredMethod(typeof(BrushFactory), "GetBrush"),
+                AccessTools2.DeclaredMethod(typeof(BrushFactoryManager), nameof(GetBrushPrefix)));
+            if (!res3) return false;
+
+            var res4 = harmony.TryPatch(
                 AccessTools2.Method(typeof(BrushFactory), "LoadBrushes"),
                 AccessTools2.DeclaredMethod(typeof(BrushFactoryManager), nameof(LoadBrushesPostfix)));
-            if (!res3) return false;
+            if (!res4) return false;
 
             return true;
         }
 
-        private static void GetBrushesPostfix(ref IEnumerable<Brush> __result)
+        private static void BrushesPostfix(ref IEnumerable<Brush> __result)
         {
             __result = __result.Concat(CustomBrushes.Values);
+        }
+
+        // We need to disable BrushFactory's hot reload
+        private static bool CheckForUpdatesPrefix()
+        {
+            return false;
         }
 
         private static bool GetBrushPrefix(string name, Dictionary<string, Brush> ____brushes, ref Brush __result)

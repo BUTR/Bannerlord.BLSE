@@ -2,13 +2,15 @@
 <Project>
 
   <PropertyGroup>
-    <GameVersion>1.1.0</GameVersion>
+    <GameVersion>1.0.0</GameVersion>
+    <GameVersionFlat>$([System.String]::Copy('$(GameVersion)').Replace('.',''))</GameVersionFlat>
+    <GameVersionConstant>v$(GameVersionFlat)</GameVersionConstant>
   </PropertyGroup>
 
   <!--Development Variables-->
   <PropertyGroup>
     <Version>1.0.0</Version>
-    <HarmonyVersion>2.2.2</HarmonyVersion>
+    <HarmonyVersion>2.10.1</HarmonyVersion>
     <BUTRSharedVersion>3.0.0.134</BUTRSharedVersion>
     <BUTRModuleManagerVersion>5.0.198</BUTRModuleManagerVersion>
     <HarmonyExtensionsVersion>3.2.0.75</HarmonyExtensionsVersion>

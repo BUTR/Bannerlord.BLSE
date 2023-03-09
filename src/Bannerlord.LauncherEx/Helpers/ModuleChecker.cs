@@ -1,4 +1,5 @@
 ﻿using Bannerlord.BUTR.Shared.Helpers;
+using Bannerlord.LauncherManager.Extensions;
 using Bannerlord.LauncherManager.Models;
 using Bannerlord.ModuleManager;
 

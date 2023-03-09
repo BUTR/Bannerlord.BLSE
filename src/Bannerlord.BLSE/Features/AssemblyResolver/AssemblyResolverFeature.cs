@@ -17,7 +17,7 @@ namespace Bannerlord.BLSE.Features.AssemblyResolver
     {
         private static ResolveEventHandler AssemblyLoaderOnAssemblyResolve =
             AccessTools2.GetDelegate<ResolveEventHandler>(typeof(AssemblyLoader), "OnAssemblyResolve")!;
-        
+
         public static string Id = FeatureIds.AssemblyResolverId;
 
         public static void Enable(Harmony harmony)
@@ -26,7 +26,7 @@ namespace Bannerlord.BLSE.Features.AssemblyResolver
             AppDomain.CurrentDomain.AssemblyResolve -= AssemblyLoaderOnAssemblyResolve;
             AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
         }
-        
+
         private static Assembly? OnAssemblyResolve(object? sender, ResolveEventArgs args)
         {
             if (args.Name is null) return null;
@@ -55,12 +55,12 @@ namespace Bannerlord.BLSE.Features.AssemblyResolver
                 }).ToArray();
 
                 var assembly = assemblies.SelectMany(x => x).FirstOrDefault(x => Path.GetFileNameWithoutExtension(x) == name.Name);
-                
+
                 if (assembly is not null)
                 {
                     return Assembly.LoadFrom(assembly);
                 }
-                
+
                 assembly = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.dll").FirstOrDefault(x => Path.GetFileNameWithoutExtension(x) == name.Name);
                 if (assembly is not null)
                 {
@@ -71,7 +71,7 @@ namespace Bannerlord.BLSE.Features.AssemblyResolver
             {
                 return null;
             }
- 
+
             return null;
         }
     }

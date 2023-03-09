@@ -157,7 +157,7 @@ namespace Bannerlord.LauncherEx.ResourceManagers
                 __result = widgetPrefab;
                 return false;
             }
-            
+
             return true;
         }
 

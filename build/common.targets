@@ -7,4 +7,52 @@
     <Warning Condition="$(BANNERLORD_GAME_DIR) == '' AND $(BANNERLORD_BETA_DIR) == ''" Text="Environment variable 'BANNERLORD_BETA_DIR' is not set!"></Warning>
   </Target>
 
+  <UsingTask TaskName="GZip" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <Files ParameterType="Microsoft.Build.Framework.ITaskItem[]"  Required="true" />
+      <Result ParameterType="Microsoft.Build.Framework.ITaskItem[]" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.IO.Compression" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+if (Files.Length > 0)
+{
+    Result = new TaskItem[Files.Length];
+    for (var i = 0; i < Files.Length; i++)
+    {
+        ITaskItem item = Files[i];
+        string sourcePath = item.GetMetadata("FullPath");
+        string sourceLink = item.GetMetadata("Link");
+        string sourceItemSpec = item.ItemSpec;
+              
+        string destinationSuffix = ".gz";
+        string sourceDirectory = Path.GetDirectoryName(sourcePath);
+        string destinationPath = Path.Combine(sourceDirectory, sourceLink + destinationSuffix);
+        
+        string destinationItemDirectory = Path.GetDirectoryName(sourceItemSpec);
+        string destinationItemSpec = Path.Combine(destinationItemDirectory, sourceLink + destinationSuffix);
+
+        Log.LogMessage(MessageImportance.Normal, $"EmbeddedResource Src: {sourceItemSpec}");
+              
+        using (var sourceStream = File.OpenRead(sourcePath))
+        using (var destinationStream = File.OpenWrite(destinationPath))
+        using (var destinationGZip = new GZipStream(destinationStream, CompressionLevel.Optimal))
+        {
+            sourceStream.CopyTo(destinationGZip);
+        }
+              
+        var destinationItem = new TaskItem(destinationItemSpec);
+        
+        Log.LogMessage(MessageImportance.Normal, $"EmbeddedResource GZip: {destinationItem.ItemSpec}");
+              
+        Result[i] = destinationItem;
+    }
+}
+  ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+  
 </Project>

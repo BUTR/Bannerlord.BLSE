@@ -139,7 +139,7 @@ namespace Bannerlord.LauncherEx
             BrushFactoryManager.Clear();
             WidgetFactoryManager.Clear();
             BUTRLocalizationManager.Clear();
-            _launcherHarmony.UnpatchAll(_launcherHarmony.Id);
+            _launcherHarmony.UnpatchSelf();
         }
     }
 }

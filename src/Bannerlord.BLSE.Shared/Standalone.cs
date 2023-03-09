@@ -11,7 +11,6 @@ using HarmonyLib;
 using System;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
 
 using TaleWorlds.Core;
 using TaleWorlds.Library;
@@ -52,6 +51,7 @@ public static class Standalone
         if (hasModules || string.IsNullOrEmpty(saveFile))
             return;
 
+        // We need the initialization for Steam discovery to work
         LauncherPlatform.Initialize();
         Common.PlatformFileHelper = new PlatformFileHelperPC("Mount and Blade II Bannerlord");
         try
@@ -75,9 +75,9 @@ public static class Standalone
 Tried to use the load order from the save file {saveFile}, but it was missing the following mods:
 {string.Join(Environment.NewLine, missingNames)}
 Press Yes to exit, press No to continue loading";
-            switch (MessageBox.Show(message, "Error from BLSE!", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Warning, System.Windows.Forms.MessageBoxDefaultButton.Button1, (System.Windows.Forms.MessageBoxOptions) 0x40000))
+            switch (MessageBoxWrapper.Show(message, "Error from BLSE!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, (MessageBoxOptions) 0x40000))
             {
-                case System.Windows.Forms.DialogResult.Yes:
+                case DialogResult.Yes:
                     Environment.Exit(1);
                     return;
             }

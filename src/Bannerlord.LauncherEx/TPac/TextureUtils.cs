@@ -3,8 +3,6 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
-using TaleWorlds.Library;
-
 namespace Bannerlord.LauncherEx.TPac
 {
     internal static class TextureUtil

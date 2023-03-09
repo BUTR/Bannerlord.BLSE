@@ -212,4 +212,16 @@ namespace Bannerlord.LauncherEx.PrefabExtensions
 
         public override XmlDocument GetPrefabExtension() => XmlDocument;
     }
+
+    // No more multiplayer for LauncherEx
+    internal sealed class UILauncherPrefabExtension35 : PrefabExtensionSetAttributesPatch
+    {
+        public static string Movie => "UILauncher";
+        public static string XPath => "descendant::ButtonWidget[@Id='PlayMultiplayerButton']";
+
+        public override List<Attribute> Attributes => new()
+        {
+            new Attribute("IsDisabled", "true"),
+        };
+    }
 }

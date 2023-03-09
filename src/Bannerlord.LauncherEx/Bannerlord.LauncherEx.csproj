@@ -1,18 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
-    <LangVersion>10.0</LangVersion>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>11.0</LangVersion>
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
     <DebugType>full</DebugType>
     <Version>1.22.0</Version>
     <PolySharpExcludeGeneratedTypes>System.Diagnostics.CodeAnalysis.UnscopedRefAttribute</PolySharpExcludeGeneratedTypes>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
-
-    <BUTRBaseUrl>$(BANNERLORD_BUTR_BASE_URL)</BUTRBaseUrl>
+    
+    <DefineConstants>$(DefineConstants);$(GameVersionConstant)</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="$(DoILRepack) == 'true'">
+    <ILRepackAllowDuplicateResources>false</ILRepackAllowDuplicateResources>
+    <ILRepackMergeDebugSymbols>true</ILRepackMergeDebugSymbols>
+    <ILRepackPerformInternalize>true</ILRepackPerformInternalize>
+    <ILRepackCopyAttributes>false</ILRepackCopyAttributes>
+  </PropertyGroup>
+  <ItemGroup Condition="$(DoILRepack) == 'true'">
+    <PackageReference Include="ILRepack.FullAuto" Version="1.2.0" PrivateAssets="all" />
+  </ItemGroup>
+  
   <PropertyGroup>
     <PackageId>Bannerlord.LauncherEx</PackageId>
     <Title>Bannerlord.LauncherEx</Title>
@@ -20,12 +30,6 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/BUTR/Bannerlord.BLSE</PackageProjectUrl>
     <PackageTags>butr bannerlord launcherex</PackageTags>
-  </PropertyGroup>
-  
-  <PropertyGroup>
-    <GameVersionFlat>$([System.String]::Copy('$(GameVersion)').Replace('.',''))</GameVersionFlat>
-    <GameVersionConstant>v$(GameVersionFlat)</GameVersionConstant>
-    <DefineConstants>$(DefineConstants);$(GameVersionConstant)</DefineConstants>
   </PropertyGroup>
   
   <ItemGroup>
@@ -68,45 +72,29 @@
   <ItemGroup>
     <!-- Bannerlord.BUTR.Shared needs the package, but Bannerlord.LauncherManager provides the types already -->
     <PackageReference Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" PrivateAssets="all" IncludeAssets="none" />
-    <PackageReference Include="Bannerlord.LauncherManager" Version="$(LauncherManagerVersion)" />
+    <PackageReference Include="Bannerlord.LauncherManager" Version="$(LauncherManagerVersion)" PrivateAssets="compile" />
     <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
-    <PackageReference Include="lz4net" Version="1.0.15.93" />
+    <PackageReference Include="HarmonyX" Version="$(HarmonyVersion)" PrivateAssets="compile" IncludeAssets="compile" />
+    <PackageReference Include="lz4net" Version="1.0.15.93" PrivateAssets="compile" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.188-beta" PrivateAssets="all" />
     <PackageReference Include="PolySharp" Version="1.12.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="StbSharp" Version="0.7.2.38" PrivateAssets="all" IncludeAssets="compile" />
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" PrivateAssets="compile" />
+    <PackageReference Include="Vanara.Core" Version="3.4.13" PrivateAssets="compile" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(TargetFramework) == 'net472'">
-    <PackageReference Include="System.Buffers" Version="4.5.1" />
-    <PackageReference Include="System.Memory" Version="4.5.5" />
-    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
-    <PackageReference Include="System.Resources.Extensions" Version="7.0.0" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
-    <Reference Include="System.Windows.Forms" />
-  </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework) == 'netcoreapp3.1'">
-    <FrameworkReference Include="Microsoft.WindowsDesktop.App" />
-  </ItemGroup>
-
-  <Target Name="SetLauncherExVersion" BeforeTargets="BeforeCompile">
+  <Target Name="SetLauncherExMetadata" BeforeTargets="BeforeCompile">
     <ItemGroup>
       <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
         <_Parameter1>LauncherExVersion</_Parameter1>
         <_Parameter2>$(Version)</_Parameter2>
       </AssemblyAttribute>
-    </ItemGroup>
-  </Target>
-  
-  <Target Name="SetBUTRBaseUrl" BeforeTargets="BeforeCompile">
-    <ItemGroup Condition="$(BUTRBaseUrl) != ''">
       <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
-        <_Parameter1>BUTRBaseUrl</_Parameter1>
-        <_Parameter2>$(BUTRBaseUrl)</_Parameter2>
+        <_Parameter1>GameVersion</_Parameter1>
+        <_Parameter2>$(GameVersion)</_Parameter2>
       </AssemblyAttribute>
     </ItemGroup>
-    <Warning Condition="$(BUTRBaseUrl) == ''" Text="Environment variable 'BANNERLORD_BUTR_BASE_URL' is not set!"></Warning>
   </Target>
 
 </Project>

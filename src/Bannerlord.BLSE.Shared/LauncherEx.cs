@@ -3,12 +3,14 @@ using Bannerlord.BLSE.Features.Commands;
 using Bannerlord.BLSE.Features.ContinueSaveFile;
 using Bannerlord.BLSE.Features.Interceptor;
 using Bannerlord.BLSE.Features.Xbox;
+using Bannerlord.BLSE.Shared.NoExceptions;
 using Bannerlord.LauncherEx;
 
 using HarmonyLib;
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -38,10 +40,17 @@ public static class LauncherEx
         Manager.Enable();
 
         ModuleInitializer.Disable();
-        TaleWorlds.MountAndBlade.Launcher.Library.Program.Main(args);
+        if (args.Contains("/noexceptions"))
+        {
+            ProgramEx.Main(args);
+        }
+        else
+        {
+            TaleWorlds.MountAndBlade.Launcher.Library.Program.Main(args);
+        }
     }
 
-    private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+    private static void CurrentDomainOnUnhandledException(object? _, UnhandledExceptionEventArgs e)
     {
         static string GetRecursiveException(Exception ex) => new StringBuilder()
             .AppendLine()
@@ -52,10 +61,10 @@ public static class LauncherEx
             .AppendLine(ex.InnerException != null ? $@"{Environment.NewLine}{Environment.NewLine}Inner {GetRecursiveException(ex.InnerException)}" : string.Empty)
             .ToString();
 
-        using var fs = File.Open("BUTRLoader_lasterror.log", FileMode.OpenOrCreate, FileAccess.Write);
+        using var fs = File.Open("BLSE_lasterror.log", FileMode.OpenOrCreate, FileAccess.Write);
         fs.SetLength(0);
         using var writer = new StreamWriter(fs);
-        writer.Write($@"BUTRLoader Exception:
+        writer.Write($@"BLSE Exception:
 Version: {typeof(Program).Assembly.GetName().Version}
 {(e.ExceptionObject is Exception ex ? GetRecursiveException(ex) : e.ToString())}");
     }

@@ -8,6 +8,7 @@
     <OutputType>winexe</OutputType>
     <AssemblyName>Bannerlord.BLSE.Standalone</AssemblyName>
     <ApplicationIcon>../../resources/Butter.ico</ApplicationIcon>
+    <DefineConstants>$(DefineConstants);STANDALONE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

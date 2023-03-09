@@ -1,4 +1,5 @@
 ﻿using Bannerlord.BUTR.Shared.Extensions;
+using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.LauncherEx.Helpers;
 using Bannerlord.LauncherManager;
 using Bannerlord.LauncherManager.Localization;
@@ -16,7 +17,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 using TaleWorlds.MountAndBlade.Launcher.Library;
 using TaleWorlds.MountAndBlade.Launcher.Library.UserDatas;
@@ -37,6 +37,7 @@ namespace Bannerlord.LauncherEx
         private string _executableParameters = string.Empty;
 
         private Func<LauncherState>? _getState;
+        private Func<IEnumerable<IModuleViewModel>>? _getAllModuleViewModels;
         private Func<IEnumerable<IModuleViewModel>>? _getModuleViewModels;
         private Action<IEnumerable<IModuleViewModel>>? _setModuleViewModels;
 
@@ -94,7 +95,7 @@ namespace Bannerlord.LauncherEx
                             break;
                         }
                         default:
-                            MessageBox.Show(translatedMessage);
+                            MessageBoxWrapper.Show(translatedMessage, "Information", MessageBoxButtons.OK);
                             cts.Cancel();
                             break;
                     }
@@ -106,11 +107,13 @@ namespace Bannerlord.LauncherEx
                         case DialogType.Warning:
                         {
                             var split = message.Split(new[] { "--CONTENT-SPLIT--" }, StringSplitOptions.RemoveEmptyEntries);
-                            var result = MessageBox.Show(
+                            var result = MessageBoxWrapper.Show(
                                 string.Join("\n", split),
                                 new BUTRTextObject(title).ToString(),
                                 MessageBoxButtons.OKCancel,
-                                MessageBoxIcon.Warning
+                                MessageBoxIcon.Warning,
+                                0,
+                                0
                             );
                             onResult(result == DialogResult.OK ? "true" : "false");
                             return;
@@ -129,7 +132,7 @@ namespace Bannerlord.LauncherEx
                                 Multiselect = false,
                                 ValidateNames = true,
                             };
-                            onResult(dialog.ShowDialog() == DialogResult.OK ? dialog.FileName : string.Empty);
+                            onResult(dialog.ShowDialog() ? dialog.FileName ?? string.Empty : string.Empty);
                             return;
                         }
                         case DialogType.FileSave:
@@ -142,12 +145,11 @@ namespace Bannerlord.LauncherEx
                                 Filter = filter,
                                 FileName = fileName,
 
-                                CheckFileExists = false,
                                 CheckPathExists = false,
 
                                 ValidateNames = true,
                             };
-                            onResult(dialog.ShowDialog() == DialogResult.OK ? dialog.FileName : string.Empty);
+                            onResult(dialog.ShowDialog() ? dialog.FileName : string.Empty);
                             return;
                         }
                     }
@@ -182,6 +184,7 @@ namespace Bannerlord.LauncherEx
                 writeFileContent: File.WriteAllBytes,
                 readDirectoryFileList: Directory.GetFiles,
                 readDirectoryList: Directory.GetDirectories,
+                getAllModuleViewModels: () => _getAllModuleViewModels?.Invoke()?.ToArray() ?? Array.Empty<IModuleViewModel>(),
                 getModuleViewModels: () => _getModuleViewModels?.Invoke()?.ToArray() ?? Array.Empty<IModuleViewModel>(),
                 setModuleViewModels: (orderedViewModels) => _setModuleViewModels?.Invoke(orderedViewModels),
                 getOptions: GetTWOptions,
@@ -198,8 +201,9 @@ namespace Bannerlord.LauncherEx
             _getState = getState;
         }
 
-        public void RegisterModuleViewModelProvider(Func<IEnumerable<IModuleViewModel>> getModuleViewModels, Action<IEnumerable<IModuleViewModel>> setModuleViewModels)
+        public void RegisterModuleViewModelProvider(Func<IEnumerable<IModuleViewModel>> getAllModuleViewModels, Func<IEnumerable<IModuleViewModel>> getModuleViewModels, Action<IEnumerable<IModuleViewModel>> setModuleViewModels)
         {
+            _getAllModuleViewModels = getAllModuleViewModels;
             _getModuleViewModels = getModuleViewModels;
             _setModuleViewModels = setModuleViewModels;
         }
@@ -221,7 +225,7 @@ namespace Bannerlord.LauncherEx
         };
 
         public new bool TryOrderByLoadOrderTW(IEnumerable<string> loadOrder, Func<string, bool> isModuleSelected, [NotNullWhen(false)] out IReadOnlyList<string>? issues,
-            [NotNullWhen(true)] out IReadOnlyList<IModuleViewModel>? orderedModules, bool overwriteWhenFailure = false)
+            out IReadOnlyList<IModuleViewModel> orderedModules, bool overwriteWhenFailure = false)
             => base.TryOrderByLoadOrderTW(loadOrder, isModuleSelected, out issues, out orderedModules, overwriteWhenFailure);
     }
 }
