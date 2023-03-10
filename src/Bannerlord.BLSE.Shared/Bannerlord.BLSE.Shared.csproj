@@ -53,7 +53,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <Target Condition="$(Configuration) == 'Release'" Name="BeforeBuildLauncherEx" BeforeTargets="BeforeBuild">
-    <Exec Command="dotnet build &quot;$(MSBuildThisFileDirectory)..\Bannerlord.LauncherEx\Bannerlord.LauncherEx.csproj&quot; -p:DoILRepack=true -p:GameVersion=%(GameAPIVersion.GameVersion) -p:Configuration=$(Configuration)_%(GameAPIVersion.Flat) -p:ILRepackTargetConfigurations=$(Configuration)_%(GameAPIVersion.Flat)" />
+    <Exec Command="dotnet build &quot;$(MSBuildThisFileDirectory)..\Bannerlord.LauncherEx\Bannerlord.LauncherEx.csproj&quot; -p:DoILRepack=true -p:GameVersion=%(GameAPIVersion.GameVersion) -p:GameFolder=$(GameFolder) -p:Configuration=$(Configuration)_%(GameAPIVersion.Flat) -p:ILRepackTargetConfigurations=$(Configuration)_%(GameAPIVersion.Flat)" />
   </Target>
   <Target Condition="$(Configuration) == 'Release'" Name="BeforeBuildCompress" AfterTargets="BeforeBuildLauncherEx">
     <GZip Files="@(EmbeddedResource)">

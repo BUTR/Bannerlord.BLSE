@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
     <OutputType>winexe</OutputType>
-    <ApplicationIcon>../../resources/Butter.ico</ApplicationIcon>
+    <ApplicationIcon>../../resources/BLSE_SMALL.ico</ApplicationIcon>
     <DefineConstants>$(DefineConstants);LAUNCHEREX</DefineConstants>
   </PropertyGroup>
 
