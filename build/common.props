@@ -24,14 +24,10 @@
     <Product>Bannerlord Software Extension (BLSE) for Bannerlord Launcher</Product>
   </PropertyGroup>
 
-  <PropertyGroup>
+  <PropertyGroup Condition="$(GameFolder) == ''">
     <!--Bannerlord's Root Folder. Leave empty if you want it to be tried to be autoresolved.-->
     <GameFolder>$(BANNERLORD_GAME_DIR)</GameFolder>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
-  </ItemGroup>
 
 
   <!--GitHub Actions-->

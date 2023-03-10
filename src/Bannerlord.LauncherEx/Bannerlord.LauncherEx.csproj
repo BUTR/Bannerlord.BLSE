@@ -70,6 +70,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
+    
     <!-- Bannerlord.BUTR.Shared needs the package, but Bannerlord.LauncherManager provides the types already -->
     <PackageReference Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" PrivateAssets="all" IncludeAssets="none" />
     <PackageReference Include="Bannerlord.LauncherManager" Version="$(LauncherManagerVersion)" PrivateAssets="compile" />
