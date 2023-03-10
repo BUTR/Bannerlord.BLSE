@@ -27,23 +27,10 @@
   <PropertyGroup>
     <!--Bannerlord's Root Folder. Leave empty if you want it to be tried to be autoresolved.-->
     <GameFolder>$(BANNERLORD_GAME_DIR)</GameFolder>
-    <GameFolder>C:\Users\vitalii.mikhailov\Git\Level0\Bannerlord</GameFolder>
   </PropertyGroup>
 
-  <ItemGroup Condition="$(GITHUB_ACTIONS) == 'true'">
+  <ItemGroup>
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
-  </ItemGroup>
-  <ItemGroup Condition="$(GITHUB_ACTIONS) != 'true' AND $(TargetFramework) == 'net472'">
-    <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\TaleWorlds.*.dll" Exclude="$(GameFolder)\bin\Win64_Shipping_Client\TaleWorlds.Native.dll">
-      <HintPath>%(Identity)</HintPath>
-      <Private>false</Private>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup Condition="$(GITHUB_ACTIONS) != 'true' AND $(TargetFramework) == 'netcoreapp3.1'">
-    <Reference Include="$(GameFolder)\bin\Gaming.Desktop.x64_Shipping_Client\TaleWorlds.*.dll" Exclude="$(GameFolder)\bin\Gaming.Desktop.x64_Shipping_Client\TaleWorlds.Native.dll">
-      <HintPath>%(Identity)</HintPath>
-      <Private>false</Private>
-    </Reference>
   </ItemGroup>
 
 
