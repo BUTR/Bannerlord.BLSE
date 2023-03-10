@@ -176,13 +176,13 @@ namespace Bannerlord.LauncherEx.Patches
                 var instructionsList = instructions.ToList();
 
                 var method = AccessTools2.DeclaredMethod(typeof(WidgetPrefab), "LoadFrom");
-                var locals = method.GetMethodBody()?.LocalVariables;
+                var locals = method?.GetMethodBody()?.LocalVariables;
                 var xmlDocumentLocal = locals?.FirstOrDefault(x => x.LocalType == typeof(XmlDocument));
 
                 if (xmlDocumentLocal is null)
                     return returnNull;
 
-                var widgetPrefabConstructorIndex = GetWidgetPrefabConstructorIndex(instructionsList, method);
+                var widgetPrefabConstructorIndex = GetWidgetPrefabConstructorIndex(instructionsList, method!);
                 if (widgetPrefabConstructorIndex == -1)
                     return returnNull;
 
