@@ -35,6 +35,7 @@ jobs:
       - name: Build Bannerlord.BLSE
         run: >-
           mkdir bannerlord;
+          dotnet build src/Bannerlord.BLSE.LauncherEx/Bannerlord.BLSE.LauncherEx.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
           dotnet build src/Bannerlord.BLSE.Shared/Bannerlord.BLSE.Shared.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
           dotnet build src/Bannerlord.BLSE.Standalone/Bannerlord.BLSE.Standalone.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
           dotnet build src/Bannerlord.BLSE.Launcher/Bannerlord.BLSE.Launcher.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
