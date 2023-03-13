@@ -6,8 +6,8 @@ on:
       - master
     paths:
       - '.github/workflows/publish.yml'
-      - 'src/Bannerlord.BLSE/**.*'
       - 'src/Bannerlord.LauncherEx/**.*'
+      - 'src/Bannerlord.BLSE/**.*'
       - 'src/Bannerlord.BLSE.Shared/**.*'
       - 'src/Bannerlord.BLSE.Standalone/**.*'
       - 'src/Bannerlord.BLSE.Launcher/**.*'
@@ -59,3 +59,33 @@ jobs:
         with:
           name: bannerlord
           path: ./bannerlord/
+  
+  ###########################
+  #        NEXUSMODS        #
+  ###########################
+  publish-on-nexusmods:
+    if: false
+    needs: ["build"]
+    uses: BUTR/workflows/.github/workflows/release-nexusmods.yml@master
+    with:
+      nexusmods_game_id: mountandblade2bannerlord
+      nexusmods_mod_id: 1
+      mod_filename: BLSE
+      mod_version: ${{ needs.build.outputs.mod_version }}
+      mod_description: ${{ needs.build.outputs.mod_description }}
+      artifact_name: bannerlord
+    secrets:
+      NEXUSMODS_APIKEY: ${{ secrets.NEXUSMODS_APIKEY }}
+      NEXUSMODS_COOKIES: ${{ secrets.NEXUSMODS_COOKIES }}
+
+  ###########################
+  #         GITHUB          #
+  ###########################
+  publish-on-github:
+    needs: ["build"]
+    uses: BUTR/workflows/.github/workflows/release-github.yml@master
+    with:
+      mod_id: Bannerlord.BLSE
+      mod_version: ${{ needs.build.outputs.mod_version }}
+      mod_description: Release v${{ needs.build.outputs.mod_version }}
+      artifact_name: bannerlord
