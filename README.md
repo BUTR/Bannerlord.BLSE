@@ -42,19 +42,31 @@
   -->
 </p>
 
-Extends the game.  
+The Bannerlord Software Extender (BLSE) is a tool for Bannerlord mods that expands modding capabilities and adds additional functionality to the game.  
+  
+Once installed, no additional steps are needed to launch Bannerlord with BLSE's added functionality.  
+You can start the game using **Bannerlord.BLSE.Launcher.exe** for the Vanilla Launcher or **Bannerlord.BLSE.LauncherEx.exe** for the Extended Launcher (BUTRLoader).  
+Mod Developers can use **Bannerlord.BLSE.Standalone.exe** to use the CLI to launch the game.  
+  
+Credits to [Pickysaurus](https://www.nexusmods.com/users/31179975)﻿ for the BLSE and BUTR Logos!  
+  
+  
+## Installation (Manual)
+* Download BLSE from the Files tab.  
+* Extract all files inside the top-level folder in the ZIP to your game folder (where **Bannerlord.Launcher.exe** is located).  
+* Run the game using **Bannerlord.BLSE.Launcher.exe** or **Bannerlord.BLSE.LauncherEx.exe**.  
+* To confirm it is working, open the console with the *ALT+`* (tilde) key and type *blse.version*. This will display the version of the installed BLSE build.   
+
+
+## Installation with Vortex
+* Click the "Vortex" button in the top-right of this page.  
+* Once installed and enabled, ensure you have deployed it by clicking "Deploy Mods" on the Mods toolbar.  
+* Use the shortcut on the dashboard to start the game with BLSE. 
+
 
 ## Features
-**BLSE** expands the game with the following features:
-
-* **Interceptor** - BLSE checks if the is a class with a custom attribute named ***BLSEInterceptorAttribute***. If it's found it checks if there are the following signatures:
-  *  **void OnInitializeSubModulesPrefix()** - will execute just before the game starts to initialize the SubModules. This gives us the ability to add SubModules declared in other programming languages like [Python](https://github.com/BUTR/Bannerlord.Python)﻿ and [Lua](https://github.com/BUTR/Bannerlord.Lua)﻿
-  * **void OnLoadSubModulesPostfix()** - will execute just after all SubModules were initialized
-* **LoadReferencesOnLoad** - gives the ability to add <Tag key="LoadReferencesOnLoad" value="false" /> that will disable explicit dependency load. Will be useful after switch to .NET Core runtime.
-
-## Installation
-Download the file and extract it's contents into the game's root folder (e.g. `C:\Program Files (x86)\Steam\steamapps\common\Mount & Blade II Bannerlord`).
-
-## Troubleshooting
-### Unblocking DLL's
-You may need to right click on Bannerlord.BLSE.exe  file, click Properties, and click `Unblock` if you extracted the zip file with Windows Explorer or other programs that try to secure extracted files.
+* **Interceptor** - BLSE checks if the is a class with a custom attribute named ***BLSEInterceptorAttribute***. If it's found it checks if there are the following signatures:  
+  *  **static void OnInitializeSubModulesPrefix()** - will execute just before the game starts to initialize the SubModules. This gives us the ability to add SubModules declared in other programming languages like [Python](https://github.com/BUTR/Bannerlord.Python) and [Lua](https://github.com/BUTR/Bannerlord.Lua)  
+  * **static void OnLoadSubModulesPostfix()** - will execute just after all SubModules were initialized  
+* **Continue Save File** - Allows to specify the save file to load when launching the game. Use */continuesave **mysavegame** *(save file should be specified without the extension)  
+* **Assembly Resolver** - Changes the assembly loading priority. Is an assembly is available in one of the loaded modules, it will be loaded from there instead.  
