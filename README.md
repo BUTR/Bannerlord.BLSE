@@ -49,19 +49,6 @@ You can start the game using **Bannerlord.BLSE.Launcher.exe** for the Vanilla La
 Mod Developers can use **Bannerlord.BLSE.Standalone.exe** to use the CLI to launch the game.  
   
 Credits to [Pickysaurus](https://www.nexusmods.com/users/31179975)﻿ for the BLSE and BUTR Logos!  
-  
-  
-## Installation (Manual)
-* Download BLSE from the Files tab.  
-* Extract all files inside the top-level folder in the ZIP to your game folder (where **Bannerlord.Launcher.exe** is located).  
-* Run the game using **Bannerlord.BLSE.Launcher.exe** or **Bannerlord.BLSE.LauncherEx.exe**.  
-* To confirm it is working, open the console with the *ALT+`* (tilde) key and type *blse.version*. This will display the version of the installed BLSE build.   
-
-
-## Installation with Vortex
-* Click the "Vortex" button in the top-right of this page.  
-* Once installed and enabled, ensure you have deployed it by clicking "Deploy Mods" on the Mods toolbar.  
-* Use the shortcut on the dashboard to start the game with BLSE. 
 
 
 ## Features
