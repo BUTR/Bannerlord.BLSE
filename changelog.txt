@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.1
+Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1
+* LauncherEx fixes: Importing wasn't working and export was not considering a custom file name
+* Disabled the remaining Xbox integration, save files and settings are now stored where Steam/GOG/Epic store them
+---------------------------------------------------------------------------------------------------
 Version: 1.0.0
 Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1
 * Public release

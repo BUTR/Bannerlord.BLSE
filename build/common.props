@@ -5,17 +5,18 @@
     <GameVersion>1.0.0</GameVersion>
     <GameVersionFlat>$([System.String]::Copy('$(GameVersion)').Replace('.',''))</GameVersionFlat>
     <GameVersionConstant>v$(GameVersionFlat)</GameVersionConstant>
+    <NoWarn>$(NoWarn);BHA0001;BHA0002;BHA0003;BHA0004;BHA0005;BHA0006;MSB4011;NU1701;</NoWarn>
   </PropertyGroup>
 
   <!--Development Variables-->
   <PropertyGroup>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <HarmonyVersion>2.10.1</HarmonyVersion>
     <BUTRSharedVersion>3.0.0.135</BUTRSharedVersion>
     <BUTRModuleManagerVersion>5.0.198</BUTRModuleManagerVersion>
     <HarmonyExtensionsVersion>3.2.0.77</HarmonyExtensionsVersion>
     <HarmonyAnalyzerVersion>1.0.1.44</HarmonyAnalyzerVersion>
-    <LauncherManagerVersion>1.0.60</LauncherManagerVersion>
+    <LauncherManagerVersion>1.0.62</LauncherManagerVersion>
     <DebugType>full</DebugType>
   </PropertyGroup>
 
