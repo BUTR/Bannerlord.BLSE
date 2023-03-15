@@ -112,7 +112,7 @@ namespace Bannerlord.LauncherEx.Helpers
         {
 #if v100 || v101 || v102 || v103
             ViewModel?.OnPropertyChangedWithValue((object) value, propertyName);
-#elif v110
+#elif v110 || v111
             ViewModel?.OnPropertyChangedWithValue<T>(value, propertyName);
 #endif
 

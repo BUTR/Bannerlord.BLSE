@@ -17,7 +17,7 @@ namespace Bannerlord.LauncherEx.PrefabExtensions
             XmlDocument.LoadXml(@"
 <ListPanel WidthSizePolicy=""CoverChildren"" HeightSizePolicy=""CoverChildren""
            VerticalAlignment=""Bottom""
-           MarginLeft =""5"" MarginBottom=""35""
+           MarginLeft =""5"" MarginBottom=""25""
            LayoutImp.LayoutMethod=""HorizontalLeftToRight"" IsVisible=""@ShowImportExport"">
   <Children>
     <ButtonWidget WidthSizePolicy=""Fixed"" HeightSizePolicy=""Fixed"" SuggestedWidth=""40"" SuggestedHeight=""40""

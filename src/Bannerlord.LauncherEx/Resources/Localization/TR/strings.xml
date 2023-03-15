@@ -27,7 +27,7 @@
     <string id="1zt99vTt" text="Büyük Mod"/>
     <string id="XUSDSpvf" text="Başlatıcıyı daha büyük hale getirir"/>
     <string id="IsR2rbnG" text="Oyun Seçenekleri Yedeklemesini Geri Yükle"/>
-    <string id="uKUsA3Sp" text="BUTRLoader, ilk kez kaydetmeden önce her zaman bir yedekleme yapar. Bu, orijinal dosyaları geri yükleyecektir"/>
+    <string id="uKUsA3Sp" text="LauncherEx, ilk kez kaydetmeden önce her zaman bir yedekleme yapar. Bu, orijinal dosyaları geri yükleyecektir"/>
     <string id="TLDgPay9" text="Onar"/>
     <string id="5XzSM7RN" text="Motor Seçenekleri Yedeklemesini Geri Yükle"/>
 
@@ -97,7 +97,7 @@
 
     <string id="hgew15HH" text="İçe aktarmaya devam et?"/>
 
-    <string id="tqjPGPtP" text="BUTRLoader, oyunun kök bin klasöründe 0Harmony.dll tespit etti!{NL}Bu sorunlara yol açabilir, kaldırılsın mı?"/>
+    <string id="tqjPGPtP" text="LauncherEx, oyunun kök bin klasöründe 0Harmony.dll tespit etti!{NL}Bu sorunlara yol açabilir, kaldırılsın mı?"/>
 
     <string id="J3Uh6MV4" text="Modül listesinde '{ID}' {VERSION} eksik"/>
     <string id="3eQSr6wt" text="Eksik '{ID}' {VERSION}"/>

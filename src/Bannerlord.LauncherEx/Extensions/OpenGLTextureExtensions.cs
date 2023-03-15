@@ -49,7 +49,8 @@ namespace Bannerlord.LauncherEx.Extensions
             if (_makeActiveDelegate is null)
                 return false;
 
-            var image = new ImageReader().Read(stream);
+            // TODO: For some reason, we need now to pass req_comp as 4, not 0 as previously
+            var image = new ImageReader().Read(stream, 4);
             texture.Initialize(name, image.Width, image.Height);
             texture.MakeActive();
             var (error, pixelFormat, pixelInternalformat) = image.Comp switch

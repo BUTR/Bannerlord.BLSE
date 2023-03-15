@@ -58,7 +58,7 @@ public sealed class ProgramEx
 
     public static void Main(string[] args)
     {
-#if v110
+#if v110 || v111
         TaleWorlds.Library.Common.SetInvariantCulture();
 #endif
         Common.PlatformFileHelper = new PlatformFileHelperPC("Mount and Blade II Bannerlord");

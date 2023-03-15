@@ -96,7 +96,7 @@ namespace Bannerlord.LauncherEx.Helpers
         public bool IsControllerConnected() => InputManager.IsControllerConnected();
         public InputKey GetControllerClickKey() => InputManager.GetControllerClickKey();
 
-#if v110
+#if v110 || v111
         public void SetRumbleEffect(float[] lowFrequencyLevels, float[] lowFrequencyDurations, int numLowFrequencyElements, float[] highFrequencyLevels,
             float[] highFrequencyDurations, int numHighFrequencyElements) =>
             InputManager.SetRumbleEffect(lowFrequencyLevels, lowFrequencyDurations, numLowFrequencyElements, highFrequencyLevels, highFrequencyDurations, numHighFrequencyElements);

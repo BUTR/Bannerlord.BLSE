@@ -27,7 +27,7 @@
     <string id="1zt99vTt" text="Большой режим"/>
     <string id="XUSDSpvf" text="Увеличивает высоту лаунчера"/>
     <string id="IsR2rbnG" text="Восстановить резервную копию настроек Игры"/>
-    <string id="uKUsA3Sp" text="BUTRLoader всегда делает резервную копию перед первым сохранением. Это восстановит исходные файлы"/>
+    <string id="uKUsA3Sp" text="LauncherEx всегда делает резервную копию перед первым сохранением. Это восстановит исходные файлы"/>
     <string id="TLDgPay9" text="Восстановить"/>
     <string id="5XzSM7RN" text="Восстановить резервную копию настроек Движка"/>
 
@@ -97,7 +97,7 @@
 
     <string id="hgew15HH" text="Сохраните файл со списком модулей Bannerlord"/>
 
-    <string id="tqjPGPtP" text="BUTRLoader обнаружил 0Harmony.dll в корневом каталоге игры!{NL}Это может привести к проблемам, удалить его?"/>
+    <string id="tqjPGPtP" text="LauncherEx обнаружил 0Harmony.dll в корневом каталоге игры!{NL}Это может привести к проблемам, удалить его?"/>
 
     <string id="J3Uh6MV4" text="Отсутствует '{ID}' {VERSION} в списке модулей"/>
     <string id="3eQSr6wt" text="Отсутствует '{ID}' {VERSION}"/>
