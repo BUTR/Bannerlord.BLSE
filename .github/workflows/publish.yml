@@ -87,5 +87,5 @@ jobs:
     with:
       mod_id: Bannerlord.BLSE
       mod_version: ${{ needs.build.outputs.mod_version }}
-      mod_description: Release v${{ needs.build.outputs.mod_version }}
+      mod_description: ${{ needs.build.outputs.mod_description }}
       artifact_name: bannerlord
