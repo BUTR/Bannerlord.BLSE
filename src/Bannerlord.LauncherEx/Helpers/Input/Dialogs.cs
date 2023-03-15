@@ -1508,7 +1508,12 @@ internal class SaveFileDialog : FileDialog
         if (OverwritePrompt)
             ofn.Flags |= OFN.OFN_OVERWRITEPROMPT;
 
-        return PInvoke.GetSaveFileName(ref ofn);
+        var result = PInvoke.GetSaveFileName(ref ofn);
+        if (result)
+        {
+            FileName = fileName.ToString();
+        }
+        return result;
     }
 }
 
