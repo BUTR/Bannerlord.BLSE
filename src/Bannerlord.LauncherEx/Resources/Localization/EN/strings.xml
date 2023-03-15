@@ -27,7 +27,7 @@
     <string id="1zt99vTt" text="Big Mode" />
     <string id="XUSDSpvf" text="Makes the launcher bigger in height" />
     <string id="IsR2rbnG" text="Restore Game Options Backup" />
-    <string id="uKUsA3Sp" text="BUTRLoader always makes a backup before saving the first time. This will restore the original files" />
+    <string id="uKUsA3Sp" text="LauncherEx always makes a backup before saving the first time. This will restore the original files" />
     <string id="TLDgPay9" text="Restore" />
     <string id="5XzSM7RN" text="Restore Engine Options Backup" />
 
@@ -97,7 +97,7 @@
 
     <string id="hgew15HH" text="Continue import?" />
 
-    <string id="tqjPGPtP" text="BUTRLoader detected 0Harmony.dll inside the game's root bin folder!{NL}This could lead to issues, remove it?" />
+    <string id="tqjPGPtP" text="LauncherEx detected 0Harmony.dll inside the game's root bin folder!{NL}This could lead to issues, remove it?" />
 
     <string id="J3Uh6MV4" text="Missing '{ID}' {VERSION} in modules list" />
     <string id="3eQSr6wt" text="Missing '{ID}' {VERSION}" />

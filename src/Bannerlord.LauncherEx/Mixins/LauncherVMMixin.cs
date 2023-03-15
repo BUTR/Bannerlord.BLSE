@@ -286,7 +286,7 @@ namespace Bannerlord.LauncherEx.Mixins
             var blseMetadata = AccessTools2.TypeByName("Bannerlord.BLSE.BLSEInterceptorAttribute")?.Assembly.GetCustomAttributes<AssemblyMetadataAttribute>();
             var launcherExMetadata = typeof(LauncherVMMixin).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>();
             _blseVersionText = $"BLSE v{blseMetadata?.FirstOrDefault(x => x.Key == "BLSEVersion")?.Value ?? "0.0.0.0"}";
-            _butrLoaderVersionText = $"BUTRLoader v{launcherExMetadata.FirstOrDefault(x => x.Key == "LauncherExVersion")?.Value ?? "0.0.0.0"}";
+            _butrLoaderVersionText = $"LauncherEx v{launcherExMetadata.FirstOrDefault(x => x.Key == "LauncherExVersion")?.Value ?? "0.0.0.0"}";
 
             _optionsEngineData = new BUTRLauncherOptionsVM(OptionsType.Engine, SaveUserData, RefreshOptions);
             _optionsGameData = new BUTRLauncherOptionsVM(OptionsType.Game, SaveUserData, RefreshOptions);
@@ -349,10 +349,10 @@ namespace Bannerlord.LauncherEx.Mixins
             if (IsOptions)
                 RefreshOptions();
 
-            ContentTabControlMarginBottom = IsOptions ? 50 : 114;
-            BUTRLoaderVersionMarginBottom = IsOptions ? 30 : 90;
-            BLSEVersionMarginBottom = IsOptions ? 10 : 70;
-            DividerMarginBottom = IsOptions ? 49 : 113;
+            ContentTabControlMarginBottom = IsOptions ? 65 : 114;
+            BUTRLoaderVersionMarginBottom = IsOptions ? 45 : 90;
+            BLSEVersionMarginBottom = IsOptions ? 25 : 70;
+            DividerMarginBottom = IsOptions ? 64 : 113;
         }
 
         public void RefreshOptions()

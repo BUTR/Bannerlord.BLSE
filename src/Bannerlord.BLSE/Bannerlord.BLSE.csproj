@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <GITHUB_RUN_NUMBER Condition="$(GITHUB_RUN_NUMBER) == ''">0</GITHUB_RUN_NUMBER>
-    <Version>0.0.1.$(GITHUB_RUN_NUMBER)</Version>
+    <Version>$(Version).$(GITHUB_RUN_NUMBER)</Version>
 
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>10.0</LangVersion>

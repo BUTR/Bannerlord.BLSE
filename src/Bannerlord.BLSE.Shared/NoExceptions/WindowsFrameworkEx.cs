@@ -44,7 +44,7 @@ public sealed class WindowsFrameworkEx
     {
         if (_frameworkDomainThreads is null || _frameworkDomains is null) return;
 
-#if v110
+#if v110 || v111
         TaleWorlds.Library.Common.SetInvariantCulture();
 #endif
         _frameworkDomainThreads[index] = new Thread(MainLoop);

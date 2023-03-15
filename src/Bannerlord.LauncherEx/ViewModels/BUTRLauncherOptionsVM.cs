@@ -134,7 +134,7 @@ namespace Bannerlord.LauncherEx.ViewModels
             SettingProperties.Add(new SettingsPropertyVM(new SettingsPropertyDefinition
             {
                 DisplayName = new BUTRTextObject("{=IsR2rbnG}Restore Game Options Backup").ToString(),
-                HintText = new BUTRTextObject("{=uKUsA3Sp}BUTRLoader always makes a backup before saving the first time. This will restore the original files").ToString(),
+                HintText = new BUTRTextObject("{=uKUsA3Sp}LauncherEx always makes a backup before saving the first time. This will restore the original files").ToString(),
                 SettingType = SettingType.Button,
                 PropertyReference = new ProxyRef<string>(() => new BUTRTextObject("{=TLDgPay9}Restore").ToString(), _ =>
                 {
@@ -150,7 +150,7 @@ namespace Bannerlord.LauncherEx.ViewModels
             SettingProperties.Add(new SettingsPropertyVM(new SettingsPropertyDefinition
             {
                 DisplayName = new BUTRTextObject("{=5XzSM7RN}Restore Engine Options Backup").ToString(),
-                HintText = new BUTRTextObject("{=uKUsA3Sp}BUTRLoader always makes a backup before saving the first time. This will restore the original files").ToString(),
+                HintText = new BUTRTextObject("{=uKUsA3Sp}LauncherEx always makes a backup before saving the first time. This will restore the original files").ToString(),
                 SettingType = SettingType.Button,
                 PropertyReference = new ProxyRef<string>(() => new BUTRTextObject("{=TLDgPay9}Restore").ToString(), _ =>
                 {

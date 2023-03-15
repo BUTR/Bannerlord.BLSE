@@ -9,6 +9,11 @@
     <Version>1.23.0</Version>
     <PolySharpExcludeGeneratedTypes>System.Diagnostics.CodeAnalysis.UnscopedRefAttribute</PolySharpExcludeGeneratedTypes>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <!--
+    <GameVersion>1.1.0</GameVersion>
+    <GameVersionFlat>$([System.String]::Copy('$(GameVersion)').Replace('.',''))</GameVersionFlat>
+    <GameVersionConstant>v$(GameVersionFlat)</GameVersionConstant>
+    -->
     
     <DefineConstants>$(DefineConstants);$(GameVersionConstant);HARMONYEXTENSIONS_HARMONYX</DefineConstants>
   </PropertyGroup>

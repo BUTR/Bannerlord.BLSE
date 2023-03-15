@@ -27,7 +27,7 @@
     <string id="1zt99vTt" text="更大的启动器"/>
     <string id="XUSDSpvf" text="使启动器变得更高"/>
     <string id="IsR2rbnG" text="恢复“游戏”选项备份"/>
-    <string id="uKUsA3Sp" text="BUTRLoader 在首次启动时会进行备份。这将恢复该备份"/>
+    <string id="uKUsA3Sp" text="LauncherEx 在首次启动时会进行备份。这将恢复该备份"/>
     <string id="TLDgPay9" text="恢复"/>
     <string id="5XzSM7RN" text="恢复“引擎”选项备份"/>
 
@@ -97,7 +97,7 @@
 
     <string id="hgew15HH" text="继续导入？"/>
 
-    <string id="tqjPGPtP" text="BUTRLoader 在游戏根目录检测到 0Harmony.dll！{NL}这将导致游戏无法运行，删掉它吗？"/>
+    <string id="tqjPGPtP" text="LauncherEx 在游戏根目录检测到 0Harmony.dll！{NL}这将导致游戏无法运行，删掉它吗？"/>
 
     <string id="J3Uh6MV4" text="模组列表缺失 '{ID}' {VERSION}"/>
     <string id="3eQSr6wt" text="缺失 '{ID}' {VERSION}"/>
