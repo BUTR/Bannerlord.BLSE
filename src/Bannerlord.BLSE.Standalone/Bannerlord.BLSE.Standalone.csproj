@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Reference Include="System.Windows.Forms" PrivateAssets="all" />
     <ProjectReference Include="..\Bannerlord.BLSE.Shared\Bannerlord.BLSE.Shared.csproj" />
   </ItemGroup>
 
