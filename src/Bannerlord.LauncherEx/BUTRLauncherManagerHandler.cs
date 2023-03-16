@@ -1,6 +1,6 @@
 ﻿using Bannerlord.BUTR.Shared.Extensions;
-using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.LauncherEx.Helpers;
+using Bannerlord.LauncherEx.Helpers.Input;
 using Bannerlord.LauncherManager;
 using Bannerlord.LauncherManager.Localization;
 using Bannerlord.LauncherManager.Models;
@@ -95,7 +95,7 @@ namespace Bannerlord.LauncherEx
                             break;
                         }
                         default:
-                            MessageBoxWrapper.Show(translatedMessage, "Information", MessageBoxButtons.OK);
+                            MessageBoxDialog.Show(translatedMessage, "Information", MessageBoxButtons.Ok);
                             cts.Cancel();
                             break;
                     }
@@ -107,15 +107,15 @@ namespace Bannerlord.LauncherEx
                         case DialogType.Warning:
                         {
                             var split = message.Split(new[] { "--CONTENT-SPLIT--" }, StringSplitOptions.RemoveEmptyEntries);
-                            var result = MessageBoxWrapper.Show(
+                            var result = MessageBoxDialog.Show(
                                 string.Join("\n", split),
                                 new BUTRTextObject(title).ToString(),
-                                MessageBoxButtons.OKCancel,
+                                MessageBoxButtons.OkCancel,
                                 MessageBoxIcon.Warning,
                                 0,
                                 0
                             );
-                            onResult(result == DialogResult.OK ? "true" : "false");
+                            onResult(result == MessageBoxResult.Ok ? "true" : "false");
                             return;
                         }
                         case DialogType.FileOpen:

@@ -75,9 +75,9 @@ public static class Standalone
 Tried to use the load order from the save file {saveFile}, but it was missing the following mods:
 {string.Join(Environment.NewLine, missingNames)}
 Press Yes to exit, press No to continue loading";
-            switch (MessageBoxWrapper.Show(message, "Error from BLSE!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, (MessageBoxOptions) 0x40000))
+            switch (MessageBoxDialog.Show(message, "Error from BLSE!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1))
             {
-                case DialogResult.Yes:
+                case MessageBoxResult.Yes:
                     Environment.Exit(1);
                     return;
             }

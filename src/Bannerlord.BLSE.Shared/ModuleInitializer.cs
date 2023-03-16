@@ -1,4 +1,5 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
+﻿using Bannerlord.BLSE.Shared;
+using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.ModuleManager;
 
 using Mono.Cecil;
@@ -13,6 +14,9 @@ using System.Threading;
 using System.Xml;
 
 using TaleWorlds.Core;
+
+using MessageBoxButtons = Bannerlord.BLSE.Shared.MessageBoxButtons;
+using MessageBoxIcon = Bannerlord.BLSE.Shared.MessageBoxIcon;
 
 internal static class ModuleInitializer
 {
@@ -87,7 +91,7 @@ internal static class ModuleInitializer
         var harmonySteamModuleFolder = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "../", "../", "../", "../", "workshop", "content", "261550", "2859188632"));
         if (!Directory.Exists(harmonyModuleFolder) && !Directory.Exists(harmonySteamModuleFolder))
         {
-            MessageBoxWrapper.Show("The Harmony module is missing!\nCan't launch with 'Bannerlord.Harmony' module missing!", "Error from BLSE!", MessageBoxButtons.OK, MessageBoxIcon.Error, 0, 0);
+            MessageBoxDialog.Show("The Harmony module is missing!\nCan't launch with 'Bannerlord.Harmony' module missing!", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error, 0, 0);
             Environment.Exit(1);
             return null;
         }
@@ -96,7 +100,7 @@ internal static class ModuleInitializer
         var harmonySteamSubModule = Path.Combine(harmonySteamModuleFolder, ModuleInfoHelper.SubModuleFile);
         if (!File.Exists(harmonySubModule) && !File.Exists(harmonySteamSubModule))
         {
-            MessageBoxWrapper.Show($"The Harmony module is corrupted!\nCan't find '{ModuleInfoHelper.SubModuleFile}' in 'Bannerlord.Harmony'!", "Error from BLSE!", MessageBoxButtons.OK, MessageBoxIcon.Error, 0, 0);
+            MessageBoxDialog.Show($"The Harmony module is corrupted!\nCan't find '{ModuleInfoHelper.SubModuleFile}' in 'Bannerlord.Harmony'!", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error, 0, 0);
             Environment.Exit(1);
             return null;
         }
@@ -106,13 +110,13 @@ internal static class ModuleInitializer
         var harmonyModuleInfo = ModuleInfoExtended.FromXml(doc);
         if (harmonyModuleInfo is null)
         {
-            MessageBoxWrapper.Show($"The Harmony module is corrupted!\nFailed to read '{ModuleInfoHelper.SubModuleFile}'!", "Error from BLSE!", MessageBoxButtons.OK, MessageBoxIcon.Error, 0, 0);
+            MessageBoxDialog.Show($"The Harmony module is corrupted!\nFailed to read '{ModuleInfoHelper.SubModuleFile}'!", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error, 0, 0);
             Environment.Exit(1);
             return null;
         }
         if (new ApplicationVersionComparer().Compare(harmonyModuleInfo.Version, new ApplicationVersion(ApplicationVersionType.Release, 2, 10, 0, 0)) < 0)
         {
-            MessageBoxWrapper.Show("Wrong Harmony module version! At least v2.10.1.x is required!", "Error from BLSE!", MessageBoxButtons.OK, MessageBoxIcon.Error, 0, 0);
+            MessageBoxDialog.Show("Wrong Harmony module version! At least v2.10.1.x is required!", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error, 0, 0);
             Environment.Exit(1);
             return null;
         }
@@ -121,7 +125,7 @@ internal static class ModuleInitializer
         var harmonyBinSteamFolder = Path.Combine(harmonySteamModuleFolder, "bin", configName);
         if (!Directory.Exists(harmonyBinFolder) && !Directory.Exists(harmonyBinSteamFolder))
         {
-            MessageBoxWrapper.Show($"The Harmony module is corrupted!\nCan't find '{Path.Combine("bin", configName)}' in 'Bannerlord.Harmony'!", "Error from BLSE!", MessageBoxButtons.OK, MessageBoxIcon.Error, 0, 0);
+            MessageBoxDialog.Show($"The Harmony module is corrupted!\nCan't find '{Path.Combine("bin", configName)}' in 'Bannerlord.Harmony'!", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error, 0, 0);
             Environment.Exit(1);
             return null;
         }
@@ -130,7 +134,7 @@ internal static class ModuleInitializer
         var assemblySteamFile = Path.Combine(harmonyBinSteamFolder, assemblyNameFull);
         if (!File.Exists(assemblyFile) && !File.Exists(assemblySteamFile))
         {
-            MessageBoxWrapper.Show($"The Harmony module is corrupted!\nCan't find '{assemblyNameFull}' in 'Bannerlord.Harmony'!", "Error from BLSE!", MessageBoxButtons.OK, MessageBoxIcon.Error, 0, 0);
+            MessageBoxDialog.Show($"The Harmony module is corrupted!\nCan't find '{assemblyNameFull}' in 'Bannerlord.Harmony'!", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error, 0, 0);
             Environment.Exit(1);
             return null;
         }
@@ -153,7 +157,7 @@ internal static class ModuleInitializer
         var harmonyX = AssemblyDefinition.ReadAssembly(assemblyFile);
         if (harmonyX.Name.Version < new Version(2, 10, 1, 0))
         {
-            MessageBoxWrapper.Show("The Harmony module is corrupted!\nWrong 0Harmony.dll version! At least v2.10.1.x is required!", "Error from BLSE!", MessageBoxButtons.OK, MessageBoxIcon.Error, 0, 0);
+            MessageBoxDialog.Show("The Harmony module is corrupted!\nWrong 0Harmony.dll version! At least v2.10.1.x is required!", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error, 0, 0);
             Environment.Exit(1);
             return null;
         }
