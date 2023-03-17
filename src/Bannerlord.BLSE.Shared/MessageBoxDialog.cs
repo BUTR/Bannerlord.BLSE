@@ -9,22 +9,22 @@ public static class MessageBoxDialog
     private static extern int MessageBox(IntPtr hWnd, string text, string caption, uint type);
 
     public static MessageBoxResult Show(string text) =>
-        (MessageBoxResult) MessageBox(IntPtr.Zero, text, "\0", (uint)MessageBoxButtons.Ok);
+        (MessageBoxResult) MessageBox(IntPtr.Zero, text, "\0", (uint) MessageBoxButtons.Ok);
 
     public static MessageBoxResult Show(string text, string caption) =>
-        (MessageBoxResult) MessageBox(IntPtr.Zero, text, caption, (uint)MessageBoxButtons.Ok);
+        (MessageBoxResult) MessageBox(IntPtr.Zero, text, caption, (uint) MessageBoxButtons.Ok);
 
     public static MessageBoxResult Show(string text, string caption, MessageBoxButtons buttons) =>
-        (MessageBoxResult) MessageBox(IntPtr.Zero, text, caption, (uint)buttons);
+        (MessageBoxResult) MessageBox(IntPtr.Zero, text, caption, (uint) buttons);
 
     public static MessageBoxResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon) =>
-        (MessageBoxResult) MessageBox(IntPtr.Zero, text, caption, ((uint)buttons) | ((uint)icon));
+        (MessageBoxResult) MessageBox(IntPtr.Zero, text, caption, ((uint) buttons) | ((uint) icon));
 
     public static MessageBoxResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton button) =>
-        (MessageBoxResult) MessageBox(IntPtr.Zero, text, caption, ((uint)buttons) | ((uint)icon) | ((uint)button));
+        (MessageBoxResult) MessageBox(IntPtr.Zero, text, caption, ((uint) buttons) | ((uint) icon) | ((uint) button));
 
     public static MessageBoxResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton button, MessageBoxModal modal) =>
-        (MessageBoxResult) MessageBox(IntPtr.Zero, text, caption, ((uint)buttons) | ((uint)icon) | ((uint)button) | ((uint)modal));
+        (MessageBoxResult) MessageBox(IntPtr.Zero, text, caption, ((uint) buttons) | ((uint) icon) | ((uint) button) | ((uint) modal));
 }
 
 public enum MessageBoxButtons

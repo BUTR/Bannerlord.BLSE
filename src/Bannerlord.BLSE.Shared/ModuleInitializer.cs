@@ -120,7 +120,7 @@ internal static class ModuleInitializer
             Environment.Exit(1);
             return null;
         }
-        
+
         var harmonyBinFolder = Path.Combine(harmonyModuleFolder, "bin", configName);
         var harmonyBinSteamFolder = Path.Combine(harmonySteamModuleFolder, "bin", configName);
         if (!Directory.Exists(harmonyBinFolder) && !Directory.Exists(harmonyBinSteamFolder))
@@ -138,10 +138,10 @@ internal static class ModuleInitializer
             Environment.Exit(1);
             return null;
         }
-        
+
         return File.Exists(assemblyFile) ? assemblyFile : File.Exists(assemblySteamFile) ? assemblySteamFile : string.Empty;
     }
-    
+
     private static Assembly? ResolveHarmonyAssembly(AssemblyName assemblyName)
     {
         foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
