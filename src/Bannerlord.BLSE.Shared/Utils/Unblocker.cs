@@ -15,18 +15,18 @@ public static class Unblocker
     private static readonly Harmony _harmony = new("Bannerlord.BLSE.Shared.Patches.Unblocker");
     private static Thread? _currentUnblockingThread;
 
-    
+
     public static void Unblock()
     {
         if (_currentUnblockingThread is not null)
             return;
-        
+
         Assembly.Load(new AssemblyName("TaleWorlds.Starter.Library"));
-        
+
         var result = _harmony.TryPatch(
             AccessTools2.DeclaredMethod("TaleWorlds.Starter.Library.Program:Main"),
             prefix: AccessTools2.Method(typeof(Unblocker), nameof(MainPrefix)));
-        
+
         if (result)
         {
             _currentUnblockingThread = new Thread(UnblockFiles);
@@ -42,10 +42,10 @@ public static class Unblocker
             _currentUnblockingThread?.Join();
         }
         catch (Exception) { /* ignore */ }
-        
+
         _harmony.Unpatch(AccessTools2.DeclaredMethod("TaleWorlds.Starter.Library.Program:Main"), AccessTools2.Method(typeof(Unblocker), nameof(MainPrefix)));
     }
-    
+
     private static void UnblockFiles()
     {
         var modulesPath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "../", "../", ModuleInfoHelper.ModulesFolder));
