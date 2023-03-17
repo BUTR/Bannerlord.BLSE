@@ -1,0 +1,4 @@
+MessageBox
+DeleteFile
+GetConsoleWindow
+ShowWindow

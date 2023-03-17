@@ -1,4 +1,5 @@
-﻿using Bannerlord.LauncherEx.Helpers;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+using Bannerlord.LauncherEx.Helpers;
 using Bannerlord.LauncherEx.Patches;
 using Bannerlord.LauncherEx.ResourceManagers;
 using Bannerlord.LauncherEx.TPac;
@@ -71,7 +72,7 @@ namespace Bannerlord.LauncherEx
             SpriteDataManager.CreateAndRegister("launcher_search");
             SpriteDataManager.CreateAndRegister("warm_overlay");
 
-            var asset = new AssetPackage(Path.Combine(BasePath.Name, "Modules/Native/AssetPackages/gauntlet_ui.tpac"));
+            var asset = new AssetPackage(Path.Combine(BasePath.Name, ModuleInfoHelper.ModulesFolder, "Native/AssetPackages/gauntlet_ui.tpac"));
             switch (BUTRLocalizationManager.ActiveLanguage)
             {
                 case BUTRLocalizationManager.ChineseTraditional or BUTRLocalizationManager.ChineseSimple when asset.GetTexture("ui_fonts_1") is { } chinese:

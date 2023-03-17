@@ -19,12 +19,12 @@ namespace Bannerlord.BLSE.Features.Xbox.Patches
                 AccessTools2.Constructor(typeof(Module)),
                 prefix: AccessTools2.Method(typeof(ModulePatch), nameof(ShowedLoginScreenPrefix)));
             if (!res1) return false;
-            
+
             var res2 = harmony.TryPatch(
                 AccessTools2.DeclaredMethod("TaleWorlds.MountAndBlade.Platform.GDK.PlatformGDKSubModule:OnSubModuleLoad"),
                 prefix: AccessTools2.Method(typeof(ModulePatch), nameof(OnSubModuleLoadPrefix)));
             if (!res2) return false;
-            
+
             var res3 = harmony.TryPatch(
                 AccessTools2.DeclaredMethod("TaleWorlds.MountAndBlade.Platform.GDK.PlatformGDKSubModule:OnApplicationTick"),
                 prefix: AccessTools2.Method(typeof(ModulePatch), nameof(OnApplicationTickPrefix)));
@@ -38,14 +38,14 @@ namespace Bannerlord.BLSE.Features.Xbox.Patches
         {
             ___ShowedLoginScreen = true;
         }
-        
+
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool OnSubModuleLoadPrefix()
         {
             Common.PlatformFileHelper = new PlatformFileHelperPC("Mount and Blade II Bannerlord");
             return false;
         }
-        
+
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool OnApplicationTickPrefix()
         {

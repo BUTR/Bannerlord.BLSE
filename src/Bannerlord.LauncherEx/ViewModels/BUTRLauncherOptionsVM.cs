@@ -64,7 +64,6 @@ namespace Bannerlord.LauncherEx.ViewModels
         {
             _launcherExData = new LauncherExData(
                 LauncherSettings.AutomaticallyCheckForUpdates,
-                LauncherSettings.UnblockFiles,
                 LauncherSettings.FixCommonIssues,
                 LauncherSettings.CompactModuleList,
                 LauncherSettings.HideRandomImage,
@@ -72,13 +71,6 @@ namespace Bannerlord.LauncherEx.ViewModels
                 LauncherSettings.BetaSorting,
                 LauncherSettings.BigMode);
 
-            SettingProperties.Add(new SettingsPropertyVM(new SettingsPropertyDefinition
-            {
-                DisplayName = new BUTRTextObject("{=zHo3tzQT}Unblock Files on Start").ToString(),
-                HintText = new BUTRTextObject("{=sOInYH9V}Automatically unblock's .dll files on start").ToString(),
-                SettingType = SettingType.Bool,
-                PropertyReference = new PropertyRef(typeof(LauncherSettings).GetProperty(nameof(LauncherSettings.UnblockFiles))!, this)
-            }));
             SettingProperties.Add(new SettingsPropertyVM(new SettingsPropertyDefinition
             {
                 DisplayName = new BUTRTextObject("{=LXlsSS8t}Fix Common Issues").ToString(),
@@ -106,16 +98,6 @@ namespace Bannerlord.LauncherEx.ViewModels
                 HintText = new BUTRTextObject("{=LaPvZjwC}Hide's the Rider image so the launcher looks more compact").ToString(),
                 SettingType = SettingType.Bool,
                 PropertyReference = new PropertyRef(typeof(LauncherSettings).GetProperty(nameof(LauncherSettings.HideRandomImage))!, this)
-            }));
-            SettingProperties.Add(new SettingsPropertyVM(new SettingsPropertyDefinition
-            {
-                DisplayName = new BUTRTextObject("{=JT7QnJJA}Unblock Files").ToString(),
-                HintText = new BUTRTextObject("{=VMIp4503}Unblock all .dll files on /Modules folder").ToString(),
-                SettingType = SettingType.Button,
-                PropertyReference = new ProxyRef<string>(() => new BUTRTextObject("{=RDLKkiVk}Unblock").ToString(), _ =>
-                {
-                    NtfsUnblocker.UnblockPath(Path.Combine(BasePath.Name, ModuleInfoHelper.ModulesFolder));
-                })
             }));
             SettingProperties.Add(new SettingsPropertyVM(new SettingsPropertyDefinition
             {
@@ -216,12 +198,6 @@ namespace Bannerlord.LauncherEx.ViewModels
                 return;
 
             if (_launcherExData.AutomaticallyCheckForUpdates != LauncherSettings.AutomaticallyCheckForUpdates)
-            {
-                _saveUserData();
-                return;
-            }
-
-            if (_launcherExData.UnblockFiles != LauncherSettings.UnblockFiles)
             {
                 _saveUserData();
                 return;
