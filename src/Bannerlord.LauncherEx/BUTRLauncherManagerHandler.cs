@@ -220,7 +220,7 @@ namespace Bannerlord.LauncherEx
         {
             BetaSorting = LauncherSettings.BetaSorting,
             FixCommonIssues = LauncherSettings.FixCommonIssues,
-            UnblockFiles = LauncherSettings.UnblockFiles,
+            UnblockFiles = true, // TODO: Remove. Always unblock
             Language = Manager.GetActiveLanguage(),
         };
 

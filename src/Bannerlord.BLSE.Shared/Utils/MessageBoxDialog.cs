@@ -1,30 +1,28 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.WindowsAndMessaging;
 
-namespace Bannerlord.BLSE.Shared;
+namespace Bannerlord.BLSE.Shared.Utils;
 
 public static class MessageBoxDialog
 {
-    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-    private static extern int MessageBox(IntPtr hWnd, string text, string caption, uint type);
-
     public static MessageBoxResult Show(string text) =>
-        (MessageBoxResult) MessageBox(IntPtr.Zero, text, "\0", (uint)MessageBoxButtons.Ok);
+        (MessageBoxResult) PInvoke.MessageBox(HWND.Null, text, "\0", (MESSAGEBOX_STYLE) MessageBoxButtons.Ok);
 
     public static MessageBoxResult Show(string text, string caption) =>
-        (MessageBoxResult) MessageBox(IntPtr.Zero, text, caption, (uint)MessageBoxButtons.Ok);
+        (MessageBoxResult) PInvoke.MessageBox(HWND.Null, text, caption, (MESSAGEBOX_STYLE) MessageBoxButtons.Ok);
 
     public static MessageBoxResult Show(string text, string caption, MessageBoxButtons buttons) =>
-        (MessageBoxResult) MessageBox(IntPtr.Zero, text, caption, (uint)buttons);
+        (MessageBoxResult) PInvoke.MessageBox(HWND.Null, text, caption, (MESSAGEBOX_STYLE) buttons);
 
     public static MessageBoxResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon) =>
-        (MessageBoxResult) MessageBox(IntPtr.Zero, text, caption, ((uint)buttons) | ((uint)icon));
+        (MessageBoxResult) PInvoke.MessageBox(HWND.Null, text, caption, ((MESSAGEBOX_STYLE) buttons) | ((MESSAGEBOX_STYLE) icon));
 
     public static MessageBoxResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton button) =>
-        (MessageBoxResult) MessageBox(IntPtr.Zero, text, caption, ((uint)buttons) | ((uint)icon) | ((uint)button));
+        (MessageBoxResult) PInvoke.MessageBox(HWND.Null, text, caption, ((MESSAGEBOX_STYLE) buttons) | ((MESSAGEBOX_STYLE) icon) | ((MESSAGEBOX_STYLE) button));
 
     public static MessageBoxResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton button, MessageBoxModal modal) =>
-        (MessageBoxResult) MessageBox(IntPtr.Zero, text, caption, ((uint)buttons) | ((uint)icon) | ((uint)button) | ((uint)modal));
+        (MessageBoxResult) PInvoke.MessageBox(HWND.Null, text, caption, ((MESSAGEBOX_STYLE) buttons) | ((MESSAGEBOX_STYLE) icon) | ((MESSAGEBOX_STYLE) button) | ((MESSAGEBOX_STYLE) modal));
 }
 
 public enum MessageBoxButtons

@@ -1,4 +1,5 @@
-﻿using Bannerlord.LauncherEx;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+using Bannerlord.LauncherEx;
 
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
@@ -21,7 +22,7 @@ public sealed class ProgramEx
         public static LauncherExContext Create()
         {
             var resourceDepot = new ResourceDepot();
-            resourceDepot.AddLocation(BasePath.Name, "Modules/Native/LauncherGUI/");
+            resourceDepot.AddLocation(BasePath.Name, $"{ModuleInfoHelper.ModulesFolder}/Native/LauncherGUI/");
             resourceDepot.CollectResources();
             resourceDepot.StartWatchingChangesInDepot();
 

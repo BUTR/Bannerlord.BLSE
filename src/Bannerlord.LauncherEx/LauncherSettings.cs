@@ -7,7 +7,6 @@ namespace Bannerlord.LauncherEx
     internal sealed class LauncherSettings
     {
         public static bool AutomaticallyCheckForUpdates { get; set; }
-        public static bool UnblockFiles { get; set; }
         public static bool FixCommonIssues { get; set; }
         public static bool CompactModuleList { get; set; }
         public static bool DisableBinaryCheck { get; set; }

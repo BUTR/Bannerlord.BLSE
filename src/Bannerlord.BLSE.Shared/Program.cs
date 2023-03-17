@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Bannerlord.BLSE.Shared.Utils;
+using Bannerlord.BUTR.Shared.Helpers;
+
+using System;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -17,6 +21,19 @@ public static class Program
     private const int SW_SHOW = 5;
     */
 
+    private static void UnblockFiles()
+    {
+        var modulesPath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "../", "../", ModuleInfoHelper.ModulesFolder));
+        if (Directory.Exists(modulesPath))
+        {
+            try
+            {
+                NtfsUnblocker.UnblockDirectory(modulesPath, "*.dll");
+            }
+            catch { /* ignore */ }
+        }
+    }
+
     public static void Main(string[] args)
     {
         /*
@@ -28,16 +45,19 @@ public static class Program
         {
             case "launcher":
             {
+                UnblockFiles();
                 Launcher.Launch(args.Skip(1).ToArray());
                 break;
             }
             case "launcherex":
             {
+                UnblockFiles();
                 LauncherEx.Launch(args.Skip(1).ToArray());
                 break;
             }
             case "standalone":
             {
+                UnblockFiles();
                 Standalone.Launch(args.Skip(1).ToArray());
                 break;
             }

@@ -51,7 +51,6 @@ namespace Bannerlord.LauncherEx.Patches
                 using var xmlReader = XmlReader.Create(____filePath);
                 var userDataOptions = (LauncherExData) xmlSerializer.Deserialize(xmlReader);
                 LauncherSettings.AutomaticallyCheckForUpdates = userDataOptions.AutomaticallyCheckForUpdates;
-                LauncherSettings.UnblockFiles = userDataOptions.UnblockFiles;
                 LauncherSettings.FixCommonIssues = userDataOptions.FixCommonIssues;
                 LauncherSettings.CompactModuleList = userDataOptions.CompactModuleList;
                 LauncherSettings.HideRandomImage = userDataOptions.HideRandomImage;
@@ -85,7 +84,6 @@ namespace Bannerlord.LauncherEx.Patches
             {
                 xmlSerializer.Serialize(writer, new LauncherExData(
                     LauncherSettings.AutomaticallyCheckForUpdates,
-                    LauncherSettings.UnblockFiles,
                     LauncherSettings.FixCommonIssues,
                     LauncherSettings.CompactModuleList,
                     LauncherSettings.HideRandomImage,

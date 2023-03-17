@@ -3,6 +3,7 @@ using Bannerlord.BLSE.Features.Commands;
 using Bannerlord.BLSE.Features.ContinueSaveFile;
 using Bannerlord.BLSE.Features.Interceptor;
 using Bannerlord.BLSE.Features.Xbox;
+using Bannerlord.BLSE.Shared.Utils;
 using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.ModuleManager;
 
@@ -16,6 +17,10 @@ using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade.Launcher.Library;
 using TaleWorlds.SaveSystem;
+
+using MessageBoxButtons = Bannerlord.BLSE.Shared.Utils.MessageBoxButtons;
+using MessageBoxDefaultButton = Bannerlord.BLSE.Shared.Utils.MessageBoxDefaultButton;
+using MessageBoxIcon = Bannerlord.BLSE.Shared.Utils.MessageBoxIcon;
 
 namespace Bannerlord.BLSE.Shared;
 

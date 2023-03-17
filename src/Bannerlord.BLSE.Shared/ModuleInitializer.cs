@@ -1,4 +1,5 @@
 ﻿using Bannerlord.BLSE.Shared;
+using Bannerlord.BLSE.Shared.Utils;
 using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.ModuleManager;
 
@@ -15,8 +16,8 @@ using System.Xml;
 
 using TaleWorlds.Core;
 
-using MessageBoxButtons = Bannerlord.BLSE.Shared.MessageBoxButtons;
-using MessageBoxIcon = Bannerlord.BLSE.Shared.MessageBoxIcon;
+using MessageBoxButtons = Bannerlord.BLSE.Shared.Utils.MessageBoxButtons;
+using MessageBoxIcon = Bannerlord.BLSE.Shared.Utils.MessageBoxIcon;
 
 internal static class ModuleInitializer
 {
