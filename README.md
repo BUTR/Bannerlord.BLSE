@@ -44,16 +44,23 @@
 
 The Bannerlord Software Extender (BLSE) is a tool for Bannerlord mods that expands modding capabilities and adds additional functionality to the game.  
   
-Once installed, no additional steps are needed to launch Bannerlord with BLSE's added functionality.  
-You can start the game using **Bannerlord.BLSE.Launcher.exe** for the Vanilla Launcher or **Bannerlord.BLSE.LauncherEx.exe** for the Extended Launcher (BUTRLoader).  
-Mod Developers can use **Bannerlord.BLSE.Standalone.exe** to use the CLI to launch the game.  
+Once installed, no additional steps are needed to launch Bannerlord with BLSE's added functionality.  
+You can start the game using **Bannerlord.BLSE.Launcher.exe** for the Vanilla Launcher or **Bannerlord.BLSE.LauncherEx.exe** for the Extended Launcher (BUTRLoader).  
+Mod Developers can use **Bannerlord.BLSE.Standalone.exe** to use the CLI to launch the game.  
   
-Credits to [Pickysaurus](https://www.nexusmods.com/users/31179975)﻿ for the BLSE and BUTR Logos!  
+Credits to [Pickysaurus](https://www.nexusmods.com/users/31179975) for the BLSE and BUTR Logos!  
 
 
 ## Features
+* **Unblocking Files** 
+  * **Launcher** and **LauncherEx** will automatically unblock files on launch.   
+Can be opted-out via passing **/nounblock** in command-line args.
+  * Standalone will not automatically unblock files on launch.  
+Can opted-in by passing **/unblock** in command-line args.
+* **Continue Save File** - Allows to specify the save file to load when launching the game.  
+Can be used by passing **/continuesave _mysavegame_** in command-line args.
+* **Assembly Resolver** - Changes the game's assembly loading priority.  
+If an assembly is available in one of the loaded modules, it will be loaded from there instead, even if the assembly is available in the main **/bin** folder.
 * **Interceptor** - BLSE checks if the is a class with a custom attribute named ***BLSEInterceptorAttribute***. If it's found it checks if there are the following signatures:  
   *  **static void OnInitializeSubModulesPrefix()** - will execute just before the game starts to initialize the SubModules. This gives us the ability to add SubModules declared in other programming languages like [Python](https://github.com/BUTR/Bannerlord.Python) and [Lua](https://github.com/BUTR/Bannerlord.Lua)  
   * **static void OnLoadSubModulesPostfix()** - will execute just after all SubModules were initialized  
-* **Continue Save File** - Allows to specify the save file to load when launching the game. Use */continuesave **mysavegame** *(save file should be specified without the extension)  
-* **Assembly Resolver** - Changes the assembly loading priority. Is an assembly is available in one of the loaded modules, it will be loaded from there instead.  

@@ -1,63 +1,40 @@
 ﻿using Bannerlord.BLSE.Shared.Utils;
-using Bannerlord.BUTR.Shared.Helpers;
 
 using System;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+
+using Windows.Win32;
+using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace Bannerlord.BLSE.Shared;
 
 public static class Program
 {
-    /*
-    [DllImport("kernel32.dll")]
-    private static extern IntPtr GetConsoleWindow();
-
-    [DllImport("user32.dll")]
-    private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
-    private const int SW_HIDE = 0;
-    private const int SW_SHOW = 5;
-    */
-
-    private static void UnblockFiles()
-    {
-        var modulesPath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "../", "../", ModuleInfoHelper.ModulesFolder));
-        if (Directory.Exists(modulesPath))
-        {
-            try
-            {
-                NtfsUnblocker.UnblockDirectory(modulesPath, "*.dll");
-            }
-            catch { /* ignore */ }
-        }
-    }
-
     public static void Main(string[] args)
     {
-        /*
-        var handle = GetConsoleWindow();
-        ShowWindow(handle, SW_HIDE);
-        */
+        //PInvoke.ShowWindow(PInvoke.GetConsoleWindow(), SHOW_WINDOW_CMD.SW_HIDE);
 
         switch (args[0])
         {
             case "launcher":
             {
-                UnblockFiles();
+                // Users can opt-out of unblocking for I guess performance reasons?
+                if (!args.Contains("/nounblock")) Unblocker.Unblock();
                 Launcher.Launch(args.Skip(1).ToArray());
                 break;
             }
             case "launcherex":
             {
-                UnblockFiles();
+                // Users can opt-out of unblocking for I guess performance reasons?
+                if (!args.Contains("/nounblock")) Unblocker.Unblock();
                 LauncherEx.Launch(args.Skip(1).ToArray());
                 break;
             }
             case "standalone":
             {
-                UnblockFiles();
+                // Since standalone is for external tools, they might unlock the files themselves
+                if (args.Contains("/unblock")) Unblocker.Unblock();
                 Standalone.Launch(args.Skip(1).ToArray());
                 break;
             }
