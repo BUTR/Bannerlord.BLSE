@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.4
+Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1
+* Show a message if the save game failed to load via the Continue feature
+---------------------------------------------------------------------------------------------------
 Version: 1.0.3
 Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1
 * Always try to unblock .dll files on startup
