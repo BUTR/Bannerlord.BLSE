@@ -56,7 +56,7 @@ jobs:
           delimiter=$(openssl rand -hex 8)
           {
               echo "mod_description<<$delimiter"
-              bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt")
+              bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt"
               echo "$delimiter"
           } >> "$GITHUB_OUTPUT"
         shell: bash
