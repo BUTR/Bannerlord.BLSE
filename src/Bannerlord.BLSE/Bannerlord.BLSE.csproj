@@ -6,7 +6,7 @@
     <Version>$(Version).$(GITHUB_RUN_NUMBER)</Version>
 
     <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>10.0</LangVersion>
+    <LangVersion>11.0</LangVersion>
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
     

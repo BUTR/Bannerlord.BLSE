@@ -16,9 +16,12 @@
     <!-- No. No. LauncherExData is inaccessible due to its protection level. -->
     <ILRepackPerformInternalize>false</ILRepackPerformInternalize>
     <ILRepackCopyAttributes>true</ILRepackCopyAttributes>
+    <ILRepack>$(ILRepackFX)</ILRepack>
   </PropertyGroup>
   
   <ItemGroup>
+    <PackageReference Update="ILRepack" PrivateAssets="all" IncludeAssets="none" />
+    <PackageReference Include="BUTR.ILRepack" Version="2.1.9-beta6" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="ILRepack.FullAuto" Version="1.2.0" PrivateAssets="all" />
 
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
