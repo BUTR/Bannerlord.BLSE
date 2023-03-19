@@ -53,12 +53,9 @@ jobs:
 
           echo "mod_version=$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")" >> $GITHUB_OUTPUT
 
-          delimiter=$(openssl rand -hex 8)
-          {
-              echo "mod_description<<$delimiter"
-              bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt"
-              echo "$delimiter"
-          } >> "$GITHUB_OUTPUT"
+          echo "mod_description<<$EOF" >> $GITHUB_ENV
+          echo "$(bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt")" >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_ENV
         shell: bash
         
       - name: Upload Bannerlord folder
