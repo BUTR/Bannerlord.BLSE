@@ -106,9 +106,6 @@
   </Target>
 
   <Target Name="BuildExtended">
-    <PropertyGroup>
-      <GameVersion>$(GameVersionOverride)</GameVersion>
-    </PropertyGroup>
     <CallTarget Targets="Build"/>
   </Target>
 
