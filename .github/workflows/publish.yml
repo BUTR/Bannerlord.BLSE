@@ -53,9 +53,9 @@ jobs:
 
           echo "mod_version=$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")" >> $GITHUB_OUTPUT
 
-          echo "mod_description<<$EOF" >> $GITHUB_ENV
+          echo "mod_description<<$EOF" >> $GITHUB_OUTPUT
           echo "$(bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt")" >> $GITHUB_OUTPUT
-          echo "$EOF" >> $GITHUB_ENV
+          echo "$EOF" >> $GITHUB_OUTPUT
         shell: bash
         
       - name: Upload Bannerlord folder
