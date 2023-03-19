@@ -42,7 +42,7 @@ namespace Bannerlord.BLSE.Features.ContinueSaveFile.Patches
                     MessageBoxDialog.Show(message, "Warning!");
                 }
             }
-            
+
             if (AccessTools2.GetDelegate<TryLoadSaveDelegate>("SandBox.SandBoxSaveHelper:TryLoadSave") is not { } tryLoadSave) return true;
             if (GetSaveGameArg?.Invoke(Module.CurrentModule.StartupInfo) is not { } saveFileName) return true;
             if (saveFileName.EndsWith(".sav", StringComparison.OrdinalIgnoreCase)) saveFileName = saveFileName.Remove(saveFileName.Length - 4, 4);
