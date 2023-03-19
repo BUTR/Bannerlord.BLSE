@@ -9,6 +9,13 @@
     <Version>1.23.3</Version>
     <PolySharpExcludeGeneratedTypes>System.Diagnostics.CodeAnalysis.UnscopedRefAttribute</PolySharpExcludeGeneratedTypes>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ILRepackBuildEnable>false</ILRepackBuildEnable>
+    <ILRepackTargetConfigurations>$(Configuration)</ILRepackTargetConfigurations>
+    <ILRepackBuildToolingPath>$(PkgBUTR_ILRepack)\tools\net461\ILRepack.exe</ILRepackBuildToolingPath>
+    <ILRepackAllowDuplicateResources>false</ILRepackAllowDuplicateResources>
+    <ILRepackMergeDebugSymbols>true</ILRepackMergeDebugSymbols>
+    <ILRepackPerformInternalize>true</ILRepackPerformInternalize>
+    <ILRepackCopyAttributes>false</ILRepackCopyAttributes>
     <!--
     <GameVersion>1.1.0</GameVersion>
     <GameVersionFlat>$([System.String]::Copy('$(GameVersion)').Replace('.',''))</GameVersionFlat>
@@ -65,6 +72,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Update="ILRepack" PrivateAssets="all" IncludeAssets="none" />
+    <PackageReference Include="BUTR.ILRepack" Version="2.1.9-beta6" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+    <PackageReference Include="ILRepack.FullAuto" Version="1.2.0" PrivateAssets="all" />
+
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
     
     <!-- Bannerlord.BUTR.Shared needs the package, but Bannerlord.LauncherManager provides the types already -->
@@ -97,17 +108,7 @@
   <Target Name="BuildExtended">
     <PropertyGroup>
       <GameVersion>$(GameVersionOverride)</GameVersion>
-      <ILRepackAllowDuplicateResources>false</ILRepackAllowDuplicateResources>
-      <ILRepackMergeDebugSymbols>true</ILRepackMergeDebugSymbols>
-      <ILRepackPerformInternalize>true</ILRepackPerformInternalize>
-      <ILRepackCopyAttributes>false</ILRepackCopyAttributes>
-      <ILRepackBuildToolingPath>$(PkgBUTR_ILRepack)\tools\net461\ILRepack.exe</ILRepackBuildToolingPath>
     </PropertyGroup>
-    <ItemGroup>
-      <PackageReference Update="ILRepack" PrivateAssets="all" IncludeAssets="none" />
-      <PackageReference Include="BUTR.ILRepack" Version="2.1.9-beta6" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-      <PackageReference Include="ILRepack.FullAuto" Version="1.2.0" PrivateAssets="all" />
-    </ItemGroup>
     <CallTarget Targets="Build"/>
   </Target>
 

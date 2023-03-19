@@ -65,8 +65,8 @@
       <LauncherExProject>$(MSBuildThisFileDirectory)..\Bannerlord.LauncherEx\Bannerlord.LauncherEx.csproj</LauncherExProject>
       <LauncherExProjectFull>&quot;$([System.IO.Path]::GetFullPath('$(LauncherExProject)'))&quot;</LauncherExProjectFull>
     </PropertyGroup>
-    <Message Text="dotnet msbuild $(LauncherExProjectFull) --target:BuildExtended -p:GameVersionOverride=%(GameAPIVersion.GameVersion) -p:Configuration=$(Configuration)_%(GameAPIVersion.Flat) -p:ILRepackTargetConfigurations=$(Configuration)_%(GameAPIVersion.Flat)" Importance="High" />
-    <Exec Command="dotnet msbuild $(LauncherExProjectFull) --target:BuildExtended -p:GameVersionOverride=%(GameAPIVersion.GameVersion) -p:Configuration=$(Configuration)_%(GameAPIVersion.Flat) -p:ILRepackTargetConfigurations=$(Configuration)_%(GameAPIVersion.Flat)" />
+    <Message Text="dotnet build $(LauncherExProjectFull) --target:BuildExtended -p:GameVersionOverride=%(GameAPIVersion.GameVersion) -p:Configuration=$(Configuration)_%(GameAPIVersion.Flat) -p:ILRepackBuildEnable=true" Importance="High" />
+    <Exec Command="dotnet build $(LauncherExProjectFull) --target:BuildExtended -p:GameVersionOverride=%(GameAPIVersion.GameVersion) -p:Configuration=$(Configuration)_%(GameAPIVersion.Flat) -p:ILRepackBuildEnable=true" />
   </Target>
   <Target Condition="$(Configuration) == 'Release'" Name="BeforeBuildCompress" AfterTargets="BeforeBuildLauncherEx">
     <GZip Files="@(EmbeddedResource)">
