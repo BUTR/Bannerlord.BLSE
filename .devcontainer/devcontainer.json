@@ -1,0 +1,11 @@
+{
+	"name": ".NET Core & Mono",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/powershell:1": {
+			"version": "latest"
+		}
+	}
+}
