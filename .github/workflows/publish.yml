@@ -55,7 +55,7 @@ jobs:
           desc="${desc//$'\n'/'%0A'}"
           desc="${desc//$'\r'/'%0D'}"
           echo "mod_description=$desc" >> $GITHUB_OUTPUT
-        shell: sh
+        shell: bash
         
       - name: Upload Bannerlord folder
         uses: actions/upload-artifact@v3
