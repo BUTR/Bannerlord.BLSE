@@ -48,13 +48,16 @@ jobs:
         id: changelog
         run: |
           dotnet tool install -g Bannerlord.ChangelogParser
+
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+
           vers="$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")"
           echo "mod_version=$vers" >> $GITHUB_OUTPUT
+
           desc="$(bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt")"
-          desc="${desc//'%'/'%25'}"
-          desc="${desc//$'\n'/'%0A'}"
-          desc="${desc//$'\r'/'%0D'}"
-          echo "mod_description=$desc" >> $GITHUB_OUTPUT
+          echo "mod_description<<$EOF" >> $GITHUB_ENV
+          $desc >> $GITHUB_ENV
+          echo "$EOF" >> $GITHUB_ENV
         shell: bash
         
       - name: Upload Bannerlord folder
