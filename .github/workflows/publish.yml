@@ -49,12 +49,12 @@ jobs:
         run: |
           dotnet tool install -g Bannerlord.ChangelogParser
           vers="$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")"
-          echo "mod_version::$vers" >> $GITHUB_OUTPUT
+          echo "mod_version=$vers" >> $GITHUB_OUTPUT
           desc="$(bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt")"
           desc="${desc//'%'/'%25'}"
           desc="${desc//$'\n'/'%0A'}"
           desc="${desc//$'\r'/'%0D'}"
-          echo "mod_description::$desc" >> $GITHUB_OUTPUT
+          echo "mod_description=$desc" >> $GITHUB_OUTPUT
         shell: sh
         
       - name: Upload Bannerlord folder
