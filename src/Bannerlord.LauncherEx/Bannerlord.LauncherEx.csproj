@@ -96,6 +96,7 @@
 
   <Target Name="BuildExtended">
     <PropertyGroup>
+      <GameVersion>$(GameVersionOverride)</GameVersion>
       <ILRepackAllowDuplicateResources>false</ILRepackAllowDuplicateResources>
       <ILRepackMergeDebugSymbols>true</ILRepackMergeDebugSymbols>
       <ILRepackPerformInternalize>true</ILRepackPerformInternalize>
