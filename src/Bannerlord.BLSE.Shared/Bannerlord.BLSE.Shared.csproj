@@ -2,30 +2,30 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>10.0</LangVersion>
+    <LangVersion>11.0</LangVersion>
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
     <OutputType>library</OutputType>
     <AssemblyName>Bannerlord.BLSE.Shared</AssemblyName>
 
     <DefineConstants>$(DefineConstants);HARMONYEXTENSIONS_HARMONYX</DefineConstants>
-    
+
     <ILRepackTargetConfigurations>$(Configurations);</ILRepackTargetConfigurations>
     <ILRepackAllowDuplicateResources>false</ILRepackAllowDuplicateResources>
     <ILRepackMergeDebugSymbols>true</ILRepackMergeDebugSymbols>
     <!-- No. No. LauncherExData is inaccessible due to its protection level. -->
     <ILRepackPerformInternalize>false</ILRepackPerformInternalize>
     <ILRepackCopyAttributes>true</ILRepackCopyAttributes>
-    <ILRepack>$(ILRepackFX)</ILRepack>
+    <ILRepackBuildToolingPath>$(PkgBUTR_ILRepack)\tools\net461\ILRepack.exe</ILRepackBuildToolingPath>
   </PropertyGroup>
-  
+
   <ItemGroup>
-    <PackageReference Update="ILRepack" PrivateAssets="all" IncludeAssets="none" />
-    <PackageReference Include="BUTR.ILRepack" Version="2.1.9-beta6" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+    <PackageReference Include="ILRepack" Version="2.0.18" PrivateAssets="all" IncludeAssets="none" />
+    <PackageReference Include="BUTR.ILRepack" Version="2.1.9-beta6" GeneratePathProperty="true" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="ILRepack.FullAuto" Version="1.2.0" PrivateAssets="all" />
 
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
-    
+
     <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Bannerlord.ModuleManager.Source" PrivateAssets="all" Version="$(BUTRModuleManagerVersion)" />
     <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
@@ -42,7 +42,7 @@
   <ItemGroup Condition="$(Configuration) == 'Release'">
     <ProjectReference Include="..\Bannerlord.LauncherEx\Bannerlord.LauncherEx.csproj" Private="false" IncludeAssets="compile" PrivateAssets="all" />
   </ItemGroup>
-  
+
   <Target Name="PostBuildFramework" AfterTargets="CopyFilesToOutputDirectory" Condition="Exists($(GameFolder))">
     <ItemGroup>
       <Files Include="$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).dll" />
@@ -61,7 +61,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <Target Condition="$(Configuration) == 'Release'" Name="BeforeBuildLauncherEx" BeforeTargets="BeforeBuild">
-    <Exec Command="dotnet build &quot;$(MSBuildThisFileDirectory)..\Bannerlord.LauncherEx\Bannerlord.LauncherEx.csproj&quot; -p:DoILRepack=true -p:GameVersion=%(GameAPIVersion.GameVersion) -p:Configuration=$(Configuration)_%(GameAPIVersion.Flat) -p:ILRepackTargetConfigurations=$(Configuration)_%(GameAPIVersion.Flat)" />
+    <PropertyGroup>
+      <LauncherExProject>$(MSBuildThisFileDirectory)..\Bannerlord.LauncherEx\Bannerlord.LauncherEx.csproj</LauncherExProject>
+      <LauncherExProjectFull>&quot;$([System.IO.Path]::GetFullPath('$(LauncherExProject)'))&quot;</LauncherExProjectFull>
+      <Command>dotnet msbuild $(LauncherExProjectFull) --target:BuildExtended -p:GameVersion=%(GameAPIVersion.GameVersion) -p:Configuration=$(Configuration)_%(GameAPIVersion.Flat) -p:ILRepackTargetConfigurations=$(Configuration)_%(GameAPIVersion.Flat)</Command>
+    </PropertyGroup>
+    <Message Text="$(Command)" Importance="High" />
+    <Exec Command="$(Command)" />
   </Target>
   <Target Condition="$(Configuration) == 'Release'" Name="BeforeBuildCompress" AfterTargets="BeforeBuildLauncherEx">
     <GZip Files="@(EmbeddedResource)">
@@ -74,5 +80,5 @@
       <EmbeddedResource Include="@(GZipEmbeddedResource)" />
     </ItemGroup>
   </Target>
-  
+
 </Project>

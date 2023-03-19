@@ -17,19 +17,6 @@
     
     <DefineConstants>$(DefineConstants);$(GameVersionConstant);HARMONYEXTENSIONS_HARMONYX</DefineConstants>
   </PropertyGroup>
-
-  <PropertyGroup Condition="$(DoILRepack) == 'true'">
-    <ILRepackAllowDuplicateResources>false</ILRepackAllowDuplicateResources>
-    <ILRepackMergeDebugSymbols>true</ILRepackMergeDebugSymbols>
-    <ILRepackPerformInternalize>true</ILRepackPerformInternalize>
-    <ILRepackCopyAttributes>false</ILRepackCopyAttributes>
-    <ILRepack>$(ILRepackFX)</ILRepack>
-  </PropertyGroup>
-  <ItemGroup Condition="$(DoILRepack) == 'true'">
-    <PackageReference Update="ILRepack" PrivateAssets="all" IncludeAssets="none" />
-    <PackageReference Include="BUTR.ILRepack" Version="2.1.9-beta6" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    <PackageReference Include="ILRepack.FullAuto" Version="1.2.0" PrivateAssets="all" />
-  </ItemGroup>
   
   <PropertyGroup>
     <PackageId>Bannerlord.LauncherEx</PackageId>
@@ -105,6 +92,22 @@
         <_Parameter2>$(GameVersion)</_Parameter2>
       </AssemblyAttribute>
     </ItemGroup>
+  </Target>
+
+  <Target Name="BuildExtended">
+    <PropertyGroup>
+      <ILRepackAllowDuplicateResources>false</ILRepackAllowDuplicateResources>
+      <ILRepackMergeDebugSymbols>true</ILRepackMergeDebugSymbols>
+      <ILRepackPerformInternalize>true</ILRepackPerformInternalize>
+      <ILRepackCopyAttributes>false</ILRepackCopyAttributes>
+      <ILRepackBuildToolingPath>$(PkgBUTR_ILRepack)\tools\net461\ILRepack.exe</ILRepackBuildToolingPath>
+    </PropertyGroup>
+    <ItemGroup>
+      <PackageReference Update="ILRepack" PrivateAssets="all" IncludeAssets="none" />
+      <PackageReference Include="BUTR.ILRepack" Version="2.1.9-beta6" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+      <PackageReference Include="ILRepack.FullAuto" Version="1.2.0" PrivateAssets="all" />
+    </ItemGroup>
+    <CallTarget Targets="Build"/>
   </Target>
 
 </Project>
