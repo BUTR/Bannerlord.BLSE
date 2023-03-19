@@ -25,7 +25,7 @@ jobs:
     name: Publish
     runs-on: ubuntu-latest
     outputs:
-      mod_version: ${{ steps.mod_version.outputs.mod_version }}
+      mod_version: ${{ steps.changelog.outputs.mod_version }}
       mod_description: ${{ steps.changelog.outputs.mod_description }}
     steps:
       - uses: actions/checkout@v3
@@ -45,20 +45,21 @@ jobs:
         shell: pwsh
 
       - name: Install and Run ChangelogParser
-        run: dotnet tool install -g Bannerlord.ChangelogParser
-        shell: sh
-
-      - id: mod_version
-        run: echo "mod_version=$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")" >> $GITHUB_OUTPUT
-        shell: sh
-
-      - id: mod_description
+        id: changelog
         run: |
+          dotnet tool install -g Bannerlord.ChangelogParser
+
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "mod_description<<$EOF" >> $GITHUB_ENV
-          bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt" >> $GITHUB_ENV
-          echo "$EOF" >> $GITHUB_ENV
-        shell: sh
+
+          echo "mod_version=$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")" >> $GITHUB_OUTPUT
+
+          delimiter=$(openssl rand -hex 8)
+          {
+              echo "mod_description<<$delimiter"
+              bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt")
+              echo "$delimiter"
+          } >> "$GITHUB_OUTPUT"
+        shell: bash
         
       - name: Upload Bannerlord folder
         uses: actions/upload-artifact@v3
