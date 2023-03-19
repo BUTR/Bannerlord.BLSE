@@ -33,12 +33,13 @@
     <PackageReference Include="IsExternalInit" Version="1.0.3" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(Configuration) == 'Debug'">
+  <ItemGroup>
     <ProjectReference Include="..\Bannerlord.BLSE\Bannerlord.BLSE.csproj" Private="true" />
+  </ItemGroup>
+  <ItemGroup Condition="$(Configuration) == 'Debug'">
     <ProjectReference Include="..\Bannerlord.LauncherEx\Bannerlord.LauncherEx.csproj" Private="true" />
   </ItemGroup>
   <ItemGroup Condition="$(Configuration) == 'Release'">
-    <ProjectReference Include="..\Bannerlord.BLSE\Bannerlord.BLSE.csproj" Private="true" />
     <ProjectReference Include="..\Bannerlord.LauncherEx\Bannerlord.LauncherEx.csproj" Private="false" IncludeAssets="compile" PrivateAssets="all" />
   </ItemGroup>
   

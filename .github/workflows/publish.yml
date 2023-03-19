@@ -33,6 +33,8 @@ jobs:
       - name: Build Bannerlord.BLSE
         run: >-
           mkdir bannerlord;
+          dotnet build src/Bannerlord.BLSE/Bannerlord.BLSE.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
+          dotnet build src/Bannerlord.LauncherEx/Bannerlord.LauncherEx.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
           dotnet build src/Bannerlord.BLSE.Shared/Bannerlord.BLSE.Shared.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
           dotnet build src/Bannerlord.BLSE.Standalone/Bannerlord.BLSE.Standalone.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
           dotnet build src/Bannerlord.BLSE.Launcher/Bannerlord.BLSE.Launcher.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
