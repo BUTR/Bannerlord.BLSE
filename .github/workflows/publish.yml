@@ -54,7 +54,7 @@ jobs:
           echo "mod_version=$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")" >> $GITHUB_OUTPUT
 
           echo "mod_description<<$EOF" >> $GITHUB_ENV
-          $(bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt") >> $GITHUB_ENV
+          bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt" >> $GITHUB_ENV
           echo "$EOF" >> $GITHUB_ENV
         shell: bash
         
