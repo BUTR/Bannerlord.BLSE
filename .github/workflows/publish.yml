@@ -51,12 +51,10 @@ jobs:
 
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
 
-          vers="$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")"
-          echo "mod_version=$vers" >> $GITHUB_OUTPUT
+          echo "mod_version=$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")" >> $GITHUB_OUTPUT
 
-          desc="$(bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt")"
           echo "mod_description<<$EOF" >> $GITHUB_ENV
-          $desc >> $GITHUB_ENV
+          $(bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt") >> $GITHUB_ENV
           echo "$EOF" >> $GITHUB_ENV
         shell: bash
         
