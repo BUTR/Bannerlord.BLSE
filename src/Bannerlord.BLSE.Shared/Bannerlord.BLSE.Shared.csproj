@@ -63,7 +63,7 @@
   <Target Condition="$(Configuration) == 'Release'" Name="BeforeBuildLauncherEx" BeforeTargets="BeforeBuild">
     <PropertyGroup>
       <LauncherExProject>$(MSBuildThisFileDirectory)..\Bannerlord.LauncherEx\Bannerlord.LauncherEx.csproj</LauncherExProject>
-      <LauncherExProjectFull>&quot;$([System.IO.Path]::GetFullPath('$(LauncherExProject)'))&quot;</LauncherExProjectFull>
+      <LauncherExProjectFull>"$([System.IO.Path]::GetFullPath('$(LauncherExProject)'))"</LauncherExProjectFull>
     </PropertyGroup>
     <Message Text="dotnet build $(LauncherExProjectFull) --target:BuildExtended -p:GameVersion=%(GameAPIVersion.GameVersion) -p:Configuration=$(Configuration)_%(GameAPIVersion.Flat) -p:ILRepackBuildEnable=true" Importance="High" />
     <Exec Command="dotnet build $(LauncherExProjectFull) --target:BuildExtended -p:GameVersion=%(GameAPIVersion.GameVersion) -p:Configuration=$(Configuration)_%(GameAPIVersion.Flat) -p:ILRepackBuildEnable=true" />

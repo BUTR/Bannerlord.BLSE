@@ -1,0 +1,67 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>winexe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <ApplicationIcon>../../resources/BLSE_SMALL.ico</ApplicationIcon>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>$(DefineConstants);LAUNCHER;</DefineConstants>
+    <AssemblyName>Bannerlord.BLSE.Launcher</AssemblyName>
+
+    <PublishAot>true</PublishAot>
+    <SelfContained>true</SelfContained>
+    <TrimMode>full</TrimMode>
+    <DebugType>none</DebugType>
+    <GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DebuggerSupport>false</DebuggerSupport>
+    <AutoreleasePoolSupport>false</AutoreleasePoolSupport>
+    <EnableUnsafeUTF7Encoding>false</EnableUnsafeUTF7Encoding>
+    <EventSourceSupport>false</EventSourceSupport>
+    <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <UseNativeHttpHandler>true</UseNativeHttpHandler>
+    <UseSystemResourceKeys>true</UseSystemResourceKeys>
+
+    <StripSymbols>true</StripSymbols>
+    <RootAllApplicationAssemblies>false</RootAllApplicationAssemblies>
+    <IlcOptimizationPreference>Size</IlcOptimizationPreference>
+    <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
+    <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
+    <IlcDisableReflection>true</IlcDisableReflection>
+    <IlcDisableUnhandledExceptionExperience>true</IlcDisableUnhandledExceptionExperience>
+    <IlcGenerateCompleteTypeMetadata>false</IlcGenerateCompleteTypeMetadata>
+    <IlcInvariantGlobalization>true</IlcInvariantGlobalization>
+    <IlcTrimMetadata>true</IlcTrimMetadata>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.DotNet.ILCompiler; runtime.win-x64.Microsoft.DotNet.ILCompiler" Version="8.0.0-preview.2.23128.3" />
+    <Compile Include="..\Bannerlord.BLSE.Core.Standalone\NETCoreLoader.cs">
+      <Link>NETCoreLoader.cs</Link>
+    </Compile>
+    <Compile Include="..\Bannerlord.BLSE.Core.Standalone\NETFrameworkLoader.cs">
+      <Link>NETFrameworkLoader.cs</Link>
+    </Compile>
+    <Compile Include="..\Bannerlord.BLSE.Core.Standalone\Program.cs">
+      <Link>Program.cs</Link>
+    </Compile>
+  </ItemGroup>
+
+  <Target Name="PublishOnBuild" AfterTargets="Build">
+    <CallTarget Targets="Publish"/>
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PublishOnBuild" Condition="Exists($(GameFolder))">
+    <ItemGroup>
+      <Files Include="$(MSBuildProjectDirectory)\$(OutputPath)\native\$(AssemblyName).exe" />
+    </ItemGroup>
+    <Copy SourceFiles="@(Files)" DestinationFolder="$(GameFolder)\bin\Win64_Shipping_Client" />
+    <Copy SourceFiles="@(Files)" DestinationFolder="$(GameFolder)\bin\Gaming.Desktop.x64_Shipping_Client" />
+  </Target>
+  
+</Project>
