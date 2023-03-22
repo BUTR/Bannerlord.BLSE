@@ -1,1 +1,0 @@
-Executable that has enables BLSE and the game's launcher with BUTRLoader (LauncherEx).
