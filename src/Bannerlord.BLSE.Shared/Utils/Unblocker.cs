@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace Bannerlord.BLSE.Shared.Utils;
 
-public static class Unblocker
+internal static class Unblocker
 {
     private static readonly Harmony _harmony = new("Bannerlord.BLSE.Shared.Patches.Unblocker");
     private static Thread? _currentUnblockingThread;

@@ -1,23 +1,20 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Bannerlord.BLSE;
 
-public static class NETCoreLoader
+[UnmanagedFunctionPointer(CallingConvention.StdCall)]
+file delegate void EntryDelegate(int argc, IntPtr[] argv);
+
+public static partial class NETCoreLoader
 {
     private const string CoreCLRPath = "Microsoft.NETCore.App/coreclr.dll";
 
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    private delegate void EntryDelegate(int argc, IntPtr[] argv);
+    [LibraryImport(CoreCLRPath)]
+    private static partial int coreclr_initialize(IntPtr exePath, IntPtr appDomainFriendlyName, int propertyCount, IntPtr[] propertyKeys, IntPtr[] propertyValues, out IntPtr hostHandle, out IntPtr domainId);
 
-    [DllImport(CoreCLRPath, CallingConvention = CallingConvention.StdCall)]
-    private static extern int coreclr_initialize(IntPtr exePath, IntPtr appDomainFriendlyName, int propertyCount, IntPtr[] propertyKeys, IntPtr[] propertyValues, out IntPtr hostHandle, out IntPtr domainId);
-
-    [DllImport(CoreCLRPath, CallingConvention = CallingConvention.StdCall)]
-    private static extern int coreclr_create_delegate(IntPtr hostHandle, uint domainId, IntPtr entryPointAssemblyName, IntPtr entryPointTypeName, IntPtr entryPointMethodName, out IntPtr @delegate);
+    [LibraryImport(CoreCLRPath)]
+    private static partial int coreclr_create_delegate(IntPtr hostHandle, uint domainId, IntPtr entryPointAssemblyName, IntPtr entryPointTypeName, IntPtr entryPointMethodName, out IntPtr @delegate);
 
     private static IntPtr NativeUTF8(string str)
     {
@@ -33,6 +30,9 @@ public static class NETCoreLoader
 
     public static void Launch(string[] args)
     {
+        // Catch AccessViolation. .NET Core 3.1 still allows that
+        Environment.SetEnvironmentVariable("COMPlus_legacyCorruptedStateExceptionsPolicy", "1");
+
         // Disable aggressive inlining of JIT by disabling JIT Optimizations
         // TODO: This is kinda extreme. What could be done?
         Environment.SetEnvironmentVariable("COMPlus_JITMinOpts", "1");

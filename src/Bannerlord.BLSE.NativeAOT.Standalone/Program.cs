@@ -1,7 +1,4 @@
-﻿using System.IO;
-using System.Linq;
-
-namespace Bannerlord.BLSE.Standalone;
+﻿namespace Bannerlord.BLSE;
 
 public static class Program
 {
@@ -23,5 +20,7 @@ public static class Program
                 NETCoreLoader.Launch(args);
                 break;
         }
+        
+        NETFrameworkLoader.Launch(args);
     }
 }

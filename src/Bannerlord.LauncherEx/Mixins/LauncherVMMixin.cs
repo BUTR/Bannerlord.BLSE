@@ -311,9 +311,9 @@ namespace Bannerlord.LauncherEx.Mixins
             ContentTabControlMarginRight = LauncherSettings.HideRandomImage ? 5 : 114;
             BackgroundHeight = LauncherSettings.BigMode ? 700 : 581;
 
+            IsDigitalCompanion2 = (bool?) launcherVM.GetPropertyValue("IsDigitalCompanion") ?? false;
             IsMultiplayer2 = launcherVM.IsMultiplayer;
             IsSingleplayer2 = launcherVM.IsSingleplayer;
-            IsDigitalCompanion2 = (bool?) launcherVM.GetPropertyValue("IsDigitalCompanion") ?? false;
 
             Refresh?.Invoke(launcherVM);
         }

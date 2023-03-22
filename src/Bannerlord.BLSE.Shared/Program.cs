@@ -15,6 +15,8 @@ public static class Program
     {
         //PInvoke.ShowWindow(PInvoke.GetConsoleWindow(), SHOW_WINDOW_CMD.SW_HIDE);
 
+        LauncherExceptionHandler.Watch();
+
         switch (args[0])
         {
             case "launcher":
@@ -50,5 +52,11 @@ public static class Program
             args[i] = Marshal.PtrToStringAnsi(charPtr) ?? string.Empty;
         }
         Main(args);
+    }
+    
+    public static int NativeEntry2(string args)
+    {
+        Main(args.Split(new[] { "|||" }, StringSplitOptions.RemoveEmptyEntries));
+        return 0;
     }
 }

@@ -1,1 +1,0 @@
-Executable that has enables BLSE and launches the game's launcher.
