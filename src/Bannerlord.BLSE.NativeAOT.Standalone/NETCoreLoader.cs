@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Bannerlord.BLSE.Core.Launcher;
+namespace Bannerlord.BLSE;
 
 [UnmanagedFunctionPointer(CallingConvention.StdCall)]
 file delegate void EntryDelegate(int argc, IntPtr[] argv);

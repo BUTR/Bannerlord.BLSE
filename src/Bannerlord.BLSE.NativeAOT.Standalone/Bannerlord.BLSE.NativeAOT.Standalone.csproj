@@ -40,7 +40,7 @@
   </PropertyGroup>
 
   <Target Name="PublishRoslynExecutableProjects" AfterTargets="Build">
-    <CallTarget Targets="Publish"/>
+    <CallTarget Targets="Publish" />
   </Target>
   
   <Target Name="PostBuild" AfterTargets="Publish" Condition="Exists($(GameFolder))">

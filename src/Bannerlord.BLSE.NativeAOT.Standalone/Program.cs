@@ -1,4 +1,4 @@
-﻿namespace Bannerlord.BLSE.Core.Launcher;
+﻿namespace Bannerlord.BLSE;
 
 public static class Program
 {
