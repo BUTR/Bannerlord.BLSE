@@ -44,8 +44,8 @@ jobs:
           echo "$EOF" >> $GITHUB_OUTPUT
         shell: bash
   
-  build-loaders:
-    name: Build Loaders
+  build-loaders-standalone:
+    name: Build Loaders Standalone
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
@@ -55,11 +55,57 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Build Bannerlord.BLSE
+      - name: Build Bannerlord.BLSE.NativeAOT.Standalone
         run: |
           mkdir bannerlord;
           dotnet build src/Bannerlord.BLSE.NativeAOT.Standalone/Bannerlord.BLSE.NativeAOT.Standalone.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
+        shell: pwsh
+
+      - name: Upload Bannerlord folder
+        uses: actions/upload-artifact@v3
+        with:
+          name: bannerlord
+          path: ./bannerlord/
+          
+  
+  build-loaders-launcher:
+    name: Build Loaders Launcher
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: butr/actions-common-setup@v2
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Build Bannerlord.BLSE.NativeAOT.Launcher
+        run: |
+          mkdir bannerlord;
           dotnet build src/Bannerlord.BLSE.NativeAOT.Launcher/Bannerlord.BLSE.NativeAOT.Launcher.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
+        shell: pwsh
+
+      - name: Upload Bannerlord folder
+        uses: actions/upload-artifact@v3
+        with:
+          name: bannerlord
+          path: ./bannerlord/
+          
+  
+  build-loaders-launcherex:
+    name: Build Loaders LauncehrEx
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: butr/actions-common-setup@v2
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Build Bannerlord.BLSE.NativeAOT.LauncherEx
+        run: |
+          mkdir bannerlord;
           dotnet build src/Bannerlord.BLSE.NativeAOT.LauncherEx/Bannerlord.BLSE.NativeAOT.LauncherEx.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
         shell: pwsh
 
@@ -97,7 +143,7 @@ jobs:
   ###########################
   publish-on-nexusmods:
     if: false && github.ref == 'refs/heads/master'
-    needs: ["get-changelog", "build-loaders", "build-shared"]
+    needs: ["get-changelog", "build-loaders-standalone", "build-loaders-launcher", "build-loaders-launcherex", "build-shared"]
     uses: BUTR/workflows/.github/workflows/release-nexusmods.yml@master
     with:
       nexusmods_game_id: mountandblade2bannerlord
@@ -115,7 +161,7 @@ jobs:
   ###########################
   publish-on-github:
     if: github.ref == 'refs/heads/master'
-    needs: ["get-changelog", "build-loaders", "build-shared"]
+    needs: ["get-changelog", "build-loaders-standalone", "build-loaders-launcher", "build-loaders-launcherex", "build-shared"]
     uses: BUTR/workflows/.github/workflows/release-github.yml@master
     with:
       mod_id: Bannerlord.BLSE
