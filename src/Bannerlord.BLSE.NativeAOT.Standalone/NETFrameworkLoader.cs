@@ -1,10 +1,15 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace Bannerlord.BLSE;
 
-file unsafe struct ICLRRuntimeHost
+[SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
+[SuppressMessage("ReSharper", "UnusedVariable")]
+file readonly unsafe struct ICLRRuntimeHost
 {
-    private ICLRRuntimeHostVtbl* vtbl;
+#pragma warning disable CS0649
+    private readonly ICLRRuntimeHostVtbl* vtbl;
+#pragma warning restore CS0649
     
     public static nint Release(ICLRRuntimeHost* host)
     {
@@ -33,29 +38,37 @@ file unsafe struct ICLRRuntimeHost
         }
     }
 }
-file unsafe struct ICLRRuntimeHostVtbl
+[SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
+[SuppressMessage("ReSharper", "UnusedVariable")]
+file readonly unsafe struct ICLRRuntimeHostVtbl
 {
-    public void* QueryInterface;
-    public void* AddRef;
-    public void* Release;
-    public void* Start;
-    public void* Stop;
-    public void* SetHostControl;
-    public void* GetCLRControl;
-    public void* UnloadAppDomain;
-    public void* ExecuteInAppDomain;
-    public void* GetCurrentAppDomainId;
-    public void* ExecuteApplication;
-    public void* ExecuteInDefaultAppDomain;
+#pragma warning disable CS0649
+    public readonly void* QueryInterface;
+    public readonly void* AddRef;
+    public readonly void* Release;
+    public readonly void* Start;
+    public readonly void* Stop;
+    public readonly void* SetHostControl;
+    public readonly void* GetCLRControl;
+    public readonly void* UnloadAppDomain;
+    public readonly void* ExecuteInAppDomain;
+    public readonly void* GetCurrentAppDomainId;
+    public readonly void* ExecuteApplication;
+    public readonly void* ExecuteInDefaultAppDomain;
+#pragma warning restore CS0649
 }
 
-file unsafe struct ICLRRuntimeInfo
+[SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
+[SuppressMessage("ReSharper", "UnusedVariable")]
+file readonly unsafe struct ICLRRuntimeInfo
 {
-    private static Guid CLSID_CLRRuntimeHost = new("90F1A06E-7712-4762-86B5-7A5EBA6BDB02");
-    private static Guid IID_ICLRRuntimeHost = new("90F1A06C-7712-4762-86B5-7A5EBA6BDB02");
+    private static readonly Guid CLSID_CLRRuntimeHost = new("90F1A06E-7712-4762-86B5-7A5EBA6BDB02");
+    private static readonly Guid IID_ICLRRuntimeHost = new("90F1A06C-7712-4762-86B5-7A5EBA6BDB02");
     
-    private ICLRRuntimeInfoVtbl* vtbl;
-    
+#pragma warning disable CS0649
+    private readonly ICLRRuntimeInfoVtbl* vtbl;
+#pragma warning restore CS0649
+
     public static nint Release(ICLRRuntimeInfo* host)
     {
         var release = (delegate*<ICLRRuntimeInfo*, nint>) host->vtbl->Release;
@@ -80,36 +93,44 @@ file unsafe struct ICLRRuntimeInfo
         }
     }
 }
-file unsafe struct ICLRRuntimeInfoVtbl
+[SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
+[SuppressMessage("ReSharper", "UnusedVariable")]
+file readonly unsafe struct ICLRRuntimeInfoVtbl
 {
-    public void* QueryInterface;
-    public void* AddRef;
-    public void* Release;
-    public void* GetVersionString;
-    public void* GetRuntimeDirectory;
-    public void* IsLoaded;
-    public void* LoadErrorString;
-    public void* LoadLibrary;
-    public void* GetProcAddress;
-    public void* GetInterface;
-    public void* IsLoadable;
-    public void* SetDefaultStartupFlags;
-    public void* GetDefaultStartupFlags;
-    public void* BindAsLegacyV2Runtime;
-    public void* IsStarted;
+#pragma warning disable CS0649
+    public readonly void* QueryInterface;
+    public readonly void* AddRef;
+    public readonly void* Release;
+    public readonly void* GetVersionString;
+    public readonly void* GetRuntimeDirectory;
+    public readonly void* IsLoaded;
+    public readonly void* LoadErrorString;
+    public readonly void* LoadLibrary;
+    public readonly void* GetProcAddress;
+    public readonly void* GetInterface;
+    public readonly void* IsLoadable;
+    public readonly void* SetDefaultStartupFlags;
+    public readonly void* GetDefaultStartupFlags;
+    public readonly void* BindAsLegacyV2Runtime;
+    public readonly void* IsStarted;
+#pragma warning restore CS0649
 }
 
-file unsafe struct ICLRMetaHost
+[SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
+[SuppressMessage("ReSharper", "UnusedVariable")]
+file readonly unsafe struct ICLRMetaHost
 {
-    private static Guid CLSID_CLRMetaHost = new("9280188D-0E8E-4867-B30C-7FA83884E8DE");
-    private static Guid IID_ICLRMetaHost = new("D332DB9E-B9B3-4125-8207-A14884F53216");
+    private static readonly Guid CLSID_CLRMetaHost = new("9280188D-0E8E-4867-B30C-7FA83884E8DE");
+    private static readonly Guid IID_ICLRMetaHost = new("D332DB9E-B9B3-4125-8207-A14884F53216");
     
-    private static Guid IID_ICLRRuntimeInfo = new("BD39D1D2-BA2F-486A-89B0-B4B0CB466891");
+    private static readonly Guid IID_ICLRRuntimeInfo = new("BD39D1D2-BA2F-486A-89B0-B4B0CB466891");
 
     [DllImport("mscoree")]
     private static extern int CLRCreateInstance(Guid* clsId, Guid* rIId, ICLRMetaHost** instance);
     
-    private ICLRMetaHostVtbl *vtbl;
+#pragma warning disable CS0649
+    private readonly ICLRMetaHostVtbl *vtbl;
+#pragma warning restore CS0649
 
     public static ICLRMetaHost* Create()
     {
@@ -141,20 +162,25 @@ file unsafe struct ICLRMetaHost
         }
     }
 }
-file unsafe struct ICLRMetaHostVtbl
+[SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
+[SuppressMessage("ReSharper", "UnusedVariable")]
+file readonly unsafe struct ICLRMetaHostVtbl
 {
-    public void* QueryInterface;
-    public void* AddRef;
-    public void* Release;
-    public void* GetRuntime;
-    public void* GetVersionFromFile;
-    public void* EnumerateInstalledRuntimes;
-    public void* EnumerateLoadedRuntimes;
-    public void* RequestRuntimeLoadedNotification;
-    public void* QueryLegacyV2RuntimeBinding;
-    public void* ExitProcess;
+#pragma warning disable CS0649
+    public readonly void* QueryInterface;
+    public readonly void* AddRef;
+    public readonly void* Release;
+    public readonly void* GetRuntime;
+    public readonly void* GetVersionFromFile;
+    public readonly void* EnumerateInstalledRuntimes;
+    public readonly void* EnumerateLoadedRuntimes;
+    public readonly void* RequestRuntimeLoadedNotification;
+    public readonly void* QueryLegacyV2RuntimeBinding;
+    public readonly void* ExitProcess;
+#pragma warning restore CS0649
 }
 
+[SuppressMessage("ReSharper", "UnusedVariable")]
 public static unsafe class NETFrameworkLoader
 {
     public static void Launch(string[] args)
