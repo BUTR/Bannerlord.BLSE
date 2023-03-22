@@ -33,6 +33,9 @@ public static class NETCoreLoader
 
     public static void Launch(string[] args)
     {
+        // Catch AccessViolation. .NET Core 3.1 still allows that
+        Environment.SetEnvironmentVariable("COMPlus_legacyCorruptedStateExceptionsPolicy", "1");
+
         // Disable aggressive inlining of JIT by disabling JIT Optimizations
         // TODO: This is kinda extreme. What could be done?
         Environment.SetEnvironmentVariable("COMPlus_JITMinOpts", "1");

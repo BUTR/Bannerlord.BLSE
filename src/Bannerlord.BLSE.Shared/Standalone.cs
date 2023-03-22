@@ -94,7 +94,6 @@ Press Yes to exit, press No to continue loading";
         }
     }
 
-    [STAThread]
     public static void Launch(string[] args)
     {
         if (Environment.OSVersion.Version.Major >= 6)

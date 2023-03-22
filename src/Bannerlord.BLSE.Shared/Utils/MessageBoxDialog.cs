@@ -4,7 +4,7 @@ using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace Bannerlord.BLSE.Shared.Utils;
 
-public static class MessageBoxDialog
+internal static class MessageBoxDialog
 {
     public static MessageBoxResult Show(string text) =>
         (MessageBoxResult) PInvoke.MessageBox(HWND.Null, text, "\0", (MESSAGEBOX_STYLE) MessageBoxButtons.Ok);

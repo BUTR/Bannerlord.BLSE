@@ -54,7 +54,7 @@ namespace Bannerlord.BLSE.Features.Interceptor
         {
             var configName = Common.ConfigName;
 
-            foreach (var moduleInfo in ModuleInfoHelper.GetLoadedModules().OfType<ModuleInfoExtendedWithMetadata>())
+            foreach (var moduleInfo in ModuleInfoHelper.GetLoadedModules())
             {
                 foreach (var subModule in moduleInfo.SubModules)
                 {

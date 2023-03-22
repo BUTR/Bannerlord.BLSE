@@ -15,6 +15,8 @@ public static class Program
     {
         //PInvoke.ShowWindow(PInvoke.GetConsoleWindow(), SHOW_WINDOW_CMD.SW_HIDE);
 
+        LauncherExceptionHandler.Watch();
+
         switch (args[0])
         {
             case "launcher":
