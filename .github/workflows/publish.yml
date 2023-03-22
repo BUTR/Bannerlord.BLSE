@@ -58,9 +58,9 @@ jobs:
       - name: Build Bannerlord.BLSE
         run: |
           mkdir bannerlord;
-          dotnet build src/Bannerlord.BLSE.Standalone/Bannerlord.BLSE.Standalone.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
-          dotnet build src/Bannerlord.BLSE.Launcher/Bannerlord.BLSE.Launcher.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
-          dotnet build src/Bannerlord.BLSE.LauncherEx/Bannerlord.BLSE.LauncherEx.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
+          dotnet build src/Bannerlord.BLSE.NativeAOT.Standalone/Bannerlord.BLSE.Standalone.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
+          dotnet build src/Bannerlord.BLSE.NativeAOT.Launcher/Bannerlord.BLSE.Launcher.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
+          dotnet build src/Bannerlord.BLSE.NativeAOT.LauncherEx/Bannerlord.BLSE.LauncherEx.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
         shell: pwsh
 
       - name: Upload Bannerlord folder
