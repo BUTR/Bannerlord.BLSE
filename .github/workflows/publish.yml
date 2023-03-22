@@ -97,7 +97,7 @@ jobs:
   ###########################
   publish-on-nexusmods:
     if: false && github.ref == 'refs/heads/master'
-    needs: ["build"]
+    needs: ["build-changelog", "build-loaders", "build-shared"]
     uses: BUTR/workflows/.github/workflows/release-nexusmods.yml@master
     with:
       nexusmods_game_id: mountandblade2bannerlord
