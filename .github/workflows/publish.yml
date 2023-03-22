@@ -7,9 +7,9 @@ on:
       - 'src/Bannerlord.LauncherEx/**.*'
       - 'src/Bannerlord.BLSE/**.*'
       - 'src/Bannerlord.BLSE.Shared/**.*'
-      - 'src/Bannerlord.BLSE.Standalone/**.*'
-      - 'src/Bannerlord.BLSE.Launcher/**.*'
-      - 'src/Bannerlord.BLSE.LauncherEx/**.*'
+      - 'src/Bannerlord.BLSE.NativeAOT.Standalone/**.*'
+      - 'src/Bannerlord.BLSE.NativeAOT.Launcher/**.*'
+      - 'src/Bannerlord.BLSE.NativeAOT.LauncherEx/**.*'
   workflow_dispatch:
 
 env:
@@ -21,8 +21,8 @@ env:
   DOTNET_CLI_TELEMETRY_OPTOUT: true
 
 jobs:
-  build-changelog:
-    name: Build Shared
+  get-changelog:
+    name: Get Changelog
     runs-on: ubuntu-latest
     outputs:
       mod_version: ${{ steps.changelog.outputs.mod_version }}
@@ -97,7 +97,7 @@ jobs:
   ###########################
   publish-on-nexusmods:
     if: false && github.ref == 'refs/heads/master'
-    needs: ["build-changelog", "build-loaders", "build-shared"]
+    needs: ["get-changelog", "build-loaders", "build-shared"]
     uses: BUTR/workflows/.github/workflows/release-nexusmods.yml@master
     with:
       nexusmods_game_id: mountandblade2bannerlord
@@ -115,7 +115,7 @@ jobs:
   ###########################
   publish-on-github:
     if: github.ref == 'refs/heads/master'
-    needs: ["build-changelog", "build-loaders", "build-shared"]
+    needs: ["get-changelog", "build-loaders", "build-shared"]
     uses: BUTR/workflows/.github/workflows/release-github.yml@master
     with:
       mod_id: Bannerlord.BLSE
