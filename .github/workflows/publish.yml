@@ -7,9 +7,9 @@ on:
       - 'src/Bannerlord.LauncherEx/**.*'
       - 'src/Bannerlord.BLSE/**.*'
       - 'src/Bannerlord.BLSE.Shared/**.*'
-      - 'src/Bannerlord.BLSE.NativeAOT.Standalone/**.*'
-      - 'src/Bannerlord.BLSE.NativeAOT.Launcher/**.*'
-      - 'src/Bannerlord.BLSE.NativeAOT.LauncherEx/**.*'
+      - 'src/Bannerlord.BLSE.Loaders.Standalone/**.*'
+      - 'src/Bannerlord.BLSE.Loaders.Launcher/**.*'
+      - 'src/Bannerlord.BLSE.Loaders.LauncherEx/**.*'
   workflow_dispatch:
 
 env:
@@ -46,7 +46,7 @@ jobs:
   
   build-loaders-standalone:
     name: Build Loaders Standalone
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
@@ -55,10 +55,10 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Build Bannerlord.BLSE.NativeAOT.Standalone
+      - name: Build Bannerlord.BLSE.Loaders.Standalone
         run: |
           mkdir bannerlord;
-          dotnet build src/Bannerlord.BLSE.NativeAOT.Standalone/Bannerlord.BLSE.NativeAOT.Standalone.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
+          dotnet build src/Bannerlord.BLSE.Loaders.Standalone/Bannerlord.BLSE.Loaders.Standalone.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
         shell: pwsh
 
       - name: Upload Bannerlord folder
@@ -70,7 +70,7 @@ jobs:
   
   build-loaders-launcher:
     name: Build Loaders Launcher
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
@@ -79,10 +79,10 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Build Bannerlord.BLSE.NativeAOT.Launcher
+      - name: Build Bannerlord.BLSE.Loaders.Launcher
         run: |
           mkdir bannerlord;
-          dotnet build src/Bannerlord.BLSE.NativeAOT.Launcher/Bannerlord.BLSE.NativeAOT.Launcher.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
+          dotnet build src/Bannerlord.BLSE.Loaders.Launcher/Bannerlord.BLSE.Loaders.Launcher.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
         shell: pwsh
 
       - name: Upload Bannerlord folder
@@ -94,7 +94,7 @@ jobs:
   
   build-loaders-launcherex:
     name: Build Loaders LauncehrEx
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
@@ -103,10 +103,10 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Build Bannerlord.BLSE.NativeAOT.LauncherEx
+      - name: Build Bannerlord.BLSE.Loaders.LauncherEx
         run: |
           mkdir bannerlord;
-          dotnet build src/Bannerlord.BLSE.NativeAOT.LauncherEx/Bannerlord.BLSE.NativeAOT.LauncherEx.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
+          dotnet build src/Bannerlord.BLSE.Loaders.LauncherEx/Bannerlord.BLSE.Loaders.LauncherEx.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
         shell: pwsh
 
       - name: Upload Bannerlord folder

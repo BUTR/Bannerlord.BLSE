@@ -4,6 +4,8 @@ using HarmonyLib.BUTR.Extensions;
 using System;
 using System.IO;
 using System.Reflection;
+using System.Runtime.ExceptionServices;
+using System.Security;
 using System.Text;
 
 namespace Bannerlord.BLSE.Shared.Utils;
@@ -31,6 +33,7 @@ internal static class LauncherExceptionHandler
         _harmony.Unpatch(AccessTools2.DeclaredMethod("TaleWorlds.Starter.Library.Program:Main"), AccessTools2.Method(typeof(Unblocker), nameof(MainPrefix)));
     }
 
+    [HandleProcessCorruptedStateExceptions, SecurityCritical]
     private static void CurrentDomainOnUnhandledException(object? _, UnhandledExceptionEventArgs e)
     {
         static string GetRecursiveException(Exception ex) => new StringBuilder()

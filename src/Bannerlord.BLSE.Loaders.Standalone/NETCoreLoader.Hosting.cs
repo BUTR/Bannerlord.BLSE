@@ -1,20 +1,24 @@
-﻿using System.Runtime.InteropServices;
+﻿#if NETCOREHOSTING
+using System;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Bannerlord.BLSE;
 
-[UnmanagedFunctionPointer(CallingConvention.StdCall)]
-file delegate void EntryDelegate(int argc, IntPtr[] argv);
-
-public static partial class NETCoreLoader
+public static class NETCoreLoader
 {
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    private delegate void EntryDelegate(int argc, IntPtr[] argv);
+
     private const string CoreCLRPath = "Microsoft.NETCore.App/coreclr.dll";
 
-    [LibraryImport(CoreCLRPath)]
-    private static partial int coreclr_initialize(IntPtr exePath, IntPtr appDomainFriendlyName, int propertyCount, IntPtr[] propertyKeys, IntPtr[] propertyValues, out IntPtr hostHandle, out IntPtr domainId);
+    [DllImport(CoreCLRPath)]
+    private static extern int coreclr_initialize(IntPtr exePath, IntPtr appDomainFriendlyName, int propertyCount, IntPtr[] propertyKeys, IntPtr[] propertyValues, out IntPtr hostHandle, out IntPtr domainId);
 
-    [LibraryImport(CoreCLRPath)]
-    private static partial int coreclr_create_delegate(IntPtr hostHandle, uint domainId, IntPtr entryPointAssemblyName, IntPtr entryPointTypeName, IntPtr entryPointMethodName, out IntPtr @delegate);
+    [DllImport(CoreCLRPath)]
+    private static extern int coreclr_create_delegate(IntPtr hostHandle, uint domainId, IntPtr entryPointAssemblyName, IntPtr entryPointTypeName, IntPtr entryPointMethodName, out IntPtr @delegate);
 
     private static IntPtr NativeUTF8(string str)
     {
@@ -90,3 +94,4 @@ public static partial class NETCoreLoader
         @delegate(args.Length, args2);
     }
 }
+#endif

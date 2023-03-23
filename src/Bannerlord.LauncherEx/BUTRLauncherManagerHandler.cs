@@ -57,7 +57,10 @@ namespace Bannerlord.LauncherEx
                 loadLoadOrder: LoadTWLoadOrder,
                 saveLoadOrder: loadOrder =>
                 {
-                    var userGameTypeData = _userDataManager.UserData.SingleplayerData;
+                    if (_getState is null) return;
+
+                    var state = _getState();
+                    var userGameTypeData = state.IsSingleplayer ? _userDataManager.UserData.SingleplayerData : _userDataManager.UserData.MultiplayerData;
                     userGameTypeData.ModDatas.Clear();
                     foreach (var (id, entry) in loadOrder)
                     {
@@ -67,6 +70,7 @@ namespace Bannerlord.LauncherEx
                             IsSelected = entry.IsSelected,
                         });
                     }
+                    _userDataManager.UserData.GameType = state.IsSingleplayer ? GameType.Singleplayer : GameType.Multiplayer;
                     _userDataManager.SaveUserData();
                 },
                 sendNotification: (id, type, message, ms) =>

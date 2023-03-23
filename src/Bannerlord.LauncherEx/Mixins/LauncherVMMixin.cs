@@ -379,29 +379,6 @@ namespace Bannerlord.LauncherEx.Mixins
             OptionsEngineData.Save();
         }
 
-        public void UpdateAndSaveUserModsData(bool isMultiplayer)
-        {
-            if (_userDataManager is null || ViewModel?.ModsData.GetModules() is not { } modules)
-                return;
-            if (_userDataManager.UserData.GameType == GameType.Singleplayer && isMultiplayer)
-                return;
-            if (_userDataManager.UserData.GameType == GameType.Multiplayer && !isMultiplayer)
-                return;
-
-            var userData = _userDataManager.UserData;
-            var userGameTypeData = isMultiplayer ? userData.MultiplayerData : userData.SingleplayerData;
-            userGameTypeData.ModDatas.Clear();
-            foreach (var moduleVM in modules)
-            {
-                userGameTypeData.ModDatas.Add(new UserModData
-                {
-                    Id = moduleVM.ModuleInfoExtended.Id,
-                    IsSelected = moduleVM.IsSelected,
-                });
-            }
-            _userDataManager.SaveUserData();
-        }
-
         // Ensure save is triggered when launching the game
         [BUTRDataSourceMethod]
         public void ExecuteConfirmUnverifiedDLLStart()
