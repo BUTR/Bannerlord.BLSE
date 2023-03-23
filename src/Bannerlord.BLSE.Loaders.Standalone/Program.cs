@@ -1,4 +1,7 @@
-﻿namespace Bannerlord.BLSE;
+﻿using System.IO;
+using System.Linq;
+
+namespace Bannerlord.BLSE;
 
 public static class Program
 {
@@ -11,16 +14,22 @@ public static class Program
 #elif LAUNCHEREX
         args = new[] { "launcherex" }.Concat(args).ToArray();
 #endif
+
         switch (new DirectoryInfo(Directory.GetCurrentDirectory()).Name)
         {
             case "Win64_Shipping_Client":
-                NETFrameworkLoader.Launch(args);
+            {
+                if (args.Contains("/forcenetcore"))
+                    NETCoreLoader.Launch(args);
+                else
+                    NETFrameworkLoader.Launch(args);
                 break;
+            }
             case "Gaming.Desktop.x64_Shipping_Client":
+            {
                 NETCoreLoader.Launch(args);
                 break;
+            }
         }
-        
-        NETFrameworkLoader.Launch(args);
     }
 }

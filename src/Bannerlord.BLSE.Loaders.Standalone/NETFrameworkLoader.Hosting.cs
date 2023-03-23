@@ -1,7 +1,47 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿#if NETFRAMEWORKHOSTING
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace Bannerlord.BLSE;
+
+[SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
+[SuppressMessage("ReSharper", "UnusedVariable")]
+file readonly unsafe struct IEnumUnknown
+{
+#pragma warning disable CS0649
+    private readonly IEnumUnknownVtbl* vtbl;
+#pragma warning restore CS0649
+
+    public static nint Release(IEnumUnknown* host)
+    {
+        var release = (delegate*<IEnumUnknown*, nint>) host->vtbl->Release;
+        return release(host);
+    }
+    
+    public static nint Next<T>(IEnumUnknown* host, int celt, T** pEnumRuntime, int* pCeltFetched) where T : unmanaged
+    {
+        var start = (delegate*<IEnumUnknown*, int, T**, int*, nint>) host->vtbl->Next;
+        return start(host, celt, pEnumRuntime, pCeltFetched);
+    }
+}
+
+[SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
+[SuppressMessage("ReSharper", "UnusedVariable")]
+file readonly unsafe struct IEnumUnknownVtbl
+{
+#pragma warning disable CS0649
+    public readonly void* QueryInterface;
+    public readonly void* AddRef;
+    public readonly void* Release;
+    public readonly void* Next;
+    public readonly void* Skip;
+    public readonly void* Reset;
+    public readonly void* Clone;
+#pragma warning restore CS0649
+}
 
 [SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
 [SuppressMessage("ReSharper", "UnusedVariable")]
@@ -75,6 +115,15 @@ file readonly unsafe struct ICLRRuntimeInfo
         return release(host);
     }
     
+    public static string GetVersionString(ICLRRuntimeInfo* host)
+    {
+        var chars = stackalloc char[20];
+        var size = 20;
+        var release = (delegate*<ICLRRuntimeInfo*, void*, int*, nint>) host->vtbl->GetVersionString;
+        var result = release(host, &chars[0], &size);
+        return new string(chars);
+    }
+    
     private static T* GetInterface<T>(ICLRRuntimeInfo* host, Guid* rclsid, Guid* riid) where T : unmanaged
     {
         var getInterface = (delegate*<ICLRRuntimeInfo*, Guid*, Guid*, T**, nint>) host->vtbl->GetInterface;
@@ -116,6 +165,12 @@ file readonly unsafe struct ICLRRuntimeInfoVtbl
 #pragma warning restore CS0649
 }
 
+file unsafe class InstalledRuntime
+{
+    public ICLRRuntimeInfo* RuntimeInfo { get; set; }
+    public string Version { get; set; }
+}
+
 [SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
 [SuppressMessage("ReSharper", "UnusedVariable")]
 file readonly unsafe struct ICLRMetaHost
@@ -147,6 +202,34 @@ file readonly unsafe struct ICLRMetaHost
     {
         var release = (delegate*<ICLRMetaHost*, nint>) host->vtbl->Release;
         return release(host);
+    }
+
+    public static List<InstalledRuntime> GetInstalledRuntimes(ICLRMetaHost* host)
+    {
+        var runtimeEnumerator = EnumerateInstalledRuntimes(host);
+        var list = new List<InstalledRuntime>();
+        var fetched = 0;
+        ICLRRuntimeInfo* runtimeInfo = null;
+        for (;;)
+        {
+            var result = IEnumUnknown.Next(runtimeEnumerator, 1, &runtimeInfo, &fetched);
+            if (result != 0) break;
+            list.Add(new InstalledRuntime
+            {
+                RuntimeInfo = runtimeInfo,
+                Version = ICLRRuntimeInfo.GetVersionString(runtimeInfo),
+            });
+        }
+        IEnumUnknown.Release(runtimeEnumerator);
+        return list;
+    }
+    
+    public static IEnumUnknown* EnumerateInstalledRuntimes(ICLRMetaHost* host)
+    {
+        IEnumUnknown* ptr;
+        var enumerateInstalledRuntimes = (delegate*<ICLRMetaHost*, IEnumUnknown**, nint>) host->vtbl->EnumerateInstalledRuntimes;
+        var result = enumerateInstalledRuntimes(host, &ptr);
+        return ptr;
     }
     
     public static ICLRRuntimeInfo* GetRuntime(ICLRMetaHost* host, string str)
@@ -189,12 +272,14 @@ public static unsafe class NETFrameworkLoader
         Environment.SetEnvironmentVariable("COMPlus_legacyCorruptedStateExceptionsPolicy", "1");
 
         var clrMetaHost = ICLRMetaHost.Create();
-        var runtimeInfo = ICLRMetaHost.GetRuntime(clrMetaHost, "v4.0.30319");
-        var runtimeHost = ICLRRuntimeInfo.GetRuntimeHost(runtimeInfo);
+        var runtimes = ICLRMetaHost.GetInstalledRuntimes(clrMetaHost);
+        var runtime = runtimes.OrderBy(x => x.Version).Last(x => x.Version.StartsWith("v4"));
+        var runtimeHost = ICLRRuntimeInfo.GetRuntimeHost(runtime.RuntimeInfo);
         var startResult = ICLRRuntimeHost.Start(runtimeHost);
         var executeResult = ICLRRuntimeHost.ExecuteInDefaultAppDomain(runtimeHost, "Bannerlord.BLSE.Shared.dll", "Bannerlord.BLSE.Shared.Program", "NativeEntry2", string.Join("|||", args));
-        ICLRRuntimeInfo.Release(runtimeInfo);
+        ICLRRuntimeInfo.Release(runtime.RuntimeInfo);
         ICLRRuntimeHost.Release(runtimeHost);
         ICLRMetaHost.Release(clrMetaHost);
     }
 }
+#endif

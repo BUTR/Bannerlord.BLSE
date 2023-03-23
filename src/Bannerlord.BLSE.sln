@@ -33,11 +33,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bannerlord.BLSE.Shared", "B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "loaders", "loaders", "{15129193-D2B6-4A7C-97EF-3736ED1372CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bannerlord.BLSE.NativeAOT.Launcher", "Bannerlord.BLSE.NativeAOT.Launcher\Bannerlord.BLSE.NativeAOT.Launcher.csproj", "{A99D50E0-924A-47A3-A465-5D53F2DDE4DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bannerlord.BLSE.Loaders.Launcher", "Bannerlord.BLSE.Loaders.Launcher\Bannerlord.BLSE.Loaders.Launcher.csproj", "{A99D50E0-924A-47A3-A465-5D53F2DDE4DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bannerlord.BLSE.NativeAOT.Standalone", "Bannerlord.BLSE.NativeAOT.Standalone\Bannerlord.BLSE.NativeAOT.Standalone.csproj", "{25C39C41-4013-440F-A1BA-5F25EF6A040B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bannerlord.BLSE.Loaders.Standalone", "Bannerlord.BLSE.Loaders.Standalone\Bannerlord.BLSE.Loaders.Standalone.csproj", "{25C39C41-4013-440F-A1BA-5F25EF6A040B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bannerlord.BLSE.NativeAOT.LauncherEx", "Bannerlord.BLSE.NativeAOT.LauncherEx\Bannerlord.BLSE.NativeAOT.LauncherEx.csproj", "{1605D5AF-A37B-4062-AAB7-DAA921AF74FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bannerlord.BLSE.Loaders.LauncherEx", "Bannerlord.BLSE.Loaders.LauncherEx\Bannerlord.BLSE.Loaders.LauncherEx.csproj", "{1605D5AF-A37B-4062-AAB7-DAA921AF74FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,16 +59,16 @@ Global
 		{59A34CE4-AC23-495F-BC7B-133114E7E6D8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A99D50E0-924A-47A3-A465-5D53F2DDE4DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A99D50E0-924A-47A3-A465-5D53F2DDE4DE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A99D50E0-924A-47A3-A465-5D53F2DDE4DE}.Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{A99D50E0-924A-47A3-A465-5D53F2DDE4DE}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{A99D50E0-924A-47A3-A465-5D53F2DDE4DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A99D50E0-924A-47A3-A465-5D53F2DDE4DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25C39C41-4013-440F-A1BA-5F25EF6A040B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25C39C41-4013-440F-A1BA-5F25EF6A040B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{25C39C41-4013-440F-A1BA-5F25EF6A040B}.Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{25C39C41-4013-440F-A1BA-5F25EF6A040B}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{25C39C41-4013-440F-A1BA-5F25EF6A040B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25C39C41-4013-440F-A1BA-5F25EF6A040B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1605D5AF-A37B-4062-AAB7-DAA921AF74FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1605D5AF-A37B-4062-AAB7-DAA921AF74FC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1605D5AF-A37B-4062-AAB7-DAA921AF74FC}.Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{1605D5AF-A37B-4062-AAB7-DAA921AF74FC}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{1605D5AF-A37B-4062-AAB7-DAA921AF74FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1605D5AF-A37B-4062-AAB7-DAA921AF74FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
