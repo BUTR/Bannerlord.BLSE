@@ -14,19 +14,18 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
+using Windows.Win32;
+
 namespace Bannerlord.BLSE.Shared;
 
 public static class LauncherEx
 {
-    [DllImport("user32.dll")]
-    private static extern bool SetProcessDPIAware();
-
     private static readonly Harmony _featureHarmony = new("bannerlord.blse.features");
 
     public static void Launch(string[] args)
     {
         if (Environment.OSVersion.Version.Major >= 6)
-            SetProcessDPIAware();
+            PInvoke.SetProcessDPIAware();
 
         InterceptorFeature.Enable(_featureHarmony);
         AssemblyResolverFeature.Enable(_featureHarmony);

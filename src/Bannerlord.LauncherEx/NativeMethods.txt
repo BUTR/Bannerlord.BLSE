@@ -10,3 +10,12 @@ Process32First
 Process32Next
 CloseHandle
 MessageBox
+IsClipboardFormatAvailable
+GetClipboardData
+GlobalLock
+GlobalUnlock
+OpenClipboard
+CloseClipboard
+SetClipboardData
+EmptyClipboard
+GlobalSize

@@ -18,6 +18,8 @@ using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade.Launcher.Library;
 using TaleWorlds.SaveSystem;
 
+using Windows.Win32;
+
 using MessageBoxButtons = Bannerlord.BLSE.Shared.Utils.MessageBoxButtons;
 using MessageBoxDefaultButton = Bannerlord.BLSE.Shared.Utils.MessageBoxDefaultButton;
 using MessageBoxIcon = Bannerlord.BLSE.Shared.Utils.MessageBoxIcon;
@@ -26,9 +28,6 @@ namespace Bannerlord.BLSE.Shared;
 
 public static class Standalone
 {
-    [DllImport("user32.dll")]
-    private static extern bool SetProcessDPIAware();
-
     private static readonly Harmony _featureHarmony = new("bannerlord.blse.features");
 
     private static string[] GetModules(MetaData metadata)
@@ -97,7 +96,7 @@ Press Yes to exit, press No to continue loading";
     public static void Launch(string[] args)
     {
         if (Environment.OSVersion.Version.Major >= 6)
-            SetProcessDPIAware();
+            PInvoke.SetProcessDPIAware();
 
         TryLoadLoadOrderFromSaveFile(ref args);
 

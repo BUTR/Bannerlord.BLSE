@@ -8,7 +8,7 @@
     <Nullable>enable</Nullable>
     <ApplicationIcon>../../resources/BLSE_SMALL.ico</ApplicationIcon>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DefineConstants>$(DefineConstants);LAUNCHER;NETCOREHOSTING;_NETFRAMEWORKHOSTING</DefineConstants>
+    <DefineConstants>$(DefineConstants);LAUNCHEREX;NETCOREHOSTING;_NETFRAMEWORKHOSTING</DefineConstants>
     <AssemblyName>Bannerlord.BLSE.LauncherEx</AssemblyName>
   </PropertyGroup>
 

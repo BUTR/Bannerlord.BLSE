@@ -2,3 +2,4 @@ MessageBox
 DeleteFile
 GetConsoleWindow
 ShowWindow
+SetProcessDPIAware

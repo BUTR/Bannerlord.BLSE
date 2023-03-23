@@ -53,7 +53,7 @@ public static class Program
         }
         Main(args);
     }
-    
+
     public static int NativeEntry2(string args)
     {
         GetEntryAssembly.Enable();

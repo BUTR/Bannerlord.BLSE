@@ -11,7 +11,7 @@ public static class NETCoreLoader
 {
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     private delegate void EntryDelegate(int argc, IntPtr[] argv);
-    
+
     private const string CoreCLRPath = "Microsoft.NETCore.App/coreclr.dll";
 
     [DllImport(CoreCLRPath)]

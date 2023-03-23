@@ -1,6 +1,4 @@
-﻿using Bannerlord.LauncherEx.Extensions;
-using Bannerlord.LauncherEx.Mixins;
-using Bannerlord.LauncherManager;
+﻿using Bannerlord.LauncherManager;
 
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
@@ -43,16 +41,8 @@ namespace Bannerlord.LauncherEx.Patches
             return true;
         }
 
-        public static bool UpdateAndSaveUserModsDataPrefix(LauncherVM __instance, bool isMultiplayer)
-        {
-            if (__instance.GetMixin<LauncherVMMixin, LauncherVM>() is { } mixin)
-            {
-                mixin.UpdateAndSaveUserModsData(isMultiplayer);
-                return false;
-            }
-
-            return true;
-        }
+        // Disable Vanilla's saving
+        public static bool UpdateAndSaveUserModsDataPrefix() => false;
 
         [MethodImpl(MethodImplOptions.NoOptimization)]
         public static bool GetApplicationVersionOfModulePrefix(string id, ref ApplicationVersion __result)

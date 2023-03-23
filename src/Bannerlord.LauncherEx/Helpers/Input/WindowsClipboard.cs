@@ -3,18 +3,15 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+
+using Windows.Win32;
+using Windows.Win32.Foundation;
 
 namespace Bannerlord.LauncherEx.Helpers;
 
 internal static class WindowsClipboard
 {
-    public static async Task SetTextAsync(string text, CancellationToken cancellation)
-    {
-        await TryOpenClipboardAsync(cancellation);
-
-        InnerSet(text);
-    }
+    private const uint CFUnicodeText = 13;
 
     public static void SetText(string text)
     {
@@ -23,23 +20,23 @@ internal static class WindowsClipboard
         InnerSet(text);
     }
 
-    static void InnerSet(string text)
+    private static unsafe void InnerSet(string text)
     {
-        EmptyClipboard();
-        IntPtr hGlobal = default;
+        PInvoke.EmptyClipboard();
+        var hGlobal = HANDLE.Null;
         try
         {
             var bytes = (text.Length + 1) * 2;
-            hGlobal = Marshal.AllocHGlobal(bytes);
+            hGlobal = (HANDLE) Marshal.AllocHGlobal(bytes);
 
-            if (hGlobal == default)
+            if (hGlobal == IntPtr.Zero)
             {
                 ThrowWin32();
             }
 
-            var target = GlobalLock(hGlobal);
+            var target = new IntPtr(PInvoke.GlobalLock(hGlobal));
 
-            if (target == default)
+            if (target == IntPtr.Zero)
             {
                 ThrowWin32();
             }
@@ -50,52 +47,33 @@ internal static class WindowsClipboard
             }
             finally
             {
-                GlobalUnlock(target);
+                PInvoke.GlobalUnlock(target);
             }
 
-            if (SetClipboardData(cfUnicodeText, hGlobal) == default)
+            if (PInvoke.SetClipboardData(CFUnicodeText, hGlobal) == IntPtr.Zero)
             {
                 ThrowWin32();
             }
 
-            hGlobal = default;
+            hGlobal = HANDLE.Null;
         }
         finally
         {
-            if (hGlobal != default)
+            if (hGlobal != IntPtr.Zero)
             {
                 Marshal.FreeHGlobal(hGlobal);
             }
 
-            CloseClipboard();
+            PInvoke.CloseClipboard();
         }
     }
 
-    static async Task TryOpenClipboardAsync(CancellationToken cancellation)
+    private static void TryOpenClipboard()
     {
         var num = 10;
         while (true)
         {
-            if (OpenClipboard(default))
-            {
-                break;
-            }
-
-            if (--num == 0)
-            {
-                ThrowWin32();
-            }
-
-            await Task.Delay(100, cancellation);
-        }
-    }
-
-    static void TryOpenClipboard()
-    {
-        var num = 10;
-        while (true)
-        {
-            if (OpenClipboard(default))
+            if (PInvoke.OpenClipboard(HWND.Null))
             {
                 break;
             }
@@ -109,20 +87,9 @@ internal static class WindowsClipboard
         }
     }
 
-    public static async Task<string?> GetTextAsync(CancellationToken cancellation)
-    {
-        if (!IsClipboardFormatAvailable(cfUnicodeText))
-        {
-            return null;
-        }
-        await TryOpenClipboardAsync(cancellation);
-
-        return InnerGet();
-    }
-
     public static string? GetText()
     {
-        if (!IsClipboardFormatAvailable(cfUnicodeText))
+        if (!PInvoke.IsClipboardFormatAvailable(CFUnicodeText))
         {
             return null;
         }
@@ -131,26 +98,26 @@ internal static class WindowsClipboard
         return InnerGet();
     }
 
-    static string? InnerGet()
+    private static unsafe string? InnerGet()
     {
-        IntPtr handle = default;
+        var handle = IntPtr.Zero;
 
-        IntPtr pointer = default;
+        var pointer = IntPtr.Zero;
         try
         {
-            handle = GetClipboardData(cfUnicodeText);
-            if (handle == default)
+            handle = PInvoke.GetClipboardData(CFUnicodeText);
+            if (handle == IntPtr.Zero)
             {
                 return null;
             }
 
-            pointer = GlobalLock(handle);
-            if (pointer == default)
+            pointer = new IntPtr(PInvoke.GlobalLock(handle));
+            if (pointer == IntPtr.Zero)
             {
                 return null;
             }
 
-            var size = GlobalSize(handle);
+            var size = (int) PInvoke.GlobalSize(handle);
             var buff = new byte[size];
 
             Marshal.Copy(pointer, buff, 0, size);
@@ -159,50 +126,14 @@ internal static class WindowsClipboard
         }
         finally
         {
-            if (pointer != default)
+            if (pointer != IntPtr.Zero)
             {
-                GlobalUnlock(handle);
+                PInvoke.GlobalUnlock(handle);
             }
 
-            CloseClipboard();
+            PInvoke.CloseClipboard();
         }
     }
 
-    const uint cfUnicodeText = 13;
-
-    static void ThrowWin32()
-    {
-        throw new Win32Exception(Marshal.GetLastWin32Error());
-    }
-
-    [DllImport("User32.dll", SetLastError = true)]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    static extern bool IsClipboardFormatAvailable(uint format);
-
-    [DllImport("User32.dll", SetLastError = true)]
-    static extern IntPtr GetClipboardData(uint uFormat);
-
-    [DllImport("kernel32.dll", SetLastError = true)]
-    static extern IntPtr GlobalLock(IntPtr hMem);
-
-    [DllImport("kernel32.dll", SetLastError = true)]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    static extern bool GlobalUnlock(IntPtr hMem);
-
-    [DllImport("user32.dll", SetLastError = true)]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    static extern bool OpenClipboard(IntPtr hWndNewOwner);
-
-    [DllImport("user32.dll", SetLastError = true)]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    static extern bool CloseClipboard();
-
-    [DllImport("user32.dll", SetLastError = true)]
-    static extern IntPtr SetClipboardData(uint uFormat, IntPtr data);
-
-    [DllImport("user32.dll")]
-    static extern bool EmptyClipboard();
-
-    [DllImport("Kernel32.dll", SetLastError = true)]
-    static extern int GlobalSize(IntPtr hMem);
+    private static void ThrowWin32() => throw new Win32Exception(Marshal.GetLastWin32Error());
 }

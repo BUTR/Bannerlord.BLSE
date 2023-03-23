@@ -9,7 +9,7 @@ namespace Bannerlord.BLSE;
 public static class NETFrameworkLoader
 {
     private delegate void Main(string[] args);
-    
+
     public static void Launch(string[] args)
     {
         // Catch AccessViolation
