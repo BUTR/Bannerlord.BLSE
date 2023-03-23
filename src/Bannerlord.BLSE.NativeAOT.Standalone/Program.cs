@@ -20,7 +20,7 @@ public static class Program
                 NETCoreLoader.Launch(args);
                 break;
         }
-        
+
         NETFrameworkLoader.Launch(args);
     }
 }

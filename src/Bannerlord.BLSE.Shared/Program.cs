@@ -53,7 +53,7 @@ public static class Program
         }
         Main(args);
     }
-    
+
     public static int NativeEntry2(string args)
     {
         Main(args.Split(new[] { "|||" }, StringSplitOptions.RemoveEmptyEntries));
