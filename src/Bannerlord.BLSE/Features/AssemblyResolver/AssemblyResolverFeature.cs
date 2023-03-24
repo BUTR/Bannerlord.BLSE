@@ -44,7 +44,7 @@ namespace Bannerlord.BLSE.Features.AssemblyResolver
 
             try
             {
-                var configName = new DirectoryInfo(Directory.GetCurrentDirectory()).Name;
+                var configName = Path.GetFileName(Directory.GetCurrentDirectory());
 
                 var isInGame = GameUtils.GetModulesNames() is not null;
 

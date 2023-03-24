@@ -15,7 +15,7 @@ namespace Bannerlord.BLSE.Features.Xbox
 
         public static void Enable(Harmony harmony)
         {
-            if (new DirectoryInfo(Directory.GetCurrentDirectory()).Name != "Gaming.Desktop.x64_Shipping_Client")
+            if (Path.GetFileName(Directory.GetCurrentDirectory()) != "Gaming.Desktop.x64_Shipping_Client")
                 return;
 
             ModulePatch.Enable(harmony);

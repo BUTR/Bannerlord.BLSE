@@ -111,7 +111,7 @@ namespace Bannerlord.LauncherEx.Helpers
 
                 // Load official modules before cheking the mods
                 var baseOfficialPath = Path.Combine(Path.GetDirectoryName(typeof(Common).Assembly.Location)!, "../", "../");
-                var officialModulesDirectories = Directory.GetDirectories(Path.Combine(baseOfficialPath, "Modules")).Select(x => new DirectoryInfo(x).Name);
+                var officialModulesDirectories = Directory.GetDirectories(Path.Combine(baseOfficialPath, "Modules")).Select(x => Path.GetFileName(x));
                 var officialModules = officialModulesDirectories.Select(ModuleInfoHelper.LoadFromId).OfType<ModuleInfoExtendedWithMetadata>().Where(x => x.IsOfficial).ToList();
                 var sortedModules = ModuleSorter.Sort(officialModules).OfType<ModuleInfoExtendedWithMetadata>();
                 foreach (var module in sortedModules)
