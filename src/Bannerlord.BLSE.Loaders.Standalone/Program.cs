@@ -15,7 +15,7 @@ public static class Program
         args = new[] { "launcherex" }.Concat(args).ToArray();
 #endif
 
-        switch (new DirectoryInfo(Directory.GetCurrentDirectory()).Name)
+        switch (Path.GetFileName(Directory.GetCurrentDirectory()))
         {
             case "Win64_Shipping_Client":
             {

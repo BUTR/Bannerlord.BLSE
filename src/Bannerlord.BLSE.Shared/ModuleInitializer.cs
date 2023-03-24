@@ -98,7 +98,7 @@ internal static class ModuleInitializer
         path = null;
         var assemblyNameFull = $"{assemblyName.Name}.dll";
 
-        var configName = new DirectoryInfo(Directory.GetCurrentDirectory()).Name;
+        var configName = Path.GetFileName(Directory.GetCurrentDirectory());
 
         var harmonyModuleFolder = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "../", "../", ModuleInfoHelper.ModulesFolder, "Bannerlord.Harmony"));
         if (!Directory.Exists(harmonyModuleFolder))
@@ -133,7 +133,7 @@ internal static class ModuleInitializer
         path = null;
         var assemblyNameFull = $"{assemblyName.Name}.dll";
 
-        var configName = new DirectoryInfo(Directory.GetCurrentDirectory()).Name;
+        var configName = Path.GetFileName(Directory.GetCurrentDirectory());
 
         var harmonySteamModuleFolder = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "../", "../", "../", "../", "workshop", "content", "261550", "2859188632"));
         if (!Directory.Exists(harmonySteamModuleFolder))
@@ -167,7 +167,7 @@ internal static class ModuleInitializer
     {
         var assemblyNameFull = $"{assemblyName.Name}.dll";
 
-        var configName = new DirectoryInfo(Directory.GetCurrentDirectory()).Name;
+        var configName = Path.GetFileName(Directory.GetCurrentDirectory());
         var checkSteam = configName == "Win64_Shipping_Client";
 
         var genericDiscoveryResult = TryResolveHarmonyAssembliesFile(assemblyName, out var genericHarmonyPath);
