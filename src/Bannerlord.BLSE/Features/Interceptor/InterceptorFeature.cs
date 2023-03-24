@@ -24,7 +24,7 @@ namespace Bannerlord.BLSE.Features.Interceptor
         private static IEnumerable<Type> GetInterceptorTypes()
         {
             static bool CheckType(Type type) => type.GetCustomAttributes()
-                .Any(att => string.Equals(att.GetType().FullName, typeof(BUTRLoaderInterceptorAttribute).FullName, StringComparison.Ordinal) ||
+                .Any(att => string.Equals(att.GetType().FullName, "Bannerlord.BLSE.BUTRLoaderInterceptorAttribute", StringComparison.Ordinal) ||
                             string.Equals(att.GetType().FullName, typeof(BLSEInterceptorAttribute).FullName, StringComparison.Ordinal));
 
             var dlls = new HashSet<string>(GetLoadedModulePaths());
