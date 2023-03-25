@@ -3,3 +3,5 @@ DeleteFile
 GetConsoleWindow
 ShowWindow
 SetProcessDPIAware
+OpenProcessToken
+GetTokenInformation
