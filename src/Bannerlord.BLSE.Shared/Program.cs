@@ -15,6 +15,9 @@ public static class Program
     {
         //PInvoke.ShowWindow(PInvoke.GetConsoleWindow(), SHOW_WINDOW_CMD.SW_HIDE);
 
+        if (PlatformHelper.IsSteam())
+            UacHelper.CheckSteam();
+
         LauncherExceptionHandler.Watch();
 
         switch (args[0])
