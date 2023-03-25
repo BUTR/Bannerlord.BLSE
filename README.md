@@ -59,8 +59,41 @@ Can be opted-out via passing **/nounblock** in command-line args.
 Can opted-in by passing **/unblock** in command-line args.
 * **Continue Save File** - Allows to specify the save file to load when launching the game.  
 Can be used by passing **/continuesave _mysavegame_** in command-line args.
+* **Game Pass PC** - Support of modding on the Xbox platform. BLSE disabled Xbox integration, replacing Cloud Saves with saves stored like on Steam/GOG/Epic
 * **Assembly Resolver** - Changes the game's assembly loading priority.  
 If an assembly is available in one of the loaded modules, it will be loaded from there instead, even if the assembly is available in the main **/bin** folder.
 * **Interceptor** - BLSE checks if the is a class with a custom attribute named ***BLSEInterceptorAttribute***. If it's found it checks if there are the following signatures:  
   *  **static void OnInitializeSubModulesPrefix()** - will execute just before the game starts to initialize the SubModules. This gives us the ability to add SubModules declared in other programming languages like [Python](https://github.com/BUTR/Bannerlord.Python) and [Lua](https://github.com/BUTR/Bannerlord.Lua)  
   * **static void OnLoadSubModulesPostfix()** - will execute just after all SubModules were initialized  
+  
+## FAQ
+* I have issues with the installation!
+  * <details>
+    <summary>Xbox Game Pass PC</summary>
+      <p>You need to copy content of '/bin/Gaming.Desktop.x64_Shipping_Client' from BLSE to 'Mount & Blade II- Bannerlord/Content/bin/Gaming.Desktop.x64_Shipping_Client'</p>
+      <img src="https://media.discordapp.net/attachments/422092475163869201/1088721252702765126/image.png" alt="BLSE Installation Path" width="500">
+      <p>You need to copy content of 'Modules/Bannerlord.Harmony' from BLSE to 'Mount & Blade II- Bannerlord/Content/Modules/Bannerlord.Harmony'</p>
+      <img src="https://media.discordapp.net/attachments/422092475163869201/1088721253692616775/image.png" alt="Bannerlord.Harmony Installation Path" width="500">
+    </details>
+  * <details>
+    <summary>Steam</summary>
+      <p>You need to copy content of '/bin/Win64_Shipping_Client' from BLSE to 'Mount & Blade II Bannerlord/bin/Win64_Shipping_Client'</p>
+      <img src="https://media.discordapp.net/attachments/422092475163869201/1088721252962807818/image.png" alt="BLSE Installation Path" width="500">
+      <p>You need to copy content of 'Modules/Bannerlord.Harmony' from BLSE to 'Mount & Blade II Bannerlord/Modules/Bannerlord.Harmony'</p>
+      <img src="https://media.discordapp.net/attachments/422092475163869201/1088721253478711407/image.png" alt="Bannerlord.Harmony Installation Path" width="500">
+    </details>
+  * <details>
+    <summary>GOG</summary>
+      <p>You need to copy content of '/bin/Win64_Shipping_Client' from BLSE to 'Mount & Blade II Bannerlord/bin/Win64_Shipping_Client'</p>
+      <img src="https://media.discordapp.net/attachments/422092475163869201/1088721253185097758/image.png" alt="BLSE Installation Path" width="500">
+      <p>You need to copy content of 'Modules/Bannerlord.Harmony' from BLSE to 'Mount & Blade II Bannerlord/Modules/Bannerlord.Harmony'</p>
+      <img src="https://media.discordapp.net/attachments/422092475163869201/1088725020458614794/image.png" alt="Bannerlord.Harmony Installation Path" width="500">
+    </details>
+* Do I need to include both `Win64_Shipping_Client` and `Gaming.Desktop.x64_Shipping_Client` directories?  
+No!  
+For Xbox Game Pass PC you need only `Gaming.Desktop.x64_Shipping_Client`  
+For Steam/GOG/Epic you need only `Win64_Shipping_Client`  
+* I don't see my old saves on Xbox Game Pass PC!  
+BLSE uses a storage that Steam/GOG/Epic versions of the game use. We do not support Xbox's Cloud Saves!
+* BLSE is not shown in Vortex's Tools!    
+You need to add it manually for now!
