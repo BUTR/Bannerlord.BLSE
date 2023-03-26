@@ -58,10 +58,12 @@ Can be opted-out via passing **/nounblock** in command-line args.
   * Standalone will not automatically unblock files on launch.  
 Can opted-in by passing **/unblock** in command-line args.
 * **Continue Save File** - Allows to specify the save file to load when launching the game.  
-Can be used by passing **/continuesave _mysavegame_** in command-line args.
-* **Game Pass PC** - Support of modding on the Xbox platform. BLSE disabled Xbox integration, replacing Cloud Saves with saves stored like on Steam/GOG/Epic
+  * Can be used by passing **/continuesave _mysavegame_** in command-line args.  
+  * (**Standalone** Only) Passing the save file without the module list is also supported. The game will check all modules from the save file and load them automatically.  
+* **DPI Aware** - Removes the blurry MessageBoxes and Crash Reports.
+* **Game Pass PC** - Support of modding on the Xbox platform. BLSE disabled Xbox integration, replacing Cloud Saves with saves stored like on Steam/GOG/Epic  
 * **Assembly Resolver** - Changes the game's assembly loading priority.  
-If an assembly is available in one of the loaded modules, it will be loaded from there instead, even if the assembly is available in the main **/bin** folder.
+  * If an assembly is available in one of the loaded modules, it will be loaded from there instead, even if the assembly is available in the main **/bin** folder.  
 * **Interceptor** - BLSE checks if the is a class with a custom attribute named ***BLSEInterceptorAttribute***. If it's found it checks if there are the following signatures:  
   *  **static void OnInitializeSubModulesPrefix()** - will execute just before the game starts to initialize the SubModules. This gives us the ability to add SubModules declared in other programming languages like [Python](https://github.com/BUTR/Bannerlord.Python) and [Lua](https://github.com/BUTR/Bannerlord.Lua)  
   * **static void OnLoadSubModulesPostfix()** - will execute just after all SubModules were initialized  

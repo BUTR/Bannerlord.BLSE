@@ -24,7 +24,7 @@ public static class LauncherEx
 
     public static void Launch(string[] args)
     {
-        if (Environment.OSVersion.Version.Major >= 6)
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.OSVersion.Version.Major >= 6)
             PInvoke.SetProcessDPIAware();
 
         InterceptorFeature.Enable(_featureHarmony);

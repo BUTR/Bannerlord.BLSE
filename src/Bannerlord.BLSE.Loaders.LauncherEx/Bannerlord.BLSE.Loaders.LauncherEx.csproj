@@ -48,6 +48,10 @@
   </ItemGroup>
   -->
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.188-beta" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+  </ItemGroup>
+
   <Target Name="PublishRoslynExecutableProjects" AfterTargets="Build">
     <CallTarget Targets="Publish" />
   </Target>
@@ -64,5 +68,5 @@
   <ItemGroup>
     <Compile Include="..\Bannerlord.BLSE.Loaders.Standalone\**\*.cs" Exclude="..\Bannerlord.BLSE.Loaders.Standalone\obj\**\*.cs" />
   </ItemGroup>
-  
+
 </Project>
