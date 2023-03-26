@@ -76,6 +76,7 @@ public static class NETCoreLoader
             return;
         }
 
+        NtfsUnblocker.UnblockFile("Bannerlord.BLSE.Shared.dll");
         var createDelegateResult = coreclr_create_delegate(
             pCLRRuntimeHost,
             (uint) domainId,

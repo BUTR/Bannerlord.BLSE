@@ -3,6 +3,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 using Windows.Win32;
 using Windows.Win32.Foundation;
@@ -10,32 +11,41 @@ using Windows.Win32.Security;
 
 namespace Bannerlord.BLSE.Shared.Utils;
 
+file enum TOKEN_ELEVATION_TYPE
+{
+    TokenElevationTypeDefault = 1,
+    TokenElevationTypeFull,
+    TokenElevationTypeLimited
+}
+
 public static class UacHelper
 {
-    private const string uacRegistryKey = "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System";
-    private const string uacRegistryValue = "EnableLUA";
+    private const string UacRegistryKey = "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System";
+    private const string UacRegistryValue = "EnableLUA";
 
     private static uint STANDARD_RIGHTS_READ = 0x00020000;
     private static uint TOKEN_QUERY = 0x0008;
-
-    public enum TOKEN_ELEVATION_TYPE
-    {
-        TokenElevationTypeDefault = 1,
-        TokenElevationTypeFull,
-        TokenElevationTypeLimited
-    }
 
     public static bool IsUacEnabled
     {
         get
         {
-            using var key = RegistryHandle.GetHKLMSubkey(uacRegistryKey);
-            return key?.GetDwordValue(uacRegistryValue)?.Equals(1) == true;
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                return false;
+
+            using var key = RegistryHandle.GetHKLMSubkey(UacRegistryKey);
+            return key?.GetDwordValue(UacRegistryValue)?.Equals(1) == true;
         }
     }
 
     public static unsafe bool? IsProcessElevated(SafeProcessHandle processHandle)
     {
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            return false;
+
+        // TODO: Linux? Root Steam and non-root game?
+        // From what I saw, Steam blocks attempts to run as Root
+
         try
         {
             if (IsUacEnabled)
