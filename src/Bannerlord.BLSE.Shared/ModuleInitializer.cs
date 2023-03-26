@@ -126,6 +126,7 @@ internal static class ModuleInitializer
             return HarmonyDiscoveryResult.ModuleHarmonyMissing;
 
         path = File.Exists(assemblyFile) ? assemblyFile : string.Empty;
+        NtfsUnblocker.UnblockFile(path);
         return HarmonyDiscoveryResult.Discovered;
     }
     private static HarmonyDiscoveryResult TryResolveHarmonyAssembliesFileFromSteam(AssemblyName assemblyName, out string? path)
@@ -161,6 +162,7 @@ internal static class ModuleInitializer
             return HarmonyDiscoveryResult.ModuleHarmonyMissing;
 
         path = File.Exists(assemblySteamFile) ? assemblySteamFile : string.Empty;
+        NtfsUnblocker.UnblockFile(path);
         return HarmonyDiscoveryResult.Discovered;
     }
     private static string? ResolveHarmonyAssembliesFile(AssemblyName assemblyName)
@@ -276,6 +278,7 @@ If Steam is used, download the Harmony mod from NexusMods!", "Error from BLSE!",
         if (string.IsNullOrEmpty(assemblyFile))
             return null;
 
+        NtfsUnblocker.UnblockFile(assemblyFile!);
         return Assembly.LoadFrom(assemblyFile);
     }
 
