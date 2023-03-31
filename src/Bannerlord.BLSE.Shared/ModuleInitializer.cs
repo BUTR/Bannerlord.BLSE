@@ -114,7 +114,7 @@ internal static class ModuleInitializer
         if (harmonyModuleInfo is null)
             return HarmonyDiscoveryResult.ModuleSubModuleCorrupted;
 
-        if (new ApplicationVersionComparer().Compare(harmonyModuleInfo.Version, new ApplicationVersion(ApplicationVersionType.Release, 2, 10, 0, 0)) < 0)
+        if (new ApplicationVersionComparer().Compare(harmonyModuleInfo.Version, new ApplicationVersion(ApplicationVersionType.Release, 2, 2, 2, 0)) < 0)
             return HarmonyDiscoveryResult.ModuleVersionWrong;
 
         var harmonyBinFolder = Path.Combine(harmonyModuleFolder, "bin", configName);
@@ -210,7 +210,7 @@ If Steam is used, download the Harmony mod from NexusMods!", "Error from BLSE!",
                 return null;
             case HarmonyDiscoveryResult.ModuleVersionWrong:
                 MessageBoxDialog.Show(@"The Harmony module is wrong!
-At least v2.10.1.x is required!
+At least v2.2.2.x is required!
 
 If the module was installed manually, find and install the latest version!
 If Vortex is used, try to reinstall manually the latest version!
@@ -252,10 +252,10 @@ If Steam is used, download the Harmony mod from NexusMods!", "Error from BLSE!",
             return null;
 
         var harmonyX = AssemblyDefinition.ReadAssembly(assemblyFile);
-        if (harmonyX.Name.Version < new Version(2, 10, 1, 0))
+        if (harmonyX.Name.Version < new Version(2, 2, 2, 0))
         {
             MessageBoxDialog.Show(@"The Harmony module is corrupted!
-Wrong 0Harmony.dll version! At least v2.10.1.x is required!
+Wrong 0Harmony.dll version! At least v2.2.2.x is required!
 
 If the module was installed manually, try to do a clean reinstall!
 If Vortex is used, try to reinstall manually!
