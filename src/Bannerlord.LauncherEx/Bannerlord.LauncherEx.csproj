@@ -22,7 +22,7 @@
     <GameVersionConstant>v$(GameVersionFlat)</GameVersionConstant>
     -->
     
-    <DefineConstants>$(DefineConstants);$(GameVersionConstant);HARMONYEXTENSIONS_HARMONYX</DefineConstants>
+    <DefineConstants>$(DefineConstants);$(GameVersionConstant)</DefineConstants>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -83,7 +83,7 @@
     <PackageReference Include="Bannerlord.LauncherManager" Version="$(LauncherManagerVersion)" PrivateAssets="compile" />
     <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    <PackageReference Include="HarmonyX" Version="$(HarmonyVersion)" PrivateAssets="compile" IncludeAssets="compile" />
+    <PackageReference Include="Bannerlord.Lib.Harmony" Version="$(HarmonyVersion)-beta3" PrivateAssets="compile" IncludeAssets="compile" />
     <PackageReference Include="lz4net" Version="1.0.15.93" PrivateAssets="compile" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.188-beta" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="PolySharp" Version="1.12.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />

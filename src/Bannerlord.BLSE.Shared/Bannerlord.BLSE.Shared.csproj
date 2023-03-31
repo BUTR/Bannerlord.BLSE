@@ -8,7 +8,7 @@
     <OutputType>library</OutputType>
     <AssemblyName>Bannerlord.BLSE.Shared</AssemblyName>
 
-    <DefineConstants>$(DefineConstants);HARMONYEXTENSIONS_HARMONYX</DefineConstants>
+    <DefineConstants>$(DefineConstants)</DefineConstants>
 
     <ILRepackTargetConfigurations>$(Configurations);</ILRepackTargetConfigurations>
     <ILRepackAllowDuplicateResources>false</ILRepackAllowDuplicateResources>
