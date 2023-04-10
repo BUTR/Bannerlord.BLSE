@@ -38,7 +38,9 @@ internal static class ModuleInitializer
         var assemblyName = new AssemblyName(e.Name);
         if (assemblyName.Name is "0Harmony")
             return ResolveHarmonyAssembly(assemblyName);
-        if (assemblyName.Name is "Mono.Cecil" or "Mono.Cecil.Mdb" or "Mono.Cecil.Mdb" or "Mono.Cecil.Rocks" or "MonoMod.Utils" or "MonoMod.RuntimeDetour")
+        if (assemblyName.Name is "Mono.Cecil" or "Mono.Cecil.Mdb" or "Mono.Cecil.Mdb" or "Mono.Cecil.Rocks")
+            return ResolveHarmonyAssemblies(assemblyName);
+        if (assemblyName.Name is "MonoMod.Core" or "MonoMod.Utils" or "MonoMod.RuntimeDetour" or "MonoMod.Backports" or "MonoMod.Iced" or "MonoMod.ILHelpers")
             return ResolveHarmonyAssemblies(assemblyName);
         if (assemblyName.Name is "Bannerlord.LauncherEx")
             return ResolveLauncherExAssemblies(assemblyName);

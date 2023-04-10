@@ -34,18 +34,22 @@ public static class NETCoreLoader
 
     public static void Launch(string[] args)
     {
+        var path = AppDomain.CurrentDomain.BaseDirectory;
+        var netCoreDirectory = Path.Combine(path, "Microsoft.NETCore.App");
+
         // Catch AccessViolation. .NET Core 3.1 still allows that
         Environment.SetEnvironmentVariable("COMPlus_legacyCorruptedStateExceptionsPolicy", "1");
 
-        // Disable aggressive inlining of JIT by disabling JIT Optimizations
-        // TODO: This is kinda extreme. What could be done?
-        Environment.SetEnvironmentVariable("COMPlus_JITMinOpts", "1");
+        // Disable aggressive inlining of JIT by disabling JIT Tiered Compilation
+        Environment.SetEnvironmentVariable("COMPlus_TieredCompilation", "0");
+        
+        // Since we have two JIT's loaded - from .NET Framework 4.8 and .NET Core 3.1, MonoMod will use the first one. Force the correct JIT
+        Environment.SetEnvironmentVariable("MONOMOD_JitPath", Path.Combine(netCoreDirectory, "clrjit.dll"));
 
-        var path = AppDomain.CurrentDomain.BaseDirectory;
         var rootFiles = Directory.GetFiles(Path.Combine(path), "*.dll", SearchOption.TopDirectoryOnly)
             .Where(x => Path.GetFileName(x) != "Mono.Cecil.dll") // On .NET Core, the game distributes an old version of Mono.Cecil.dll. Ignore it.
             .Select(x => $"{x};");
-        var netcoreFiles = Directory.GetFiles(Path.Combine(path, "Microsoft.NETCore.App"), "*.dll", SearchOption.TopDirectoryOnly).Select(x => $"{x};");
+        var netcoreFiles = Directory.GetFiles(netCoreDirectory, "*.dll", SearchOption.TopDirectoryOnly).Select(x => $"{x};");
         var aspCoreFiles = Directory.GetFiles(Path.Combine(path, "Microsoft.AspNetCore.App"), "*.dll", SearchOption.TopDirectoryOnly).Select(x => $"{x};");
         var winDeskFiles = Directory.GetFiles(Path.Combine(path, "Microsoft.WindowsDesktop.App"), "*.dll", SearchOption.TopDirectoryOnly).Select(x => $"{x};");
         // Do not set Modules .dll as trusted and to be loaded
