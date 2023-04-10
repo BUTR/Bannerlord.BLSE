@@ -68,6 +68,46 @@ Can opted-in by passing **/unblock** in command-line args.
   *  **static void OnInitializeSubModulesPrefix()** - will execute just before the game starts to initialize the SubModules. This gives us the ability to add SubModules declared in other programming languages like [Python](https://github.com/BUTR/Bannerlord.Python) and [Lua](https://github.com/BUTR/Bannerlord.Lua)  
   * **static void OnLoadSubModulesPostfix()** - will execute just after all SubModules were initialized  
   
+## LauncherEx
+**LauncherEx** is the UI module. It expands the native launcher with the following features:
+* **Option Tab** - provides Game and Engine options, plus the following Launcher options.
+  * **Extended Sorting** - the launcher now respects the community metadata when sorting. Enabled by default.
+  * **Compact Module List** - allows a more compact display of the Module List. Disabled by default.
+  * **Fix Common Issues** - the launcher checks if 0Harmony.dll is present in the main /bin folder. If there is one, will prompt the user whether to delete it.
+  * **File Unblocking** - the launcher will unblock the .dll's if they are locked itself. Enabled by default.
+  * **Beta Sorting** - uses the new algorithm for sorting modules. Tries to respect existing load order when applying a new load order.
+  * **Big Mode** - extends the height of the Native Launcher window.
+* **Save Sub Tab** - shows all available saves, some metadata, plus their load order. Allows to continue a specific save and to import/export a save's load order.
+* **Scrollbar** - the launcher before e1.7.2 didn't had a way to scroll without the mouse wheel. We added a scrollbar to fix this.
+* **Enable/Disable All Mods Checkbox** - added the ability to enable and disable all mods with one click.
+* **Resort Modules Button** - will forcefully reset the module list and force the raw loaded list to be sorted.
+* **Expanded Dependencies Hint** - added our community metadata to be displayed in the Hints added in e1.7.0.
+* **Issue Hint System** - the launcher displays an arrow that when expanded, will display why a mod can't be enabled. The issue can be a wrong dependency module version, binary incompatibility with the current game version
+* **Binary Compatibility Check** - the launcher will check whether the are ABI issues in the module with the current game version. ABI issues mean the module won't work in the game and will need a new updated version.
+* **Import/Export Mod List** - provides a way to export and import Mod Lists with the correct load order and module versions. If a module version is incorrect, with highlight that.
+* **Supports Mod Organizer 2** - full support for MO2 with its virtual FS
+
+## Community Dependency Metadata
+BLSE adds support for a new tag DependedModuleMetadatas that allows you to better define your load order, see the example below
+```xml
+<DependedModuleMetadatas>
+  <!-- order: [ "LoadBeforeThis", "LoadAfterThis" ] -->
+  <!-- optional: [ "true", "false" ] -->
+  <!-- version: [ "e1.0.0.0", "e1.*", "e1.0.*", "e1.0.0.*" ] -->
+  <!-- incompatible: [ "true", "false" ] -->
+
+  <DependedModuleMetadata id="Bannerlord.Harmony" order="LoadBeforeThis" />
+
+  <DependedModuleMetadata id="Native" order="LoadAfterThis" version="e1.4.3.*" />
+  <DependedModuleMetadata id="SandBoxCore" order="LoadAfterThis" version="e1.5.*" />
+  <DependedModuleMetadata id="Sandbox" order="LoadAfterThis" />
+  <DependedModuleMetadata id="StoryMode" order="LoadAfterThis" version="e1.*" optional="true" />
+  <DependedModuleMetadata id="CustomBattle" order="LoadAfterThis" optional="true" />
+
+  <DependedModuleMetadata id="MyCustomMod" incompatible="true" />
+</DependedModuleMetadatas>
+```
+  
 ## FAQ
 * I have issues with the installation!
   * <details>
