@@ -116,7 +116,7 @@ namespace Bannerlord.LauncherEx.ViewModels
             SettingProperties.Add(new SettingsPropertyVM(new SettingsPropertyDefinition
             {
                 DisplayName = new BUTRTextObject("{=1zt99vTt}Enable DPI Scaling").ToString(),
-                HintText = new BUTRTextObject("{=JusnHy6S}Enabes Windows DPI Scaling to remove blurriness of UI elements").ToString(),
+                HintText = $"{new BUTRTextObject("{=44qrhQ6g}Requires restart!")} {new BUTRTextObject("{=JusnHy6S}Enabes Windows DPI Scaling to remove blurriness of UI elements")}",
                 SettingType = SettingType.Bool,
                 PropertyReference = new PropertyRef(typeof(LauncherSettings).GetProperty(nameof(LauncherSettings.EnableDPIScaling))!, this)
             }));

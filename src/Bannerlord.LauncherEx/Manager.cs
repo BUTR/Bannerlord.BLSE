@@ -13,7 +13,6 @@ using System;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Xml;
-using System.Xml.Serialization;
 
 using TaleWorlds.Library;
 
@@ -145,21 +144,12 @@ namespace Bannerlord.LauncherEx
             _launcherHarmony.UnpatchAll(_launcherHarmony.Id);
         }
 
-        public static LauncherExData? CurrentSettingsSnapshot()
+        public static LauncherExData CurrentSettingsSnapshot()
         {
             var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Mount and Blade II Bannerlord", "Configs", "LauncherData.xml");
-            if (!File.Exists(path)) return null;
+            if (!File.Exists(path)) return new();
 
-            var xmlSerializer = new XmlSerializer(typeof(LauncherExData));
-            try
-            {
-                using var xmlReader = XmlReader.Create(path);
-                return (LauncherExData) xmlSerializer.Deserialize(xmlReader);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            return LauncherExData.FromUserDataXml(path) ?? new();
         }
     }
 }
