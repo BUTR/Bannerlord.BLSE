@@ -35,7 +35,7 @@ public static class LauncherEx
         var settings = Manager.CurrentSettingsSnapshot();
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.OSVersion.Version.Major >= 6 && settings is null || settings is { EnableDPIScaling: true })
             PInvoke.SetProcessDPIAware();
-        
+
         Manager.Enable();
 
         ModuleInitializer.Disable();

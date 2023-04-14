@@ -10,7 +10,8 @@
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
 
-    <DefineConstants>$(DefineConstants)</DefineConstants>
+    <GameConfiguration Condition="$(GameConfiguration) == '' AND Exists('$(GameFolder)\bin\Win64_Shipping_Client')">Win64_Shipping_Client</GameConfiguration>
+    <GameConfiguration Condition="$(GameConfiguration) == '' AND Exists('$(GameFolder)\bin\Gaming.Desktop.x64_Shipping_Client')">Gaming.Desktop.x64_Shipping_Client</GameConfiguration>
   </PropertyGroup>
 
   <PropertyGroup>

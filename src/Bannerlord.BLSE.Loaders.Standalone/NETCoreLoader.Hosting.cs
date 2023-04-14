@@ -42,7 +42,7 @@ public static class NETCoreLoader
 
         // Disable aggressive inlining of JIT by disabling JIT Tiered Compilation
         Environment.SetEnvironmentVariable("COMPlus_TieredCompilation", "0");
-        
+
         // Since we have two JIT's loaded - from .NET Framework 4.8 and .NET Core 3.1, MonoMod will use the first one. Force the correct JIT
         Environment.SetEnvironmentVariable("MONOMOD_JitPath", Path.Combine(netCoreDirectory, "clrjit.dll"));
 

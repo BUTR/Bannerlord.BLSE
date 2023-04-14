@@ -62,7 +62,7 @@ jobs:
       - name: ${{matrix.project}} (${{matrix.configuration}})
         run: |
           mkdir bannerlord;
-          dotnet build src/${{matrix.project}}/${{matrix.project}}.csproj --configuration Release -p:GameConfiguration="${{matrix.configuration}}" -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
+          dotnet build src/${{matrix.project}}/${{matrix.project}}.csproj --configuration Release -p:GameConfiguration="${{matrix.configuration}}" -p:GameFolder="$PWD/bannerlord" -p:BuildShared="false" /nowarn:MSB4011;
         shell: pwsh
 
       - name: Upload Bannerlord folder

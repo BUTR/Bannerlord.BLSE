@@ -11,6 +11,7 @@
     <DefineConstants>$(DefineConstants);LAUNCHEREX;NETCOREHOSTING;_NETFRAMEWORKHOSTING</DefineConstants>
     <AssemblyName>Bannerlord.BLSE.LauncherEx</AssemblyName>
 
+    <BuildShared>true</BuildShared>
     <GameConfiguration Condition="$(GameConfiguration) == '' AND Exists('$(GameFolder)\bin\Win64_Shipping_Client')">Win64_Shipping_Client</GameConfiguration>
     <GameConfiguration Condition="$(GameConfiguration) == '' AND Exists('$(GameFolder)\bin\Gaming.Desktop.x64_Shipping_Client')">Gaming.Desktop.x64_Shipping_Client</GameConfiguration>
   </PropertyGroup>
@@ -69,6 +70,10 @@
 
   <ItemGroup>
     <Compile Include="..\Bannerlord.BLSE.Loaders.Standalone\**\*.cs" Exclude="..\Bannerlord.BLSE.Loaders.Standalone\obj\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(BuildShared) == 'true'">
+    <ProjectReference Include="..\Bannerlord.BLSE.Shared\Bannerlord.BLSE.Shared.csproj" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
 </Project>

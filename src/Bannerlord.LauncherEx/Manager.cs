@@ -149,7 +149,7 @@ namespace Bannerlord.LauncherEx
         {
             var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Mount and Blade II Bannerlord", "Configs", "LauncherData.xml");
             if (!File.Exists(path)) return null;
-            
+
             var xmlSerializer = new XmlSerializer(typeof(LauncherExData));
             try
             {

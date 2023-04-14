@@ -11,7 +11,7 @@
     <GameConfiguration Condition="$(GameConfiguration) == '' AND Exists('$(GameFolder)\bin\Win64_Shipping_Client')">Win64_Shipping_Client</GameConfiguration>
     <GameConfiguration Condition="$(GameConfiguration) == '' AND Exists('$(GameFolder)\bin\Gaming.Desktop.x64_Shipping_Client')">Gaming.Desktop.x64_Shipping_Client</GameConfiguration>
 
-    <ILRepackTargetConfigurations>$(Configurations);</ILRepackTargetConfigurations>
+    <ILRepackTargetConfigurations>Release</ILRepackTargetConfigurations>
     <ILRepackAllowDuplicateResources>false</ILRepackAllowDuplicateResources>
     <ILRepackMergeDebugSymbols>true</ILRepackMergeDebugSymbols>
     <!-- No. No. LauncherExData is inaccessible due to its protection level. -->
@@ -49,9 +49,17 @@
 
   <Target Name="PostBuildFramework" AfterTargets="CopyFilesToOutputDirectory" Condition="Exists($(GameFolder))">
     <ItemGroup>
+      <FilesDebug Include="Bannerlord.LauncherEx.dll" />
+      <FilesDebug Include="Bannerlord.BLSE.dll" />
+      <FilesCopy Include="$(MSBuildProjectDirectory)\$(OutputPath)\%(FilesDebug.Identity)" />
+      <FilesDelete Include="$(GameFolder)\bin\$(GameConfiguration)\%(FilesDebug.Identity)" />
+      
       <Files Include="$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).dll" />
     </ItemGroup>
     <Copy SourceFiles="@(Files)" DestinationFolder="$(GameFolder)\bin\$(GameConfiguration)" />
+    
+    <Copy Condition="$(Configuration) == 'Debug'" SourceFiles="@(FilesCopy)" DestinationFolder="$(GameFolder)\bin\$(GameConfiguration)" />
+    <Delete Condition="$(Configuration) == 'Release'" Files="@(FilesDelete)" />
   </Target>
 
   <!-- Embedding multiple versions of LauncherEx -->
