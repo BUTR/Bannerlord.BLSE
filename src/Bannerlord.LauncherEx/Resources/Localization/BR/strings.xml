@@ -30,6 +30,7 @@
     <string id="uKUsA3Sp" text="O LauncherEx sempre faz um backup antes de salvar pela primeira vez. Isso restaurará os arquivos originais"/>
     <string id="TLDgPay9" text="Restaurar"/>
     <string id="5XzSM7RN" text="Restaurar Opções de Backup da Engine"/>
+    <string id="JusnHy6S" text="Enabes Windows DPI Scaling to remove blurriness of UI elements" />
 
     <!-- BUTRLauncherSavesVM -->
     <string id="JtelOsIW" text="Nome"/>
