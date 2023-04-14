@@ -1,5 +1,6 @@
 ﻿using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.LauncherEx.Helpers;
+using Bannerlord.LauncherEx.Options;
 using Bannerlord.LauncherEx.Patches;
 using Bannerlord.LauncherEx.ResourceManagers;
 using Bannerlord.LauncherEx.TPac;
@@ -12,6 +13,7 @@ using System;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Xml;
+using System.Xml.Serialization;
 
 using TaleWorlds.Library;
 
@@ -141,6 +143,23 @@ namespace Bannerlord.LauncherEx
             WidgetFactoryManager.Clear();
             BUTRLocalizationManager.Clear();
             _launcherHarmony.UnpatchAll(_launcherHarmony.Id);
+        }
+
+        public static LauncherExData? CurrentSettingsSnapshot()
+        {
+            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Mount and Blade II Bannerlord", "Configs", "LauncherData.xml");
+            if (!File.Exists(path)) return null;
+            
+            var xmlSerializer = new XmlSerializer(typeof(LauncherExData));
+            try
+            {
+                using var xmlReader = XmlReader.Create(path);
+                return (LauncherExData) xmlSerializer.Deserialize(xmlReader);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

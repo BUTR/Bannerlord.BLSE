@@ -44,9 +44,13 @@ jobs:
           echo "$EOF" >> $GITHUB_OUTPUT
         shell: bash
   
-  build-loaders-standalone:
-    name: Build Loaders Standalone
+  build:
+    name: Build ${{matrix.project}} (${{matrix.configuration}})
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: [ 'Bannerlord.BLSE.Loaders.Standalone', 'Bannerlord.BLSE.Loaders.Launcher', 'Bannerlord.BLSE.Loaders.LauncherEx', 'Bannerlord.BLSE.Shared' ]
+        configuration: [ 'Win64_Shipping_Client', 'Gaming.Desktop.x64_Shipping_Client' ]
     steps:
       - uses: actions/checkout@v3
 
@@ -55,10 +59,10 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Build Bannerlord.BLSE.Loaders.Standalone
+      - name: ${{matrix.project}} (${{matrix.configuration}})
         run: |
           mkdir bannerlord;
-          dotnet build src/Bannerlord.BLSE.Loaders.Standalone/Bannerlord.BLSE.Loaders.Standalone.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
+          dotnet build src/${{matrix.project}}/${{matrix.project}}.csproj --configuration Release -p:GameConfiguration="${{matrix.configuration}}" -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
         shell: pwsh
 
       - name: Upload Bannerlord folder
@@ -66,78 +70,7 @@ jobs:
         with:
           name: bannerlord
           path: ./bannerlord/
-          
-  
-  build-loaders-launcher:
-    name: Build Loaders Launcher
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
 
-      - name: Setup
-        uses: butr/actions-common-setup@v2
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-
-      - name: Build Bannerlord.BLSE.Loaders.Launcher
-        run: |
-          mkdir bannerlord;
-          dotnet build src/Bannerlord.BLSE.Loaders.Launcher/Bannerlord.BLSE.Loaders.Launcher.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
-        shell: pwsh
-
-      - name: Upload Bannerlord folder
-        uses: actions/upload-artifact@v3
-        with:
-          name: bannerlord
-          path: ./bannerlord/
-          
-  
-  build-loaders-launcherex:
-    name: Build Loaders LauncehrEx
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup
-        uses: butr/actions-common-setup@v2
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-
-      - name: Build Bannerlord.BLSE.Loaders.LauncherEx
-        run: |
-          mkdir bannerlord;
-          dotnet build src/Bannerlord.BLSE.Loaders.LauncherEx/Bannerlord.BLSE.Loaders.LauncherEx.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
-        shell: pwsh
-
-      - name: Upload Bannerlord folder
-        uses: actions/upload-artifact@v3
-        with:
-          name: bannerlord
-          path: ./bannerlord/
-  
-  build-shared:
-    name: Build Shared
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup
-        uses: butr/actions-common-setup@v2
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-
-      - name: Build Bannerlord.BLSE
-        run: |
-          mkdir bannerlord;
-          dotnet build src/Bannerlord.BLSE.Shared/Bannerlord.BLSE.Shared.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
-        shell: pwsh
-
-      - name: Upload Bannerlord folder
-        uses: actions/upload-artifact@v3
-        with:
-          name: bannerlord
-          path: ./bannerlord/
-  
   ###########################
   #        NEXUSMODS        #
   ###########################

@@ -24,9 +24,6 @@ public static class LauncherEx
 
     public static void Launch(string[] args)
     {
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.OSVersion.Version.Major >= 6)
-            PInvoke.SetProcessDPIAware();
-
         InterceptorFeature.Enable(_featureHarmony);
         AssemblyResolverFeature.Enable(_featureHarmony);
         ContinueSaveFileFeature.Enable(_featureHarmony);
@@ -34,6 +31,11 @@ public static class LauncherEx
         XboxFeature.Enable(_featureHarmony);
 
         Manager.Initialize();
+
+        var settings = Manager.CurrentSettingsSnapshot();
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.OSVersion.Version.Major >= 6 && settings is null || settings is { EnableDPIScaling: true })
+            PInvoke.SetProcessDPIAware();
+        
         Manager.Enable();
 
         ModuleInitializer.Disable();

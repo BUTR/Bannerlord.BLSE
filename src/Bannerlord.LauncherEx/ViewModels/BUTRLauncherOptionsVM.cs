@@ -1,5 +1,4 @@
 ﻿using Bannerlord.BUTR.Shared.Extensions;
-using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.LauncherEx.Helpers;
 using Bannerlord.LauncherEx.Options;
 using Bannerlord.LauncherManager.Localization;
@@ -69,7 +68,8 @@ namespace Bannerlord.LauncherEx.ViewModels
                 LauncherSettings.HideRandomImage,
                 LauncherSettings.DisableBinaryCheck,
                 LauncherSettings.BetaSorting,
-                LauncherSettings.BigMode);
+                LauncherSettings.BigMode,
+                LauncherSettings.EnableDPIScaling);
 
             SettingProperties.Add(new SettingsPropertyVM(new SettingsPropertyDefinition
             {
@@ -112,6 +112,13 @@ namespace Bannerlord.LauncherEx.ViewModels
                 HintText = new BUTRTextObject("{=XUSDSpvf}Makes the launcher bigger in height").ToString(),
                 SettingType = SettingType.Bool,
                 PropertyReference = new PropertyRef(typeof(LauncherSettings).GetProperty(nameof(LauncherSettings.BigMode))!, this)
+            }));
+            SettingProperties.Add(new SettingsPropertyVM(new SettingsPropertyDefinition
+            {
+                DisplayName = new BUTRTextObject("{=1zt99vTt}Enable DPI Scaling").ToString(),
+                HintText = new BUTRTextObject("{=JusnHy6S}Enabes Windows DPI Scaling to remove blurriness of UI elements").ToString(),
+                SettingType = SettingType.Bool,
+                PropertyReference = new PropertyRef(typeof(LauncherSettings).GetProperty(nameof(LauncherSettings.EnableDPIScaling))!, this)
             }));
             SettingProperties.Add(new SettingsPropertyVM(new SettingsPropertyDefinition
             {
@@ -234,6 +241,12 @@ namespace Bannerlord.LauncherEx.ViewModels
             }
 
             if (_launcherExData.BigMode != LauncherSettings.BigMode)
+            {
+                _saveUserData();
+                return;
+            }
+
+            if (_launcherExData.EnableDPIScaling != LauncherSettings.EnableDPIScaling)
             {
                 _saveUserData();
                 return;

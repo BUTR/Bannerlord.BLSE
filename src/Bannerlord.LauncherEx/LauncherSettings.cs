@@ -4,7 +4,7 @@ namespace Bannerlord.LauncherEx
 {
     [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    internal sealed class LauncherSettings
+    internal static class LauncherSettings
     {
         public static bool AutomaticallyCheckForUpdates { get; set; }
         public static bool FixCommonIssues { get; set; }
@@ -13,5 +13,6 @@ namespace Bannerlord.LauncherEx
         public static bool HideRandomImage { get; set; }
         public static bool BetaSorting { get; set; } = true;
         public static bool BigMode { get; set; } = true;
+        public static bool EnableDPIScaling { get; set; } = true;
     }
 }

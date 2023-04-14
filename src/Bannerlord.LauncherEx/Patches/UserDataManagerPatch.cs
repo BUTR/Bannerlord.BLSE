@@ -57,6 +57,7 @@ namespace Bannerlord.LauncherEx.Patches
                 LauncherSettings.DisableBinaryCheck = userDataOptions.DisableBinaryCheck;
                 LauncherSettings.BetaSorting = userDataOptions.BetaSorting;
                 LauncherSettings.BigMode = userDataOptions.BigMode;
+                LauncherSettings.EnableDPIScaling = userDataOptions.EnableDPIScaling;
             }
             catch (Exception value)
             {
@@ -89,7 +90,8 @@ namespace Bannerlord.LauncherEx.Patches
                     LauncherSettings.HideRandomImage,
                     LauncherSettings.DisableBinaryCheck,
                     LauncherSettings.BetaSorting,
-                    LauncherSettings.BigMode));
+                    LauncherSettings.BigMode,
+                    LauncherSettings.EnableDPIScaling));
             }
             catch (Exception value)
             {

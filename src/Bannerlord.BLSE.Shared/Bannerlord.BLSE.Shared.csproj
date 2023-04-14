@@ -8,6 +8,9 @@
     <OutputType>library</OutputType>
     <AssemblyName>Bannerlord.BLSE.Shared</AssemblyName>
 
+    <GameConfiguration Condition="$(GameConfiguration) == '' AND Exists('$(GameFolder)\bin\Win64_Shipping_Client')">Win64_Shipping_Client</GameConfiguration>
+    <GameConfiguration Condition="$(GameConfiguration) == '' AND Exists('$(GameFolder)\bin\Gaming.Desktop.x64_Shipping_Client')">Gaming.Desktop.x64_Shipping_Client</GameConfiguration>
+
     <ILRepackTargetConfigurations>$(Configurations);</ILRepackTargetConfigurations>
     <ILRepackAllowDuplicateResources>false</ILRepackAllowDuplicateResources>
     <ILRepackMergeDebugSymbols>true</ILRepackMergeDebugSymbols>
@@ -48,8 +51,7 @@
     <ItemGroup>
       <Files Include="$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).dll" />
     </ItemGroup>
-    <Copy SourceFiles="@(Files)" DestinationFolder="$(GameFolder)\bin\Win64_Shipping_Client" />
-    <Copy SourceFiles="@(Files)" DestinationFolder="$(GameFolder)\bin\Gaming.Desktop.x64_Shipping_Client" />
+    <Copy SourceFiles="@(Files)" DestinationFolder="$(GameFolder)\bin\$(GameConfiguration)" />
   </Target>
 
   <!-- Embedding multiple versions of LauncherEx -->

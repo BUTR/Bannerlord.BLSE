@@ -9,6 +9,7 @@
         public bool HideRandomImage { get; set; }
         public bool BetaSorting { get; set; }
         public bool BigMode { get; set; }
+        public bool EnableDPIScaling { get; set; }
 
         public LauncherExData() { }
         public LauncherExData(
@@ -18,7 +19,8 @@
             bool hideRandomImage,
             bool disableBinaryCheck,
             bool betaSorting,
-            bool bigMode)
+            bool bigMode,
+            bool enableDPIScaling)
         {
             AutomaticallyCheckForUpdates = automaticallyCheckForUpdates;
             FixCommonIssues = fixCommonIssues;
@@ -27,6 +29,7 @@
             HideRandomImage = hideRandomImage;
             BetaSorting = betaSorting;
             BigMode = bigMode;
+            EnableDPIScaling = enableDPIScaling;
         }
     }
 }
