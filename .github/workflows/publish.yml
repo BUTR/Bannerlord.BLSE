@@ -76,7 +76,7 @@ jobs:
   ###########################
   publish-on-nexusmods:
     if: false && github.ref == 'refs/heads/master'
-    needs: ["get-changelog", "build-loaders-standalone", "build-loaders-launcher", "build-loaders-launcherex", "build-shared"]
+    needs: ["get-changelog", "build"]
     uses: BUTR/workflows/.github/workflows/release-nexusmods.yml@master
     with:
       nexusmods_game_id: mountandblade2bannerlord
@@ -94,7 +94,7 @@ jobs:
   ###########################
   publish-on-github:
     if: github.ref == 'refs/heads/master'
-    needs: ["get-changelog", "build-loaders-standalone", "build-loaders-launcher", "build-loaders-launcherex", "build-shared"]
+    needs: ["get-changelog", "build"]
     uses: BUTR/workflows/.github/workflows/release-github.yml@master
     with:
       mod_id: Bannerlord.BLSE
