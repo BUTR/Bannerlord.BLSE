@@ -45,24 +45,15 @@ namespace Bannerlord.LauncherEx.Patches
                 return true;
             }
 
-            var xmlSerializer = new XmlSerializer(typeof(LauncherExData), new XmlRootAttribute("UserData"));
-            try
-            {
-                using var xmlReader = XmlReader.Create(____filePath);
-                var userDataOptions = (LauncherExData) xmlSerializer.Deserialize(xmlReader);
-                LauncherSettings.AutomaticallyCheckForUpdates = userDataOptions.AutomaticallyCheckForUpdates;
-                LauncherSettings.FixCommonIssues = userDataOptions.FixCommonIssues;
-                LauncherSettings.CompactModuleList = userDataOptions.CompactModuleList;
-                LauncherSettings.HideRandomImage = userDataOptions.HideRandomImage;
-                LauncherSettings.DisableBinaryCheck = userDataOptions.DisableBinaryCheck;
-                LauncherSettings.BetaSorting = userDataOptions.BetaSorting;
-                LauncherSettings.BigMode = userDataOptions.BigMode;
-                LauncherSettings.EnableDPIScaling = userDataOptions.EnableDPIScaling;
-            }
-            catch (Exception value)
-            {
-                Trace.WriteLine(value);
-            }
+            var userDataOptions = LauncherExData.FromUserDataXml(____filePath) ?? new();
+            LauncherSettings.AutomaticallyCheckForUpdates = userDataOptions.AutomaticallyCheckForUpdates;
+            LauncherSettings.FixCommonIssues = userDataOptions.FixCommonIssues;
+            LauncherSettings.CompactModuleList = userDataOptions.CompactModuleList;
+            LauncherSettings.HideRandomImage = userDataOptions.HideRandomImage;
+            LauncherSettings.DisableBinaryCheck = userDataOptions.DisableBinaryCheck;
+            LauncherSettings.BetaSorting = userDataOptions.BetaSorting;
+            LauncherSettings.BigMode = userDataOptions.BigMode;
+            LauncherSettings.EnableDPIScaling = userDataOptions.EnableDPIScaling;
 
             return true;
         }

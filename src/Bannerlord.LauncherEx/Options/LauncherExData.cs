@@ -1,7 +1,27 @@
-﻿namespace Bannerlord.LauncherEx.Options
+﻿using System;
+using System.Diagnostics;
+using System.Xml;
+using System.Xml.Serialization;
+
+namespace Bannerlord.LauncherEx.Options
 {
     public sealed class LauncherExData
     {
+        public static LauncherExData? FromUserDataXml(string path)
+        {
+            var xmlSerializer = new XmlSerializer(typeof(LauncherExData), new XmlRootAttribute("UserData"));
+            try
+            {
+                using var xmlReader = XmlReader.Create(path);
+                return (LauncherExData) xmlSerializer.Deserialize(xmlReader);
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine(e);
+                return null;
+            }
+        }
+        
         public bool AutomaticallyCheckForUpdates { get; set; }
         public bool FixCommonIssues { get; set; }
         public bool CompactModuleList { get; set; }

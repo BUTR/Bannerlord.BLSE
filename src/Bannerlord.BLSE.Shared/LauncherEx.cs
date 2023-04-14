@@ -9,10 +9,8 @@ using Bannerlord.LauncherEx;
 using HarmonyLib;
 
 using System;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 
 using Windows.Win32;
 
@@ -33,7 +31,7 @@ public static class LauncherEx
         Manager.Initialize();
 
         var settings = Manager.CurrentSettingsSnapshot();
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.OSVersion.Version.Major >= 6 && settings is null || settings is { EnableDPIScaling: true })
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.OSVersion.Version.Major >= 6 && settings is { EnableDPIScaling: true })
             PInvoke.SetProcessDPIAware();
 
         Manager.Enable();
