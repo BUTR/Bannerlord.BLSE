@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LanguageData id="Русский" name="Русский" subtitle_extension="ru" supported_iso="ru,rus,ru-ru,ru-md" under_development="false">
+<LanguageData id="English" name="English" subtitle_extension="en-GB" supported_iso="en-GB,en-US,en,eng,en-us,en-gb,en-au,en-bz,en-ca,en-ie,en-jm,en-nz,en-za,en-tt" under_development="false">
   <strings>
     <!-- BUTRLauncherModuleVM -->
     <string id="kfMQEOFS" text="Модуль установлен в папке /Modules игры и в Мастерской Steam!{NL}Будет использоваться версия из /Modules!"/>
@@ -30,7 +30,7 @@
     <string id="uKUsA3Sp" text="LauncherEx всегда делает резервную копию перед первым сохранением. Это восстановит исходные файлы"/>
     <string id="TLDgPay9" text="Восстановить"/>
     <string id="5XzSM7RN" text="Восстановить резервную копию настроек Движка"/>
-    <string id="JusnHy6S" text="Enabes Windows DPI Scaling to remove blurriness of UI elements" />
+    <string id="JusnHy6S" text="Включает DPI масштабирование для удаления размытия элементов интерфейса"/>
 
     <!-- BUTRLauncherSavesVM -->
     <string id="JtelOsIW" text="Имя"/>
