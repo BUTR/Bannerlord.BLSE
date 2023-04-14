@@ -30,7 +30,7 @@
     <string id="uKUsA3Sp" text="LauncherEx 在首次启动时会进行备份。这将恢复该备份"/>
     <string id="TLDgPay9" text="恢复"/>
     <string id="5XzSM7RN" text="恢复“引擎”选项备份"/>
-    <string id="JusnHy6S" text="Enabes Windows DPI Scaling to remove blurriness of UI elements" />
+    <string id="JusnHy6S" text="Enables Windows DPI Scaling to remove blurriness of UI elements" />
 
     <!-- BUTRLauncherSavesVM -->
     <string id="JtelOsIW" text="名称"/>

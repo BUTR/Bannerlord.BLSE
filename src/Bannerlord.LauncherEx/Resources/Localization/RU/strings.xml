@@ -30,7 +30,7 @@
     <string id="uKUsA3Sp" text="LauncherEx всегда делает резервную копию перед первым сохранением. Это восстановит исходные файлы"/>
     <string id="TLDgPay9" text="Восстановить"/>
     <string id="5XzSM7RN" text="Восстановить резервную копию настроек Движка"/>
-    <string id="JusnHy6S" text="Enabes Windows DPI Scaling to remove blurriness of UI elements" />
+    <string id="JusnHy6S" text="Enables Windows DPI Scaling to remove blurriness of UI elements" />
 
     <!-- BUTRLauncherSavesVM -->
     <string id="JtelOsIW" text="Имя"/>
