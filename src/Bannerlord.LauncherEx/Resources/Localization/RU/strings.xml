@@ -2,121 +2,121 @@
 <LanguageData id="Русский" name="Русский" subtitle_extension="ru" supported_iso="ru,rus,ru-ru,ru-md" under_development="false">
   <strings>
     <!-- BUTRLauncherModuleVM -->
-    <string id="kfMQEOFS" text="Модуль установлен в папке /Modules игры и в Мастерской Steam!{NL}Будет использоваться версия из /Modules!"/>
-    <string id="aAYdk1zd" text="DLL обфусцирован!{NL}Нет никаких гарантий, что код безопасен!{NL}Команда BUTR предупреждает о последствиях, связанных с запуском обфусцированного кода!"/>
+    <string id="kfMQEOFS" text="The Module is installed in the game's /Modules folder and on Steam Workshop!{NL}The /Modules version will be used!"/>
+    <string id="aAYdk1zd" text="The DLL is obfuscated!{NL}There is no guarantee that the code is safe!{NL}The BUTR Team warns of consequences arising from running obfuscated code!"/>
 
     <!-- BUTRLauncherOptionsVM -->
-    <string id="z9WqFewN" text="ОТКЛЮЧЕНО!"/>
-    <string id="44qrhQ6g" text="Требует рестарта!"/>
+    <string id="z9WqFewN" text="DISABLED!"/>
+    <string id="44qrhQ6g" text="Requires restart!"/>
 
-    <string id="zHo3tzQT" text="Разблокировать файлы при старте"/>
-    <string id="sOInYH9V" text="Автоматически разблокировать файлы при старте игры"/>
-    <string id="LXlsSS8t" text="Исправить распространенные проблемы"/>
-    <string id="J9VbkLW4" text="Исправляет проблемы вроде наличия 0Harmony.dll в корне игры"/>
-    <string id="vUAqDj9H" text="Компактный режим"/>
-    <string id="Qn1aPNQM" text="Делает контент в Модули и Сохранения меньше"/>
-    <string id="GUWbD65T" text="Отключить проверку бинарной совместимости модов"/>
-    <string id="lmpQeQBS" text="Отключает собственную проверку Лаунчера на бинарную совместимость модов"/>
-    <string id="iD27wEq7" text="Скрыть случайное изображение"/>
-    <string id="LaPvZjwC" text="Скрыть изображение Всадника, чтобы лаунчер выглядел компактнее"/>
-    <string id="JT7QnJJA" text="Разблокировать файлы"/>
-    <string id="VMIp4503" text="Разблокировать все файлы .dll в папке /Modules"/>
-    <string id="RDLKkiVk" text="Разблокировать"/>
-    <string id="QJSBiZdJ" text="Бета-сортировка"/>
-    <string id="HVhaqeb4" text="Использует новый алгоритм сортировки после версии 1.12.x. Отключите, чтобы использовать старый алгоритм"/>
-    <string id="1zt99vTt" text="Большой режим"/>
-    <string id="XUSDSpvf" text="Увеличивает высоту лаунчера"/>
-    <string id="IsR2rbnG" text="Восстановить резервную копию настроек Игры"/>
-    <string id="uKUsA3Sp" text="LauncherEx всегда делает резервную копию перед первым сохранением. Это восстановит исходные файлы"/>
-    <string id="TLDgPay9" text="Восстановить"/>
-    <string id="5XzSM7RN" text="Восстановить резервную копию настроек Движка"/>
+    <string id="zHo3tzQT" text="Unblock Files on Start"/>
+    <string id="sOInYH9V" text="Automatically unblock's .dll files on start"/>
+    <string id="LXlsSS8t" text="Fix Common Issues"/>
+    <string id="J9VbkLW4" text="Fixes issues like 0Harmony.dll being in the /bin folder"/>
+    <string id="vUAqDj9H" text="Compact Module List"/>
+    <string id="Qn1aPNQM" text="Makes the Mods tab content smaller"/>
+    <string id="GUWbD65T" text="Disable Binary Compatibility Check"/>
+    <string id="lmpQeQBS" text="Disables Launcher's own check for binary compatibility of mods"/>
+    <string id="iD27wEq7" text="Hide Random Image"/>
+    <string id="LaPvZjwC" text="Hide's the Rider image so the launcher looks more compact"/>
+    <string id="JT7QnJJA" text="Unblock Files"/>
+    <string id="VMIp4503" text="Unblock all .dll files on /Modules folder"/>
+    <string id="RDLKkiVk" text="Unblock"/>
+    <string id="QJSBiZdJ" text="Beta Sorting"/>
+    <string id="HVhaqeb4" text="Uses the new sorting algorithm after v1.12.x. Disable to use the old algorithm"/>
+    <string id="1zt99vTt" text="Big Mode"/>
+    <string id="XUSDSpvf" text="Makes the launcher bigger in height"/>
+    <string id="IsR2rbnG" text="Restore Game Options Backup"/>
+    <string id="uKUsA3Sp" text="LauncherEx always makes a backup before saving the first time. This will restore the original files"/>
+    <string id="TLDgPay9" text="Restore"/>
+    <string id="5XzSM7RN" text="Restore Engine Options Backup"/>
 
     <!-- BUTRLauncherSavesVM -->
-    <string id="JtelOsIW" text="Имя"/>
-    <string id="14WBFIS1" text="Версия"/>
-    <string id="OJsGrGVi" text="Персонаж"/>
-    <string id="JxpEEQdF" text="Уровень"/>
-    <string id="qkkTPycE" text="Дней"/>
-    <string id="aYWWDkKX" text="Создан"/>
+    <string id="JtelOsIW" text="Name"/>
+    <string id="14WBFIS1" text="Version"/>
+    <string id="OJsGrGVi" text="Character"/>
+    <string id="JxpEEQdF" text="Level"/>
+    <string id="qkkTPycE" text="Days"/>
+    <string id="aYWWDkKX" text="CreatedAt"/>
 
     <!-- LauncherConfirmStartVMMixin -->
-    <string id="DzJmcvsP" text="Отменить"/>
-    <string id="epTxGUqT" text="Подтвердить"/>
+    <string id="DzJmcvsP" text="Cancel"/>
+    <string id="epTxGUqT" text="Confirm"/>
 
     <!-- LauncherModsVMMixin -->
-    <string id="pZVVdI5d" text="Порядок Загрузки был пересортирован с использованием алгоритма по умолчанию!{NL}Причины:{NL}{REASONS}"/>
-    <string id="sP1a61KE" text="Не удалось установить модуль в нужное положение! Размещение до ближайшего доступного!{NL}Причина:{NL}{REASONS}"/>
-    <string id="sLf3eIpH" text="Не удалось упорядочить список модулей!"/>
+    <string id="pZVVdI5d" text="The Load Order was re-sorted with the default algorithm!{NL}Reasons:{NL}{REASONS}"/>
+    <string id="sP1a61KE" text="Failed to place the module to the desired position! Placing to the nearest available!{NL}Reason:{NL}{REASONS}"/>
+    <string id="sLf3eIpH" text="Failed to order the module list!"/>
 
     <!-- LauncherVMMixin -->
-    <string id="yS5hbWCL" text="Опции"/>
-    <string id="V66qoU6n" text="Лаунчер"/>
-    <string id="ro4RMgyt" text="Игра"/>
-    <string id="q4rQuTgG" text="Движок"/>
-    <string id="d5OjKcGE" text="Сохранения"/>
-    <string id="Aws9irMU" text="Импорт Порядка Загрузки"/>
-    <string id="4wKr76gx" text="Импорт Порядка Загрузки Сохранения"/>
-    <string id="XdZGqnFW" text="Экспорт Текущего Порядка Загрузки"/>
-    <string id="G55IdM6M" text="Экспорт Порядка Загрузки Сохранения"/>
-    <string id="MlYQ0uX7" text="Могут возникнуть проблемы в игре."/>
-    <string id="qvzptzrE" text="Вы хотите продолжить загрузку сохранения?"/>
-    <string id="dDprK7Mz" text="ПРЕДУПРЕЖДЕНИЕ"/>
+    <string id="yS5hbWCL" text="Options"/>
+    <string id="V66qoU6n" text="Launcher"/>
+    <string id="ro4RMgyt" text="Game"/>
+    <string id="q4rQuTgG" text="Engine"/>
+    <string id="d5OjKcGE" text="Saves"/>
+    <string id="Aws9irMU" text="Import Load Order"/>
+    <string id="4wKr76gx" text="Import Save's Load Order"/>
+    <string id="XdZGqnFW" text="Export Current Load Order"/>
+    <string id="G55IdM6M" text="Export Save's Load Order"/>
+    <string id="MlYQ0uX7" text="An unstable experience could occur."/>
+    <string id="qvzptzrE" text="Do you wish to continue loading the save?"/>
+    <string id="dDprK7Mz" text="WARNING"/>
 
-    <string id="Hk7FBBSa" text="Одиночная"/>
-    <string id="UOGhdUWE" text="Мультиплеер"/>
-    <string id="VDTcZpPr" text="Цифр. Компаньон"/>
-    <string id="Tg0If68v" text="Новости"/>
-    <string id="YGU9eXM0" text="Моды"/>
-    <string id="xYv4iv7C" text="ЗАПУСТИТЬ"/>
-    <string id="6B3iZLqR" text="ПРОДОЛЖИТЬ"/>
-    <string id="eUt6GKkQ" text="ЗАПУСТИТЬ"/>
+    <string id="Hk7FBBSa" text="Singleplayer"/>
+    <string id="UOGhdUWE" text="Multiplayer"/>
+    <string id="VDTcZpPr" text="Digital Companion"/>
+    <string id="Tg0If68v" text="News"/>
+    <string id="YGU9eXM0" text="Mods"/>
+    <string id="xYv4iv7C" text="PLAY"/>
+    <string id="6B3iZLqR" text="CONTINUE"/>
+    <string id="eUt6GKkQ" text="LAUNCH"/>
 
     <!-- LauncherVMMixin -->
-    <string id="WJnTxf3v" text="Импорт отменен!"/>
-    <string id="BjtJ4Lxw" text="Экспорт отменен"/>
-    <string id="eohqbvHU" text="Список успешно импортирован!"/>
-    <string id="VwFQTk5z" text="Список успешно экспортирован!"/>
+    <string id="WJnTxf3v" text="Cancelled Import!"/>
+    <string id="BjtJ4Lxw" text="Cancelled Export"/>
+    <string id="eohqbvHU" text="Successfully imported list!"/>
+    <string id="VwFQTk5z" text="Successfully exported list!"/>
 
     <!-- Issues -->
-    <string id="kxqLbSqe" text="(Неизвестный ID)"/>
+    <string id="kxqLbSqe" text="(Unknown ID)"/>
 
-    <string id="izSm5f85" text="Дублирующиеся Id модулей:{NL}{MODULIDS}"/>
-    <string id="vCwH9226" text="Дублирующиеся имена модулей: {NL}{MODULENAMES}"/>
-    <string id="GtDRbC3m" text="Отсутствующие модули: {NL}{MODULES}"/>
-    <string id="BuMom4Jt" text="Несоответствующие версии модулей:{NL}{MODULEVERSIONS}"/>
+    <string id="izSm5f85" text="Duplicate Module Ids:{NL}{MODULEIDS}"/>
+    <string id="vCwH9226" text="Duplicate Module Names:{NL}{MODULENAMES}"/>
+    <string id="GtDRbC3m" text="Missing Modules:{NL}{MODULES}"/>
+    <string id="BuMom4Jt" text="Mismatched Module Versions:{NL}{MODULEVERSIONS}"/>
 
-    <string id="nYVWoomO" text="{MODULEID}. Требуется {REQUIREDVERSION}. Установлено {ACTUALVERSION}"/>
-    <string id="sd6M4KRd" text="Порядок загрузки:{NL}{LOADORDER}"/>
-    <string id="HvvA78sZ" text="Проблемы с порядком загрузки:{NL}{LOADORDERISSUES}"/>
+    <string id="nYVWoomO" text="{MODULEID}. Required {REQUIREDVERSION}. Installed {ACTUALVERSION}"/>
+    <string id="sd6M4KRd" text="Load Order:{NL}{LOADORDER}"/>
+    <string id="HvvA78sZ" text="Load Order Issues:{NL}{LOADORDERISSUES}"/>
 
-    <string id="B64DbmWp" text="Файл сохранения не найден!"/>
-    <string id="epU06HID" text="Не удалось прочитать файл сохранения!"/>
+    <string id="B64DbmWp" text="Save File not found!"/>
+    <string id="epU06HID" text="Failed to read the save file!"/>
 
-    <string id="DKRNkst2" text="Продолжить импорт?"/>
-    <string id="XSxlKweM" text="Открытие файла с порядком загрузки"/>
+    <string id="DKRNkst2" text="Open a File with a Load Order"/>
+    <string id="XSxlKweM" text="Save a Bannerlord Module List File"/>
 
-    <string id="hgew15HH" text="Сохраните файл со списком модулей Bannerlord"/>
+    <string id="hgew15HH" text="Continue import?"/>
 
-    <string id="tqjPGPtP" text="LauncherEx обнаружил 0Harmony.dll в корневом каталоге игры!{NL}Это может привести к проблемам, удалить его?"/>
+    <string id="tqjPGPtP" text="LauncherEx detected 0Harmony.dll inside the game's root bin folder!{NL}This could lead to issues, remove it?"/>
 
-    <string id="J3Uh6MV4" text="Отсутствует '{ID}' {VERSION} в списке модулей"/>
-    <string id="3eQSr6wt" text="Отсутствует '{ID}' {VERSION}"/>
-    <string id="U858vdQX" text="'{ID}' не имеет своих зависимостей!"/>
-    <string id="1LS8Z5DU" text="'{ID}' имеет нерешенные проблемы!"/>
-    <string id="Vjz9HQ41" text="'{ID}' неправильная версия &lt;= {VERSION}"/>
-    <string id="ZvnlL7VE" text="'{ID}' неправильная версия &lt; [{VERSION}]"/>
-    <string id="EfNuH2bG" text="'{ID}' неправильная версия &gt; [{VERSION}]"/>
-    <string id="zXDidmpQ" text="'{ID}' несовместим с этим модулем"/>
-    <string id="4KFwqKgG" text="Модуль '{ID}' зависит от него и помечен как несовместимый"/>
-    <string id="9DRB6yXv" text="Модуль '{ID}' зависит как от LoadBefore, так и от LoadAfter"/>
-    <string id="RC1V9BbP" text="Циклические зависимости. '{TARGETID}' и '{SOURCEID}' зависят друг от друга"/>
-    <string id="s3xbuejE" text="'{TARGETID}' должен быть загружен перед '{SOURCEID}'"/>
-    <string id="2ALJB7z2" text="'{TARGETID}' должен быть загружен после '{SOURCEID}'"/>
+    <string id="J3Uh6MV4" text="Missing '{ID}' {VERSION} in modules list"/>
+    <string id="3eQSr6wt" text="Missing '{ID}' {VERSION}"/>
+    <string id="U858vdQX" text="'{ID}' is missing it's dependencies!"/>
+    <string id="1LS8Z5DU" text="'{ID}' has unresolved issues!"/>
+    <string id="Vjz9HQ41" text="'{ID}' wrong version &lt;= {VERSION}"/>
+    <string id="ZvnlL7VE" text="'{ID}' wrong version &lt; [{VERSION}]"/>
+    <string id="EfNuH2bG" text="'{ID}' wrong version &gt; [{VERSION}]"/>
+    <string id="zXDidmpQ" text="'{ID}' is incompatible with this module"/>
+    <string id="4KFwqKgG" text="Module '{ID}' is both depended upon and marked as incompatible"/>
+    <string id="9DRB6yXv" text="Module '{ID}' is both depended upon as LoadBefore and LoadAfter"/>
+    <string id="RC1V9BbP" text="Circular dependencies. '{TARGETID}' and '{SOURCEID}' depend on each other"/>
+    <string id="s3xbuejE" text="'{TARGETID}' should be loaded before '{SOURCEID}'"/>
+    <string id="2ALJB7z2" text="'{TARGETID}' should be loaded after '{SOURCEID}'"/>
 
     <!-- Dependency Constructor -->
-    <string id="8ldMJPhQ" text=" (необязательно)"/>
-    <string id="f9hYP7mk" text="Зависит от:"/>
-    <string id="eGJ387f7" text="Несовместимо с:"/>
-    <string id="eW76jyd7" text="Должно быть загружено перед:"/>
+    <string id="8ldMJPhQ" text=" (optional)"/>
+    <string id="f9hYP7mk" text="Depends on:"/>
+    <string id="eGJ387f7" text="Incompatible with:"/>
+    <string id="eW76jyd7" text="Needs to load before:"/>
   </strings>
 </LanguageData>
