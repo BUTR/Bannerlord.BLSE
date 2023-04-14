@@ -2,121 +2,121 @@
 <LanguageData id="Türkçe" name="Türkçe" subtitle_extension="tr-TR" supported_iso="tr,tur,tr-tr" under_development="false">
   <strings>
     <!-- BUTRLauncherModuleVM -->
-    <string id="kfMQEOFS" text="The Module is installed in the game's /Modules folder and on Steam Workshop!{NL}The /Modules version will be used!"/>
-    <string id="aAYdk1zd" text="The DLL is obfuscated!{NL}There is no guarantee that the code is safe!{NL}The BUTR Team warns of consequences arising from running obfuscated code!"/>
+    <string id="kfMQEOFS" text="Modül, oyunun /Modules klasörüne ve Steam Workshop'a yüklenir!{NL}/Modules sürümü kullanılacaktır!"/>
+    <string id="aAYdk1zd" text="DLL gizlenmiş!{NL}Kodun güvenli olduğunun garantisi yok!{NL}BUTR Ekibi, gizlenmiş kod çalıştırmanın sonuçları konusunda uyarıyor!"/>
 
     <!-- BUTRLauncherOptionsVM -->
-    <string id="z9WqFewN" text="DISABLED!"/>
-    <string id="44qrhQ6g" text="Requires restart!"/>
+    <string id="z9WqFewN" text="ENGELLİ!"/>
+    <string id="44qrhQ6g" text="Yeniden başlatma gerektirir!"/>
 
-    <string id="zHo3tzQT" text="Unblock Files on Start"/>
-    <string id="sOInYH9V" text="Automatically unblock's .dll files on start"/>
-    <string id="LXlsSS8t" text="Fix Common Issues"/>
-    <string id="J9VbkLW4" text="Fixes issues like 0Harmony.dll being in the /bin folder"/>
-    <string id="vUAqDj9H" text="Compact Module List"/>
-    <string id="Qn1aPNQM" text="Makes the Mods tab content smaller"/>
-    <string id="GUWbD65T" text="Disable Binary Compatibility Check"/>
-    <string id="lmpQeQBS" text="Disables Launcher's own check for binary compatibility of mods"/>
-    <string id="iD27wEq7" text="Hide Random Image"/>
-    <string id="LaPvZjwC" text="Hide's the Rider image so the launcher looks more compact"/>
-    <string id="JT7QnJJA" text="Unblock Files"/>
-    <string id="VMIp4503" text="Unblock all .dll files on /Modules folder"/>
-    <string id="RDLKkiVk" text="Unblock"/>
-    <string id="QJSBiZdJ" text="Beta Sorting"/>
-    <string id="HVhaqeb4" text="Uses the new sorting algorithm after v1.12.x. Disable to use the old algorithm"/>
-    <string id="1zt99vTt" text="Big Mode"/>
-    <string id="XUSDSpvf" text="Makes the launcher bigger in height"/>
-    <string id="IsR2rbnG" text="Restore Game Options Backup"/>
-    <string id="uKUsA3Sp" text="LauncherEx always makes a backup before saving the first time. This will restore the original files"/>
-    <string id="TLDgPay9" text="Restore"/>
-    <string id="5XzSM7RN" text="Restore Engine Options Backup"/>
+    <string id="zHo3tzQT" text="Başlangıçta Dosyaların Engelini Kaldır"/>
+    <string id="sOInYH9V" text="Başlangıçta .dll dosyalarının engellemesini otomatik olarak kaldır"/>
+    <string id="LXlsSS8t" text="Sık Karşılaşılan Sorunları Düzeltin"/>
+    <string id="J9VbkLW4" text="0Harmony.dll dosyasının /bin klasöründe olması gibi sorunları düzeltir"/>
+    <string id="vUAqDj9H" text="Kompakt Modül Listesi"/>
+    <string id="Qn1aPNQM" text="Eklentiler sekmesi içeriğini küçültür"/>
+    <string id="GUWbD65T" text="İkili Uyumluluk Denetimini Devre Dışı Bırak"/>
+    <string id="lmpQeQBS" text="Eklentilerin ikili uyumluluğu için Başlatıcı'nın kendi denetimini devre dışı bırakır"/>
+    <string id="iD27wEq7" text="Rastgele Görüntüyü Gizle"/>
+    <string id="LaPvZjwC" text="Binici görüntüsünü gizleyin, böylece başlatıcı daha kompakt görünür"/>
+    <string id="JT7QnJJA" text="Dosyaların Engelini Kaldır"/>
+    <string id="VMIp4503" text="/Modules klasöründeki tüm .dll dosyalarının engellemesini kaldırın"/>
+    <string id="RDLKkiVk" text="Engeli Kaldır"/>
+    <string id="QJSBiZdJ" text="Beta Sıralama"/>
+    <string id="HVhaqeb4" text="v1.12.x'ten sonraki yeni sıralama algoritmasını kullanır. Eski algoritmayı kullanmayı devre dışı bırak"/>
+    <string id="1zt99vTt" text="Büyük Mod"/>
+    <string id="XUSDSpvf" text="Başlatıcıyı daha büyük hale getirir"/>
+    <string id="IsR2rbnG" text="Oyun Seçenekleri Yedeklemesini Geri Yükle"/>
+    <string id="uKUsA3Sp" text="LauncherEx, ilk kez kaydetmeden önce her zaman bir yedekleme yapar. Bu, orijinal dosyaları geri yükleyecektir"/>
+    <string id="TLDgPay9" text="Onar"/>
+    <string id="5XzSM7RN" text="Motor Seçenekleri Yedeklemesini Geri Yükle"/>
 
     <!-- BUTRLauncherSavesVM -->
-    <string id="JtelOsIW" text="Name"/>
-    <string id="14WBFIS1" text="Version"/>
-    <string id="OJsGrGVi" text="Character"/>
-    <string id="JxpEEQdF" text="Level"/>
-    <string id="qkkTPycE" text="Days"/>
-    <string id="aYWWDkKX" text="CreatedAt"/>
+    <string id="JtelOsIW" text="İsim"/>
+    <string id="14WBFIS1" text="Sürüm"/>
+    <string id="OJsGrGVi" text="Karakter"/>
+    <string id="JxpEEQdF" text="Seviye"/>
+    <string id="qkkTPycE" text="Gün"/>
+    <string id="aYWWDkKX" text="Oluşturulma Tarihi"/>
 
     <!-- LauncherConfirmStartVMMixin -->
-    <string id="DzJmcvsP" text="Cancel"/>
-    <string id="epTxGUqT" text="Confirm"/>
+    <string id="DzJmcvsP" text="İptal"/>
+    <string id="epTxGUqT" text="Onayla"/>
 
     <!-- LauncherModsVMMixin -->
-    <string id="pZVVdI5d" text="The Load Order was re-sorted with the default algorithm!{NL}Reasons:{NL}{REASONS}"/>
-    <string id="sP1a61KE" text="Failed to place the module to the desired position! Placing to the nearest available!{NL}Reason:{NL}{REASONS}"/>
-    <string id="sLf3eIpH" text="Failed to order the module list!"/>
+    <string id="pZVVdI5d" text="Yükleme Sırası, varsayılan algoritmaya göre yeniden sıralandı!{NL}Nedenler:{NL}{REASONS}"/>
+    <string id="sP1a61KE" text="Modül istenen konuma yerleştirilemedi! Mümkün olan en yakın yere yerleştiriliyor!{NL}Neden:{NL}{REASONS}"/>
+    <string id="sLf3eIpH" text="Modül listesi yüklenirken hata oluştu!"/>
 
     <!-- LauncherVMMixin -->
-    <string id="yS5hbWCL" text="Options"/>
-    <string id="V66qoU6n" text="Launcher"/>
-    <string id="ro4RMgyt" text="Game"/>
-    <string id="q4rQuTgG" text="Engine"/>
-    <string id="d5OjKcGE" text="Saves"/>
-    <string id="Aws9irMU" text="Import Load Order"/>
-    <string id="4wKr76gx" text="Import Save's Load Order"/>
-    <string id="XdZGqnFW" text="Export Current Load Order"/>
-    <string id="G55IdM6M" text="Export Save's Load Order"/>
-    <string id="MlYQ0uX7" text="An unstable experience could occur."/>
-    <string id="qvzptzrE" text="Do you wish to continue loading the save?"/>
-    <string id="dDprK7Mz" text="WARNING"/>
+    <string id="yS5hbWCL" text="Seçenekler"/>
+    <string id="V66qoU6n" text="Başlatıcı"/>
+    <string id="ro4RMgyt" text="Oyun"/>
+    <string id="q4rQuTgG" text="Motor"/>
+    <string id="d5OjKcGE" text="Kaydet"/>
+    <string id="Aws9irMU" text="Sıralamayı içe aktar"/>
+    <string id="4wKr76gx" text="Yükleme Sırasını İçe Aktar"/>
+    <string id="XdZGqnFW" text="Geçerli Yük Sırasını Dışa Aktar"/>
+    <string id="G55IdM6M" text="Yükleme Sırasını Dışa Aktar"/>
+    <string id="MlYQ0uX7" text="Dengesiz bir deneyim meydana gelebilir."/>
+    <string id="qvzptzrE" text="Yine de devam etmek istiyor musun?"/>
+    <string id="dDprK7Mz" text="UYARI"/>
 
-    <string id="Hk7FBBSa" text="Singleplayer"/>
-    <string id="UOGhdUWE" text="Multiplayer"/>
-    <string id="VDTcZpPr" text="Digital Companion"/>
-    <string id="Tg0If68v" text="News"/>
-    <string id="YGU9eXM0" text="Mods"/>
-    <string id="xYv4iv7C" text="PLAY"/>
-    <string id="6B3iZLqR" text="CONTINUE"/>
-    <string id="eUt6GKkQ" text="LAUNCH"/>
+    <string id="Hk7FBBSa" text="Tek Oyunculu"/>
+    <string id="UOGhdUWE" text="Çok Oyunculu"/>
+    <string id="VDTcZpPr" text="Dijital Arkadaş"/>
+    <string id="Tg0If68v" text="Haberler"/>
+    <string id="YGU9eXM0" text="Eklentiler"/>
+    <string id="xYv4iv7C" text="OYNA"/>
+    <string id="6B3iZLqR" text="DEVAM ET"/>
+    <string id="eUt6GKkQ" text="BAŞLATICI"/>
 
     <!-- LauncherVMMixin -->
-    <string id="WJnTxf3v" text="Cancelled Import!"/>
-    <string id="BjtJ4Lxw" text="Cancelled Export"/>
-    <string id="eohqbvHU" text="Successfully imported list!"/>
-    <string id="VwFQTk5z" text="Successfully exported list!"/>
+    <string id="WJnTxf3v" text="İçe Aktarmayı İptal Et!"/>
+    <string id="BjtJ4Lxw" text="Dışarı Aktarmayı İptal Et"/>
+    <string id="eohqbvHU" text="Başarıyla içeri aktarıldı!"/>
+    <string id="VwFQTk5z" text="Başarıyla dışa aktarıldı!"/>
 
     <!-- Issues -->
-    <string id="kxqLbSqe" text="(Unknown ID)"/>
+    <string id="kxqLbSqe" text="(Bilinmeyen)"/>
 
-    <string id="izSm5f85" text="Duplicate Module Ids:{NL}{MODULEIDS}"/>
-    <string id="vCwH9226" text="Duplicate Module Names:{NL}{MODULENAMES}"/>
-    <string id="GtDRbC3m" text="Missing Modules:{NL}{MODULES}"/>
-    <string id="BuMom4Jt" text="Mismatched Module Versions:{NL}{MODULEVERSIONS}"/>
+    <string id="izSm5f85" text="Yinelenen Modül Kimlikleri:{NL}{MODULEIDS}"/>
+    <string id="vCwH9226" text="Yinelenen Modül Adları:{NL}{MODULENAMES}"/>
+    <string id="GtDRbC3m" text="Eksik Modüller:{NL}{MODULES}"/>
+    <string id="BuMom4Jt" text="Uyumsuz Modül Sürümleri:{NL}{MODULEVERSIONS}"/>
 
-    <string id="nYVWoomO" text="{MODULEID}. Required {REQUIREDVERSION}. Installed {ACTUALVERSION}"/>
-    <string id="sd6M4KRd" text="Load Order:{NL}{LOADORDER}"/>
-    <string id="HvvA78sZ" text="Load Order Issues:{NL}{LOADORDERISSUES}"/>
+    <string id="nYVWoomO" text="{MODULEID}. Gerekli {REQUIREDVERSION}. {ACTUALVERSION} yüklendi"/>
+    <string id="sd6M4KRd" text="Yükleme Sırası:{NL}{LOADORDER}"/>
+    <string id="HvvA78sZ" text="Yükleme Sırası Sorunları:{NL}{LOADORDERISSUES}"/>
 
-    <string id="B64DbmWp" text="Save File not found!"/>
-    <string id="epU06HID" text="Failed to read the save file!"/>
+    <string id="B64DbmWp" text="Kayıt Dosyası Bulunamadı!"/>
+    <string id="epU06HID" text="Kayıt dosyası okunamadı!"/>
 
-    <string id="DKRNkst2" text="Open a File with a Load Order"/>
-    <string id="XSxlKweM" text="Save a Bannerlord Module List File"/>
+    <string id="DKRNkst2" text="Dosyayı Yükleme Sırasıyla Açın"/>
+    <string id="XSxlKweM" text="Bannerlord Modül Listesini Kaydet"/>
 
-    <string id="hgew15HH" text="Continue import?"/>
+    <string id="hgew15HH" text="İçe aktarmaya devam et?"/>
 
-    <string id="tqjPGPtP" text="LauncherEx detected 0Harmony.dll inside the game's root bin folder!{NL}This could lead to issues, remove it?"/>
+    <string id="tqjPGPtP" text="LauncherEx, oyunun kök bin klasöründe 0Harmony.dll tespit etti!{NL}Bu sorunlara yol açabilir, kaldırılsın mı?"/>
 
-    <string id="J3Uh6MV4" text="Missing '{ID}' {VERSION} in modules list"/>
-    <string id="3eQSr6wt" text="Missing '{ID}' {VERSION}"/>
-    <string id="U858vdQX" text="'{ID}' is missing it's dependencies!"/>
-    <string id="1LS8Z5DU" text="'{ID}' has unresolved issues!"/>
-    <string id="Vjz9HQ41" text="'{ID}' wrong version &lt;= {VERSION}"/>
-    <string id="ZvnlL7VE" text="'{ID}' wrong version &lt; [{VERSION}]"/>
-    <string id="EfNuH2bG" text="'{ID}' wrong version &gt; [{VERSION}]"/>
-    <string id="zXDidmpQ" text="'{ID}' is incompatible with this module"/>
-    <string id="4KFwqKgG" text="Module '{ID}' is both depended upon and marked as incompatible"/>
-    <string id="9DRB6yXv" text="Module '{ID}' is both depended upon as LoadBefore and LoadAfter"/>
-    <string id="RC1V9BbP" text="Circular dependencies. '{TARGETID}' and '{SOURCEID}' depend on each other"/>
-    <string id="s3xbuejE" text="'{TARGETID}' should be loaded before '{SOURCEID}'"/>
-    <string id="2ALJB7z2" text="'{TARGETID}' should be loaded after '{SOURCEID}'"/>
+    <string id="J3Uh6MV4" text="Modül listesinde '{ID}' {VERSION} eksik"/>
+    <string id="3eQSr6wt" text="Eksik '{ID}' {VERSION}"/>
+    <string id="U858vdQX" text="'{ID}' bağımlılıkları eksik!"/>
+    <string id="1LS8Z5DU" text="'{ID}' ile ilgili çözülmemiş sorunlar var!"/>
+    <string id="Vjz9HQ41" text="'{ID}' yanlış sürüm &lt;= {VERSION}"/>
+    <string id="ZvnlL7VE" text="'{ID}' yanlış sürüm &lt; [{VERSION}]"/>
+    <string id="EfNuH2bG" text="'{ID}' yanlış sürüm &gt; [{VERSION}]"/>
+    <string id="zXDidmpQ" text="'{ID}' bu modülle uyumlu değil"/>
+    <string id="4KFwqKgG" text="Modül '{ID}' hem bağımlı hem de uyumsuz olarak işaretlendi"/>
+    <string id="9DRB6yXv" text="'{ID}' modülü, hem ÖnceYükle hem de SonraYükle olarak bağımlıdır"/>
+    <string id="RC1V9BbP" text="Dairesel bağımlılıklar. &quot;{TARGETID}&quot; ve &quot;{SOURCEID}&quot; birbirine bağlıdır"/>
+    <string id="s3xbuejE" text="'{TARGETID}', '{SOURCEID}'den önce yüklenmelidir"/>
+    <string id="2ALJB7z2" text="'{TARGETID}', '{SOURCEID}'den sonra yüklenmelidir"/>
 
     <!-- Dependency Constructor -->
     <string id="8ldMJPhQ" text=" (optional)"/>
-    <string id="f9hYP7mk" text="Depends on:"/>
-    <string id="eGJ387f7" text="Incompatible with:"/>
-    <string id="eW76jyd7" text="Needs to load before:"/>
+    <string id="f9hYP7mk" text="Bağlıdır:"/>
+    <string id="eGJ387f7" text="Uyumsuz:"/>
+    <string id="eW76jyd7" text="Şunlardan önce yüklenmesi gerekiyor:"/>
   </strings>
 </LanguageData>
