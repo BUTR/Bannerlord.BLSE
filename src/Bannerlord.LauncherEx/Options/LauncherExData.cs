@@ -21,7 +21,7 @@ namespace Bannerlord.LauncherEx.Options
                 return null;
             }
         }
-        
+
         public bool AutomaticallyCheckForUpdates { get; set; }
         public bool FixCommonIssues { get; set; }
         public bool CompactModuleList { get; set; }
