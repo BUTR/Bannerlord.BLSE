@@ -8,9 +8,10 @@
     <OutputType>library</OutputType>
     <AssemblyName>Bannerlord.BLSE.Shared</AssemblyName>
 
-    <DefineConstants>$(DefineConstants)</DefineConstants>
+    <GameConfiguration Condition="$(GameConfiguration) == '' AND Exists('$(GameFolder)\bin\Win64_Shipping_Client')">Win64_Shipping_Client</GameConfiguration>
+    <GameConfiguration Condition="$(GameConfiguration) == '' AND Exists('$(GameFolder)\bin\Gaming.Desktop.x64_Shipping_Client')">Gaming.Desktop.x64_Shipping_Client</GameConfiguration>
 
-    <ILRepackTargetConfigurations>$(Configurations);</ILRepackTargetConfigurations>
+    <ILRepackTargetConfigurations>Release</ILRepackTargetConfigurations>
     <ILRepackAllowDuplicateResources>false</ILRepackAllowDuplicateResources>
     <ILRepackMergeDebugSymbols>true</ILRepackMergeDebugSymbols>
     <!-- No. No. LauncherExData is inaccessible due to its protection level. -->
@@ -24,7 +25,7 @@
     <PackageReference Include="BUTR.ILRepack" Version="2.1.9-beta6" GeneratePathProperty="true" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="ILRepack.FullAuto" Version="1.2.0" PrivateAssets="all" />
 
-    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" IncludeAssets="compile" PrivateAssets="all" />
 
     <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Bannerlord.ModuleManager.Source" PrivateAssets="all" Version="$(BUTRModuleManagerVersion)" />
@@ -32,7 +33,7 @@
     <PackageReference Include="IsExternalInit" Version="1.0.3" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
 
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.188-beta" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    <PackageReference Include="Mono.Cecil" Version="0.11.4" PrivateAssets="all" />
+    <PackageReference Include="Mono.Cecil" Version="0.11.4" IncludeAssets="compile" PrivateAssets="all" />
     <PackageReference Include="System.Memory" Version="4.5.5" PrivateAssets="all" />
   </ItemGroup>
 
@@ -48,10 +49,17 @@
 
   <Target Name="PostBuildFramework" AfterTargets="CopyFilesToOutputDirectory" Condition="Exists($(GameFolder))">
     <ItemGroup>
+      <FilesDebug Include="Bannerlord.LauncherEx.dll" />
+      <FilesDebug Include="Bannerlord.BLSE.dll" />
+      <FilesCopy Include="$(MSBuildProjectDirectory)\$(OutputPath)\%(FilesDebug.Identity)" />
+      <FilesDelete Include="$(GameFolder)\bin\$(GameConfiguration)\%(FilesDebug.Identity)" />
+      
       <Files Include="$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).dll" />
     </ItemGroup>
-    <Copy SourceFiles="@(Files)" DestinationFolder="$(GameFolder)\bin\Win64_Shipping_Client" />
-    <Copy SourceFiles="@(Files)" DestinationFolder="$(GameFolder)\bin\Gaming.Desktop.x64_Shipping_Client" />
+    <Copy SourceFiles="@(Files)" DestinationFolder="$(GameFolder)\bin\$(GameConfiguration)" />
+    
+    <Copy Condition="$(Configuration) == 'Debug'" SourceFiles="@(FilesCopy)" DestinationFolder="$(GameFolder)\bin\$(GameConfiguration)" />
+    <Delete Condition="$(Configuration) == 'Release'" Files="@(FilesDelete)" />
   </Target>
 
   <!-- Embedding multiple versions of LauncherEx -->

@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.3.2
+Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2
+* Added EnableDPIScaling setting to remove DPI scaling on high resolution
+* Updated LauncherManager library
+---------------------------------------------------------------------------------------------------
 Version: 1.3.1
 Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2
 * Improved game's performance

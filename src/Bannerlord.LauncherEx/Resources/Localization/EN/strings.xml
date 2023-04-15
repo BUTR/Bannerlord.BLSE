@@ -30,6 +30,7 @@
     <string id="uKUsA3Sp" text="LauncherEx always makes a backup before saving the first time. This will restore the original files" />
     <string id="TLDgPay9" text="Restore" />
     <string id="5XzSM7RN" text="Restore Engine Options Backup" />
+    <string id="JusnHy6S" text="Enables Windows DPI Scaling to remove blurriness of UI elements" />
 
     <!-- BUTRLauncherSavesVM -->
     <string id="JtelOsIW" text="Name" />

@@ -2,8 +2,6 @@
 using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.ModuleManager;
 
-using Mono.Cecil;
-
 using System;
 using System.IO;
 using System.IO.Compression;
@@ -14,9 +12,6 @@ using System.Threading;
 using System.Xml;
 
 using TaleWorlds.Core;
-
-using MessageBoxButtons = Bannerlord.BLSE.Shared.Utils.MessageBoxButtons;
-using MessageBoxIcon = Bannerlord.BLSE.Shared.Utils.MessageBoxIcon;
 
 internal static class ModuleInitializer
 {
@@ -253,8 +248,8 @@ If Steam is used, download the Harmony mod from NexusMods!", "Error from BLSE!",
         if (string.IsNullOrEmpty(assemblyFile))
             return null;
 
-        var harmonyX = AssemblyDefinition.ReadAssembly(assemblyFile);
-        if (harmonyX.Name.Version < new Version(2, 2, 2, 0))
+        var harmony = Assembly.ReflectionOnlyLoadFrom(assemblyFile);
+        if (harmony.GetName().Version < new Version(2, 2, 2, 0))
         {
             MessageBoxDialog.Show(@"The Harmony module is corrupted!
 Wrong 0Harmony.dll version! At least v2.2.2.x is required!

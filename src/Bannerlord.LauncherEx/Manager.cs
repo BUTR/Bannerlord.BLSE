@@ -1,5 +1,6 @@
 ﻿using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.LauncherEx.Helpers;
+using Bannerlord.LauncherEx.Options;
 using Bannerlord.LauncherEx.Patches;
 using Bannerlord.LauncherEx.ResourceManagers;
 using Bannerlord.LauncherEx.TPac;
@@ -141,6 +142,14 @@ namespace Bannerlord.LauncherEx
             WidgetFactoryManager.Clear();
             BUTRLocalizationManager.Clear();
             _launcherHarmony.UnpatchAll(_launcherHarmony.Id);
+        }
+
+        public static LauncherExData CurrentSettingsSnapshot()
+        {
+            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Mount and Blade II Bannerlord", "Configs", "LauncherData.xml");
+            if (!File.Exists(path)) return new();
+
+            return LauncherExData.FromUserDataXml(path) ?? new();
         }
     }
 }

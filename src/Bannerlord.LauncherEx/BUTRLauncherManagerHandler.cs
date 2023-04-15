@@ -194,6 +194,14 @@ namespace Bannerlord.LauncherEx
                 getOptions: GetTWOptions,
                 getState: () => _getState?.Invoke() ?? LauncherState.Empty
             );
+            SetGameStore(LauncherPlatform.PlatformType switch
+            {
+                LauncherPlatformType.Steam => GameStore.Steam,
+                LauncherPlatformType.Epic => GameStore.Epic,
+                LauncherPlatformType.Gog => GameStore.GOG,
+                LauncherPlatformType.Gdk => GameStore.Xbox,
+                _ => GameStore.Unknown
+            });
         }
         private static void AdditionalArgsPostfix(ref string __result)
         {

@@ -6,25 +6,28 @@
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
     <DebugType>full</DebugType>
-    <Version>1.24.0</Version>
+    <Version>1.24.2</Version>
     <PolySharpExcludeGeneratedTypes>System.Diagnostics.CodeAnalysis.UnscopedRefAttribute</PolySharpExcludeGeneratedTypes>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
-    <ILRepackBuildEnable>false</ILRepackBuildEnable>
+
+    <GameConfiguration Condition="$(GameConfiguration) == '' AND Exists('$(GameFolder)\bin\Win64_Shipping_Client')">Win64_Shipping_Client</GameConfiguration>
+    <GameConfiguration Condition="$(GameConfiguration) == '' AND Exists('$(GameFolder)\bin\Gaming.Desktop.x64_Shipping_Client')">Gaming.Desktop.x64_Shipping_Client</GameConfiguration>
+    
     <ILRepackTargetConfigurations>$(Configuration)</ILRepackTargetConfigurations>
-    <ILRepackBuildToolingPath>$(PkgBUTR_ILRepack)\tools\net461\ILRepack.exe</ILRepackBuildToolingPath>
     <ILRepackAllowDuplicateResources>false</ILRepackAllowDuplicateResources>
     <ILRepackMergeDebugSymbols>true</ILRepackMergeDebugSymbols>
     <ILRepackPerformInternalize>true</ILRepackPerformInternalize>
     <ILRepackCopyAttributes>false</ILRepackCopyAttributes>
+    <ILRepackBuildToolingPath>$(PkgBUTR_ILRepack)\tools\net461\ILRepack.exe</ILRepackBuildToolingPath>
     <!--
     <GameVersion>1.1.0</GameVersion>
     <GameVersionFlat>$([System.String]::Copy('$(GameVersion)').Replace('.',''))</GameVersionFlat>
     <GameVersionConstant>v$(GameVersionFlat)</GameVersionConstant>
     -->
-    
+
     <DefineConstants>$(DefineConstants);$(GameVersionConstant)</DefineConstants>
   </PropertyGroup>
-  
+
   <PropertyGroup>
     <PackageId>Bannerlord.LauncherEx</PackageId>
     <Title>Bannerlord.LauncherEx</Title>
@@ -33,28 +36,28 @@
     <PackageProjectUrl>https://github.com/BUTR/Bannerlord.BLSE</PackageProjectUrl>
     <PackageTags>butr bannerlord launcherex</PackageTags>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <EmbeddedResource Include="Resources\Brushes\Launcher.xml" />
     <EmbeddedResource Include="Resources\Prefabs\Launcher.MessageBox.xml" />
     <EmbeddedResource Include="Resources\Prefabs\Launcher.Options.OptionTuple.xml" />
     <EmbeddedResource Include="Resources\Prefabs\Widgets\Launcher.Scrollbar.xml" />
     <EmbeddedResource Include="Resources\Prefabs\Widgets\Launcher.SearchBox.xml" />
-    
+
     <EmbeddedResource Include="Resources\Prefabs\Widgets\Launcher.ToggleButton.xml" />
-    
+
     <EmbeddedResource Include="Resources\Prefabs\Properties\Launcher.SettingsPropertyBoolView.xml" />
     <EmbeddedResource Include="Resources\Prefabs\Properties\Launcher.SettingsPropertyButtonView.xml" />
     <EmbeddedResource Include="Resources\Prefabs\Properties\Launcher.SettingsPropertyFloatView.xml" />
     <EmbeddedResource Include="Resources\Prefabs\Properties\Launcher.SettingsPropertyIntView.xml" />
     <EmbeddedResource Include="Resources\Prefabs\Properties\Launcher.SettingsPropertyStringView.xml" />
-    
+
     <EmbeddedResource Include="Resources\Prefabs\Launcher.Saves.SaveTuple.xml" />
     <EmbeddedResource Include="Resources\Prefabs\Launcher.Saves.xml" />
     <EmbeddedResource Include="Resources\Prefabs\Launcher.Mods.ModuleTuple.xml" />
     <EmbeddedResource Include="Resources\Prefabs\Launcher.Mods.xml" />
     <EmbeddedResource Include="Resources\Prefabs\Launcher.Options.xml" />
-    
+
     <EmbeddedResource Include="Resources\Textures\arrow_down.png" />
     <EmbeddedResource Include="Resources\Textures\arrow_left.png" />
     <EmbeddedResource Include="Resources\Textures\export.png" />
@@ -77,20 +80,20 @@
     <PackageReference Include="ILRepack.FullAuto" Version="1.2.0" PrivateAssets="all" />
 
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
-    
+
     <!-- Bannerlord.BUTR.Shared needs the package, but Bannerlord.LauncherManager provides the types already -->
     <PackageReference Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" PrivateAssets="all" IncludeAssets="none" />
-    <PackageReference Include="Bannerlord.LauncherManager" Version="$(LauncherManagerVersion)" PrivateAssets="compile" />
+    <PackageReference Include="Bannerlord.LauncherManager" Version="$(LauncherManagerVersion)" />
     <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    <PackageReference Include="Bannerlord.Lib.Harmony" Version="$(HarmonyVersion)" PrivateAssets="compile" IncludeAssets="compile" />
-    <PackageReference Include="lz4net" Version="1.0.15.93" PrivateAssets="compile" />
+    <PackageReference Include="Bannerlord.Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
+    <PackageReference Include="lz4net" Version="1.0.15.93" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.188-beta" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    <PackageReference Include="Mono.Cecil" Version="0.11.4" PrivateAssets="compile" />
+    <PackageReference Include="Mono.Cecil" Version="0.11.4" IncludeAssets="compile" />
     <PackageReference Include="PolySharp" Version="1.13.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    <PackageReference Include="StbSharp" Version="0.7.2.38" PrivateAssets="all" IncludeAssets="compile" />
-    <PackageReference Include="System.Drawing.Common" Version="7.0.0" PrivateAssets="compile" />
-    <PackageReference Include="Vanara.Core" Version="3.4.13" PrivateAssets="compile" />
+    <PackageReference Include="StbSharp" Version="0.7.2.38" PrivateAssets="all" />
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+    <PackageReference Include="Vanara.Core" Version="3.4.13" />
   </ItemGroup>
 
   <Target Name="SetLauncherExMetadata" BeforeTargets="BeforeCompile">

@@ -10,6 +10,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>$(DefineConstants);STANDALONE;NETCOREHOSTING;_NETFRAMEWORKHOSTING</DefineConstants>
     <AssemblyName>Bannerlord.BLSE.Standalone</AssemblyName>
+
+    <BuildShared>true</BuildShared>
+    <GameConfiguration Condition="$(GameConfiguration) == '' AND Exists('$(GameFolder)\bin\Win64_Shipping_Client')">Win64_Shipping_Client</GameConfiguration>
+    <GameConfiguration Condition="$(GameConfiguration) == '' AND Exists('$(GameFolder)\bin\Gaming.Desktop.x64_Shipping_Client')">Gaming.Desktop.x64_Shipping_Client</GameConfiguration>
   </PropertyGroup>
 
   <!--
@@ -60,9 +64,12 @@
       <Files Include="$(MSBuildProjectDirectory)\$(OutputPath)\publish\$(AssemblyName).exe" />
       <FilesWin64 Include="$(MSBuildProjectDirectory)\_Root\bin\Win64_Shipping_Client\**\*" />
     </ItemGroup>
-    <Copy SourceFiles="@(FilesWin64)" DestinationFolder="$(GameFolder)\bin\Win64_Shipping_Client" />
-    <Copy SourceFiles="@(Files)" DestinationFolder="$(GameFolder)\bin\Win64_Shipping_Client" />
-    <Copy SourceFiles="@(Files)" DestinationFolder="$(GameFolder)\bin\Gaming.Desktop.x64_Shipping_Client" />
+    <Copy Condition="$(GameConfiguration) == 'Win64_Shipping_Client'" SourceFiles="@(FilesWin64)" DestinationFolder="$(GameFolder)\bin\$(GameConfiguration)" />
+    <Copy SourceFiles="@(Files)" DestinationFolder="$(GameFolder)\bin\$(GameConfiguration)" />
   </Target>
+
+  <ItemGroup Condition="$(BuildShared) == 'true'">
+    <ProjectReference Include="..\Bannerlord.BLSE.Shared\Bannerlord.BLSE.Shared.csproj" ReferenceOutputAssembly="false" />
+  </ItemGroup>
 
 </Project>

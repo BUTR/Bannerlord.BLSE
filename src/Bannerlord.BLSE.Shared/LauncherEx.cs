@@ -9,10 +9,8 @@ using Bannerlord.LauncherEx;
 using HarmonyLib;
 
 using System;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 
 using Windows.Win32;
 
@@ -24,9 +22,6 @@ public static class LauncherEx
 
     public static void Launch(string[] args)
     {
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.OSVersion.Version.Major >= 6)
-            PInvoke.SetProcessDPIAware();
-
         InterceptorFeature.Enable(_featureHarmony);
         AssemblyResolverFeature.Enable(_featureHarmony);
         ContinueSaveFileFeature.Enable(_featureHarmony);
@@ -34,6 +29,11 @@ public static class LauncherEx
         XboxFeature.Enable(_featureHarmony);
 
         Manager.Initialize();
+
+        var settings = Manager.CurrentSettingsSnapshot();
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.OSVersion.Version.Major >= 6 && settings is { EnableDPIScaling: true })
+            PInvoke.SetProcessDPIAware();
+
         Manager.Enable();
 
         ModuleInitializer.Disable();
