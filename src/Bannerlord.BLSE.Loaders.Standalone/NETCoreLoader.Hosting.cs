@@ -40,6 +40,7 @@ public static class NETCoreLoader
         // Catch AccessViolation. .NET Core 3.1 still allows that
         Environment.SetEnvironmentVariable("COMPlus_legacyCorruptedStateExceptionsPolicy", "1");
 
+        // TODO: Remove once Lib.Harmony v2.3 is out
         // Disable aggressive inlining of JIT by disabling JIT Tiered Compilation
         Environment.SetEnvironmentVariable("COMPlus_TieredCompilation", "0");
 

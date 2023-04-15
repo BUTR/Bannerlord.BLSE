@@ -247,9 +247,9 @@ If Steam is used, download the Harmony mod from NexusMods!", "Error from BLSE!",
         var assemblyFile = ResolveHarmonyAssembliesFile(assemblyName);
         if (string.IsNullOrEmpty(assemblyFile))
             return null;
-
-        var harmony = Assembly.ReflectionOnlyLoadFrom(assemblyFile);
-        if (harmony.GetName().Version < new Version(2, 2, 2, 0))
+        
+        
+        if (ReflectionParser.GetAssemblyVersion(assemblyFile) < new Version(2, 2, 2, 0))
         {
             MessageBoxDialog.Show(@"The Harmony module is corrupted!
 Wrong 0Harmony.dll version! At least v2.2.2.x is required!
