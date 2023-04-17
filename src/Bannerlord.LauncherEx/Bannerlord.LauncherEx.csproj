@@ -18,7 +18,7 @@
     <ILRepackMergeDebugSymbols>true</ILRepackMergeDebugSymbols>
     <ILRepackPerformInternalize>true</ILRepackPerformInternalize>
     <ILRepackCopyAttributes>false</ILRepackCopyAttributes>
-    <ILRepackBuildToolingPath Condition="$(Configuration) == 'Release'">$(PkgBUTR_ILRepack)\tools\net461\ILRepack.exe</ILRepackBuildToolingPath>
+    <ILRepackBuildToolingPath Condition="$(Configuration) != 'Debug'">$(PkgBUTR_ILRepack)\tools\net461\ILRepack.exe</ILRepackBuildToolingPath>
     <!--
     <GameVersion>1.1.0</GameVersion>
     <GameVersionFlat>$([System.String]::Copy('$(GameVersion)').Replace('.',''))</GameVersionFlat>
@@ -76,8 +76,8 @@
 
   <ItemGroup>
     <!-- BUTR.ILRepack breaks debugging -->
-    <PackageReference Condition="$(Configuration) == 'Release'" Update="ILRepack" PrivateAssets="all" IncludeAssets="none" />
-    <PackageReference Condition="$(Configuration) == 'Release'" Include="BUTR.ILRepack" Version="2.1.9-beta6" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+    <PackageReference Condition="$(Configuration) != 'Debug'" Update="ILRepack" PrivateAssets="all" IncludeAssets="none" />
+    <PackageReference Condition="$(Configuration) != 'Debug'" Include="BUTR.ILRepack" Version="2.1.9-beta6" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="ILRepack.FullAuto" Version="1.2.0" PrivateAssets="all" />
 
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
