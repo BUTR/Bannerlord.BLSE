@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.3.4
+Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2
+* Fixed a regression with Xbox where Harmony 2.2.2.* wasn't working correctly
+* On Xbox, Harmony 2.2 will slow down the game due to JIT optimization disabling
+* On Xbox, Harmony 2.3 beta and beyond will keep native speed
+---------------------------------------------------------------------------------------------------
 Version: 1.3.3
 Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2
 * Xbox version CTD fix

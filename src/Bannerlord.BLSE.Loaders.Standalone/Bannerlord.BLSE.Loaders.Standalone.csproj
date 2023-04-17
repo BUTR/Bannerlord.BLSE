@@ -68,6 +68,10 @@
     <Copy SourceFiles="@(Files)" DestinationFolder="$(GameFolder)\bin\$(GameConfiguration)" />
   </Target>
 
+  <ItemGroup>
+    <Compile Include="..\Bannerlord.BLSE.Shared\Utils\HarmonyFinder.cs" />
+  </ItemGroup>
+
   <ItemGroup Condition="$(BuildShared) == 'true'">
     <ProjectReference Include="..\Bannerlord.BLSE.Shared\Bannerlord.BLSE.Shared.csproj" ReferenceOutputAssembly="false" />
   </ItemGroup>
