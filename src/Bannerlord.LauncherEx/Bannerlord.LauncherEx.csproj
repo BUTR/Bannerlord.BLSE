@@ -94,7 +94,7 @@
     <PackageReference Include="PolySharp" Version="1.13.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="StbSharp" Version="0.7.2.38" PrivateAssets="all" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
-    <PackageReference Include="Vanara.Core" Version="3.4.13" />
+    <PackageReference Include="Vanara.Core" Version="3.4.14" />
   </ItemGroup>
 
   <Target Name="SetLauncherExMetadata" BeforeTargets="BeforeCompile">
