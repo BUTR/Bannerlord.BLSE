@@ -1,7 +1,10 @@
 ﻿#if NETCOREHOSTING
+using Bannerlord.BLSE.Shared.Utils;
+
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -40,9 +43,12 @@ public static class NETCoreLoader
         // Catch AccessViolation. .NET Core 3.1 still allows that
         Environment.SetEnvironmentVariable("COMPlus_legacyCorruptedStateExceptionsPolicy", "1");
 
-        // TODO: Remove once Lib.Harmony v2.3 is out
-        // Disable aggressive inlining of JIT by disabling JIT Tiered Compilation
-        Environment.SetEnvironmentVariable("COMPlus_TieredCompilation", "0");
+        // Harmony v2.3 migrated to MonoMod.Core. It doesn't need nether COMPlus_TieredCompilation or COMPlus_JITMinOpts
+        if (GetHarmonyVersion() < new Version(2, 3, 0, 0))
+        {
+            // Disable aggressive inlining of JIT, since earlier version of MonoMod can't handle it correctly
+            Environment.SetEnvironmentVariable("COMPlus_JITMinOpts ", "1"); 
+        }
 
         // Since we have two JIT's loaded - from .NET Framework 4.8 and .NET Core 3.1, MonoMod will use the first one. Force the correct JIT
         Environment.SetEnvironmentVariable("MONOMOD_JitPath", Path.Combine(netCoreDirectory, "clrjit.dll"));
@@ -98,6 +104,16 @@ public static class NETCoreLoader
         var args2 = args.Select(NativeUTF8).ToArray();
         var @delegate = Marshal.GetDelegateForFunctionPointer<EntryDelegate>(pMethod);
         @delegate(args.Length, args2);
+    }
+
+    private static Version GetHarmonyVersion()
+    {
+        if (HarmonyFinder.TryResolveHarmonyAssembliesFileFull(new AssemblyName("0Harmony"), out var path) != HarmonyDiscoveryResult.Discovered)
+            return new Version();
+
+        var assembly = Assembly.ReflectionOnlyLoadFrom(path);
+        var assemblyName = assembly.GetName();
+        return assemblyName.Version;
     }
 }
 #endif

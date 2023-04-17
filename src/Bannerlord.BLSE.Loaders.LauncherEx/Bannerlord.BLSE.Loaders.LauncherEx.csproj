@@ -70,6 +70,7 @@
 
   <ItemGroup>
     <Compile Include="..\Bannerlord.BLSE.Loaders.Standalone\**\*.cs" Exclude="..\Bannerlord.BLSE.Loaders.Standalone\obj\**\*.cs" />
+    <Compile Include="..\Bannerlord.BLSE.Shared\Utils\HarmonyFinder.cs" />
   </ItemGroup>
 
   <ItemGroup Condition="$(BuildShared) == 'true'">
