@@ -92,7 +92,7 @@ If Steam is used, download the Harmony mod from NexusMods!", "Error from BLSE!",
                 return null;
         }
     }
-    
+
     private static Assembly? ResolveAssembly(object? sender, ResolveEventArgs e)
     {
         if (e.Name is null)
@@ -145,7 +145,7 @@ If Steam is used, download the Harmony mod from NexusMods!", "Error from BLSE!",
 
         return null;
     }
-    
+
     private static Assembly? ResolveHarmonyAssembly(AssemblyName assemblyName)
     {
         foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
@@ -157,8 +157,8 @@ If Steam is used, download the Harmony mod from NexusMods!", "Error from BLSE!",
         var assemblyFile = ResolveHarmonyAssembliesFile(assemblyName);
         if (string.IsNullOrEmpty(assemblyFile))
             return null;
-        
-        
+
+
         if (ReflectionParser.GetAssemblyVersion(assemblyFile) < new Version(2, 2, 2, 0))
         {
             MessageBoxDialog.Show(@"The Harmony module is corrupted!

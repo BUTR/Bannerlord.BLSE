@@ -47,7 +47,7 @@ public static class NETCoreLoader
         if (GetHarmonyVersion() < new Version(2, 3, 0, 0))
         {
             // Disable aggressive inlining of JIT, since earlier version of MonoMod can't handle it correctly
-            Environment.SetEnvironmentVariable("COMPlus_JITMinOpts ", "1"); 
+            Environment.SetEnvironmentVariable("COMPlus_JITMinOpts ", "1");
         }
 
         // Since we have two JIT's loaded - from .NET Framework 4.8 and .NET Core 3.1, MonoMod will use the first one. Force the correct JIT
