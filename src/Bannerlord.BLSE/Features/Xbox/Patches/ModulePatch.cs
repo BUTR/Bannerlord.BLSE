@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
+using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -14,7 +15,9 @@ namespace Bannerlord.BLSE.Features.Xbox.Patches
     {
         public static bool Enable(Harmony harmony)
         {
-            Assembly.Load(new AssemblyName("TaleWorlds.MountAndBlade.Platform.GDK"));
+            var asm = Assembly.LoadFrom("TaleWorlds.MountAndBlade.Platform.GDK.dll");
+            Trace.Assert(asm is not null);
+
             var res1 = harmony.TryPatch(
                 AccessTools2.Constructor(typeof(Module)),
                 prefix: AccessTools2.Method(typeof(ModulePatch), nameof(ShowedLoginScreenPrefix)));

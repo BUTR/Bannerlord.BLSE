@@ -2,6 +2,7 @@
 using HarmonyLib.BUTR.Extensions;
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
@@ -17,7 +18,8 @@ internal static class LauncherExceptionHandler
 
     public static void Watch()
     {
-        Assembly.Load(new AssemblyName("TaleWorlds.Starter.Library"));
+        var asm = Assembly.LoadFrom("TaleWorlds.Starter.Library.dll");
+        Trace.Assert(asm is not null);
 
         _harmony.TryPatch(
             AccessTools2.DeclaredMethod("TaleWorlds.Starter.Library.Program:Main"),

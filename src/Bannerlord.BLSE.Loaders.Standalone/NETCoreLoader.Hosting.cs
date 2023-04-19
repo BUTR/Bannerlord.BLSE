@@ -47,7 +47,9 @@ public static class NETCoreLoader
         if (GetHarmonyVersion() < new Version(2, 3, 0, 0))
         {
             // Disable aggressive inlining of JIT, since earlier version of MonoMod can't handle it correctly
-            Environment.SetEnvironmentVariable("COMPlus_JITMinOpts ", "1"); 
+            //Environment.SetEnvironmentVariable("COMPlus_ReadyToRun", "0");      // Not affecting
+            //Environment.SetEnvironmentVariable("COMPlus_JITMinOpts", "1");      // Too harsh
+            Environment.SetEnvironmentVariable("COMPlus_TieredCompilation", "0"); // Just right
         }
 
         // Since we have two JIT's loaded - from .NET Framework 4.8 and .NET Core 3.1, MonoMod will use the first one. Force the correct JIT
@@ -62,7 +64,7 @@ public static class NETCoreLoader
         // Do not set Modules .dll as trusted and to be loaded
         var modulesFiles = Directory.GetFiles(Path.Combine(path, "..", "..", "Modules"), "*.dll", SearchOption.AllDirectories).Select(x => $"{x};");
         // The instantly loaded assembly files
-        var files = string.Join("", rootFiles.Concat(netcoreFiles).Concat(aspCoreFiles).Concat(winDeskFiles)/*.Concat(files5)*/);
+        var files = string.Join("", rootFiles.Concat(netcoreFiles).Concat(aspCoreFiles).Concat(winDeskFiles)/*.Concat(modulesFiles)*/);
 
         var propKeys = new IntPtr[]
         {
