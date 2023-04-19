@@ -136,6 +136,7 @@ No!
 For Xbox Game Pass PC you need only `Gaming.Desktop.x64_Shipping_Client`  
 For Steam/GOG/Epic you need only `Win64_Shipping_Client`  
 * I don't see my old saves on Xbox Game Pass PC!  
-BLSE uses a storage that Steam/GOG/Epic versions of the game use. We do not support Xbox's Cloud Saves!
+BLSE uses a storage that Steam/GOG/Epic versions of the game use. We do not support Xbox's Saves!  
+[PC Games has an article for save migration.](https://www.pcgamesn.com/xbox-game-pass-pc-steam)
 * BLSE is not shown in Vortex's Tools!    
 You need to add it manually for now!
