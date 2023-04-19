@@ -94,7 +94,7 @@ public static class HarmonyFinder
         return HarmonyDiscoveryResult.Discovered;
     }
 
-    
+
     public static HarmonyDiscoveryResult TryResolveHarmonyAssembliesFileFull(AssemblyName assemblyName, out string? path)
     {
         var configName = Path.GetFileName(Directory.GetCurrentDirectory());

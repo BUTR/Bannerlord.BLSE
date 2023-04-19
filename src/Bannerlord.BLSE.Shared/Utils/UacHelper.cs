@@ -81,7 +81,7 @@ The game won't work if Steam has higher privileges than the game!
 Please run Steam as a user or run the game as Admin!", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
             Environment.Exit(1);
         }
-        
+
         var thisProcess = Process.GetCurrentProcess();
 
         var steamProcesses = Process.GetProcessesByName("steam");
