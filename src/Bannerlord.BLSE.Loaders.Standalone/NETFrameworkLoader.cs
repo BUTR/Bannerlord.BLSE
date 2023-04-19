@@ -1,5 +1,6 @@
 ﻿#if !NETFRAMEWORKHOSTING
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
@@ -17,6 +18,7 @@ public static class NETFrameworkLoader
 
         NtfsUnblocker.UnblockFile("Bannerlord.BLSE.Shared.dll");
         var sharedAssembly = Assembly.LoadFrom("Bannerlord.BLSE.Shared.dll");
+        Trace.Assert(sharedAssembly is not null);
         var sharedMainDelegate = (Main) Delegate.CreateDelegate(typeof(Main), sharedAssembly.GetType("Bannerlord.BLSE.Shared.Program"), "Main");
         sharedMainDelegate(args);
     }

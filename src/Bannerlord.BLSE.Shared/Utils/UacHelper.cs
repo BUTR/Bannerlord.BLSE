@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32.SafeHandles;
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -73,26 +74,38 @@ public static class UacHelper
 
     public static void CheckSteam()
     {
+        static void Exit()
+        {
+            MessageBoxDialog.Show(@"Steam is launched as Admin, but BLSE is not!
+The game won't work if Steam has higher privileges than the game!
+Please run Steam as a user or run the game as Admin!", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
+            Environment.Exit(1);
+        }
+        
         var thisProcess = Process.GetCurrentProcess();
 
         var steamProcesses = Process.GetProcessesByName("steam");
         if (steamProcesses.Length != 1) return;
         var steamProcess = steamProcesses.First();
 
-        using var steamProcessHandle = steamProcess.SafeHandle;
-        var steamElevated = IsProcessElevated(steamProcessHandle);
-        if (steamElevated is null) return;
-
-        using var thisProcessHandle = thisProcess.SafeHandle;
-        var thisElevated = IsProcessElevated(thisProcessHandle);
-        if (thisElevated is null) return;
-
-        if (steamElevated == true && thisElevated != true)
+        try
         {
-            MessageBoxDialog.Show(@"Steam is launched as Admin, but BLSE is not!
-The game won't work if Steam has higher privileges than the game!
-Please run Steam as a user or run the game as Admin!", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
-            Environment.Exit(1);
+            using var steamProcessHandle = steamProcess.SafeHandle;
+            var steamElevated = IsProcessElevated(steamProcessHandle);
+            if (steamElevated is null) return;
+
+            using var thisProcessHandle = thisProcess.SafeHandle;
+            var thisElevated = IsProcessElevated(thisProcessHandle);
+            if (thisElevated is null) return;
+
+            if (steamElevated == true && thisElevated != true)
+            {
+                Exit();
+            }
+        }
+        catch (Win32Exception e) when (e.NativeErrorCode == 5) // AccessDenied
+        {
+            Exit();
         }
     }
 }
