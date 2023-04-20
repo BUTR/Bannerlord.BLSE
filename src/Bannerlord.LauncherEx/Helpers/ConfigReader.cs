@@ -25,7 +25,7 @@ namespace Bannerlord.LauncherEx.Helpers
                     if (split.Length != 2) continue;
                     var key = split[0].Trim();
                     var value = split[1].Trim();
-                    dict.Add(key, value);
+                    dict[key] = value;
                 }
             }
             catch (Exception) { /* ignore */ }
@@ -34,7 +34,7 @@ namespace Bannerlord.LauncherEx.Helpers
         public static Dictionary<string, string> GetEngineOptions(Func<string, byte[]?> readFileContent)
         {
             var dict = new Dictionary<string, string>();
-            if (readFileContent(GameConfigPath) is not { } data) return dict;
+            if (readFileContent(EngineConfigPath) is not { } data) return dict;
             try
             {
                 var content = Encoding.UTF8.GetString(data);
@@ -44,7 +44,7 @@ namespace Bannerlord.LauncherEx.Helpers
                     if (split.Length != 2) continue;
                     var key = split[0].Trim();
                     var value = split[1].Trim();
-                    dict.Add(key, value);
+                    dict[key] = value;
                 }
             }
             catch (Exception) { /* ignore */ }

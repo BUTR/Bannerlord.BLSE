@@ -101,7 +101,6 @@ namespace Bannerlord.LauncherEx.Mixins
 
                 //TryOrderByLoadOrder(Enumerable.Empty<string>(), x => loadOrder.TryGetValue(x, out var isSelected) && isSelected);
             }
-            _launcherManagerHandler.SetGameParametersLoadOrder(Modules2);
         }
 
         private void SetViewModels(IEnumerable<IModuleViewModel> orderedModuleViewModels)
@@ -113,6 +112,8 @@ namespace Bannerlord.LauncherEx.Mixins
             // Validate all VM's after they were selected and ordered
             foreach (var modules in Modules2)
                 modules.Validate();
+
+            _launcherManagerHandler.SetGameParametersLoadOrder(Modules2);
         }
 
         private IEnumerable<string> ValidateModule(BUTRLauncherModuleVM moduleVM) => SortHelper.ValidateModule(Modules2, _modulesLookup, moduleVM);

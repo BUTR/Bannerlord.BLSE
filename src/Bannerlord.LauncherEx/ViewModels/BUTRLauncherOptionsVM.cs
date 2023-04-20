@@ -35,6 +35,13 @@ namespace Bannerlord.LauncherEx.ViewModels
         public MBBindingList<SettingsPropertyVM> SettingProperties { get => _settingProperties; set => SetField(ref _settingProperties, value); }
         private MBBindingList<SettingsPropertyVM> _settingProperties = new();
 
+        [BUTRDataSourceProperty]
+        public string NeedsGameLaunchMessage { get => _needsGameLaunchMessage; set => SetField(ref _needsGameLaunchMessage, value); }
+        private string _needsGameLaunchMessage = new BUTRTextObject("{=jfNh7Sg3}One-time game launch is required!").ToString();
+
+        [BUTRDataSourceProperty]
+        public bool NeedsGameLaunch { get => _needsGameLaunch; set => SetField(ref _needsGameLaunch, value); }
+        private bool _needsGameLaunch;
 
         public BUTRLauncherOptionsVM(OptionsType optionsType, Action saveUserData, Action refreshOptions)
         {
@@ -165,7 +172,11 @@ namespace Bannerlord.LauncherEx.ViewModels
         {
             try
             {
-                foreach (var (key, value) in ConfigReader.GetGameOptions(path => File.Exists(path) ? File.ReadAllBytes(path) : null))
+                var options = ConfigReader.GetGameOptions(path => File.Exists(path) ? File.ReadAllBytes(path) : null);
+                if (options.Count == 0)
+                    NeedsGameLaunch = true;
+
+                foreach (var (key, value) in options)
                 {
                     SettingProperties.Add(CreateSettingsPropertyVM(key, value, ToSeparateWords));
                 }
@@ -176,7 +187,11 @@ namespace Bannerlord.LauncherEx.ViewModels
         {
             try
             {
-                foreach (var (key, value) in ConfigReader.GetEngineOptions(path => File.Exists(path) ? File.ReadAllBytes(path) : null))
+                var options = ConfigReader.GetEngineOptions(path => File.Exists(path) ? File.ReadAllBytes(path) : null);
+                if (options.Count == 0)
+                    NeedsGameLaunch = true;
+
+                foreach (var (key, value) in options)
                 {
                     SettingProperties.Add(CreateSettingsPropertyVM(key, value, x => ToTitleCase(x.Replace("_", " "))));
                 }
