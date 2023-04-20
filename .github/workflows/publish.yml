@@ -101,3 +101,29 @@ jobs:
       mod_version: ${{ needs.build-changelog.outputs.mod_version }}
       mod_description: ${{ needs.build.outputs.mod_description }}
       artifact_name: bannerlord
+
+  ###########################
+  #          STEAM          #
+  ###########################
+  publish-on-steam:
+    if: github.ref == 'refs/heads/master'
+    needs: ["get-changelog", "build"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Module artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: bannerlord
+          path: ./artifact
+      - uses: game-ci/steam-deploy@v2
+        with:
+          username: ${{ secrets.STEAM_USERNAME }}
+          password: ${{ secrets.STEAM_PASSWORD }}
+          configVdf: ${{ secrets.STEAM_CONFIG_VDF }}
+          ssfnFileName: ${{ secrets.STEAM_SSFN_FILE_NAME }}
+          ssfnFileContents: ${{ secrets.STEAM_SSFN_FILE_CONTENTS }}
+          appId: ${{ secrets.STEAM_APPID }}
+          buildDescription: ${{ needs.build-changelog.outputs.mod_version }}
+          rootPath: build
+          depot1Path: ./artifact
+          releaseBranch: prerelease
