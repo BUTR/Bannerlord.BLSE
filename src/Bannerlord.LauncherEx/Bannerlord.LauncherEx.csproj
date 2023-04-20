@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
     <DebugType>full</DebugType>
-    <Version>1.24.2</Version>
+    <Version>1.24.3</Version>
     <PolySharpExcludeGeneratedTypes>System.Diagnostics.CodeAnalysis.UnscopedRefAttribute</PolySharpExcludeGeneratedTypes>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
 
@@ -90,7 +90,7 @@
     <PackageReference Include="Bannerlord.Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
     <PackageReference Include="lz4net" Version="1.0.15.93" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.188-beta" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    <PackageReference Include="Mono.Cecil" Version="0.11.4" IncludeAssets="compile" />
+    <PackageReference Include="Mono.Cecil" Version="0.11.5" IncludeAssets="compile" />
     <PackageReference Include="PolySharp" Version="1.13.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="StbSharp" Version="0.7.2.38" PrivateAssets="all" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />

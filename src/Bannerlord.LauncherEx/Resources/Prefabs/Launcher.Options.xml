@@ -8,6 +8,7 @@
           <Children>
             <Widget Id="MyClipRect" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" ClipContents="true">
               <Children>
+                <TextWidget Text="@NeedsGameLaunchMessage" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" Brush="Launcher.Mods.ModNameText" Brush.TextHorizontalAlignment="Left" IsVisible="@NeedsGameLaunch" />
                 <ListPanel Id="InnerPanel" DataSource="{SettingProperties}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" LayoutImp.LayoutMethod="VerticalBottomToTop" VerticalAlignment="Top">
                   <ItemTemplate>
                     <Launcher.Options.OptionTuple />
