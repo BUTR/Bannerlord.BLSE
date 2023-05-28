@@ -30,7 +30,7 @@
     <string id="uKUsA3Sp" text="O LauncherEx sempre faz um backup antes de salvar pela primeira vez. Isso restaurará os arquivos originais"/>
     <string id="TLDgPay9" text="Restaurar"/>
     <string id="5XzSM7RN" text="Restaurar Opções de Backup da Engine"/>
-    <string id="JusnHy6S" text="Enables Windows DPI Scaling to remove blurriness of UI elements" />
+    <string id="JusnHy6S" text="Habilita a escala de DPI do Windows para remover a desfocagem dos elementos da interface do usuário"/>
 
     <!-- BUTRLauncherSavesVM -->
     <string id="JtelOsIW" text="Nome"/>
@@ -51,7 +51,7 @@
 
     <!-- LauncherVMMixin -->
     <string id="yS5hbWCL" text="Opções"/>
-    <string id="V66qoU6n" text="Launcher"/>
+    <string id="V66qoU6n" text="Inicializador"/>
     <string id="ro4RMgyt" text="Jogo"/>
     <string id="q4rQuTgG" text="Engine"/>
     <string id="d5OjKcGE" text="Salvar"/>
