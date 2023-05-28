@@ -13,8 +13,8 @@
   <a href="https://codeclimate.com/github/BUTR/Bannerlord.BLSE/maintainability">
     <img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability-percentage/BUTR/Bannerlord.BLSE">
   </a>
-  <a title="Crowdin" target="_blank" href="https://crowdin.com/project/blse">
-    <img src="https://badges.crowdin.net/blse/localized.svg">
+  <a title="Crowdin" target="_blank" href="https://crowdin.com/project/butrloader">
+    <img src="https://badges.crowdin.net/butrloader/localized.svg">
   </a>
   </br>
   <a href="https://github.com/BUTR/Bannerlord.BLSE/actions/workflows/test.yml?query=branch%3Amaster">
