@@ -1,7 +1,6 @@
 ﻿using Bannerlord.LauncherEx.Extensions;
 using Bannerlord.LauncherEx.Helpers;
 using Bannerlord.LauncherEx.ViewModels;
-using Bannerlord.LauncherManager;
 using Bannerlord.LauncherManager.Localization;
 using Bannerlord.LauncherManager.Models;
 using Bannerlord.LauncherManager.Utils;
@@ -525,6 +524,14 @@ namespace Bannerlord.LauncherEx.Mixins
                 }
 
                 ExecuteStartGame(ViewModel, 0);
+                return;
+            }
+            
+            if (mode == 1)
+            {
+                _launcherManagerHandler.SetGameParameterContinueLastSaveFile(true);
+                
+                ExecuteStartGame(ViewModel, 1);
                 return;
             }
 

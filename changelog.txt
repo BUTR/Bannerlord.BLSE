@@ -2,6 +2,7 @@
 Version: 1.3.7
 Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4
 * Fixed continuing save files with spaces in names
+* Fixed the vanilla Continue button that launches the last save
 ---------------------------------------------------------------------------------------------------
 Version: 1.3.6
 Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3
