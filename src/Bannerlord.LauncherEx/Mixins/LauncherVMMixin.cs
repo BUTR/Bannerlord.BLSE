@@ -526,11 +526,11 @@ namespace Bannerlord.LauncherEx.Mixins
                 ExecuteStartGame(ViewModel, 0);
                 return;
             }
-            
+
             if (mode == 1)
             {
                 _launcherManagerHandler.SetGameParameterContinueLastSaveFile(true);
-                
+
                 ExecuteStartGame(ViewModel, 1);
                 return;
             }
