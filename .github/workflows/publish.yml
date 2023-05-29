@@ -124,6 +124,6 @@ jobs:
           ssfnFileContents: ${{ secrets.STEAM_SSFN_FILE_CONTENTS }}
           appId: ${{ secrets.STEAM_APPID }}
           buildDescription: ${{ needs.build-changelog.outputs.mod_version }}
-          rootPath: build
+          rootPath: artifact
           depot1Path: ./artifact
           releaseBranch: prerelease
