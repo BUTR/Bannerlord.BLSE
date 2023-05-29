@@ -1,7 +1,10 @@
-﻿using HarmonyLib;
+﻿using Bannerlord.BLSE.Utils;
+
+using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
 using System;
+using System.Linq;
 
 using TaleWorlds.Engine;
 using TaleWorlds.MountAndBlade;
@@ -25,7 +28,8 @@ namespace Bannerlord.BLSE.Features.ContinueSaveFile.Patches
 
         private static void ProcessApplicationArgumentsPostfix(Module __instance)
         {
-            var array = Utilities.GetFullCommandLineString().Split(' ');
+            var cli = Utilities.GetFullCommandLineString();
+            var array = CommandLineSplitter.SplitCommandLine(cli).ToArray();
             for (var i = 0; i < array.Length; i++)
             {
                 if (!string.Equals(array[i], "/continuesave", StringComparison.OrdinalIgnoreCase)) continue;
