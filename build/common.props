@@ -16,7 +16,7 @@
     <BUTRModuleManagerVersion>5.0.198</BUTRModuleManagerVersion>
     <HarmonyExtensionsVersion>3.2.0.77</HarmonyExtensionsVersion>
     <HarmonyAnalyzerVersion>1.0.1.44</HarmonyAnalyzerVersion>
-    <LauncherManagerVersion>1.0.74</LauncherManagerVersion>
+    <LauncherManagerVersion>1.0.76</LauncherManagerVersion>
     <DebugType>full</DebugType>
   </PropertyGroup>
 
