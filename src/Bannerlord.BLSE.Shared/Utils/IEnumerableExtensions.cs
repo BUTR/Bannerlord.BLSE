@@ -8,11 +8,11 @@ public static class Extensions
     public static TSource? MaxByOrDefault<TSource, TKey>(this IEnumerable<TSource> enumerable, Func<TSource, TKey> selector, IComparer<TKey> comparer, out TKey? maxKey)
     {
         if (enumerable == null)
-            throw new ArgumentNullException(nameof (enumerable));
+            throw new ArgumentNullException(nameof(enumerable));
         if (selector == null)
-            throw new ArgumentNullException(nameof (selector));
+            throw new ArgumentNullException(nameof(selector));
         if (comparer == null)
-            throw new ArgumentNullException(nameof (comparer));
+            throw new ArgumentNullException(nameof(comparer));
 
         using var enumerator = enumerable.GetEnumerator();
         if (!enumerator.MoveNext())
