@@ -111,7 +111,7 @@
   </Target>
 
   <Target Name="BuildExtended">
-    <CallTarget Targets="Build"/>
+    <CallTarget Targets="Build" />
   </Target>
 
 </Project>
