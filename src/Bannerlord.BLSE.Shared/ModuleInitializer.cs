@@ -10,8 +10,6 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
-using TaleWorlds.Core;
-
 internal static class ModuleInitializer
 {
     private static int _isAttached;
@@ -130,7 +128,7 @@ If Steam is used, download the Harmony mod from NexusMods!", "Error from BLSE!",
             toLoad = exactVersion.Item1;
 
         var comparer = new ApplicationVersionComparer();
-        var closestVersion = versions.Where(x => comparer.Compare(x.Item2, gameVersion) <= 0).MaxBy(x => x.Item2, comparer, out var maxKey);
+        var closestVersion = versions.Where(x => comparer.Compare(x.Item2, gameVersion) <= 0).MaxByOrDefault(x => x.Item2, comparer, out _);
         if (closestVersion.Item2 != ApplicationVersion.Empty)
             toLoad = closestVersion.Item1;
 

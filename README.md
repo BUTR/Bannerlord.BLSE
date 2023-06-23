@@ -114,21 +114,21 @@ BLSE adds support for a new tag DependedModuleMetadatas that allows you to bette
     <summary>Xbox Game Pass PC</summary>
       <p>You need to copy content of '/bin/Gaming.Desktop.x64_Shipping_Client' from BLSE to 'Mount & Blade II- Bannerlord/Content/bin/Gaming.Desktop.x64_Shipping_Client'</p>
       <img src="https://media.discordapp.net/attachments/422092475163869201/1088721252702765126/image.png" alt="BLSE Installation Path" width="500">
-      <p>You need to copy content of 'Modules/Bannerlord.Harmony' from BLSE to 'Mount & Blade II- Bannerlord/Content/Modules/Bannerlord.Harmony'</p>
+      <p>You need to copy content of 'Modules/Bannerlord.Harmony' from Harmony to 'Mount & Blade II- Bannerlord/Content/Modules/Bannerlord.Harmony'</p>
       <img src="https://media.discordapp.net/attachments/422092475163869201/1088721253692616775/image.png" alt="Bannerlord.Harmony Installation Path" width="500">
     </details>
   * <details>
     <summary>Steam</summary>
       <p>You need to copy content of '/bin/Win64_Shipping_Client' from BLSE to 'Mount & Blade II Bannerlord/bin/Win64_Shipping_Client'</p>
       <img src="https://media.discordapp.net/attachments/422092475163869201/1088721252962807818/image.png" alt="BLSE Installation Path" width="500">
-      <p>You need to copy content of 'Modules/Bannerlord.Harmony' from BLSE to 'Mount & Blade II Bannerlord/Modules/Bannerlord.Harmony'</p>
+      <p>You need to copy content of 'Modules/Bannerlord.Harmony' from Harmony to 'Mount & Blade II Bannerlord/Modules/Bannerlord.Harmony'</p>
       <img src="https://media.discordapp.net/attachments/422092475163869201/1088721253478711407/image.png" alt="Bannerlord.Harmony Installation Path" width="500">
     </details>
   * <details>
     <summary>GOG</summary>
       <p>You need to copy content of '/bin/Win64_Shipping_Client' from BLSE to 'Mount & Blade II Bannerlord/bin/Win64_Shipping_Client'</p>
       <img src="https://media.discordapp.net/attachments/422092475163869201/1088721253185097758/image.png" alt="BLSE Installation Path" width="500">
-      <p>You need to copy content of 'Modules/Bannerlord.Harmony' from BLSE to 'Mount & Blade II Bannerlord/Modules/Bannerlord.Harmony'</p>
+      <p>You need to copy content of 'Modules/Bannerlord.Harmony' from Harmony to 'Mount & Blade II Bannerlord/Modules/Bannerlord.Harmony'</p>
       <img src="https://media.discordapp.net/attachments/422092475163869201/1088725020458614794/image.png" alt="Bannerlord.Harmony Installation Path" width="500">
     </details>
 * Do I need to include both `Win64_Shipping_Client` and `Gaming.Desktop.x64_Shipping_Client` directories?  
