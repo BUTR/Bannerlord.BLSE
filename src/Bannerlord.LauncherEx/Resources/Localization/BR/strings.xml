@@ -111,8 +111,8 @@
     <string id="4KFwqKgG" text="O módulo '{ID}' está com dependências e marcado como incompatível"/>
     <string id="9DRB6yXv" text="Módulo '{ID}' é dependente de LoadBefore e LoadAfter"/>
     <string id="RC1V9BbP" text="Há um ciclo de dependências. '{TARGETID}' e '{SOURCEID}' dependem uma da outra"/>
-    <string id="s3xbuejE" text="'{TARGETID}' deve ser carregado antes de '{SOURCEID}'"/>
-    <string id="2ALJB7z2" text="'{TARGETID}' deve ser carregado depois de '{SOURCEID}'"/>
+    <string id="s3xbuejE" text="'{SOURCEID}' deve ser carregado antes de '{TARGETID}'"/>
+    <string id="2ALJB7z2" text="'{SOURCEID}' deve ser carregado depois de '{TARGETID}'"/>
 
     <!-- Dependency Constructor -->
     <string id="8ldMJPhQ" text=" (opcional)"/>
