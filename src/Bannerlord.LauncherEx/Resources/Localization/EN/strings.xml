@@ -111,8 +111,8 @@
     <string id="4KFwqKgG" text="Module '{ID}' is both depended upon and marked as incompatible" />
     <string id="9DRB6yXv" text="Module '{ID}' is both depended upon as LoadBefore and LoadAfter" />
     <string id="RC1V9BbP" text="Circular dependencies. '{TARGETID}' and '{SOURCEID}' depend on each other" />
-    <string id="s3xbuejE" text="'{TARGETID}' should be loaded before '{SOURCEID}'" />
-    <string id="2ALJB7z2" text="'{TARGETID}' should be loaded after '{SOURCEID}'" />
+    <string id="s3xbuejE" text="'{SOURCEID}' should be loaded before '{TARGETID}'" />
+    <string id="2ALJB7z2" text="'{SOURCEID}' should be loaded after '{TARGETID}'" />
 
     <!-- Dependency Constructor -->
     <string id="8ldMJPhQ" text=" (optional)" />
