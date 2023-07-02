@@ -111,8 +111,8 @@
     <string id="4KFwqKgG" text="Modül '{ID}' hem bağımlı hem de uyumsuz olarak işaretlendi"/>
     <string id="9DRB6yXv" text="'{ID}' modülü, hem ÖnceYükle hem de SonraYükle olarak bağımlıdır"/>
     <string id="RC1V9BbP" text="Dairesel bağımlılıklar. &quot;{TARGETID}&quot; ve &quot;{SOURCEID}&quot; birbirine bağlıdır"/>
-    <string id="s3xbuejE" text="'{TARGETID}', '{SOURCEID}'den önce yüklenmelidir"/>
-    <string id="2ALJB7z2" text="'{TARGETID}', '{SOURCEID}'den sonra yüklenmelidir"/>
+    <string id="s3xbuejE" text="'{SOURCEID}', '{TARGETID}'den önce yüklenmelidir"/>
+    <string id="2ALJB7z2" text="'{SOURCEID}', '{TARGETID}'den sonra yüklenmelidir"/>
 
     <!-- Dependency Constructor -->
     <string id="8ldMJPhQ" text=" (optional)"/>

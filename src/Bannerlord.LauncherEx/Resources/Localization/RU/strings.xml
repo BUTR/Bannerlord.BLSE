@@ -22,7 +22,7 @@
     <string id="JT7QnJJA" text="Разблокировать файлы"/>
     <string id="VMIp4503" text="Разблокировать все файлы .dll в папке /Modules"/>
     <string id="RDLKkiVk" text="Разблокировать"/>
-    <string id="QJSBiZdJ" text="Бета-сортировка"/>
+    <string id="QJSBiZdJ" text="Бета сортировка"/>
     <string id="HVhaqeb4" text="Использует новый алгоритм сортировки после версии 1.12.x. Отключите, чтобы использовать старый алгоритм"/>
     <string id="1zt99vTt" text="Большой режим"/>
     <string id="XUSDSpvf" text="Увеличивает высоту лаунчера"/>
@@ -46,7 +46,7 @@
 
     <!-- LauncherModsVMMixin -->
     <string id="pZVVdI5d" text="Порядок Загрузки был пересортирован с использованием алгоритма по умолчанию!{NL}Причины:{NL}{REASONS}"/>
-    <string id="sP1a61KE" text="Не удалось установить модуль в нужное положение! Размещение до ближайшего доступного!{NL}Причина:{NL}{REASONS}"/>
+    <string id="sP1a61KE" text="Не удалось установить модуль в нужное положение! Размещение до ближайшего доступного!{NL}Причины:{NL}{REASONS}"/>
     <string id="sLf3eIpH" text="Не удалось упорядочить список модулей!"/>
 
     <!-- LauncherVMMixin -->
@@ -81,7 +81,7 @@
     <!-- Issues -->
     <string id="kxqLbSqe" text="(Неизвестный ID)"/>
 
-    <string id="izSm5f85" text="Дублирующиеся Id модулей:{NL}{MODULIDS}"/>
+    <string id="izSm5f85" text="Дублирующиеся Id модулей:{NL}{MODULEIDS}"/>
     <string id="vCwH9226" text="Дублирующиеся имена модулей: {NL}{MODULENAMES}"/>
     <string id="GtDRbC3m" text="Отсутствующие модули: {NL}{MODULES}"/>
     <string id="BuMom4Jt" text="Несоответствующие версии модулей:{NL}{MODULEVERSIONS}"/>
@@ -93,10 +93,10 @@
     <string id="B64DbmWp" text="Файл сохранения не найден!"/>
     <string id="epU06HID" text="Не удалось прочитать файл сохранения!"/>
 
-    <string id="DKRNkst2" text="Продолжить импорт?"/>
-    <string id="XSxlKweM" text="Открытие файла с порядком загрузки"/>
+    <string id="DKRNkst2" text="Открытие файла с порядком загрузки"/>
+    <string id="XSxlKweM" text="Сохраните файл со списком модулей Bannerlord"/>
 
-    <string id="hgew15HH" text="Сохраните файл со списком модулей Bannerlord"/>
+    <string id="hgew15HH" text="Продолжить импорт?"/>
 
     <string id="tqjPGPtP" text="LauncherEx обнаружил 0Harmony.dll в корневом каталоге игры!{NL}Это может привести к проблемам, удалить его?"/>
 
@@ -111,8 +111,8 @@
     <string id="4KFwqKgG" text="Модуль '{ID}' зависит от него и помечен как несовместимый"/>
     <string id="9DRB6yXv" text="Модуль '{ID}' зависит как от LoadBefore, так и от LoadAfter"/>
     <string id="RC1V9BbP" text="Циклические зависимости. '{TARGETID}' и '{SOURCEID}' зависят друг от друга"/>
-    <string id="s3xbuejE" text="'{TARGETID}' должен быть загружен перед '{SOURCEID}'"/>
-    <string id="2ALJB7z2" text="'{TARGETID}' должен быть загружен после '{SOURCEID}'"/>
+    <string id="s3xbuejE" text="'{SOURCEID}' должен быть загружен перед '{TARGETID}'"/>
+    <string id="2ALJB7z2" text="'{SOURCEID}' должен быть загружен после '{TARGETID}'"/>
 
     <!-- Dependency Constructor -->
     <string id="8ldMJPhQ" text=" (необязательно)"/>
