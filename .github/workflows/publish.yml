@@ -75,7 +75,7 @@ jobs:
   #        NEXUSMODS        #
   ###########################
   publish-on-nexusmods:
-    if: false && github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
     needs: ["get-changelog", "build"]
     uses: BUTR/workflows/.github/workflows/release-nexusmods.yml@master
     with:
