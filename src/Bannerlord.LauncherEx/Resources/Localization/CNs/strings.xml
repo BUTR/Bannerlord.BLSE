@@ -111,8 +111,8 @@
     <string id="4KFwqKgG" text="'{ID}' 模组同时作为前置并与其他模组冲突"/>
     <string id="9DRB6yXv" text="'{ID}' 模组同时作为前置并加载顺序冲突"/>
     <string id="RC1V9BbP" text="循环依赖。 '{TARGETID}' 和 '{SOURCEID}' 相互需要"/>
-    <string id="s3xbuejE" text="'{TARGETID}' 应当在 '{SOURCEID}' 之前加载"/>
-    <string id="2ALJB7z2" text="'{TARGETID}' 应当在 '{SOURCEID}' 之后加载"/>
+    <string id="s3xbuejE" text="'{SOURCEID}' 应当在 '{TARGETID}' 之前加载"/>
+    <string id="2ALJB7z2" text="'{SOURCEID}' 应当在 '{TARGETID}' 之后加载"/>
 
     <!-- Dependency Constructor -->
     <string id="8ldMJPhQ" text=" （可选）"/>
