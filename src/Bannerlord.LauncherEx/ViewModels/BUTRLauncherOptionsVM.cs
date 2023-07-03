@@ -76,7 +76,10 @@ namespace Bannerlord.LauncherEx.ViewModels
                 LauncherSettings.DisableBinaryCheck,
                 LauncherSettings.BetaSorting,
                 LauncherSettings.BigMode,
-                LauncherSettings.EnableDPIScaling);
+                LauncherSettings.EnableDPIScaling,
+                LauncherSettings.DisableCrashHandlerWhenDebuggerIsAttached,
+                LauncherSettings.DisableCatchAutoGenExceptions,
+                LauncherSettings.UseVanillaCrashHandler);
 
             SettingProperties.Add(new SettingsPropertyVM(new SettingsPropertyDefinition
             {
@@ -167,6 +170,27 @@ namespace Bannerlord.LauncherEx.ViewModels
                 PropertyReference = new PropertyRef(typeof(BUTRLoaderAppDomainManager).GetProperty(nameof(BUTRLoaderAppDomainManager.AutomaticallyCheckForUpdates))!, this)
             }));
             */
+            SettingProperties.Add(new SettingsPropertyVM(new SettingsPropertyDefinition
+            {
+                DisplayName = new BUTRTextObject("{=QzPFvxGy}Disable BLSE Crash Handler When Debugger Is Attached").ToString(),
+                HintText = new BUTRTextObject("{=P5NWQtKr}Stops BLSE Crash Handler when a debugger is attached. Do not disable if not sure.").ToString(),
+                SettingType = SettingType.Bool,
+                PropertyReference = new PropertyRef(typeof(LauncherSettings).GetProperty(nameof(LauncherSettings.DisableCrashHandlerWhenDebuggerIsAttached))!, this)
+            }));
+            SettingProperties.Add(new SettingsPropertyVM(new SettingsPropertyDefinition
+            {
+                DisplayName = new BUTRTextObject("{=NkCBdPSE}Disable Auto Generated Method Exception Catching").ToString(),
+                HintText = new BUTRTextObject("{=QWGZy8Ym}Disables catching every Native->Managed call. It should catch every exception not catched the standard way. Do not disable if not sure.").ToString(),
+                SettingType = SettingType.Bool,
+                PropertyReference = new PropertyRef(typeof(LauncherSettings).GetProperty(nameof(LauncherSettings.DisableCatchAutoGenExceptions))!, this)
+            }));
+            SettingProperties.Add(new SettingsPropertyVM(new SettingsPropertyDefinition
+            {
+                DisplayName = new BUTRTextObject("{=qKK4Ehyd}Use Vanilla Crash Handler").ToString(),
+                HintText = new BUTRTextObject("{=RTmWsIEA}Disables ButterLib's and BEW's Crash Handlers with the new Watchdog Crash Handler. Do not enable if not sure.").ToString(),
+                SettingType = SettingType.Bool,
+                PropertyReference = new PropertyRef(typeof(LauncherSettings).GetProperty(nameof(LauncherSettings.UseVanillaCrashHandler))!, this)
+            }));
         }
         private void RefreshGameOptions()
         {
@@ -262,6 +286,24 @@ namespace Bannerlord.LauncherEx.ViewModels
             }
 
             if (_launcherExData.EnableDPIScaling != LauncherSettings.EnableDPIScaling)
+            {
+                _saveUserData();
+                return;
+            }
+
+            if (_launcherExData.DisableCrashHandlerWhenDebuggerIsAttached != LauncherSettings.DisableCrashHandlerWhenDebuggerIsAttached)
+            {
+                _saveUserData();
+                return;
+            }
+
+            if (_launcherExData.DisableCatchAutoGenExceptions != LauncherSettings.DisableCatchAutoGenExceptions)
+            {
+                _saveUserData();
+                return;
+            }
+
+            if (_launcherExData.UseVanillaCrashHandler != LauncherSettings.UseVanillaCrashHandler)
             {
                 _saveUserData();
                 return;

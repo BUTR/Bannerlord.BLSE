@@ -54,6 +54,9 @@ namespace Bannerlord.LauncherEx.Patches
             LauncherSettings.BetaSorting = userDataOptions.BetaSorting;
             LauncherSettings.BigMode = userDataOptions.BigMode;
             LauncherSettings.EnableDPIScaling = userDataOptions.EnableDPIScaling;
+            LauncherSettings.DisableCrashHandlerWhenDebuggerIsAttached = userDataOptions.DisableCrashHandlerWhenDebuggerIsAttached;
+            LauncherSettings.DisableCatchAutoGenExceptions = userDataOptions.DisableCatchAutoGenExceptions;
+            LauncherSettings.UseVanillaCrashHandler = userDataOptions.UseVanillaCrashHandler;
 
             return true;
         }
@@ -82,7 +85,10 @@ namespace Bannerlord.LauncherEx.Patches
                     LauncherSettings.DisableBinaryCheck,
                     LauncherSettings.BetaSorting,
                     LauncherSettings.BigMode,
-                    LauncherSettings.EnableDPIScaling));
+                    LauncherSettings.EnableDPIScaling,
+                    LauncherSettings.DisableCrashHandlerWhenDebuggerIsAttached,
+                    LauncherSettings.DisableCatchAutoGenExceptions,
+                    LauncherSettings.UseVanillaCrashHandler));
             }
             catch (Exception value)
             {

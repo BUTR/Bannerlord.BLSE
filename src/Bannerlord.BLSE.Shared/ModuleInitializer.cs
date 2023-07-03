@@ -1,6 +1,9 @@
-﻿using Bannerlord.BLSE.Shared.Utils;
+﻿extern alias ModuleManager;
+
+using Bannerlord.BLSE.Shared.Utils;
 using Bannerlord.BUTR.Shared.Helpers;
-using Bannerlord.ModuleManager;
+
+using ModuleManager::Bannerlord.ModuleManager;
 
 using System;
 using System.IO;

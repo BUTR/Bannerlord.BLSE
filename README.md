@@ -67,7 +67,9 @@ Can opted-in by passing **/unblock** in command-line args.
 * **Interceptor** - BLSE checks if the is a class with a custom attribute named ***BLSEInterceptorAttribute***. If it's found it checks if there are the following signatures:  
   *  **static void OnInitializeSubModulesPrefix()** - will execute just before the game starts to initialize the SubModules. This gives us the ability to add SubModules declared in other programming languages like [Python](https://github.com/BUTR/Bannerlord.Python) and [Lua](https://github.com/BUTR/Bannerlord.Lua)  
   * **static void OnLoadSubModulesPostfix()** - will execute just after all SubModules were initialized  
-  
+* **Exception Interceptor** - BLSE intercepts unhandled exceptions and patches all managed (C#) entrypoints that the native (C/C++) game code calls, thus ensuring that all exceptions are catched
+  * Can be opted-out with settings in LauncherEx or via command-line args **/enablecrashhandlerwhendebuggerisattached** to enable the interceptor when a debugger is attached or **/disableautogenexceptions** to disable the managed entrypoints patching
+
 ## LauncherEx
 **LauncherEx** is the UI module. It expands the native launcher with the following features:
 * **Option Tab** - provides Game and Engine options, plus the following Launcher options.

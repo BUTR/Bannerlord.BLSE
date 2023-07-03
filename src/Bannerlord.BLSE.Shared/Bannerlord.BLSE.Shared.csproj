@@ -29,11 +29,12 @@
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" IncludeAssets="compile" PrivateAssets="all" />
 
     <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    <PackageReference Include="Bannerlord.ModuleManager.Source" PrivateAssets="all" Version="$(BUTRModuleManagerVersion)" />
+    <!-- We need our own implementation of Bannerlord.ModuleManager.Source so won't load it from Bannerlord.LauncherEx that is dynamically resolved -->
+    <PackageReference Include="Bannerlord.ModuleManager" PrivateAssets="all" Version="$(BUTRModuleManagerVersion)" />
     <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="IsExternalInit" Version="1.0.3" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
 
-    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.188-beta" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.229-beta" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Mono.Cecil" Version="0.11.5" IncludeAssets="compile" PrivateAssets="all" />
     <PackageReference Include="System.Memory" Version="4.5.5" PrivateAssets="all" />
   </ItemGroup>
@@ -47,6 +48,14 @@
   <ItemGroup Condition="$(Configuration) == 'Release'">
     <ProjectReference Include="..\Bannerlord.LauncherEx\Bannerlord.LauncherEx.csproj" Private="false" IncludeAssets="compile" PrivateAssets="all" />
   </ItemGroup>
+
+  <Target Name="ChangeAliasesOfNugetRefs" BeforeTargets="FindReferenceAssembliesForReferences;ResolveReferences">
+    <ItemGroup>
+      <ReferencePath Condition="'%(FileName)' == 'Bannerlord.ModuleManager'">
+        <Aliases>ModuleManager</Aliases>
+      </ReferencePath>
+    </ItemGroup>
+  </Target>
 
   <Target Name="PostBuildFramework" AfterTargets="CopyFilesToOutputDirectory" Condition="Exists($(GameFolder))">
     <ItemGroup>

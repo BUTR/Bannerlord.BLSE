@@ -1,12 +1,12 @@
-﻿using HarmonyLib;
+﻿using Bannerlord.BLSE.Features.ExceptionInterceptor;
+
+using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Runtime.ExceptionServices;
-using System.Security;
 using System.Text;
 
 namespace Bannerlord.BLSE.Shared.Utils;
@@ -15,7 +15,6 @@ internal static class LauncherExceptionHandler
 {
     private static readonly Harmony _harmony = new("Bannerlord.BLSE.Shared.Patches.LauncherExceptionHandler");
 
-
     public static void Watch()
     {
         var asm = Assembly.LoadFrom("TaleWorlds.Starter.Library.dll");
@@ -23,20 +22,14 @@ internal static class LauncherExceptionHandler
 
         _harmony.TryPatch(
             AccessTools2.DeclaredMethod("TaleWorlds.Starter.Library.Program:Main"),
-            prefix: AccessTools2.Method(typeof(Unblocker), nameof(MainPrefix)));
+            prefix: AccessTools2.DeclaredMethod(typeof(LauncherExceptionHandler), nameof(MainPrefix)));
 
-        AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
+        // If ButterLib/BEW is not available or the stage is too early, use our built-in just in case
+        ExceptionInterceptorFeature.Enable();
+        ExceptionInterceptorFeature.OnException += ExceptionInterceptorFeatureOnException;
     }
 
-    private static void MainPrefix()
-    {
-        AppDomain.CurrentDomain.UnhandledException -= CurrentDomainOnUnhandledException;
-
-        _harmony.Unpatch(AccessTools2.DeclaredMethod("TaleWorlds.Starter.Library.Program:Main"), AccessTools2.Method(typeof(Unblocker), nameof(MainPrefix)));
-    }
-
-    [HandleProcessCorruptedStateExceptions, SecurityCritical]
-    private static void CurrentDomainOnUnhandledException(object? _, UnhandledExceptionEventArgs e)
+    private static void ExceptionInterceptorFeatureOnException(Exception exception)
     {
         static string GetRecursiveException(Exception ex) => new StringBuilder()
             .AppendLine()
@@ -52,6 +45,17 @@ internal static class LauncherExceptionHandler
         using var writer = new StreamWriter(fs);
         writer.Write($@"BLSE Exception:
 Version: {typeof(Program).Assembly.GetName().Version}
-{(e.ExceptionObject is Exception ex ? GetRecursiveException(ex) : e.ToString())}");
+{GetRecursiveException(exception)}");
+    }
+
+    private static void MainPrefix()
+    {
+        // After launch we rely on ButterLib/BEW being available
+        ExceptionInterceptorFeature.OnException -= ExceptionInterceptorFeatureOnException;
+        ExceptionInterceptorFeature.Disable();
+
+        _harmony.Unpatch(
+            AccessTools2.DeclaredMethod("TaleWorlds.Starter.Library.Program:Main"),
+            AccessTools2.DeclaredMethod(typeof(LauncherExceptionHandler), nameof(MainPrefix)));
     }
 }

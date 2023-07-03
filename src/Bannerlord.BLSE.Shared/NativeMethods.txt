@@ -5,3 +5,6 @@ ShowWindow
 SetProcessDPIAware
 OpenProcessToken
 GetTokenInformation
+NtQueryInformationProcess
+LoadLibrary
+VirtualProtect

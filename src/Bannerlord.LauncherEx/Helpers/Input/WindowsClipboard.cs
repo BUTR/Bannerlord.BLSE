@@ -23,19 +23,17 @@ internal static class WindowsClipboard
     private static unsafe void InnerSet(string text)
     {
         PInvoke.EmptyClipboard();
-        var hGlobal = HANDLE.Null;
+        var hGlobal = (HGLOBAL) IntPtr.Zero;
         try
         {
             var bytes = (text.Length + 1) * 2;
-            hGlobal = (HANDLE) Marshal.AllocHGlobal(bytes);
-
+            hGlobal = (HGLOBAL) Marshal.AllocHGlobal(bytes);
             if (hGlobal == IntPtr.Zero)
             {
                 ThrowWin32();
             }
 
-            var target = new IntPtr(PInvoke.GlobalLock(hGlobal));
-
+            var target = (HGLOBAL) new IntPtr(PInvoke.GlobalLock(hGlobal));
             if (target == IntPtr.Zero)
             {
                 ThrowWin32();
@@ -50,12 +48,12 @@ internal static class WindowsClipboard
                 PInvoke.GlobalUnlock(target);
             }
 
-            if (PInvoke.SetClipboardData(CFUnicodeText, hGlobal) == IntPtr.Zero)
+            if (PInvoke.SetClipboardData(CFUnicodeText, new HANDLE(hGlobal)) == IntPtr.Zero)
             {
                 ThrowWin32();
             }
 
-            hGlobal = HANDLE.Null;
+            hGlobal = (HGLOBAL) IntPtr.Zero;
         }
         finally
         {
@@ -100,12 +98,12 @@ internal static class WindowsClipboard
 
     private static unsafe string? InnerGet()
     {
-        var handle = IntPtr.Zero;
+        var handle = (HGLOBAL) IntPtr.Zero;
 
         var pointer = IntPtr.Zero;
         try
         {
-            handle = PInvoke.GetClipboardData(CFUnicodeText);
+            handle = (HGLOBAL) (IntPtr) PInvoke.GetClipboardData(CFUnicodeText);
             if (handle == IntPtr.Zero)
             {
                 return null;

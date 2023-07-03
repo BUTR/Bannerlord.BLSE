@@ -30,6 +30,9 @@ namespace Bannerlord.LauncherEx.Options
         public bool BetaSorting { get; set; }
         public bool BigMode { get; set; }
         public bool EnableDPIScaling { get; set; }
+        public bool DisableCrashHandlerWhenDebuggerIsAttached { get; set; }
+        public bool DisableCatchAutoGenExceptions { get; set; }
+        public bool UseVanillaCrashHandler { get; set; }
 
         public LauncherExData() { }
         public LauncherExData(
@@ -40,7 +43,10 @@ namespace Bannerlord.LauncherEx.Options
             bool disableBinaryCheck,
             bool betaSorting,
             bool bigMode,
-            bool enableDPIScaling)
+            bool enableDPIScaling,
+            bool disableCrashHandlerWhenDebuggerIsAttached,
+            bool disableCatchAutoGenExceptions,
+            bool useVanillaCrashHandler)
         {
             AutomaticallyCheckForUpdates = automaticallyCheckForUpdates;
             FixCommonIssues = fixCommonIssues;
@@ -50,6 +56,9 @@ namespace Bannerlord.LauncherEx.Options
             BetaSorting = betaSorting;
             BigMode = bigMode;
             EnableDPIScaling = enableDPIScaling;
+            DisableCrashHandlerWhenDebuggerIsAttached = disableCrashHandlerWhenDebuggerIsAttached;
+            DisableCatchAutoGenExceptions = disableCatchAutoGenExceptions;
+            UseVanillaCrashHandler = useVanillaCrashHandler;
         }
     }
 }

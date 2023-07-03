@@ -1,5 +1,11 @@
-﻿using System.IO;
+﻿extern alias ModuleManager;
+
+using System.IO;
 using System.Reflection;
+
+#if SHARED
+using ModuleManager::Bannerlord.ModuleManager;
+#endif
 
 namespace Bannerlord.BLSE.Shared.Utils;
 
@@ -35,11 +41,11 @@ public static class HarmonyFinder
 
         var doc = new System.Xml.XmlDocument();
         doc.Load(File.Exists(harmonySubModule) ? harmonySubModule : string.Empty);
-        var harmonyModuleInfo = ModuleManager.ModuleInfoExtended.FromXml(doc);
+        var harmonyModuleInfo = ModuleInfoExtended.FromXml(doc);
         if (harmonyModuleInfo is null)
             return HarmonyDiscoveryResult.ModuleSubModuleCorrupted;
 
-        if (new ModuleManager.ApplicationVersionComparer().Compare(harmonyModuleInfo.Version, new ModuleManager.ApplicationVersion(ModuleManager.ApplicationVersionType.Release, 2, 2, 2, 0)) < 0)
+        if (new ApplicationVersionComparer().Compare(harmonyModuleInfo.Version, new ApplicationVersion(ApplicationVersionType.Release, 2, 2, 2, 0)) < 0)
             return HarmonyDiscoveryResult.ModuleVersionWrong;
 #endif
 
@@ -73,11 +79,11 @@ public static class HarmonyFinder
 
         var doc = new System.Xml.XmlDocument();
         doc.Load(File.Exists(harmonySteamSubModule) ? harmonySteamSubModule : string.Empty);
-        var harmonyModuleInfo = ModuleManager.ModuleInfoExtended.FromXml(doc);
+        var harmonyModuleInfo = ModuleInfoExtended.FromXml(doc);
         if (harmonyModuleInfo is null)
             return HarmonyDiscoveryResult.ModuleSubModuleCorrupted;
 
-        if (new ModuleManager.ApplicationVersionComparer().Compare(harmonyModuleInfo.Version, new ModuleManager.ApplicationVersion(ModuleManager.ApplicationVersionType.Release, 2, 10, 0, 0)) < 0)
+        if (new ApplicationVersionComparer().Compare(harmonyModuleInfo.Version, new ApplicationVersion(ApplicationVersionType.Release, 2, 10, 0, 0)) < 0)
             return HarmonyDiscoveryResult.ModuleVersionWrong;
 #endif
 
