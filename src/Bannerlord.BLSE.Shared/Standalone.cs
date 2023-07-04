@@ -11,6 +11,8 @@ using Bannerlord.BUTR.Shared.Helpers;
 
 using HarmonyLib;
 
+using ModuleManager::Bannerlord.ModuleManager;
+
 using System;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -21,8 +23,6 @@ using TaleWorlds.MountAndBlade.Launcher.Library;
 using TaleWorlds.SaveSystem;
 
 using Windows.Win32;
-
-using ModuleManager::Bannerlord.ModuleManager;
 
 using MessageBoxButtons = Bannerlord.BLSE.Shared.Utils.MessageBoxButtons;
 using MessageBoxDefaultButton = Bannerlord.BLSE.Shared.Utils.MessageBoxDefaultButton;

@@ -27,7 +27,7 @@ namespace Bannerlord.BLSE.Shared.Utils.DebuggerDetection
                 (uint) sizeof(nint),
                 ref returnLength
             );
-            return status == 0 &&  processInformation != null;
+            return status == 0 && processInformation != null;
         }
     }
 }
