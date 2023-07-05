@@ -37,7 +37,7 @@ namespace Bannerlord.BLSE.Shared.Utils
 
                 PInvoke.VirtualProtect(watchdogLocationPtr, (nuint) watchdogLocationSpan.Length, PAGE_PROTECTION_FLAGS.PAGE_EXECUTE_READWRITE, out var old);
                 WatchdogReplacement.CopyTo(watchdogLocationSpan);
-                PInvoke.VirtualProtect(watchdogLocationPtr, (nuint)  watchdogLocationSpan.Length, old, out _);
+                PInvoke.VirtualProtect(watchdogLocationPtr, (nuint) watchdogLocationSpan.Length, old, out _);
 
                 searchSpanOffset = idx;
                 searchSpan = searchSpan.Slice(searchSpanOffset);
