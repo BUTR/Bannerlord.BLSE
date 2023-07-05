@@ -9,6 +9,7 @@ using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.ModuleManager;
 
 using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using System;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace Bannerlord.BLSE.Shared;
 public static class Standalone
 {
     private static readonly Harmony _featureHarmony = new("bannerlord.blse.features");
+    private static string[] _args = Array.Empty<string>();
 
     private static string[] GetModules(MetaData metadata)
     {
@@ -40,17 +42,17 @@ public static class Standalone
         return text.Split(';');
     }
 
-    private static void TryLoadLoadOrderFromSaveFile(ref string[] args)
+    private static void TryLoadLoadOrderFromSaveFile()
     {
         // If _MODULES_ arg is missing but a save file to load is specified, use the load order from the save file
         var hasModules = false;
         var saveFile = string.Empty;
-        for (var i = 0; i < args.Length; i++)
+        for (var i = 0; i < _args.Length; i++)
         {
-            if (args[i].StartsWith("_MODULES_"))
+            if (_args[i].StartsWith("_MODULES_"))
                 hasModules = true;
-            if (string.Equals(args[i], "/continuesave", StringComparison.OrdinalIgnoreCase) && args.Length > i + 1)
-                saveFile = args[i + 1];
+            if (string.Equals(_args[i], "/continuesave", StringComparison.OrdinalIgnoreCase) && _args.Length > i + 1)
+                saveFile = _args[i + 1];
         }
 
         if (hasModules || string.IsNullOrEmpty(saveFile))
@@ -72,7 +74,7 @@ public static class Standalone
             var missingNames = moduleNames.Select(x => x).Except(existingModulesByName.Keys).ToArray();
             if (missingNames.Length == 0)
             {
-                args = args.Concat(new[] { $"_MODULES_*{string.Join("*", existingModules.Select(x => x.Id))}*_MODULES_" }).ToArray();
+                _args = _args.Concat(new[] { $"_MODULES_*{string.Join("*", existingModules.Select(x => x.Id))}*_MODULES_" }).ToArray();
                 return;
             }
 
@@ -96,10 +98,12 @@ Press Yes to exit, press No to continue loading";
 
     public static void Launch(string[] args)
     {
+        _args = args;
+
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.OSVersion.Version.Major >= 6)
             PInvoke.SetProcessDPIAware();
 
-        TryLoadLoadOrderFromSaveFile(ref args);
+        TryLoadLoadOrderFromSaveFile();
 
         InterceptorFeature.Enable(_featureHarmony);
         AssemblyResolverFeature.Enable(_featureHarmony);
@@ -107,14 +111,27 @@ Press Yes to exit, press No to continue loading";
         CommandsFeature.Enable(_featureHarmony);
         XboxFeature.Enable(_featureHarmony);
 
-        var disableCrashHandler = !args.Contains("/enablecrashhandlerwhendebuggerisattached") && DebuggerUtils.IsDebuggerAttached();
+        ModuleInitializer.Disable();
+
+        _featureHarmony.TryPatch(
+            AccessTools2.DeclaredMethod("TaleWorlds.Starter.Library.Program:Main"),
+            prefix: SymbolExtensions2.GetMethodInfo(static () => MainPrefix()));
+
+        TaleWorlds.Starter.Library.Program.Main(_args);
+    }
+
+    private static void MainPrefix()
+    {
+        var disableCrashHandler = !_args.Contains("/enablecrashhandlerwhendebuggerisattached") && DebuggerUtils.IsDebuggerAttached();
         if (!disableCrashHandler)
             ExceptionInterceptorFeature.Enable();
 
-        if (!args.Contains("/disableautogenexceptions"))
+        if (!_args.Contains("/disableautogenexceptions"))
             ExceptionInterceptorFeature.EnableAutoGens();
 
-        ModuleInitializer.Disable();
-        TaleWorlds.Starter.Library.Program.Main(args);
+        if (!_args.Contains("/enablevanillacrashhandler"))
+            WatchdogHandler.DisableTWWatchdog();
+
+        _featureHarmony.Unpatch(AccessTools2.DeclaredMethod("TaleWorlds.Starter.Library.Program:Main"), SymbolExtensions2.GetMethodInfo(static () => MainPrefix()));
     }
 }
