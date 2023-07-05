@@ -30,7 +30,7 @@
 
     <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <!-- We need our own implementation of Bannerlord.ModuleManager.Source so won't load it from Bannerlord.LauncherEx that is dynamically resolved -->
-    <PackageReference Include="Bannerlord.ModuleManager" PrivateAssets="all" Version="$(BUTRModuleManagerVersion)" />
+    <PackageReference Include="Bannerlord.ModuleManager.Source" PrivateAssets="all" Version="$(BUTRModuleManagerVersion)" />
     <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="IsExternalInit" Version="1.0.3" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
 
@@ -48,14 +48,6 @@
   <ItemGroup Condition="$(Configuration) == 'Release'">
     <ProjectReference Include="..\Bannerlord.LauncherEx\Bannerlord.LauncherEx.csproj" Private="false" IncludeAssets="compile" PrivateAssets="all" />
   </ItemGroup>
-
-  <Target Name="ChangeAliasesOfNugetRefs" BeforeTargets="FindReferenceAssembliesForReferences;ResolveReferences">
-    <ItemGroup>
-      <ReferencePath Condition="'%(FileName)' == 'Bannerlord.ModuleManager'">
-        <Aliases>ModuleManager</Aliases>
-      </ReferencePath>
-    </ItemGroup>
-  </Target>
 
   <Target Name="PostBuildFramework" AfterTargets="CopyFilesToOutputDirectory" Condition="Exists($(GameFolder))">
     <ItemGroup>

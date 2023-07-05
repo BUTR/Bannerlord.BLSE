@@ -9,8 +9,8 @@ namespace Bannerlord.BLSE.Shared.Utils
     internal static unsafe class WatchdogHandler
     {
         private static readonly string WatchdogLibraryName = "TaleWorlds.Native.dll";
-        private static readonly byte[] WatchdogOriginal = "Watchdog.exe"u8.ToArray();
-        private static readonly byte[] WatchdogReplacement = "Wetchdog.exe"u8.ToArray();
+        private static readonly byte[] WatchdogOriginal = @"Watchdog\Watchdog.exe"u8.ToArray();
+        private static readonly byte[] WatchdogReplacement = @"Wetchdog\Watchdog.exe"u8.ToArray();
 
         // Disable Watchdog by renaming it, thus performing a soft delete in it's eyes
         public static void DisableTWWatchdog()
@@ -39,8 +39,8 @@ namespace Bannerlord.BLSE.Shared.Utils
                 WatchdogReplacement.CopyTo(watchdogLocationSpan);
                 PInvoke.VirtualProtect(watchdogLocationPtr, (nuint) watchdogLocationSpan.Length, old, out _);
 
-                searchSpanOffset = idx;
-                searchSpan = searchSpan.Slice(searchSpanOffset);
+                searchSpanOffset += idx + 1;
+                searchSpan = searchSpan.Slice(idx + 1);
             }
         }
     }

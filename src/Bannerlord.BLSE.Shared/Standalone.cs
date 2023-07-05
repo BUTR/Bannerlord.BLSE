@@ -1,6 +1,4 @@
-﻿extern alias ModuleManager;
-
-using Bannerlord.BLSE.Features.AssemblyResolver;
+﻿using Bannerlord.BLSE.Features.AssemblyResolver;
 using Bannerlord.BLSE.Features.Commands;
 using Bannerlord.BLSE.Features.ContinueSaveFile;
 using Bannerlord.BLSE.Features.ExceptionInterceptor;
@@ -8,10 +6,9 @@ using Bannerlord.BLSE.Features.Interceptor;
 using Bannerlord.BLSE.Features.Xbox;
 using Bannerlord.BLSE.Shared.Utils;
 using Bannerlord.BUTR.Shared.Helpers;
+using Bannerlord.ModuleManager;
 
 using HarmonyLib;
-
-using ModuleManager::Bannerlord.ModuleManager;
 
 using System;
 using System.Linq;

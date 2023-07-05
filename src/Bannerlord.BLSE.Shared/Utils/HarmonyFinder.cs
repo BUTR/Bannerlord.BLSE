@@ -1,10 +1,8 @@
-﻿extern alias ModuleManager;
-
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 
 #if SHARED
-using ModuleManager::Bannerlord.ModuleManager;
+using Bannerlord.ModuleManager;
 #endif
 
 namespace Bannerlord.BLSE.Shared.Utils;
