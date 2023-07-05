@@ -43,7 +43,7 @@ public static class LauncherEx
 
         _featureHarmony.TryPatch(
             AccessTools2.DeclaredMethod("TaleWorlds.Starter.Library.Program:Main"),
-            prefix: AccessTools2.Method(typeof(LauncherEx), nameof(MainPrefix)));
+            prefix: SymbolExtensions2.GetMethodInfo(static () => MainPrefix()));
 
         if (args.Contains("/noexceptions"))
         {
@@ -78,6 +78,6 @@ public static class LauncherEx
 #endif
         }
 
-        _featureHarmony.Unpatch(AccessTools2.DeclaredMethod("TaleWorlds.Starter.Library.Program:Main"), AccessTools2.Method(typeof(LauncherEx), nameof(MainPrefix)));
+        _featureHarmony.Unpatch(AccessTools2.DeclaredMethod("TaleWorlds.Starter.Library.Program:Main"), SymbolExtensions2.GetMethodInfo(static () => MainPrefix()));
     }
 }
