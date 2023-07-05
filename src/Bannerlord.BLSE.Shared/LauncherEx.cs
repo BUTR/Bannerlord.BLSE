@@ -63,10 +63,10 @@ public static class LauncherEx
             ExceptionInterceptorFeature.Enable();
         }
 
-        if (!LauncherSettings.DisableCatchAutoGenExceptions)
-        {
-            ExceptionInterceptorFeature.EnableAutoGens();
-        }
+        //if (!LauncherSettings.DisableCatchAutoGenExceptions)
+        //{
+        //    ExceptionInterceptorFeature.EnableAutoGens();
+        //}
 
         if (!LauncherSettings.UseVanillaCrashHandler)
         {

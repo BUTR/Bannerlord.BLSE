@@ -126,8 +126,8 @@ Press Yes to exit, press No to continue loading";
         if (!disableCrashHandler)
             ExceptionInterceptorFeature.Enable();
 
-        if (!_args.Contains("/disableautogenexceptions"))
-            ExceptionInterceptorFeature.EnableAutoGens();
+        //if (!_args.Contains("/disableautogenexceptions"))
+        //    ExceptionInterceptorFeature.EnableAutoGens();
 
         if (!_args.Contains("/enablevanillacrashhandler"))
             WatchdogHandler.DisableTWWatchdog();
