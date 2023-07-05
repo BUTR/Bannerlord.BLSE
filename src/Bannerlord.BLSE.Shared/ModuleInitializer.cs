@@ -1,4 +1,5 @@
-﻿using Bannerlord.BLSE.Shared.Utils;
+﻿
+using Bannerlord.BLSE.Shared.Utils;
 using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.ModuleManager;
 

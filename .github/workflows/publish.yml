@@ -75,7 +75,7 @@ jobs:
   #        NEXUSMODS        #
   ###########################
   publish-on-nexusmods:
-    if: false && github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
     needs: ["get-changelog", "build"]
     uses: BUTR/workflows/.github/workflows/release-nexusmods.yml@master
     with:
@@ -115,7 +115,7 @@ jobs:
         with:
           name: bannerlord
           path: ./artifact
-      - uses: game-ci/steam-deploy@v2
+      - uses: game-ci/steam-deploy@v3
         with:
           username: ${{ secrets.STEAM_USERNAME }}
           password: ${{ secrets.STEAM_PASSWORD }}

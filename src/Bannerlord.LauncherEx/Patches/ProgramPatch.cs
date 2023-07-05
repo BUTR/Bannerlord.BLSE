@@ -13,13 +13,13 @@ namespace Bannerlord.LauncherEx.Patches
         {
             var res1 = harmony.TryPatch(
                 AccessTools2.Method(typeof(Program), "AuxFinalize"),
-                prefix: AccessTools2.DeclaredMethod(typeof(ProgramPatch), nameof(AuxFinalizePrefix)));
+                postfix: AccessTools2.DeclaredMethod(typeof(ProgramPatch), nameof(AuxFinalizePostfix)));
             if (!res1) return false;
 
             return true;
         }
 
-        private static void AuxFinalizePrefix()
+        private static void AuxFinalizePostfix()
         {
             if (LauncherSettings.FixCommonIssues)
             {

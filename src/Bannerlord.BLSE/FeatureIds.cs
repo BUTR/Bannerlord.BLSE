@@ -11,6 +11,7 @@ namespace Bannerlord.BLSE
         public static string ContinueSaveFileId => "BLSE.ContinueSaveFile";
         public static string CommandsId => "BLSE.Commands";
         public static string XboxId => "BLSE.Xbox";
+        public static string ExceptionInterceptorId => "BLSE.ExceptionInterceptor";
 
         public static readonly HashSet<string> Features = new()
         {
@@ -20,6 +21,7 @@ namespace Bannerlord.BLSE
             AssemblyResolverId2,
             ContinueSaveFileId,
             CommandsId,
+            ExceptionInterceptorId,
         };
         public static readonly HashSet<string> LauncherFeatures = new()
         {
@@ -27,6 +29,7 @@ namespace Bannerlord.BLSE
             InterceptorId2,
             AssemblyResolverId,
             AssemblyResolverId2,
+            ExceptionInterceptorId,
         };
     }
 }

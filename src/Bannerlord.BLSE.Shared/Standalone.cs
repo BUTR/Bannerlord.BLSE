@@ -1,6 +1,7 @@
 ﻿using Bannerlord.BLSE.Features.AssemblyResolver;
 using Bannerlord.BLSE.Features.Commands;
 using Bannerlord.BLSE.Features.ContinueSaveFile;
+using Bannerlord.BLSE.Features.ExceptionInterceptor;
 using Bannerlord.BLSE.Features.Interceptor;
 using Bannerlord.BLSE.Features.Xbox;
 using Bannerlord.BLSE.Shared.Utils;
@@ -105,6 +106,13 @@ Press Yes to exit, press No to continue loading";
         ContinueSaveFileFeature.Enable(_featureHarmony);
         CommandsFeature.Enable(_featureHarmony);
         XboxFeature.Enable(_featureHarmony);
+
+        var disableCrashHandler = !args.Contains("/enablecrashhandlerwhendebuggerisattached") && DebuggerUtils.IsDebuggerAttached();
+        if (!disableCrashHandler)
+            ExceptionInterceptorFeature.Enable();
+
+        if (!args.Contains("/disableautogenexceptions"))
+            ExceptionInterceptorFeature.EnableAutoGens();
 
         ModuleInitializer.Disable();
         TaleWorlds.Starter.Library.Program.Main(args);

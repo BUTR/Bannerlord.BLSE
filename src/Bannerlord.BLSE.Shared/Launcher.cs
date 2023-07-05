@@ -1,6 +1,7 @@
 ﻿using Bannerlord.BLSE.Features.AssemblyResolver;
 using Bannerlord.BLSE.Features.Commands;
 using Bannerlord.BLSE.Features.ContinueSaveFile;
+using Bannerlord.BLSE.Features.ExceptionInterceptor;
 using Bannerlord.BLSE.Features.Interceptor;
 using Bannerlord.BLSE.Features.Xbox;
 
