@@ -18,7 +18,7 @@ namespace Bannerlord.BLSE.Features.ExceptionInterceptor
         private delegate void OnExceptionDelegate(Exception exception);
 
         private static readonly Harmony ExceptionHandler = new("bannerlord.blse.exceptionhandler");
-        private static readonly MethodInfo? FinalizerMethod = AccessTools2.Method(typeof(ExceptionInterceptorFeature), nameof(Finalizer));
+        private static readonly MethodInfo FinalizerMethod = AccessTools2.Method(typeof(ExceptionInterceptorFeature), nameof(Finalizer))!;
 
         public static event Action<Exception>? OnException;
 
@@ -26,15 +26,13 @@ namespace Bannerlord.BLSE.Features.ExceptionInterceptor
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
             OnException += HandleException;
+            FinalizerSimple.Enable(ExceptionHandler, FinalizerMethod);
         }
 
         public static void EnableAutoGens()
         {
             AppDomain.CurrentDomain.AssemblyLoad += CurrentDomainOnAssemblyLoad;
-            var callbacksGeneratedTypes = AccessTools2.AllAssemblies().SelectMany(x => x.GetTypes().Where(y => y.Name.EndsWith("CallbacksGenerated")));
-            var callbackGeneratedMethods = callbacksGeneratedTypes.SelectMany(AccessTools.GetDeclaredMethods);
-            foreach (var method in callbackGeneratedMethods.Where(x => x.GetCustomAttributesData().Any(y => y.AttributeType.Name == "MonoPInvokeCallbackAttribute")))
-                ExceptionHandler.Patch(method, finalizer: new HarmonyMethod(FinalizerMethod));
+            FinalizerGlobal.Enable(ExceptionHandler, FinalizerMethod);
         }
 
         public static void Disable()
@@ -48,10 +46,7 @@ namespace Bannerlord.BLSE.Features.ExceptionInterceptor
         private static void CurrentDomainOnAssemblyLoad(object sender, AssemblyLoadEventArgs args)
         {
             var assembly = args.LoadedAssembly;
-            var callbacksGeneratedTypes = assembly.GetTypes().Where(y => y.Name.EndsWith("CallbacksGenerated"));
-            var callbackGeneratedMethods = callbacksGeneratedTypes.SelectMany(AccessTools.GetDeclaredMethods);
-            foreach (var method in callbackGeneratedMethods.Where(x => x.GetCustomAttributesData().Any(y => y.AttributeType.Name == "MonoPInvokeCallbackAttribute")))
-                ExceptionHandler.Patch(method, finalizer: new HarmonyMethod(FinalizerMethod));
+            FinalizerGlobal.OnNewAssembly(ExceptionHandler, FinalizerMethod, assembly);
         }
 
         private static void Finalizer(Exception? __exception)
