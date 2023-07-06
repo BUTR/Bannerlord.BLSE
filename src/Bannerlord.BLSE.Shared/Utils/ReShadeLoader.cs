@@ -13,7 +13,7 @@ internal static class ReShadeLoader
         if (!reShade.Exists) return;
 
         var reShadeVersionInfo = FileVersionInfo.GetVersionInfo(reShade.FullName);
-        var isReShade = reShadeVersionInfo is { CompanyName: "crosire", OriginalFilename: "ReShade64.dll" };
+        var isReShade = reShadeVersionInfo is { CompanyName: "crosire", ProductName: "ReShade" };
         if (!isReShade) return;
 
         PInvoke.LoadLibrary(reShade.FullName);
