@@ -33,57 +33,69 @@ internal static class ModuleInitializer
             case HarmonyDiscoveryResult.Discovered:
                 return path;
             case HarmonyDiscoveryResult.ModuleMissing:
-                MessageBoxDialog.Show(@"The Harmony module is missing!
+                MessageBoxDialog.Show("""
+The Harmony module is missing!
 Can't launch with 'Bannerlord.Harmony' module missing!
 
 If the module was installed manually, make sure that the module in installed in 'Modules/Bannerlord.Harmony'!
 If Vortex is used, try to reinstall manually!
-If Steam is used, download the Harmony mod from NexusMods!", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
+If Steam is used, download the Harmony mod from NexusMods!
+""", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
                 Environment.Exit(1);
                 return null;
             case HarmonyDiscoveryResult.ModuleSubModuleMissing:
-                MessageBoxDialog.Show(@$"The Harmony module is corrupted!
+                MessageBoxDialog.Show($"""
+The Harmony module is corrupted!
 Can't find '{ModuleInfoHelper.SubModuleFile}' in 'Bannerlord.Harmony'!
 
 If the module was installed manually, try to do a clean reinstall!
 If Vortex is used, try to reinstall manually!
-If Steam is used, download the Harmony mod from NexusMods!", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
+If Steam is used, download the Harmony mod from NexusMods!
+""", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
                 Environment.Exit(1);
                 return null;
             case HarmonyDiscoveryResult.ModuleSubModuleCorrupted:
-                MessageBoxDialog.Show(@$"The Harmony module is corrupted!
+                MessageBoxDialog.Show($"""
+The Harmony module is corrupted!
 Failed to read '{ModuleInfoHelper.SubModuleFile}'!
 
 If the module was installed manually, try to do a clean reinstall!
 If Vortex is used, try to reinstall manually!
-If Steam is used, download the Harmony mod from NexusMods!", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
+If Steam is used, download the Harmony mod from NexusMods!
+""", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
                 Environment.Exit(1);
                 return null;
             case HarmonyDiscoveryResult.ModuleVersionWrong:
-                MessageBoxDialog.Show(@"The Harmony module is wrong!
+                MessageBoxDialog.Show("""
+The Harmony module is wrong!
 At least v2.2.2.x is required!
 
 If the module was installed manually, find and install the latest version!
 If Vortex is used, try to reinstall manually the latest version!
-If Steam is used, download the latest Harmony mod from NexusMods!", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
+If Steam is used, download the latest Harmony mod from NexusMods!
+""", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
                 Environment.Exit(1);
                 return null;
             case HarmonyDiscoveryResult.ModuleBinariesMissing:
-                MessageBoxDialog.Show(@$"The Harmony module is corrupted!
+                MessageBoxDialog.Show($"""
+The Harmony module is corrupted!
 Can't find '{Path.Combine("bin", configName)}' in 'Bannerlord.Harmony'!
 
 If the module was installed manually, try to do a clean reinstall!
 If Vortex is used, try to reinstall manually!
-If Steam is used, download the Harmony mod from NexusMods!", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
+If Steam is used, download the Harmony mod from NexusMods!
+""", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
                 Environment.Exit(1);
                 return null;
             case HarmonyDiscoveryResult.ModuleHarmonyMissing:
-                MessageBoxDialog.Show(@$"The Harmony module is corrupted!
+                MessageBoxDialog.Show($"""
+The Harmony module is corrupted!
 Can't find '{assemblyNameFull}' in 'Bannerlord.Harmony'!
 
 If the module was installed manually, try to do a clean reinstall!
 If Vortex is used, try to reinstall manually!
-If Steam is used, download the Harmony mod from NexusMods!", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
+If Steam is used, download the Harmony mod from NexusMods!
+""", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
                 Environment.Exit(1);
                 return null;
             case HarmonyDiscoveryResult.UnknownIssue:
@@ -160,12 +172,14 @@ If Steam is used, download the Harmony mod from NexusMods!", "Error from BLSE!",
 
         if (ReflectionParser.GetAssemblyVersion(assemblyFile) < new Version(2, 2, 2, 0))
         {
-            MessageBoxDialog.Show(@"The Harmony module is corrupted!
+            MessageBoxDialog.Show("""
+The Harmony module is corrupted!
 Wrong 0Harmony.dll version! At least v2.2.2.x is required!
 
 If the module was installed manually, try to do a clean reinstall!
 If Vortex is used, try to reinstall manually!
-If Steam is used, download the Harmony mod from NexusMods!", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
+If Steam is used, download the Harmony mod from NexusMods!
+""", "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
             Environment.Exit(1);
             return null;
         }

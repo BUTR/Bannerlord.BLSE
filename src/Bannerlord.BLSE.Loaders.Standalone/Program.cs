@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using Bannerlord.BLSE.Shared.Utils;
+
+using System.IO;
 using System.Linq;
 
 namespace Bannerlord.BLSE;
@@ -7,6 +9,8 @@ public static class Program
 {
     public static void Main(string[] args)
     {
+        GameConsistencyChecker.Verify();
+
 #if STANDALONE
         args = new[] { "standalone" }.Concat(args).ToArray();
 #elif LAUNCHER
