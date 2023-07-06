@@ -37,5 +37,5 @@ namespace Bannerlord.BLSE.Features.ExceptionInterceptor
 
             harmony.Patch(ManagedScriptHolderTickComponentsMethod, finalizer: new HarmonyMethod(finalizerMethod));
         }
-        }
+    }
 }
