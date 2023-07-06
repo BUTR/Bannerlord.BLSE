@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.4.6
+Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.2.0
+* Added proper Watchdog integration
+* Added experimental Special K support. It requires SpecialK64.dll to be present instead of dxgi.dll
+---------------------------------------------------------------------------------------------------
 Version: 1.4.5
 Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.2.0
 * Returning AutoGen catching with excluding the hot calls

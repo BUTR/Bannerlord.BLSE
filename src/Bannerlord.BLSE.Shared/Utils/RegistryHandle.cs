@@ -2,6 +2,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Bannerlord.BLSE.Shared.Utils;
 
@@ -79,6 +80,13 @@ internal class RegistryHandle : SafeHandleZeroOrMinusOneIsInvalid
         return hkResult;
     }
 
+    public static RegistryHandle? GetHKCUSubkey(string key)
+    {
+        if (SafeNativeMethods.RegOpenKeyEx(HKEY_CURRENT_USER, key, 0, SafeNativeMethods.KEY_READ, out var hkResult) != SafeNativeMethods.ERROR_SUCCESS || hkResult == null || hkResult.IsInvalid)
+            return null;
+        return hkResult;
+    }
+
     public RegistryHandle(IntPtr hKey, bool ownHandle) : base(ownHandle) => handle = hKey;
     public RegistryHandle() : base(ownsHandle: true) { }
 
@@ -105,6 +113,7 @@ internal class RegistryHandle : SafeHandleZeroOrMinusOneIsInvalid
             return false;
         return true;
     }
+    */
 
 	public string? GetStringValue(string valName)
 	{
@@ -114,11 +123,10 @@ internal class RegistryHandle : SafeHandleZeroOrMinusOneIsInvalid
 		{
 			var array = new byte[lpcbData];
 			var num = SafeNativeMethods.RegQueryValueEx(this, valName, 0, ref lpType, array, ref lpcbData);
-			return new UnicodeEncoding().GetString(array);
+			return Encoding.Unicode.GetString(array, 0, array.Length - 2);
 		}
 		return null;
 	}
-    */
 
     public int? GetDwordValue(string valName)
     {
