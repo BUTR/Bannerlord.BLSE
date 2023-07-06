@@ -20,6 +20,8 @@ public static class Program
 
         LauncherExceptionHandler.Watch();
 
+        ReShadeLoader.LoadReShadeIfNeeded();
+
         switch (args[0])
         {
             case "launcher":
