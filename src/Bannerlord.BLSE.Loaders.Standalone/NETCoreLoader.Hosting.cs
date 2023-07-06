@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Bannerlord.BLSE;
 
@@ -37,6 +38,17 @@ public static class NETCoreLoader
 
     public static void Launch(string[] args)
     {
+        if (!Directory.Exists("Microsoft.NETCore.App"))
+        {
+            MessageBox.Show("""
+BLSE was installed in the wrong location!
+The built-in .NET Core runtime is missing!
+Make sure BLSE is installed in:
+'%GAME FOLDER%/bin/Gaming.Desktop.x64_Shipping_Client' for Xbox Game Pass PC
+""", "Error from BLSE!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Environment.Exit(1);
+        }
+
         var path = AppDomain.CurrentDomain.BaseDirectory;
         var netCoreDirectory = Path.Combine(path, "Microsoft.NETCore.App");
 

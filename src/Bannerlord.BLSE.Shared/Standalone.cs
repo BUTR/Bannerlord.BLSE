@@ -78,10 +78,12 @@ public static class Standalone
                 return;
             }
 
-            var message = $@"No modules were provided as an argument!
+            var message = $"""
+No modules were provided as an argument!
 Tried to use the load order from the save file {saveFile}, but it was missing the following mods:
 {string.Join(Environment.NewLine, missingNames)}
-Press Yes to exit, press No to continue loading";
+Press Yes to exit, press No to continue loading
+""";
             switch (MessageBoxDialog.Show(message, "Error from BLSE!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1))
             {
                 case MessageBoxResult.Yes:
