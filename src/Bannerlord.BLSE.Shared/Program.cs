@@ -20,6 +20,7 @@ public static class Program
 
         LauncherExceptionHandler.Watch();
 
+        SpecialKILoader.LoadSpecialKIfNeeded();
         ReShadeLoader.LoadReShadeIfNeeded();
 
         switch (args[0])

@@ -43,7 +43,7 @@ public static class LauncherEx
 
         _featureHarmony.TryPatch(
             AccessTools2.DeclaredMethod("TaleWorlds.Starter.Library.Program:Main"),
-            prefix: SymbolExtensions2.GetMethodInfo(static () => MainPrefix()));
+            prefix: SymbolExtensions2.GetMethodInfo(static (string[] x) => MainPrefix(ref x)));
 
         if (args.Contains("/noexceptions"))
         {
@@ -55,29 +55,23 @@ public static class LauncherEx
         }
     }
 
-    private static void MainPrefix()
+    private static void MainPrefix(ref string[] args)
     {
         var disableCrashHandler = LauncherSettings.DisableCrashHandlerWhenDebuggerIsAttached && DebuggerUtils.IsDebuggerAttached();
         if (!disableCrashHandler)
-        {
             ExceptionInterceptorFeature.Enable();
-        }
 
         if (!LauncherSettings.DisableCatchAutoGenExceptions)
-        {
             ExceptionInterceptorFeature.EnableAutoGens();
-        }
 
-        if (!LauncherSettings.UseVanillaCrashHandler)
+        if (!LauncherSettings.UseVanillaCrashHandler && !args.Contains("no_watchdog"))
         {
-            // TODO: Use the CLI when available
-#if !DEBUG
-            // We do not copy System.Memory.dll and System.Runtime.CompilerServices.Unsafe.dll, which are required
-            // They are included in Release with ILMerge
-            WatchdogHandler.DisableTWWatchdog();
-#endif
+            Array.Resize(ref args, args.Length + 1);
+            args[args.Length - 1] = "no_watchdog";
         }
 
-        _featureHarmony.Unpatch(AccessTools2.DeclaredMethod("TaleWorlds.Starter.Library.Program:Main"), SymbolExtensions2.GetMethodInfo(static () => MainPrefix()));
+        _featureHarmony.Unpatch(
+            AccessTools2.DeclaredMethod("TaleWorlds.Starter.Library.Program:Main"),
+            SymbolExtensions2.GetMethodInfo(static (string[] x) => MainPrefix(ref x)));
     }
 }
