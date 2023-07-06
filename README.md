@@ -70,6 +70,7 @@ Can opted-in by passing **/unblock** in command-line args.
 * **Exception Interceptor** - BLSE intercepts unhandled exceptions and patches all managed (C#) entrypoints that the native (C/C++) game code calls, thus ensuring that all exceptions are catched
   * Can be opted-out with settings in LauncherEx or via command-line args **/enablecrashhandlerwhendebuggerisattached** to enable the interceptor when a debugger is attached or **/disableautogenexceptions** to disable the managed entrypoints patching. Use **/enablevanillacrashhandler** to enable Watchdog
 * **ReShade Support** - ReShade is manually loaded if it's installed even with **Launcher** and **LauncherEx**. Use the DirectX 10/11/12 installation for ReShade.
+* **Special K Support** - Special K is loaded if **SpecialK64.dll** is used for installation ([use local installation](https://wiki.special-k.info/SpecialK/Local)﻿ without the renaming). Use SKIF to launch BLSE.
 
 ## LauncherEx
 **LauncherEx** is the UI module. It expands the native launcher with the following features:
