@@ -4,7 +4,6 @@ using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
 using System;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
 using System.Security;
@@ -26,7 +25,6 @@ namespace Bannerlord.BLSE.Features.ExceptionInterceptor
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
             OnException += HandleException;
-            FinalizerSimple.Enable(ExceptionHandler, FinalizerMethod);
         }
 
         public static void EnableAutoGens()
@@ -49,7 +47,7 @@ namespace Bannerlord.BLSE.Features.ExceptionInterceptor
             FinalizerGlobal.OnNewAssembly(ExceptionHandler, FinalizerMethod, assembly);
         }
 
-        private static void Finalizer(Exception? __exception)
+        private static void Finalizer(Exception? __exception, MethodBase __originalMethod)
         {
             if (__exception is not null)
                 HandleException(__exception);
