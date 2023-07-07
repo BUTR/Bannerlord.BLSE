@@ -18,7 +18,7 @@ namespace Bannerlord.BLSE.Features.ContinueSaveFile
         public static void Enable(Harmony harmony)
         {
             _harmony = harmony;
-            ModulePatch.OnSaveGameArgParsed += (info, saveFile) => _currentSaveFile = saveFile;
+            ModulePatch.OnSaveGameArgParsed += (_, saveFile) => _currentSaveFile = saveFile;
             ModulePatch.Enable(harmony);
 
             AppDomain.CurrentDomain.AssemblyLoad += CurrentDomainOnAssemblyLoad;

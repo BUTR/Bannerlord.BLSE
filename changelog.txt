@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.4.7
+Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.2.0
+* Fixed ReShade and Special K loading. At the moment they do not work together
+* Launcher will have DPI Aware, Exception Interceptor, Watchdog Disabler, ReShade and Special K support enabled
+---------------------------------------------------------------------------------------------------
 Version: 1.4.6
 Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.2.0
 * Added proper Watchdog integration

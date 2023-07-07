@@ -115,18 +115,18 @@ internal class RegistryHandle : SafeHandleZeroOrMinusOneIsInvalid
     }
     */
 
-	public string? GetStringValue(string valName)
-	{
-		var lpType = 0;
-		var lpcbData = 0;
-		if (SafeNativeMethods.RegQueryValueEx(this, valName, 0, ref lpType, null, ref lpcbData) == SafeNativeMethods.ERROR_SUCCESS && lpType == 1)
-		{
-			var array = new byte[lpcbData];
-			var num = SafeNativeMethods.RegQueryValueEx(this, valName, 0, ref lpType, array, ref lpcbData);
-			return Encoding.Unicode.GetString(array, 0, array.Length - 2);
-		}
-		return null;
-	}
+    public string? GetStringValue(string valName)
+    {
+        var lpType = 0;
+        var lpcbData = 0;
+        if (SafeNativeMethods.RegQueryValueEx(this, valName, 0, ref lpType, null, ref lpcbData) == SafeNativeMethods.ERROR_SUCCESS && lpType == 1)
+        {
+            var array = new byte[lpcbData];
+            var num = SafeNativeMethods.RegQueryValueEx(this, valName, 0, ref lpType, array, ref lpcbData);
+            return Encoding.Unicode.GetString(array, 0, array.Length - 2);
+        }
+        return null;
+    }
 
     public int? GetDwordValue(string valName)
     {
