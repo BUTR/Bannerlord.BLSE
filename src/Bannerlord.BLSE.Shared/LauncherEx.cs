@@ -70,6 +70,9 @@ public static class LauncherEx
             args[args.Length - 1] = "no_watchdog";
         }
 
+        SpecialKILoader.LoadSpecialKIfNeeded();
+        ReShadeLoader.LoadReShadeIfNeeded();
+
         _featureHarmony.Unpatch(
             AccessTools2.DeclaredMethod("TaleWorlds.Starter.Library.Program:Main"),
             SymbolExtensions2.GetMethodInfo(static (string[] x) => MainPrefix(ref x)));

@@ -47,7 +47,7 @@ namespace Bannerlord.BLSE.Features.ExceptionInterceptor
             FinalizerGlobal.OnNewAssembly(ExceptionHandler, FinalizerMethod, assembly);
         }
 
-        private static void Finalizer(Exception? __exception, MethodBase __originalMethod)
+        private static void Finalizer(Exception? __exception)
         {
             if (__exception is not null)
                 HandleException(__exception);
@@ -72,7 +72,7 @@ namespace Bannerlord.BLSE.Features.ExceptionInterceptor
                     }
                 }
             }
-            catch (Exception) { }
+            catch (Exception) { /* ignore */ }
         }
     }
 }
