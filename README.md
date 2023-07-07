@@ -72,7 +72,7 @@ Can opted-in by passing **/unblock** in command-line args.
 * **Watchdog Disabler** - Disables TaleWorlds tool that intercepts game exceptions, thus blocking BLSE's Exception Interceptor.
   * Can be opted-out with settings in LauncherEx or via command-line args **/enablevanillacrashhandler**
 * **ReShade Support** - ReShade is manually loaded if it's installed even with **Launcher** and **LauncherEx**. Use the DirectX 10/11/12 installation for ReShade.
-* **Special K Support** - No action is required without **ReShade**. ***When ReShade is installed, Special K won't work.*** Use SKIF to launch BLSE or run the Special K service and launch BLSE as usual.
+* **Special K Support** - Rename the installed dxgi.dll to `SpecialK64.dll`. ***When ReShade is installed, Special K won't work.*** Use SKIF to launch BLSE or run the Special K service and launch BLSE as usual.
 
 ## Launcher
 **Launcher** is the native UI module, without LauncherEx features. It enables the following optional features, configurable in LauncherEx:
