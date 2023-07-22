@@ -1,4 +1,3 @@
-# Bannerlord.BLSE
 <p align="center">
   <a href="https://github.com/BUTR/Bannerlord.UIExtenderEx" alt="Logo">
     <img src="https://media.discordapp.net/attachments/422092475163869201/1083742477250465843/BLSE_SMALL_SMALL.png" />
@@ -48,7 +47,34 @@ Once installed, no additional steps are needed to launch Bannerlord with BLSE's 
 You can start the game using **Bannerlord.BLSE.Launcher.exe** for the Vanilla Launcher or **Bannerlord.BLSE.LauncherEx.exe** for the Extended Launcher (BUTRLoader).  
 Mod Developers can use **Bannerlord.BLSE.Standalone.exe** to use the CLI to launch the game.  
   
-Credits to [Pickysaurus](https://www.nexusmods.com/users/31179975) for the BLSE and BUTR Logos!  
+If you were a previous user of BUTRLoader, run Bannerlord.BLSE.LauncherEx.exe to get the same experience!
+
+Sources available at [GitHub](https://github.com/BUTR/Bannerlord.BLSE)﻿!  
+Credits to [Pickysaurus](https://www.nexusmods.com/users/31179975)﻿ for the BLSE and BUTR Logos!
+
+## If you were searching for the following mods:
+* BLSE.LoadingInterceptor
+* BLSE.AssemblyResolver
+
+Installing this will resolve your inability to select the mod. The following mod id's are not real mods, but BLSE 'Features' that advanced mods may require to work. We are marking them as mods so the vanilla launcher would block selecting the mod. BLSE disables this block.
+
+## Xbox Warning!
+* On Xbox, Harmony 2.2 will slow down the game due to JIT optimization disabling
+* On Xbox, Harmony 2.3 beta and beyond will keep native speed
+
+
+## Installation (Manual)
+* Download BLSE from the Files tab.
+* Download and install Harmony from the Requirements section in the Description tab.
+* Extract all files inside the top-level folder in the ZIP to your game folder (where Bannerlord.Launcher.exe is located).
+* Run the game using Bannerlord.BLSE.Launcher.exe or Bannerlord.BLSE.LauncherEx.exe.
+* To confirm it is working, open the console with the ALT+` (tilde) key and type blse.version. This will display the version of the installed BLSE build. 
+
+
+## Installation with Vortex
+* Click the "Vortex" button in the top-right of this page.
+* Once installed and enabled, ensure you have deployed it by clicking "Deploy Mods" on the Mods toolbar.
+* Use the shortcut on the dashboard to start the game with BLSE. (Here's [How To](https://www.nexusmods.com/mountandblade2bannerlord/articles/766)﻿)
 
 
 ## Features
@@ -62,9 +88,9 @@ Can opted-in by passing **/unblock** in command-line args.
   * (**Standalone** Only) Passing the save file without the module list is also supported. The game will check all modules from the save file and load them automatically.  
 * **DPI Aware** - Removes the blurry MessageBoxes and Crash Reports.
 * **Game Pass PC** - Support of modding on the Xbox platform. BLSE disabled Xbox integration, replacing Cloud Saves with saves stored like on Steam/GOG/Epic  
-* **Assembly Resolver** - Changes the game's assembly loading priority.  
+* **Assembly Resolver** (BLSE.AssemblyResolver) - Changes the game's assembly loading priority.  
   * If an assembly is available in one of the loaded modules, it will be loaded from there instead, even if the assembly is available in the main **/bin** folder.  
-* **Interceptor** - BLSE checks if the is a class with a custom attribute named ***BLSEInterceptorAttribute***. If it's found it checks if there are the following signatures:  
+* **Interceptor** (BLSE.LoadingInterceptor) - BLSE checks if the is a class with a custom attribute named ***BLSEInterceptorAttribute***. If it's found it checks if there are the following signatures:  
   *  **static void OnInitializeSubModulesPrefix()** - will execute just before the game starts to initialize the SubModules. This gives us the ability to add SubModules declared in other programming languages like [Python](https://github.com/BUTR/Bannerlord.Python) and [Lua](https://github.com/BUTR/Bannerlord.Lua)  
   * **static void OnLoadSubModulesPostfix()** - will execute just after all SubModules were initialized  
 * **Exception Interceptor** - BLSE intercepts unhandled exceptions and patches all managed (C#) entrypoints that the native (C/C++) game code calls, thus ensuring that all exceptions are catched
@@ -99,7 +125,7 @@ Can opted-in by passing **/unblock** in command-line args.
 * **Issue Hint System** - the launcher displays an arrow that when expanded, will display why a mod can't be enabled. The issue can be a wrong dependency module version, binary incompatibility with the current game version
 * **Binary Compatibility Check** - the launcher will check whether the are ABI issues in the module with the current game version. ABI issues mean the module won't work in the game and will need a new updated version.
 * **Import/Export Mod List** - provides a way to export and import Mod Lists with the correct load order and module versions. If a module version is incorrect, with highlight that.
-* **Supports Mod Organizer 2** - full support for MO2 with its virtual FS
+* **Supports Mod Organizer 2** - full support for MO2 with its virtual FS. [Here's how to add BLSE to MO2](https://www.nexusmods.com/mountandblade2bannerlord/articles/768).
 
 ## Community Dependency Metadata
 BLSE adds support for a new tag DependedModuleMetadatas that allows you to better define your load order, see the example below
@@ -152,5 +178,7 @@ For Steam/GOG/Epic you need only `Win64_Shipping_Client`
 * I don't see my old saves on Xbox Game Pass PC!  
 BLSE uses a storage that Steam/GOG/Epic versions of the game use. We do not support Xbox's Saves!  
 [PC Games has an article for save migration.](https://www.pcgamesn.com/xbox-game-pass-pc-steam)
-* BLSE is not shown in Vortex's Tools!    
-You need to add it manually for now!
+* BLSE is not shown in Vortex's Tools!  
+You need to add it [manually](https://www.nexusmods.com/mountandblade2bannerlord/articles/766) for now!
+* Steam Workshop mods are not visible!  
+Try to launch the game once and exit, we have reports that it might help!
