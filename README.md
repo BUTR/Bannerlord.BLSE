@@ -159,7 +159,7 @@ For Steam/GOG/Epic you need only `Win64_Shipping_Client`
 ### I don't see my old saves on Xbox Game Pass PC!  
 BLSE uses a storage that Steam/GOG/Epic versions of the game use. We do not support Xbox's Saves!  
 [PC Games has an article for save migration.](https://www.pcgamesn.com/xbox-game-pass-pc-steam)
-* BLSE is not shown in Vortex's Tools!  
+### BLSE is not shown in Vortex's Tools!  
 You need to add it [manually](https://www.nexusmods.com/mountandblade2bannerlord/articles/766) for now!
-* Steam Workshop mods are not visible!  
+### Steam Workshop mods are not visible!  
 Try to launch the game once and exit, we have reports that it might help!
