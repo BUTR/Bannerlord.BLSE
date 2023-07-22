@@ -1,42 +1,20 @@
 <p align="center">
-  <a href="https://github.com/BUTR/Bannerlord.UIExtenderEx" alt="Logo">
-    <img src="https://media.discordapp.net/attachments/422092475163869201/1083742477250465843/BLSE_SMALL_SMALL.png" />
-  </a>
+  <a href="https://github.com/BUTR/Bannerlord.BLSE" ><img alt="Logo" src="https://media.discordapp.net/attachments/422092475163869201/1083742477250465843/BLSE_SMALL_SMALL.png" /></a>
   </br>
-  <a href="https://github.com/BUTR/Bannerlord.BLSE" alt="Lines Of Code">
-    <img src="https://aschey.tech/tokei/github/BUTR/Bannerlord.BLSE?category=code" />
-  </a>
-  <a href="https://www.codefactor.io/repository/github/butr/bannerlord.blse">
-    <img src="https://www.codefactor.io/repository/github/butr/bannerlord.blse/badge" alt="CodeFactor" />
-  </a>
-  <a href="https://codeclimate.com/github/BUTR/Bannerlord.BLSE/maintainability">
-    <img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability-percentage/BUTR/Bannerlord.BLSE">
-  </a>
-  <a title="Crowdin" target="_blank" href="https://crowdin.com/project/butrloader">
-    <img src="https://badges.crowdin.net/butrloader/localized.svg">
-  </a>
-  </br>
-  <a href="https://github.com/BUTR/Bannerlord.BLSE/actions/workflows/test.yml?query=branch%3Amaster">
-    <img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/BUTR/Bannerlord.BLSE/test.yml?branch=master&label=Game%20Stable%20and%20Beta">
-  </a>
-  </br>
-  <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" alt="NexusMods BLSE">
-    <img src="https://img.shields.io/badge/NexusMods-BLSE-yellow.svg" />
-  </a>
-  <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" alt="NexusMods BLSE">
-    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-version-pzk4e0ejol6j.runkit.sh%3FgameId%3Dmountandblade2bannerlord%26modId%3D1" />
-  </a>
-  <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" alt="NexusMods BLSE">
-    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dunique%26gameId%3D3174%26modId%3D1" />
-  </a>
-  <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" alt="NexusMods BLSE">
-    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dtotal%26gameId%3D3174%26modId%3D1" />
-  </a>
-  <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" alt="NexusMods BLSE">
-    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dviews%26gameId%3D3174%26modId%3D1" />
-  </a>
-  </br>
+  <a converter_ignore href="https://github.com/BUTR/Bannerlord.BLSE" ><img alt="Lines Of Code" src="https://aschey.tech/tokei/github/BUTR/Bannerlord.BLSE?category=code" /></a>
+  <a converter_ignore href="https://www.codefactor.io/repository/github/butr/bannerlord.blse"><img src="https://www.codefactor.io/repository/github/butr/bannerlord.blse/badge" alt="CodeFactor" /></a>
+  <a converter_ignore href="https://codeclimate.com/github/BUTR/Bannerlord.BLSE/maintainability"><img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability-percentage/BUTR/Bannerlord.BLSE"></a>
+  <a title="Crowdin" target="_blank" href="https://crowdin.com/project/butrloader"><img src="https://badges.crowdin.net/butrloader/localized.svg"></a>
+  <br converter_ignore></br>
+  <a converter_ignore href="https://github.com/BUTR/Bannerlord.BLSE/actions/workflows/test.yml?query=branch%3Amaster"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/BUTR/Bannerlord.BLSE/test.yml?branch=master&label=Game%20Stable%20and%20Beta"></a>
+  <br converter_ignore></br>
+  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/badge/NexusMods-BLSE-yellow.svg" /></a>
+  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-version-pzk4e0ejol6j.runkit.sh%3FgameId%3Dmountandblade2bannerlord%26modId%3D1" /></a>
+  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dunique%26gameId%3D3174%26modId%3D1" /></a>
+  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dtotal%26gameId%3D3174%26modId%3D1" /></a>
+  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dviews%26gameId%3D3174%26modId%3D1" /></a>
   <!--
+  </br>
   <img src="https://staticdelivery.nexusmods.com/mods/3174/images/2513/2513-1612129311-35018174.png" width="800">
   -->
 </p>
@@ -47,14 +25,14 @@ Once installed, no additional steps are needed to launch Bannerlord with BLSE's 
 You can start the game using **Bannerlord.BLSE.Launcher.exe** for the Vanilla Launcher or **Bannerlord.BLSE.LauncherEx.exe** for the Extended Launcher (BUTRLoader).  
 Mod Developers can use **Bannerlord.BLSE.Standalone.exe** to use the CLI to launch the game.  
   
-If you were a previous user of BUTRLoader, run Bannerlord.BLSE.LauncherEx.exe to get the same experience!
+If you were a previous user of **BUTRLoader**, run **Bannerlord.BLSE.LauncherEx.exe** to get the same experience!
 
 Sources available at [GitHub](https://github.com/BUTR/Bannerlord.BLSE)﻿!  
 Credits to [Pickysaurus](https://www.nexusmods.com/users/31179975)﻿ for the BLSE and BUTR Logos!
 
 ## If you were searching for the following mods:
-* BLSE.LoadingInterceptor
-* BLSE.AssemblyResolver
+* **BLSE.LoadingInterceptor**
+* **BLSE.AssemblyResolver**
 
 Installing this will resolve your inability to select the mod. The following mod id's are not real mods, but BLSE 'Features' that advanced mods may require to work. We are marking them as mods so the vanilla launcher would block selecting the mod. BLSE disables this block.
 
