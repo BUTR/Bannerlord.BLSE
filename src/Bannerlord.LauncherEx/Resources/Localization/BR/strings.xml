@@ -3,13 +3,13 @@
   <strings>
     <!-- BUTRLauncherModuleVM -->
     <string id="kfMQEOFS" text="O módulo está instalado na pasta /Modules na pasta raiz do jogo e na Oficina da Steam!{NL} A versão /Modules será utilizada!"/>
-    <string id="aAYdk1zd" text="A DLL está ofuscada!{NL} Não há garantia de que o código está seguro!{NL}A equipe BUTR avisa sobre as consequências decorrentes da execução de um código ofuscado!"/>
+    <string id="aAYdk1zd" text="A DLL está ofuscada!{NL} Não há garantia de que o código esteja seguro!{NL}A equipe BUTR avisa sobre as consequências decorrentes da execução de um código ofuscado!"/>
 
     <!-- BUTRLauncherOptionsVM -->
     <string id="z9WqFewN" text="DESABILITADO!"/>
     <string id="44qrhQ6g" text="Reinicialização necessária!"/>
 
-    <string id="zHo3tzQT" text="Desbloquear arquivos ao inializar"/>
+    <string id="zHo3tzQT" text="Desbloquear arquivos ao inicializar"/>
     <string id="sOInYH9V" text="Desbloqueia automaticamente os arquivos .dll ao inicializar"/>
     <string id="LXlsSS8t" text="Corrige problemas comuns"/>
     <string id="J9VbkLW4" text="Corrige problemas como 0Harmony.dll estar na pasta /bin"/>
