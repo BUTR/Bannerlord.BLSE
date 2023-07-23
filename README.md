@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/BUTR/Bannerlord.BLSE" ><img alt="Logo" src="https://media.discordapp.net/attachments/422092475163869201/1083742477250465843/BLSE_SMALL_SMALL.png" /></a>
+  <img alt="Logo" src="https://media.discordapp.net/attachments/422092475163869201/1083742477250465843/BLSE_SMALL_SMALL.png" />
   <br>
   <a converter_ignore href="https://github.com/BUTR/Bannerlord.BLSE" ><img alt="Lines Of Code" src="https://aschey.tech/tokei/github/BUTR/Bannerlord.BLSE?category=code" /></a>
   <a converter_ignore href="https://www.codefactor.io/repository/github/butr/bannerlord.blse"><img src="https://www.codefactor.io/repository/github/butr/bannerlord.blse/badge" alt="CodeFactor" /></a>
