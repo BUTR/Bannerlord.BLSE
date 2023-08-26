@@ -30,7 +30,7 @@
     <string id="uKUsA3Sp" text="LauncherEx, ilk kez kaydetmeden önce her zaman bir yedekleme yapar. Bu, orijinal dosyaları geri yükleyecektir"/>
     <string id="TLDgPay9" text="Onar"/>
     <string id="5XzSM7RN" text="Motor Seçenekleri Yedeklemesini Geri Yükle"/>
-    <string id="JusnHy6S" text="Enables Windows DPI Scaling to remove blurriness of UI elements" />
+    <string id="JusnHy6S" text="Kullanıcı Arayüzünden bulanıklığı kaldırmak için Windows Fare Duyarlılığı'nı (DPI) etkinleştirir"/>
 
     <!-- BUTRLauncherSavesVM -->
     <string id="JtelOsIW" text="İsim"/>
@@ -115,7 +115,7 @@
     <string id="2ALJB7z2" text="'{SOURCEID}', '{TARGETID}'den sonra yüklenmelidir"/>
 
     <!-- Dependency Constructor -->
-    <string id="8ldMJPhQ" text=" (optional)"/>
+    <string id="8ldMJPhQ" text=" (isteğe bağlı)"/>
     <string id="f9hYP7mk" text="Bağlıdır:"/>
     <string id="eGJ387f7" text="Uyumsuz:"/>
     <string id="eW76jyd7" text="Şunlardan önce yüklenmesi gerekiyor:"/>
