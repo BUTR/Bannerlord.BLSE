@@ -40,6 +40,8 @@ Can't launch with 'Bannerlord.Harmony' module missing!
 If the module was installed manually, make sure that the module in installed in 'Modules/Bannerlord.Harmony'!
 If Vortex is used, try to reinstall manually!
 If Steam is used, download the Harmony mod from NexusMods!
+Don't forget that on Steam you have the '/Modules' folder in the Game
+and the Steam Workshop folder that can conflict with each other!
 """, "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
                 Environment.Exit(1);
                 return null;
@@ -51,6 +53,8 @@ Can't find '{ModuleInfoHelper.SubModuleFile}' in 'Bannerlord.Harmony'!
 If the module was installed manually, try to do a clean reinstall!
 If Vortex is used, try to reinstall manually!
 If Steam is used, download the Harmony mod from NexusMods!
+Don't forget that on Steam you have the '/Modules' folder in the Game
+and the Steam Workshop folder that can conflict with each other!
 """, "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
                 Environment.Exit(1);
                 return null;
@@ -62,6 +66,8 @@ Failed to read '{ModuleInfoHelper.SubModuleFile}'!
 If the module was installed manually, try to do a clean reinstall!
 If Vortex is used, try to reinstall manually!
 If Steam is used, download the Harmony mod from NexusMods!
+Don't forget that on Steam you have the '/Modules' folder in the Game
+and the Steam Workshop folder that can conflict with each other!
 """, "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
                 Environment.Exit(1);
                 return null;
@@ -73,6 +79,8 @@ At least v2.2.2.x is required!
 If the module was installed manually, find and install the latest version!
 If Vortex is used, try to reinstall manually the latest version!
 If Steam is used, download the latest Harmony mod from NexusMods!
+Don't forget that on Steam you have the '/Modules' folder in the Game
+and the Steam Workshop folder that can conflict with each other!
 """, "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
                 Environment.Exit(1);
                 return null;
@@ -84,6 +92,8 @@ Can't find '{Path.Combine("bin", configName)}' in 'Bannerlord.Harmony'!
 If the module was installed manually, try to do a clean reinstall!
 If Vortex is used, try to reinstall manually!
 If Steam is used, download the Harmony mod from NexusMods!
+Don't forget that on Steam you have the '/Modules' folder in the Game
+and the Steam Workshop folder that can conflict with each other!
 """, "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
                 Environment.Exit(1);
                 return null;
@@ -95,6 +105,8 @@ Can't find '{assemblyNameFull}' in 'Bannerlord.Harmony'!
 If the module was installed manually, try to do a clean reinstall!
 If Vortex is used, try to reinstall manually!
 If Steam is used, download the Harmony mod from NexusMods!
+Don't forget that on Steam you have the '/Modules' folder in the Game
+and the Steam Workshop folder that can conflict with each other!
 """, "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
                 Environment.Exit(1);
                 return null;
@@ -179,6 +191,8 @@ Wrong 0Harmony.dll version! At least v2.2.2.x is required!
 If the module was installed manually, try to do a clean reinstall!
 If Vortex is used, try to reinstall manually!
 If Steam is used, download the Harmony mod from NexusMods!
+Don't forget that on Steam you have the '/Modules' folder in the Game
+and the Steam Workshop folder that can conflict with each other!
 """, "Error from BLSE!", MessageBoxButtons.Ok, MessageBoxIcon.Error);
             Environment.Exit(1);
             return null;
