@@ -24,7 +24,7 @@ namespace Bannerlord.BLSE.Features.Interceptor
         {
             foreach (var type in TypeFinder.GetInterceptorTypes(typeof(BLSEInterceptorAttribute)))
             {
-                if (AccessTools2.GetDelegate<OnInitializeSubModulesPrefixDelegate>(type, "OnInitializeSubModulesPrefix") is { } method)
+                if (AccessTools2.GetDelegate<OnInitializeSubModulesPrefixDelegate>(type, "OnInitializeSubModulesPrefix", logErrorInTrace: false) is { } method)
                 {
                     method();
                 }
@@ -35,7 +35,7 @@ namespace Bannerlord.BLSE.Features.Interceptor
         {
             foreach (var type in TypeFinder.GetInterceptorTypes(typeof(BLSEInterceptorAttribute)))
             {
-                if (AccessTools2.GetDelegate<OnLoadSubModulesPostfixDelegate>(type, "OnLoadSubModulesPostfix") is { } method)
+                if (AccessTools2.GetDelegate<OnLoadSubModulesPostfixDelegate>(type, "OnLoadSubModulesPostfix", logErrorInTrace: false) is { } method)
                 {
                     method();
                 }
