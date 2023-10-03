@@ -28,7 +28,7 @@ jobs:
       mod_version: ${{ steps.changelog.outputs.mod_version }}
       mod_description: ${{ steps.changelog.outputs.mod_description }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install and Run ChangelogParser
         id: changelog
@@ -52,7 +52,7 @@ jobs:
         project: [ 'Bannerlord.BLSE.Loaders.Standalone', 'Bannerlord.BLSE.Loaders.Launcher', 'Bannerlord.BLSE.Loaders.LauncherEx', 'Bannerlord.BLSE.Shared' ]
         configuration: [ 'Win64_Shipping_Client', 'Gaming.Desktop.x64_Shipping_Client' ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup
         uses: butr/actions-common-setup@v2
