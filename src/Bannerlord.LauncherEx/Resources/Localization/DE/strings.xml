@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData id="Deutsch" name="Deutsch" subtitle_extension="de" supported_iso="de,deu,ger,de-de,de-at,de-li,de-lu,de-ch" under_development="false">
+  <strings>
+    <!-- BUTRLauncherModuleVM -->
+    <string id="kfMQEOFS" text="Das Modul ist im /Modules Ordner des Spiels und im Steam Workshop installiert!{NL}Es wird die /Modules Version verwendet!"/>
+    <string id="aAYdk1zd" text="Die DLL ist verschleiert!{NL}Es gibt keine Garantie dafür, dass der Code sicher ist!{NL}Das BUTR-Team warnt vor Konsequenzen, die aus dem Ausführen von verschleiertem Code entstehen!"/>
+
+    <!-- BUTRLauncherOptionsVM -->
+    <string id="z9WqFewN" text="DEAKTIVIERT!"/>
+    <string id="44qrhQ6g" text="Benötigt Neustart!"/>
+
+    <string id="zHo3tzQT" text="Dateien beim Start entblocken"/>
+    <string id="sOInYH9V" text="Entblockt beim Start automatisch .dll Dateien"/>
+    <string id="LXlsSS8t" text="Häufige Probleme beheben"/>
+    <string id="J9VbkLW4" text="Behebt Probleme wie das 0Harmony.dll im /bin Ordner ist"/>
+    <string id="vUAqDj9H" text="Kompakte Modul-Liste"/>
+    <string id="Qn1aPNQM" text="Verkleinert den Inhalt des Mods Tab"/>
+    <string id="GUWbD65T" text="Binärkompatibilitätsprüfung deaktivieren"/>
+    <string id="lmpQeQBS" text="Deaktiviert die Launcher eigene Prüfung auf die Binärkompatibilität von Mods"/>
+    <string id="iD27wEq7" text="Zufälliges Bild ausblenden"/>
+    <string id="LaPvZjwC" text="Versteckt das Bild des Reiters, damit der Launcher kompakter aussieht"/>
+    <string id="JT7QnJJA" text="Dateien entsperren"/>
+    <string id="VMIp4503" text="Entsperrt alle .dll Dateien im /Moduls-Ordner"/>
+    <string id="RDLKkiVk" text="Entblocken"/>
+    <string id="QJSBiZdJ" text="Beta-Sortierung"/>
+    <string id="HVhaqeb4" text="Verwendet den neuen Sortieralgorithmus nach v1.12.x. Deaktivieren, um den alten Algorithmus zu verwenden"/>
+    <string id="1zt99vTt" text="Großer Modus"/>
+    <string id="XUSDSpvf" text="Vergrößert die Höhe des Launchers"/>
+    <string id="IsR2rbnG" text="Backup der Spieloptionen wiederherstellen"/>
+    <string id="uKUsA3Sp" text="LauncherEx erstellt immer ein Backup, bevor das erste Mal gespeichert wird. Dies wird die Originaldateien wiederherstellen"/>
+    <string id="TLDgPay9" text="Wiederherstellen"/>
+    <string id="5XzSM7RN" text="Backup der Engine Einstellungen wiederherstellen"/>
+    <string id="JusnHy6S" text="Aktiviert Windows DPI Skalierung, um die Unschärfe von UI Elementen zu entfernen"/>
+
+    <!-- BUTRLauncherSavesVM -->
+    <string id="JtelOsIW" text="Name"/>
+    <string id="14WBFIS1" text="Version"/>
+    <string id="OJsGrGVi" text="Charakter"/>
+    <string id="JxpEEQdF" text="Level"/>
+    <string id="qkkTPycE" text="Tage"/>
+    <string id="aYWWDkKX" text="Erstellt am"/>
+
+    <!-- LauncherConfirmStartVMMixin -->
+    <string id="DzJmcvsP" text="Abbrechen"/>
+    <string id="epTxGUqT" text="Bestätigen"/>
+
+    <!-- LauncherModsVMMixin -->
+    <string id="pZVVdI5d" text="Die Ladereihenfolge wurde mit dem Standardalgorithmus neu sortiert!{NL}Gründe:{NL}{REASONS}"/>
+    <string id="sP1a61KE" text="Das Modul konnte nicht an die gewünschte Position platziert werden! Es wird an die nächste verfügbare Stelle platziert{NL}Grund:{NL}{REASONS}"/>
+    <string id="sLf3eIpH" text="Die Modulliste konnte nicht geordnet werden!"/>
+
+    <!-- LauncherVMMixin -->
+    <string id="yS5hbWCL" text="Optionen"/>
+    <string id="V66qoU6n" text="Launcher"/>
+    <string id="ro4RMgyt" text="Spiel"/>
+    <string id="q4rQuTgG" text="Engine"/>
+    <string id="d5OjKcGE" text="Speicherstände"/>
+    <string id="Aws9irMU" text="Ladereihenfolge importieren"/>
+    <string id="4wKr76gx" text="Ladereihenfolge des Speicherstands importieren"/>
+    <string id="XdZGqnFW" text="Aktuelle Ladereihenfolge exportieren"/>
+    <string id="G55IdM6M" text="Ladereihenfolge des Speicherstands exportieren"/>
+    <string id="MlYQ0uX7" text="Eine instabile Erfahrung könnte auftreten."/>
+    <string id="qvzptzrE" text="Möchten Sie mit dem Laden des Speicherstandes fortfahren?"/>
+    <string id="dDprK7Mz" text="WARNUNG"/>
+
+    <string id="Hk7FBBSa" text="Einzelspieler"/>
+    <string id="UOGhdUWE" text="Mehrspieler"/>
+    <string id="VDTcZpPr" text="Digitaler Begleiter"/>
+    <string id="Tg0If68v" text="Neuigkeiten"/>
+    <string id="YGU9eXM0" text="Mods"/>
+    <string id="xYv4iv7C" text="SPIELEN"/>
+    <string id="6B3iZLqR" text="FORTFAHREN"/>
+    <string id="eUt6GKkQ" text="LAUNCHEN"/>
+
+    <!-- LauncherVMMixin -->
+    <string id="WJnTxf3v" text="Importieren abgebrochen!"/>
+    <string id="BjtJ4Lxw" text="Exportieren abgebrochen"/>
+    <string id="eohqbvHU" text="Liste erfolgreich importiert!"/>
+    <string id="VwFQTk5z" text="Liste erfolgreich exportiert!"/>
+
+    <!-- Issues -->
+    <string id="kxqLbSqe" text="(Unbekannte ID)"/>
+
+    <string id="izSm5f85" text="Doppelt vorhandene Module Ids:{NL}{MODULEIDS}"/>
+    <string id="vCwH9226" text="Doppelt vorhandene Module Namen:{NL}{MODULENAMES}"/>
+    <string id="GtDRbC3m" text="Fehlende Module:{NL}{MODULES}"/>
+    <string id="BuMom4Jt" text="Nicht passende Modulversionen:{NL}{MODULEVERSIONS}"/>
+
+    <string id="nYVWoomO" text="{MODULEID}. Benötigt {REQUIREDVERSION}. {ACTUALVERSION} ist installiert"/>
+    <string id="sd6M4KRd" text="Ladereihenfolge:{NL}{LOADORDER}"/>
+    <string id="HvvA78sZ" text="Ladereihenfolge-Probleme:{NL}{LOADORDERISSUES}"/>
+
+    <string id="B64DbmWp" text="Speicherstand nicht gefunden!"/>
+    <string id="epU06HID" text="Der Speicherstand konnte nicht gelesen werden!"/>
+
+    <string id="DKRNkst2" text="Datei mit einer Ladereihenfolge öffnen"/>
+    <string id="XSxlKweM" text="Speichere eine Bannerlord Modul-Listen-Datei"/>
+
+    <string id="hgew15HH" text="Importieren fortsetzen?"/>
+
+    <string id="tqjPGPtP" text="LauncherEx erkannte 0Harmony.dll im root bin Verzeichnis des Spiels!{NL}Dies könnte zu Problemen führen, entfernen?"/>
+
+    <string id="J3Uh6MV4" text="'{ID}' {VERSION} fehlt in der Modulliste"/>
+    <string id="3eQSr6wt" text="'{ID}' {VERSION} fehlt"/>
+    <string id="U858vdQX" text="'{ID}' fehlen seine Abhängigkeiten!"/>
+    <string id="1LS8Z5DU" text="'{ID}' hat ungelöste Probleme!"/>
+    <string id="Vjz9HQ41" text="'{ID}' falsche Version &lt;= {VERSION}"/>
+    <string id="ZvnlL7VE" text="'{ID}' falsche Version &lt; [{VERSION}]"/>
+    <string id="EfNuH2bG" text="'{ID}' falsche Version &gt; [{VERSION}]"/>
+    <string id="zXDidmpQ" text="'{ID}' ist mit diesem Modul inkompatibel"/>
+    <string id="4KFwqKgG" text="Modul '{ID}' ist gleichzeitig als abhängig und auch als inkompatibel markiert"/>
+    <string id="9DRB6yXv" text="Modul '{ID}' ist sowohl als LoadBefore als auch als LoadAfter benötigt"/>
+    <string id="RC1V9BbP" text="Zirkuläre Abhängigkeiten. '{TARGETID}' und '{SOURCEID}' hängen voneinander ab"/>
+    <string id="s3xbuejE" text="'{SOURCEID}' sollte vor '{TARGETID} ' geladen werden"/>
+    <string id="2ALJB7z2" text="'{SOURCEID}' sollte nach '{TARGETID} ' geladen werden"/>
+
+    <!-- Dependency Constructor -->
+    <string id="8ldMJPhQ" text=" (optional)"/>
+    <string id="f9hYP7mk" text="Abhängig von:"/>
+    <string id="eGJ387f7" text="Inkompatibel mit:"/>
+    <string id="eW76jyd7" text="Muss laden vor:"/>
+  </strings>
+</LanguageData>
