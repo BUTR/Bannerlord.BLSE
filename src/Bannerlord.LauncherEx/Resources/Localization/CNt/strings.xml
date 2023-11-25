@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData id="繁體中文" name="繁體中文" subtitle_extension="zh-HANT" supported_iso="zh-Hant,zh-cn,zh-hk" under_development="false">
+  <strings>
+    <!-- BUTRLauncherModuleVM -->
+    <string id="kfMQEOFS" text="該模組被安裝在 遊戲目錄/Modules 以及 steam創意工坊！{NL}將使用 遊戲目錄/Modules 的版本。"/>
+    <string id="aAYdk1zd" text="這個是混淆DLL！{NL}無法保證程式碼是安全的！{NL}BUTR團隊警告您允許混淆程式碼將產生嚴重後果！"/>
+
+    <!-- BUTRLauncherOptionsVM -->
+    <string id="z9WqFewN" text="已停用!"/>
+    <string id="44qrhQ6g" text="需要重新啟動!"/>
+
+    <string id="zHo3tzQT" text="啟動時解除封鎖dll檔案"/>
+    <string id="sOInYH9V" text="啟動時自動解鎖dll"/>
+    <string id="LXlsSS8t" text="修復常見問題"/>
+    <string id="J9VbkLW4" text="修復常見問題，例如0Harmony.dll位於資料夾/bin"/>
+    <string id="vUAqDj9H" text="緊湊模組清單"/>
+    <string id="Qn1aPNQM" text="縮小模組清單"/>
+    <string id="GUWbD65T" text="停用二進位相容性檢查"/>
+    <string id="lmpQeQBS" text="停用啟動器檢測Mods的二進制相容性"/>
+    <string id="iD27wEq7" text="隱藏隨機影像"/>
+    <string id="LaPvZjwC" text="隱藏右方騎手影像，使啟動器更緊湊"/>
+    <string id="JT7QnJJA" text="解鎖dll檔案"/>
+    <string id="VMIp4503" text="解鎖資料夾/Modules內所有的dll檔案"/>
+    <string id="RDLKkiVk" text="解鎖"/>
+    <string id="QJSBiZdJ" text="測試版自動排序"/>
+    <string id="HVhaqeb4" text="使用 v1.12.x 之後的新版自動排序。禁用舊演算法"/>
+    <string id="1zt99vTt" text="放大的啟動器"/>
+    <string id="XUSDSpvf" text="啟動器變高"/>
+    <string id="IsR2rbnG" text="恢復遊戲選項備份"/>
+    <string id="uKUsA3Sp" text="LauncherEx在首次啟動時會進行備份。這將恢復該備份"/>
+    <string id="TLDgPay9" text="恢復"/>
+    <string id="5XzSM7RN" text="恢復引擎選項備份"/>
+    <string id="JusnHy6S" text="啟動Windows DPI縮放以移除UI界面模糊"/>
+
+    <!-- BUTRLauncherSavesVM -->
+    <string id="JtelOsIW" text="名字"/>
+    <string id="14WBFIS1" text="版本"/>
+    <string id="OJsGrGVi" text="角色"/>
+    <string id="JxpEEQdF" text="等級"/>
+    <string id="qkkTPycE" text="天數"/>
+    <string id="aYWWDkKX" text="建立時間"/>
+
+    <!-- LauncherConfirmStartVMMixin -->
+    <string id="DzJmcvsP" text="取消"/>
+    <string id="epTxGUqT" text="確認"/>
+
+    <!-- LauncherModsVMMixin -->
+    <string id="pZVVdI5d" text="模組順序已使用預設演算法重新排序！{NL}原因：{NL}{REASONS}"/>
+    <string id="sP1a61KE" text="無法將模組放置到所需位置！放置到最近的可用位置！{NL}原因：{NL}{REASONS}"/>
+    <string id="sLf3eIpH" text="模組列表排序失敗"/>
+
+    <!-- LauncherVMMixin -->
+    <string id="yS5hbWCL" text="選項"/>
+    <string id="V66qoU6n" text="啟動器"/>
+    <string id="ro4RMgyt" text="遊戲遊戲"/>
+    <string id="q4rQuTgG" text="引擎"/>
+    <string id="d5OjKcGE" text="存檔"/>
+    <string id="Aws9irMU" text="匯入載入順序"/>
+    <string id="4wKr76gx" text="匯入存檔的載入順序"/>
+    <string id="XdZGqnFW" text="導出目前載入順序"/>
+    <string id="G55IdM6M" text="導出存檔的載入順序"/>
+    <string id="MlYQ0uX7" text="可能會出現不穩定的體驗"/>
+    <string id="qvzptzrE" text="你是否繼續載入該存檔嗎？"/>
+    <string id="dDprK7Mz" text="警告"/>
+
+    <string id="Hk7FBBSa" text="單人遊戲"/>
+    <string id="UOGhdUWE" text="多人遊戲"/>
+    <string id="VDTcZpPr" text="數位週邊商品"/>
+    <string id="Tg0If68v" text="新聞"/>
+    <string id="YGU9eXM0" text="模組"/>
+    <string id="xYv4iv7C" text="遊玩"/>
+    <string id="6B3iZLqR" text="繼續"/>
+    <string id="eUt6GKkQ" text="啟動"/>
+
+    <!-- LauncherVMMixin -->
+    <string id="WJnTxf3v" text="取消匯入"/>
+    <string id="BjtJ4Lxw" text="取消導出"/>
+    <string id="eohqbvHU" text="成功匯入排序"/>
+    <string id="VwFQTk5z" text="成功導出排序"/>
+
+    <!-- Issues -->
+    <string id="kxqLbSqe" text="(未知ID)"/>
+
+    <string id="izSm5f85" text="重複的模組ID：{NL}{MODULEIDS}"/>
+    <string id="vCwH9226" text="重複的模組名稱：{NL}{MODULENAMES}"/>
+    <string id="GtDRbC3m" text="缺少模組：{NL}{MODULES}"/>
+    <string id="BuMom4Jt" text="不符合版本的模組：{NL}{MODULEVERSIONS}"/>
+
+    <string id="nYVWoomO" text="{MODULEID}。需要版本 {REQUIREDVERSION}。目前版本{ACTUALVERSION}"/>
+    <string id="sd6M4KRd" text="載入順序：{NL}{LOADORDER}"/>
+    <string id="HvvA78sZ" text="載入順序問題：{NL}{LOADORDERISSUES}"/>
+
+    <string id="B64DbmWp" text="無法找到存檔!"/>
+    <string id="epU06HID" text="讀取存檔失敗！"/>
+
+    <string id="DKRNkst2" text="開啟有載入順序的檔案"/>
+    <string id="XSxlKweM" text="儲存霸主模組清單"/>
+
+    <string id="hgew15HH" text="繼續匯入?"/>
+
+    <string id="tqjPGPtP" text="LauncherEx 在遊戲根目錄/bin檢測到0Harmony.dll！{NL}這將導致遊戲無法執行，將其刪除嗎？"/>
+
+    <string id="J3Uh6MV4" text="模組清單中缺少 '{ID}' {VERSION}"/>
+    <string id="3eQSr6wt" text="缺少 '{ID}' {VERSION}"/>
+    <string id="U858vdQX" text="{ID}' 缺少前置模組！"/>
+    <string id="1LS8Z5DU" text="{ID}' 有未解決的問題！"/>
+    <string id="Vjz9HQ41" text="{ID}' 版本錯誤 &lt;= {VERSION}"/>
+    <string id="ZvnlL7VE" text="{ID}' 版本錯誤 &lt; [{VERSION}]"/>
+    <string id="EfNuH2bG" text="{ID}' 版本錯誤 &gt; [{VERSION}]"/>
+    <string id="zXDidmpQ" text="{ID}' 與此模組衝突"/>
+    <string id="4KFwqKgG" text="{ID}' 模組作為前置並與其他模組衝突"/>
+    <string id="9DRB6yXv" text="{ID}' 模組作為前置並載入順序衝突"/>
+    <string id="RC1V9BbP" text="循環依賴。 '{TARGETID}' 和 '{SOURCEID}' 相互依賴"/>
+    <string id="s3xbuejE" text="{SOURCEID}' 應當在 '{TARGETID}' 之前載入"/>
+    <string id="2ALJB7z2" text="{SOURCEID}' 應當在 '{TARGETID}' 之後載入"/>
+
+    <!-- Dependency Constructor -->
+    <string id="8ldMJPhQ" text=" (可選)"/>
+    <string id="f9hYP7mk" text="需要模組"/>
+    <string id="eGJ387f7" text="不相容"/>
+    <string id="eW76jyd7" text="需要在其之前載入"/>
+  </strings>
+</LanguageData>
