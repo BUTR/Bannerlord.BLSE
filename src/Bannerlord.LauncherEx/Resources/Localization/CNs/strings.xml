@@ -14,7 +14,7 @@
     <string id="LXlsSS8t" text="修复常见问题"/>
     <string id="J9VbkLW4" text="修复常见问题，例如 0Harmony.dll 加载于 游戏目录/bin"/>
     <string id="vUAqDj9H" text="紧凑模组列表"/>
-    <string id="Qn1aPNQM" text="缩小Mods列表"/>
+    <string id="Qn1aPNQM" text="使得各个 Mod 栏（框）更小更紧凑"/>
     <string id="GUWbD65T" text="禁用二进制兼容检测"/>
     <string id="lmpQeQBS" text="禁用启动器检测Mods的二进制兼容性"/>
     <string id="iD27wEq7" text="隐藏骑手图像"/>
