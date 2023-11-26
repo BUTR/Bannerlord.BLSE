@@ -11,6 +11,7 @@ using HarmonyLib;
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Xml;
 
@@ -46,11 +47,8 @@ namespace Bannerlord.LauncherEx
             ViewModelPatch.Enable(_launcherHarmony);
             WidgetPrefabPatch.Enable(_launcherHarmony);
 
-            BUTRLocalizationManager.LoadLanguage(Load("Bannerlord.LauncherEx.Resources.Localization.EN.strings.xml"));
-            BUTRLocalizationManager.LoadLanguage(Load("Bannerlord.LauncherEx.Resources.Localization.RU.strings.xml"));
-            BUTRLocalizationManager.LoadLanguage(Load("Bannerlord.LauncherEx.Resources.Localization.CNs.strings.xml"));
-            BUTRLocalizationManager.LoadLanguage(Load("Bannerlord.LauncherEx.Resources.Localization.TR.strings.xml"));
-            BUTRLocalizationManager.LoadLanguage(Load("Bannerlord.LauncherEx.Resources.Localization.BR.strings.xml"));
+            foreach (var language in typeof(Manager).Assembly.GetManifestResourceNames().Where(x => x.StartsWith("Bannerlord.LauncherEx.Resources.Localization") && x.EndsWith("strings.xml")))
+                BUTRLocalizationManager.LoadLanguage(Load(language));
             BUTRLocalizationManager.ActiveLanguage = GetActiveLanguage();
 
             GraphicsContextManager.Enable(_launcherHarmony);
