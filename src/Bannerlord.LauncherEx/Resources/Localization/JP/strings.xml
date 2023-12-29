@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData id="日本語" name="日本語" subtitle_extension="jp" supported_iso="ja,jpn,ja-ja,ja-jp,jp-jp" under_development="false">
+  <strings>
+    <!-- BUTRLauncherModuleVM -->
+    <string id="kfMQEOFS" text="このモジュールはModulesフォルダとスチームワークショップの両方にインストールされています。{NL}Modulesフォルダにある方が使用されます。"/>
+    <string id="aAYdk1zd" text="DLLファイルが難読化されています。{NL}このコードが安全かどうか保証できません。{NL}難読化されたスクリプトを実行したことで生じうる結果について、BUTRチームからの警告です。"/>
+
+    <!-- BUTRLauncherOptionsVM -->
+    <string id="z9WqFewN" text="無効です!"/>
+    <string id="44qrhQ6g" text="再起動が必要です。"/>
+
+    <string id="zHo3tzQT" text="開始時にファイルのブロックを解除する"/>
+    <string id="sOInYH9V" text="起動時にDLLファイルのブロック解除を自動で実行します"/>
+    <string id="LXlsSS8t" text="ありがちな不具合を修正する"/>
+    <string id="J9VbkLW4" text="0Hamrmony.dllがbinフォルダに置いてある、といったよくあるミスを修正します。"/>
+    <string id="vUAqDj9H" text="モジュール一覧を小さく表示する"/>
+    <string id="Qn1aPNQM" text="再起動後に適用されます。Modタブの内容を小さく表示します。"/>
+    <string id="GUWbD65T" text="バイナリの互換性確認をしない"/>
+    <string id="lmpQeQBS" text="modに対してランチャー内蔵のバイナリ互換性確認機能を実行しません"/>
+    <string id="iD27wEq7" text="ランダム画像を表示しない"/>
+    <string id="LaPvZjwC" text="ランチャーに騎兵の画像を表示させません。画面が小さくまとまります。"/>
+    <string id="JT7QnJJA" text="ファイルのブロックを解除する"/>
+    <string id="VMIp4503" text="Modulesフォルダ内の全てのDLLファイルをブロックを解除します。"/>
+    <string id="RDLKkiVk" text="ブロック解除"/>
+    <string id="QJSBiZdJ" text="ソート(ベータ版)"/>
+    <string id="HVhaqeb4" text="v1.12x以降の新しいソートアルゴリズムを使用します。古いアルゴリズムは無効になります。"/>
+    <string id="1zt99vTt" text="ビッグモード"/>
+    <string id="XUSDSpvf" text="ランチャーの高さを少し大きくします。"/>
+    <string id="IsR2rbnG" text="ゲームオプションのバックアップを復元する"/>
+    <string id="uKUsA3Sp" text="LauncherFXは常に最初のセーブ前にバックアップを作成するため、この操作で元のファイルを復元します。"/>
+    <string id="TLDgPay9" text="復元する"/>
+    <string id="5XzSM7RN" text="エンジンオプションのバックアップから復元する"/>
+    <string id="JusnHy6S" text="UIのぼやけをなくすためにウィンドウズのDPIスケーリングを有効にします。"/>
+
+    <!-- BUTRLauncherSavesVM -->
+    <string id="JtelOsIW" text="Mod名"/>
+    <string id="14WBFIS1" text="バージョン"/>
+    <string id="OJsGrGVi" text="キャラクター"/>
+    <string id="JxpEEQdF" text="レベル"/>
+    <string id="qkkTPycE" text="経過日数"/>
+    <string id="aYWWDkKX" text="作成日"/>
+
+    <!-- LauncherConfirmStartVMMixin -->
+    <string id="DzJmcvsP" text="キャンセル"/>
+    <string id="epTxGUqT" text="確認"/>
+
+    <!-- LauncherModsVMMixin -->
+    <string id="pZVVdI5d" text="ロード順がデフォルトのアルゴリズムによって戻されました。{NL}原因:{NL}{REASONS}"/>
+    <string id="sP1a61KE" text="モジュールの位置の変更に失敗しました。できるだけ近くの場所に配置し直されました。{NL}原因:{NL}{REASONS}"/>
+    <string id="sLf3eIpH" text="モジュール一覧の並び替えに失敗しました。"/>
+
+    <!-- LauncherVMMixin -->
+    <string id="yS5hbWCL" text="オプション"/>
+    <string id="V66qoU6n" text="ランチャー"/>
+    <string id="ro4RMgyt" text="ゲーム"/>
+    <string id="q4rQuTgG" text="エンジン"/>
+    <string id="d5OjKcGE" text="セーブデータ"/>
+    <string id="Aws9irMU" text="読み込み順を読み込む"/>
+    <string id="4wKr76gx" text="セーブデータのロード順を読み込みます"/>
+    <string id="XdZGqnFW" text="現在の読み込み順をエクスポートする"/>
+    <string id="G55IdM6M" text="セーブデータのロード順をエクスポートします。"/>
+    <string id="MlYQ0uX7" text="不安定な挙動が発生する可能性があります。"/>
+    <string id="qvzptzrE" text="セーブデータの読み込みを続けますか?"/>
+    <string id="dDprK7Mz" text="警告"/>
+
+    <string id="Hk7FBBSa" text="シングルプレイヤー"/>
+    <string id="UOGhdUWE" text="マルチプレイヤー"/>
+    <string id="VDTcZpPr" text="Digital Companion"/>
+    <string id="Tg0If68v" text="ニュース"/>
+    <string id="YGU9eXM0" text="Mod"/>
+    <string id="xYv4iv7C" text="プレイ"/>
+    <string id="6B3iZLqR" text="再開"/>
+    <string id="eUt6GKkQ" text="起動"/>
+
+    <!-- LauncherVMMixin -->
+    <string id="WJnTxf3v" text="インポートがキャンセルされました!"/>
+    <string id="BjtJ4Lxw" text="キャンセルされたエクスポート"/>
+    <string id="eohqbvHU" text="リストの読み込みに成功しました。"/>
+    <string id="VwFQTk5z" text="リストのエクスポートに成功しました。"/>
+
+    <!-- Issues -->
+    <string id="kxqLbSqe" text="(不明なID)"/>
+
+    <string id="izSm5f85" text="モジュールIDの重複:{NL}{MODULEIDS}"/>
+    <string id="vCwH9226" text="モジュール名の重複:{NL}{MODULENAMES}"/>
+    <string id="GtDRbC3m" text="不足モジュール:{NL}{MODULES}"/>
+    <string id="BuMom4Jt" text="モジュールのバージョンの不一致:{NL}{MODULEVERSIONS}"/>
+
+    <string id="nYVWoomO" text="{MODULEID}、{REQUIREDVERSION}が要求されていますが、インストールされているのは {ACTUALVERSION}です。"/>
+    <string id="sd6M4KRd" text="ロード順:{NL}{LOADORDER}"/>
+    <string id="HvvA78sZ" text="ロード順の問題:{NL}{LOADORDERISSUES}"/>
+
+    <string id="B64DbmWp" text="保存ファイルが見つかりません。"/>
+    <string id="epU06HID" text="セーブファイルの読み込みに失敗しました。"/>
+
+    <string id="DKRNkst2" text="ロード順でファイルを開く"/>
+    <string id="XSxlKweM" text="バナーロードのモジュール一覧をファイルに保存する"/>
+
+    <string id="hgew15HH" text="インポートを続行しますか?"/>
+
+    <string id="tqjPGPtP" text="LauncherExはゲームのルートbinフォルダ内に0Harmony.dllを検出しました。{NL}このままでは不具合の可能性があります。削除しますか?"/>
+
+    <string id="J3Uh6MV4" text="モジュールリストに {ID} {VERSION} が不足しています"/>
+    <string id="3eQSr6wt" text="{ID} {VERSION} が不足しています"/>
+    <string id="U858vdQX" text="「{ID}」の依存モジュールが不足しています!"/>
+    <string id="1LS8Z5DU" text="「{ID}」の問題を解決できません!"/>
+    <string id="Vjz9HQ41" text="「{ID}」のバージョンが異なります &lt;= {VERSION}"/>
+    <string id="ZvnlL7VE" text="「{ID}」のバージョンが異なります  &lt; [{VERSION}]"/>
+    <string id="EfNuH2bG" text="「{ID}」のバージョンが異なります &gt;= {VERSION}"/>
+    <string id="zXDidmpQ" text="「{ID}」はこのモジュールと互換性がありません"/>
+    <string id="4KFwqKgG" text="モジュール「{ID}」に対して依存関係と非互換性の両方の登録があります。"/>
+    <string id="9DRB6yXv" text="モジュール「{ID}」の依存関係に関して「前に読み込む」と「後に読み込む」との両方が登録されています。"/>
+    <string id="RC1V9BbP" text="依存関係が循環しています。「{TARGETID}」と「{SOURCEID}」は互いに依存していることになっています。"/>
+    <string id="s3xbuejE" text="「{SOURCEID}」は{TARGETID}より前に読み込むべきです。"/>
+    <string id="2ALJB7z2" text="「{SOURCEID}」は{TARGETID}より後に読み込むべきです。"/>
+
+    <!-- Dependency Constructor -->
+    <string id="8ldMJPhQ" text="(オプション)"/>
+    <string id="f9hYP7mk" text="これらに依存:"/>
+    <string id="eGJ387f7" text="これらと非互換:"/>
+    <string id="eW76jyd7" text="これらより前にロードする必要があります:"/>
+  </strings>
+</LanguageData>
