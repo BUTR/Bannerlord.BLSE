@@ -68,7 +68,7 @@ jobs:
       - name: Upload Bannerlord folder
         uses: actions/upload-artifact@v4
         with:
-          name: bannerlord
+          name: bannerlord-${{matrix.project}}-${{matrix.configuration}}
           path: ./bannerlord/
 
   ###########################
