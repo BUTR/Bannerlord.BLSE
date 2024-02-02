@@ -37,6 +37,17 @@ namespace Bannerlord.LauncherEx.ResourceManagers
         private static readonly SetSpriteNamesDelegate? SetSpriteNames =
             AccessTools2.GetPropertySetterDelegate<SetSpriteNamesDelegate>(typeof(SpriteData), "SpriteNames");
 
+        private delegate void AddFontDefinitionDelegate(FontFactory instance, string fontPath, string fontName, SpriteData spriteData);
+        private static readonly AddFontDefinitionDelegate? AddFontDefinition =
+            AccessTools2.GetDelegate<AddFontDefinitionDelegate>(typeof(FontFactory), "AddFontDefinition");
+
+        private delegate bool TryAddFontDefinitionDelegate(FontFactory instance, string fontPath, string fontName, SpriteData spriteData);
+        private static readonly TryAddFontDefinitionDelegate? TryAddFontDefinition =
+            AccessTools2.GetDelegate<TryAddFontDefinitionDelegate>(typeof(FontFactory), "TryAddFontDefinition");
+
+        private static readonly AddFontDefinitionDelegate? AddFontDefinitionOptimistic =
+            AddFontDefinition ?? new((instance, fontPath, fontName, spriteData) => TryAddFontDefinition?.Invoke(instance, fontPath, fontName, spriteData));
+
         private static SpriteData WithData(this SpriteData spriteData, string spriteName)
         {
             SetSpriteNames!(spriteData, new Dictionary<string, Sprite>
@@ -48,17 +59,22 @@ namespace Bannerlord.LauncherEx.ResourceManagers
 
         private static void LoadAllFontsPostfix(ref FontFactory __instance)
         {
+            if (AddFontDefinitionOptimistic is not AddFontDefinitionDelegate addFont)
+            {
+                return;
+            }
+
             switch (BUTRLocalizationManager.ActiveLanguage)
             {
                 case BUTRLocalizationManager.ChineseTraditional:
                 case BUTRLocalizationManager.ChineseSimple:
-                    __instance.AddFontDefinition(Path.Combine(BasePath.Name, "GUI", "GauntletUI", "Fonts", "simkai") + "/", "simkai", new SpriteData("simkai").WithData("simkai"));
+                    addFont(__instance, Path.Combine(BasePath.Name, "GUI", "GauntletUI", "Fonts", "simkai") + "/", "simkai", new SpriteData("simkai").WithData("simkai"));
                     break;
                 case BUTRLocalizationManager.Japanese:
-                    __instance.AddFontDefinition(Path.Combine(BasePath.Name, "GUI", "GauntletUI", "Fonts", "SourceHanSansJP") + "/", "SourceHanSansJP", new SpriteData("SourceHanSansJP").WithData("SourceHanSansJP"));
+                    addFont(__instance, Path.Combine(BasePath.Name, "GUI", "GauntletUI", "Fonts", "SourceHanSansJP") + "/", "SourceHanSansJP", new SpriteData("SourceHanSansJP").WithData("SourceHanSansJP"));
                     break;
                 case BUTRLocalizationManager.Korean:
-                    __instance.AddFontDefinition(Path.Combine(BasePath.Name, "GUI", "GauntletUI", "Fonts", "NanumGothicKR") + "/", "NanumGothicKR", new SpriteData("NanumGothicKR").WithData("NanumGothicKR"));
+                    addFont(__instance, Path.Combine(BasePath.Name, "GUI", "GauntletUI", "Fonts", "NanumGothicKR") + "/", "NanumGothicKR", new SpriteData("NanumGothicKR").WithData("NanumGothicKR"));
                     break;
             }
 
