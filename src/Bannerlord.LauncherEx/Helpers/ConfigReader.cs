@@ -8,8 +8,7 @@ namespace Bannerlord.LauncherEx.Helpers
 {
     internal static class ConfigReader
     {
-        private static readonly string BOMMarkUtf8 =
-            Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
+        private static readonly string BOMMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
         
         public static readonly string GameConfigPath =
             Path.Combine($@"{Environment.GetFolderPath(Environment.SpecialFolder.Personal)}", "Mount and Blade II Bannerlord", "Configs", "BannerlordConfig.txt");
@@ -25,7 +24,7 @@ namespace Bannerlord.LauncherEx.Helpers
                 var content = Encoding.UTF8.GetString(data);
                 if (content.StartsWith(BOMMarkUtf8, StringComparison.Ordinal))
                     content = content.Remove(0, BOMMarkUtf8.Length);
-                
+
                 foreach (var keyValue in content.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     var split = keyValue.Split(new[] { "=" }, StringSplitOptions.RemoveEmptyEntries);
@@ -47,7 +46,7 @@ namespace Bannerlord.LauncherEx.Helpers
                 var content = Encoding.UTF8.GetString(data);
                 if (content.StartsWith(BOMMarkUtf8, StringComparison.Ordinal))
                     content = content.Remove(0, BOMMarkUtf8.Length);
-                
+
                 foreach (var keyValue in content.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     var split = keyValue.Split(new[] { "=" }, StringSplitOptions.RemoveEmptyEntries);

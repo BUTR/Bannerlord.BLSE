@@ -39,7 +39,7 @@ internal static class ModuleInitializer
     private static Assembly? ResolveLauncherExAssemblies(AssemblyName assemblyName)
     {
         var name = assemblyName.Name;
-        
+
         var @namespace = "Bannerlord.BLSE.Loaders.LauncherEx.";
         var resources = typeof(ModuleInitializer).Assembly.GetManifestResourceNames().Select(x => x.Remove(0, @namespace.Length));
         var toLoad = resources.FirstOrDefault(x => x.StartsWith(name));

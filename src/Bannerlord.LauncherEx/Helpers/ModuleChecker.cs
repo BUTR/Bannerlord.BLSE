@@ -12,7 +12,6 @@ using System.IO;
 using System.Linq;
 
 using TaleWorlds.Library;
-using TaleWorlds.MountAndBlade;
 
 namespace Bannerlord.LauncherEx.Helpers
 {
@@ -28,7 +27,7 @@ namespace Bannerlord.LauncherEx.Helpers
         public static bool IsObfuscated(ModuleInfoExtendedWithPath moduleInfoExtended)
         {
             static bool CanBeLoaded(SubModuleInfoExtended x) =>
-                ModuleInfoHelper.CheckIfSubModuleCanBeLoaded(x, ApplicationPlatform.CurrentPlatform, ApplicationPlatform.CurrentRuntimeLibrary, DedicatedServerType.None, false);
+                ModuleInfoHelper.CheckIfSubModuleCanBeLoaded(x, ApplicationPlatform.CurrentPlatform, ApplicationPlatform.CurrentRuntimeLibrary, TaleWorlds.MountAndBlade.DedicatedServerType.None, false);
 
             foreach (var subModule in moduleInfoExtended.SubModules.Where(CanBeLoaded))
             {

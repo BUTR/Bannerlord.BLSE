@@ -66,9 +66,9 @@ jobs:
         shell: pwsh
 
       - name: Upload Bannerlord folder
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: bannerlord
+          name: bannerlord-${{matrix.project}}-${{matrix.configuration}}
           path: ./bannerlord/
 
   ###########################
@@ -111,7 +111,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download Module artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: bannerlord
           path: ./artifact

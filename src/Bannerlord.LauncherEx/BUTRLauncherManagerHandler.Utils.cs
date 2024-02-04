@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Bannerlord.LauncherEx
 {
-    internal partial class BUTRLauncherManagerHandler
+    partial class BUTRLauncherManagerHandler
     {
         public void SetGameParametersLoadOrder(IEnumerable<IModuleViewModel> modules) => SaveLoadOrder(GetFromViewModel(modules));
 
@@ -23,10 +23,7 @@ namespace Bannerlord.LauncherEx
         public Task<bool> ShowWarning(string title, string contentPrimary, string contentSecondary)
         {
             var tcs = new TaskCompletionSource<bool>();
-            base.ShowWarning(title, contentPrimary, contentSecondary, result =>
-            {
-                tcs.SetResult(result);
-            });
+            base.ShowWarning(title, contentPrimary, contentSecondary, tcs.SetResult);
             return tcs.Task;
         }
 
