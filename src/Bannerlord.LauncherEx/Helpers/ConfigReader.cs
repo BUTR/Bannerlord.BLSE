@@ -8,9 +8,8 @@ namespace Bannerlord.LauncherEx.Helpers
 {
     internal static class ConfigReader
     {
-        private static readonly string BOMMarkUtf8 =
-            Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
-
+        private static readonly string BOMMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
+        
         public static readonly string GameConfigPath =
             Path.Combine($@"{Environment.GetFolderPath(Environment.SpecialFolder.Personal)}", "Mount and Blade II Bannerlord", "Configs", "BannerlordConfig.txt");
         public static readonly string EngineConfigPath =

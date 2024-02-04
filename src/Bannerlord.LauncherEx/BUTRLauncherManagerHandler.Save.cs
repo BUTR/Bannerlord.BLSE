@@ -10,7 +10,7 @@ using TaleWorlds.SaveSystem;
 
 namespace Bannerlord.LauncherEx
 {
-    internal partial class BUTRLauncherManagerHandler
+    partial class BUTRLauncherManagerHandler
     {
         public override SaveMetadata[] GetSaveFiles() => MBSaveLoad.GetSaveFiles().Where(x => x.MetaData is not null).Select(x =>
         {

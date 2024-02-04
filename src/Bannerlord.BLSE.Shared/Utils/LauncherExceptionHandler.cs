@@ -44,7 +44,7 @@ internal static class LauncherExceptionHandler
         fs.SetLength(0);
         using var writer = new StreamWriter(fs);
         writer.Write($@"BLSE Exception:
-Version: {typeof(Program).Assembly.GetName().Version}
+Version: {typeof(LauncherExceptionHandler).Assembly.GetName().Version}
 {GetRecursiveException(exception)}");
     }
 
