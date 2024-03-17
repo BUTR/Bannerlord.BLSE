@@ -98,7 +98,7 @@
 
     <string id="hgew15HH" text="インポートを続行しますか?"/>
 
-    <string id="tqjPGPtP" text="LauncherExはゲームのルートbinフォルダ内に0Harmony.dllを検出しました。{NL}このままでは不具合の可能性があります。削除しますか?"/>
+    <string id="tqjPGPtP" text="LauncherExは、ゲームのルートフォルダ内のbinフォルダ内に、0Harmony.dllを検出しました。{NL}このままでは不具合の発生の可能性があります。削除しますか?"/>
 
     <string id="J3Uh6MV4" text="モジュールリストに {ID} {VERSION} が不足しています"/>
     <string id="3eQSr6wt" text="{ID} {VERSION} が不足しています"/>
@@ -109,15 +109,15 @@
     <string id="EfNuH2bG" text="「{ID}」のバージョンが異なります &gt;= {VERSION}"/>
     <string id="zXDidmpQ" text="「{ID}」はこのモジュールと互換性がありません"/>
     <string id="4KFwqKgG" text="モジュール「{ID}」に対して依存関係と非互換性の両方の登録があります。"/>
-    <string id="9DRB6yXv" text="モジュール「{ID}」の依存関係に関して「前に読み込む」と「後に読み込む」との両方が登録されています。"/>
+    <string id="9DRB6yXv" text="モジュール「{ID}」の依存関係に関して「前に読み込む」と「後に読み込む」との両方が指定されています。"/>
     <string id="RC1V9BbP" text="依存関係が循環しています。「{TARGETID}」と「{SOURCEID}」は互いに依存していることになっています。"/>
     <string id="s3xbuejE" text="「{SOURCEID}」は{TARGETID}より前に読み込むべきです。"/>
     <string id="2ALJB7z2" text="「{SOURCEID}」は{TARGETID}より後に読み込むべきです。"/>
 
     <!-- Dependency Constructor -->
     <string id="8ldMJPhQ" text="(オプション)"/>
-    <string id="f9hYP7mk" text="これらに依存:"/>
-    <string id="eGJ387f7" text="これらと非互換:"/>
-    <string id="eW76jyd7" text="これらより前にロードする必要があります:"/>
+    <string id="f9hYP7mk" text="依存しているmod:"/>
+    <string id="eGJ387f7" text="互換性のないmod:"/>
+    <string id="eW76jyd7" text="より前にロードする必要があるmod:"/>
   </strings>
 </LanguageData>
