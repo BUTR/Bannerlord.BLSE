@@ -84,7 +84,8 @@ namespace Bannerlord.LauncherEx.Mixins
         {
             Modules2.Clear();
 
-            var loadOrder = _launcherManagerHandler.LoadTWLoadOrder().ToDictionary(x => x.Key, x => x.Value.IsSelected);
+            var loadOrder = _launcherManagerHandler.LoadLoadOrder().ToDictionary(x => x.Key, x => x.Value.IsSelected);
+
             if (_launcherManagerHandler.TryOrderByLoadOrder(loadOrder.Keys, x => loadOrder.TryGetValue(x, out var isSelected) && isSelected, out var issues, out var orderedModules))
             {
                 SetViewModels(orderedModules);

@@ -40,5 +40,7 @@ namespace Bannerlord.LauncherEx
             base.ShowFileSave(title, fileName, filters, tcs.SetResult);
             return tcs.Task;
         }
+
+        public new LoadOrder LoadLoadOrder() => base.LoadLoadOrder();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Bannerlord.LauncherEx.Extensions;
 using Bannerlord.LauncherManager.Models;
 
+using System;
 using System.IO;
 using System.Linq;
 
@@ -20,9 +21,9 @@ namespace Bannerlord.LauncherEx
             return dict;
         }).ToArray();
 
-        public override SaveMetadata GetSaveMetadata(string fileName, byte[] data)
+        public override SaveMetadata GetSaveMetadata(string fileName, ReadOnlySpan<byte> data)
         {
-            using var stream = new MemoryStream(data);
+            using var stream = new MemoryStream(data.ToArray());
             var metadata = MetaData.Deserialize(stream);
             var dict = new SaveMetadata(fileName);
             foreach (var key in metadata.Keys)
