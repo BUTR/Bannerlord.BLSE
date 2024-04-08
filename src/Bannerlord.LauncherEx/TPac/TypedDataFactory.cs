@@ -3,28 +3,28 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace Bannerlord.LauncherEx.TPac
-{
-    internal static class TypedDataFactory
-    {
-        private static readonly Dictionary<Guid, Type> guidToLoaderTypeMap = new();
-        private static readonly Dictionary<Guid, ConstructorInfo> guidToLoaderConstructorMap = new();
+namespace Bannerlord.LauncherEx.TPac;
 
-        static TypedDataFactory()
-        {
+internal static class TypedDataFactory
+{
+    private static readonly Dictionary<Guid, Type> guidToLoaderTypeMap = new();
+    private static readonly Dictionary<Guid, ConstructorInfo> guidToLoaderConstructorMap = new();
+
+    static TypedDataFactory()
+    {
             RegisterType(typeof(TexturePixelData));
         }
 
-        public static void RegisterType(Type typeClass)
-        {
+    public static void RegisterType(Type typeClass)
+    {
             var field = typeClass.GetField("TYPE_GUID", BindingFlags.Static | BindingFlags.Public) ?? throw new ArgumentException("Cannot find public static field \"TYPE_GUID\" from class " + typeClass.FullName);
             if (field.FieldType != typeof(Guid)) throw new ArgumentException("\"TYPE_GUID\" must be Guid");
             var guid = (Guid) field.GetValue(null);
             RegisterType(guid, typeClass);
         }
 
-        public static void RegisterType(Guid typeGuid, Type typeClass)
-        {
+    public static void RegisterType(Guid typeGuid, Type typeClass)
+    {
             if (!typeof(ExternalData).IsAssignableFrom(typeClass))
                 throw new ArgumentException("Registered type must extend from ExternalData");
 
@@ -36,8 +36,8 @@ namespace Bannerlord.LauncherEx.TPac
             guidToLoaderConstructorMap[typeGuid] = loaderType.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, null, new[] { typeof(FileInfo) }, null);
         }
 
-        public static bool CreateTypedLoader(Guid typeGuid, FileInfo file, out AbstractExternalLoader result)
-        {
+    public static bool CreateTypedLoader(Guid typeGuid, FileInfo file, out AbstractExternalLoader result)
+    {
             AbstractExternalLoader? loader = null;
             var isFound = false;
             if (guidToLoaderTypeMap.ContainsKey(typeGuid))
@@ -53,5 +53,4 @@ namespace Bannerlord.LauncherEx.TPac
             result = loader;
             return isFound;
         }
-    }
 }

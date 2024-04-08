@@ -2,33 +2,33 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Bannerlord.LauncherEx.TPac
+namespace Bannerlord.LauncherEx.TPac;
+
+internal class TexturePixelData : ExternalData
 {
-    internal class TexturePixelData : ExternalData
+    public static readonly Guid TYPE_GUID = Guid.Parse("70ee4e2c-79e4-4b2d-8d54-d53ecd2a559c");
+
+    public const string KEY_WIDTH = "width";
+
+    public const string KEY_HEIGHT = "height";
+
+    public const string KEY_ARRAY = "array";
+
+    public const string KEY_MIPMAP = "mipmap";
+
+    public const string KEY_FORMAT = "format";
+
+    /*public const string KEY_PIXELSIZE = "pixelSize";
+    public const string KEY_ALIGN = "align";*/
+
+    public byte[][][] RawImage { set; get; } = Array.Empty<byte[][]>();
+
+    public byte[] PrimaryRawImage => RawImage[0][0];
+
+    public TexturePixelData() : base(TYPE_GUID) { }
+
+    public override void ReadData(BinaryReader stream, IDictionary<object, object> userdata, int totalSize)
     {
-        public static readonly Guid TYPE_GUID = Guid.Parse("70ee4e2c-79e4-4b2d-8d54-d53ecd2a559c");
-
-        public const string KEY_WIDTH = "width";
-
-        public const string KEY_HEIGHT = "height";
-
-        public const string KEY_ARRAY = "array";
-
-        public const string KEY_MIPMAP = "mipmap";
-
-        public const string KEY_FORMAT = "format";
-
-        /*public const string KEY_PIXELSIZE = "pixelSize";
-        public const string KEY_ALIGN = "align";*/
-
-        public byte[][][] RawImage { set; get; } = Array.Empty<byte[][]>();
-
-        public byte[] PrimaryRawImage => RawImage[0][0];
-
-        public TexturePixelData() : base(TYPE_GUID) { }
-
-        public override void ReadData(BinaryReader stream, IDictionary<object, object> userdata, int totalSize)
-        {
             int array = 1, mipmap = 1;
             if (userdata.TryGetValue(KEY_ARRAY, out var arrayObj))
             {
@@ -89,5 +89,4 @@ namespace Bannerlord.LauncherEx.TPac
 
             RawImage = raw;
         }
-    }
 }

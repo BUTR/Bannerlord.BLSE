@@ -11,52 +11,52 @@ using System.Linq;
 
 using TaleWorlds.MountAndBlade.Launcher.Library;
 
-namespace Bannerlord.LauncherEx.ViewModels
+namespace Bannerlord.LauncherEx.ViewModels;
+
+internal sealed class BUTRLauncherModuleVM : BUTRViewModel, IModuleViewModel
 {
-    internal sealed class BUTRLauncherModuleVM : BUTRViewModel, IModuleViewModel
+    private readonly Action<BUTRLauncherModuleVM> _select;
+    private readonly Func<BUTRLauncherModuleVM, IEnumerable<string>> _validate;
+
+    public ModuleInfoExtendedWithPath ModuleInfoExtended { get; }
+
+    public int Index { get; set; }
+
+    [BUTRDataSourceProperty]
+    public string Name => ModuleInfoExtended.Name;
+
+    [BUTRDataSourceProperty]
+    public string VersionText => ModuleInfoExtended.Version.ToString();
+
+    [BUTRDataSourceProperty]
+    public bool IsOfficial => ModuleInfoExtended.IsOfficial;
+
+    [BUTRDataSourceProperty]
+    public bool IsDangerous { get => _isDangerous; set => SetField(ref _isDangerous, value); }
+    private bool _isDangerous;
+
+    [BUTRDataSourceProperty]
+    public LauncherHintVM? DangerousHint { get => _dangerousHint; set => SetField(ref _dangerousHint, value); }
+    private LauncherHintVM? _dangerousHint;
+
+    [BUTRDataSourceProperty]
+    public LauncherHintVM? DependencyHint { get => _dependencyHint; set => SetField(ref _dependencyHint, value); }
+    private LauncherHintVM? _dependencyHint;
+
+    [BUTRDataSourceProperty]
+    public bool AnyDependencyAvailable { get => _anyDependencyAvailable; set => SetField(ref _anyDependencyAvailable, value); }
+    private bool _anyDependencyAvailable;
+
+    [BUTRDataSourceProperty]
+    public bool IsSelected { get => _isSelected; set => SetField(ref _isSelected, value); }
+    private bool _isSelected;
+
+    [BUTRDataSourceProperty]
+    public bool IsDisabled
     {
-        private readonly Action<BUTRLauncherModuleVM> _select;
-        private readonly Func<BUTRLauncherModuleVM, IEnumerable<string>> _validate;
-
-        public ModuleInfoExtendedWithPath ModuleInfoExtended { get; }
-
-        public int Index { get; set; }
-
-        [BUTRDataSourceProperty]
-        public string Name => ModuleInfoExtended.Name;
-
-        [BUTRDataSourceProperty]
-        public string VersionText => ModuleInfoExtended.Version.ToString();
-
-        [BUTRDataSourceProperty]
-        public bool IsOfficial => ModuleInfoExtended.IsOfficial;
-
-        [BUTRDataSourceProperty]
-        public bool IsDangerous { get => _isDangerous; set => SetField(ref _isDangerous, value); }
-        private bool _isDangerous;
-
-        [BUTRDataSourceProperty]
-        public LauncherHintVM? DangerousHint { get => _dangerousHint; set => SetField(ref _dangerousHint, value); }
-        private LauncherHintVM? _dangerousHint;
-
-        [BUTRDataSourceProperty]
-        public LauncherHintVM? DependencyHint { get => _dependencyHint; set => SetField(ref _dependencyHint, value); }
-        private LauncherHintVM? _dependencyHint;
-
-        [BUTRDataSourceProperty]
-        public bool AnyDependencyAvailable { get => _anyDependencyAvailable; set => SetField(ref _anyDependencyAvailable, value); }
-        private bool _anyDependencyAvailable;
-
-        [BUTRDataSourceProperty]
-        public bool IsSelected { get => _isSelected; set => SetField(ref _isSelected, value); }
-        private bool _isSelected;
-
-        [BUTRDataSourceProperty]
-        public bool IsDisabled
+        get => _isDisabled;
+        set
         {
-            get => _isDisabled;
-            set
-            {
                 if (value != _isDisabled)
                 {
                     _isDisabled = value;
@@ -64,19 +64,19 @@ namespace Bannerlord.LauncherEx.ViewModels
                     OnPropertyChanged(nameof(IsNotSelectable));
                 }
             }
-        }
-        private bool _isDisabled;
+    }
+    private bool _isDisabled;
 
-        [BUTRDataSourceProperty]
-        public bool IsExpanded { get => _isExpanded; set => SetField(ref _isExpanded, value); }
-        private bool _isExpanded;
+    [BUTRDataSourceProperty]
+    public bool IsExpanded { get => _isExpanded; set => SetField(ref _isExpanded, value); }
+    private bool _isExpanded;
 
-        [BUTRDataSourceProperty]
-        public string IssuesText
+    [BUTRDataSourceProperty]
+    public string IssuesText
+    {
+        get => _issuesText;
+        set
         {
-            get => _issuesText;
-            set
-            {
                 if (value != _issuesText)
                 {
                     _issuesText = value;
@@ -85,22 +85,22 @@ namespace Bannerlord.LauncherEx.ViewModels
                     OnPropertyChanged(nameof(IsValid));
                 }
             }
-        }
-        private string _issuesText = string.Empty;
+    }
+    private string _issuesText = string.Empty;
 
 
-        [BUTRDataSourceProperty]
-        public bool IsNotSelectable => !IsValid || IsDisabled;
+    [BUTRDataSourceProperty]
+    public bool IsNotSelectable => !IsValid || IsDisabled;
 
-        [BUTRDataSourceProperty]
-        public bool IsValid => string.IsNullOrWhiteSpace(IssuesText);
+    [BUTRDataSourceProperty]
+    public bool IsValid => string.IsNullOrWhiteSpace(IssuesText);
 
-        [BUTRDataSourceProperty]
-        public bool IsVisible { get => _isVisible; set => SetField(ref _isVisible, value); }
-        private bool _isVisible = true;
+    [BUTRDataSourceProperty]
+    public bool IsVisible { get => _isVisible; set => SetField(ref _isVisible, value); }
+    private bool _isVisible = true;
 
-        public BUTRLauncherModuleVM(ModuleInfoExtendedWithPath moduleInfoExtended, Action<BUTRLauncherModuleVM> select, Func<BUTRLauncherModuleVM, IEnumerable<string>> validate)
-        {
+    public BUTRLauncherModuleVM(ModuleInfoExtendedWithPath moduleInfoExtended, Action<BUTRLauncherModuleVM> select, Func<BUTRLauncherModuleVM, IEnumerable<string>> validate)
+    {
             ModuleInfoExtended = moduleInfoExtended;
             _select = select;
             _validate = validate;
@@ -133,8 +133,8 @@ namespace Bannerlord.LauncherEx.ViewModels
             }
         }
 
-        public void Validate()
-        {
+    public void Validate()
+    {
             var validationIssues = _validate(this).ToList();
 
             IssuesText = validationIssues.Count > 0
@@ -142,18 +142,18 @@ namespace Bannerlord.LauncherEx.ViewModels
                 : string.Empty;
         }
 
-        [BUTRDataSourceMethod]
-        public void ExecuteSelect()
-        {
+    [BUTRDataSourceMethod]
+    public void ExecuteSelect()
+    {
             if (IsNotSelectable)
                 return;
 
             _select(this);
         }
 
-        [BUTRDataSourceMethod]
-        public void ExecuteOpen()
-        {
+    [BUTRDataSourceMethod]
+    public void ExecuteOpen()
+    {
             if (Integrations.IsModOrganizer2)
             {
                 var explorer = Path.Combine(Integrations.ModOrganizer2Path!, "explorer++", "Explorer++.exe");
@@ -166,6 +166,5 @@ namespace Bannerlord.LauncherEx.ViewModels
             Process.Start(ModuleInfoExtended.Path);
         }
 
-        public override string ToString() => $"{ModuleInfoExtended}, IsSelected: {IsSelected}, IsValid: {IsValid}";
-    }
+    public override string ToString() => $"{ModuleInfoExtended}, IsSelected: {IsSelected}, IsValid: {IsValid}";
 }

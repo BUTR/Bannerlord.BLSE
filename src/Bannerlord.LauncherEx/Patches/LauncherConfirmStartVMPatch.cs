@@ -5,12 +5,12 @@ using System;
 
 using TaleWorlds.MountAndBlade.Launcher.Library;
 
-namespace Bannerlord.LauncherEx.Patches
+namespace Bannerlord.LauncherEx.Patches;
+
+internal static class LauncherConfirmStartVMPatch
 {
-    internal static class LauncherConfirmStartVMPatch
+    public static bool Enable(Harmony harmony)
     {
-        public static bool Enable(Harmony harmony)
-        {
             var res1 = harmony.TryPatch(
                 AccessTools2.Method(typeof(LauncherConfirmStartVM), "EnableWith"),
                 prefix: AccessTools2.DeclaredMethod(typeof(LauncherConfirmStartVMPatch), nameof(EnableWithPrefix)));
@@ -18,10 +18,9 @@ namespace Bannerlord.LauncherEx.Patches
             return res1;
         }
 
-        public static bool EnableWithPrefix(Action? ____onConfirm)
-        {
+    public static bool EnableWithPrefix(Action? ____onConfirm)
+    {
             ____onConfirm?.Invoke();
             return false;
         }
-    }
 }

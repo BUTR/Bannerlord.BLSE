@@ -1,19 +1,19 @@
 ﻿using System.Collections.Generic;
 
-namespace Bannerlord.BLSE.Utils
-{
-    internal static class CommandLineSplitter
-    {
-        private enum Boundary
-        {
-            TokenStart,
-            WordEnd,
-            QuoteStart,
-            QuoteEnd
-        }
+namespace Bannerlord.BLSE.Utils;
 
-        public static IEnumerable<string> SplitCommandLine(string commandLine)
-        {
+internal static class CommandLineSplitter
+{
+    private enum Boundary
+    {
+        TokenStart,
+        WordEnd,
+        QuoteStart,
+        QuoteEnd
+    }
+
+    public static IEnumerable<string> SplitCommandLine(string commandLine)
+    {
             var startTokenIndex = 0;
 
             var pos = 0;
@@ -107,5 +107,4 @@ namespace Bannerlord.BLSE.Utils
 
             bool IsAtEndOfInput() => pos == commandLine.Length;
         }
-    }
 }

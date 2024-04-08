@@ -6,38 +6,38 @@ using System.Collections.Generic;
 using TaleWorlds.GauntletUI;
 using TaleWorlds.GauntletUI.BaseTypes;
 
-namespace Bannerlord.LauncherEx.Widgets
-{
-    internal sealed class LauncherToggleButtonWidget : ImageWidget
-    {
-        private enum ButtonClickState
-        {
-            None,
-            HandlingClick,
-            HandlingAlternateClick
-        }
+namespace Bannerlord.LauncherEx.Widgets;
 
-        //[Editor]
-        public Widget? ToggleIndicator
+internal sealed class LauncherToggleButtonWidget : ImageWidget
+{
+    private enum ButtonClickState
+    {
+        None,
+        HandlingClick,
+        HandlingAlternateClick
+    }
+
+    //[Editor]
+    public Widget? ToggleIndicator
+    {
+        get => _toggleIndicator;
+        set
         {
-            get => _toggleIndicator;
-            set
-            {
                 if (_toggleIndicator != value)
                 {
                     _toggleIndicator = value;
                     Refresh();
                 }
             }
-        }
-        private Widget? _toggleIndicator;
+    }
+    private Widget? _toggleIndicator;
 
-        //[Editor]
-        public bool IsSelected
+    //[Editor]
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set
         {
-            get => _isSelected;
-            set
-            {
                 if (_isSelected != value)
                 {
                     _isSelected = value;
@@ -46,37 +46,37 @@ namespace Bannerlord.LauncherEx.Widgets
                     OnPropertyChanged(value);
                 }
             }
-        }
-        private bool _isSelected;
+    }
+    private bool _isSelected;
 
-        //[Editor]
-        public bool DominantSelectedState { get => _dominantSelectedState; set => this.SetField(ref _dominantSelectedState, value); }
-        private bool _dominantSelectedState = true;
+    //[Editor]
+    public bool DominantSelectedState { get => _dominantSelectedState; set => this.SetField(ref _dominantSelectedState, value); }
+    private bool _dominantSelectedState = true;
 
-        //[Editor]
-        public bool ManualToggle { get => _manualToggle; set => this.SetField(ref _manualToggle, value); }
-        private bool _manualToggle;
+    //[Editor]
+    public bool ManualToggle { get => _manualToggle; set => this.SetField(ref _manualToggle, value); }
+    private bool _manualToggle;
 
-        private const float _maxDoubleClickDeltaTimeInSeconds = 0.5f;
-        private float _lastClickTime;
+    private const float _maxDoubleClickDeltaTimeInSeconds = 0.5f;
+    private float _lastClickTime;
 
-        private ButtonClickState _clickState;
+    private ButtonClickState _clickState;
 
-        public List<Action<Widget>> ClickEventHandlers = new();
+    public List<Action<Widget>> ClickEventHandlers = new();
 
-        public LauncherToggleButtonWidget(UIContext context) : base(context)
-        {
+    public LauncherToggleButtonWidget(UIContext context) : base(context)
+    {
             FrictionEnabled = true;
         }
 
-        protected override bool OnPreviewMousePressed()
-        {
+    protected override bool OnPreviewMousePressed()
+    {
             base.OnPreviewMousePressed();
             return true;
         }
 
-        protected override void RefreshState()
-        {
+    protected override void RefreshState()
+    {
             base.RefreshState();
             if (!OverrideDefaultStateSwitchingEnabled)
             {
@@ -119,10 +119,10 @@ namespace Bannerlord.LauncherEx.Widgets
             }
         }
 
-        private void Refresh() => ShowHideToggle();
+    private void Refresh() => ShowHideToggle();
 
-        private void ShowHideToggle()
-        {
+    private void ShowHideToggle()
+    {
             if (ToggleIndicator == null) return;
 
             if (_isSelected)
@@ -134,8 +134,8 @@ namespace Bannerlord.LauncherEx.Widgets
             ToggleIndicator.Hide();
         }
 
-        protected override void OnMousePressed()
-        {
+    protected override void OnMousePressed()
+    {
             if (_clickState != ButtonClickState.None) return;
 
             _clickState = ButtonClickState.HandlingClick;
@@ -150,8 +150,8 @@ namespace Bannerlord.LauncherEx.Widgets
             }
         }
 
-        protected override void OnMouseReleased()
-        {
+    protected override void OnMouseReleased()
+    {
             if (_clickState != ButtonClickState.HandlingClick) return;
 
             _clickState = ButtonClickState.None;
@@ -171,10 +171,10 @@ namespace Bannerlord.LauncherEx.Widgets
             }
         }
 
-        private bool IsPointInsideMeasuredAreaAndCheckIfVisible() => this.IsPointInsideMeasuredArea() && IsRecursivelyVisible();
+    private bool IsPointInsideMeasuredAreaAndCheckIfVisible() => this.IsPointInsideMeasuredArea() && IsRecursivelyVisible();
 
-        protected override void OnMouseAlternatePressed()
-        {
+    protected override void OnMouseAlternatePressed()
+    {
             if (_clickState != ButtonClickState.None) return;
 
             _clickState = ButtonClickState.HandlingAlternateClick;
@@ -189,8 +189,8 @@ namespace Bannerlord.LauncherEx.Widgets
             }
         }
 
-        protected override void OnMouseAlternateReleased()
-        {
+    protected override void OnMouseAlternateReleased()
+    {
             if (_clickState != ButtonClickState.HandlingAlternateClick) return;
 
             _clickState = ButtonClickState.None;
@@ -210,8 +210,8 @@ namespace Bannerlord.LauncherEx.Widgets
             }
         }
 
-        private void HandleClick()
-        {
+    private void HandleClick()
+    {
             foreach (var action in ClickEventHandlers)
             {
                 action(this);
@@ -233,13 +233,12 @@ namespace Bannerlord.LauncherEx.Widgets
             _lastClickTime = Context.EventManager.Time;
         }
 
-        private void HandleAlternateClick()
-        {
+    private void HandleAlternateClick()
+    {
             OnAlternateClick();
             EventFired("AlternateClick", Array.Empty<object>());
         }
 
-        private void OnClick() { }
-        private void OnAlternateClick() { }
-    }
+    private void OnClick() { }
+    private void OnAlternateClick() { }
 }

@@ -9,31 +9,31 @@ using System.Collections.Generic;
 
 using TaleWorlds.Library;
 
-namespace Bannerlord.BLSE.Features.Commands.Patches
-{
-    internal static class CommandLineFunctionalityPatch
-    {
-        private readonly ref struct CommandLineFunctionHandle
-        {
-            private delegate object CommandLineFunctionCtorDelegate(Func<List<string>, string> commandlinefunc);
-            private static readonly CommandLineFunctionCtorDelegate? CommandLineFunctionCtor =
-                AccessTools2.GetConstructorDelegate<CommandLineFunctionCtorDelegate>("TaleWorlds.Library.CommandLineFunctionality+CommandLineFunction", new[] { typeof(Func<List<string>, string>) });
+namespace Bannerlord.BLSE.Features.Commands.Patches;
 
-            public static CommandLineFunctionHandle Create(Func<List<string>, string> commandlinefunc)
-            {
+internal static class CommandLineFunctionalityPatch
+{
+    private readonly ref struct CommandLineFunctionHandle
+    {
+        private delegate object CommandLineFunctionCtorDelegate(Func<List<string>, string> commandlinefunc);
+        private static readonly CommandLineFunctionCtorDelegate? CommandLineFunctionCtor =
+            AccessTools2.GetConstructorDelegate<CommandLineFunctionCtorDelegate>("TaleWorlds.Library.CommandLineFunctionality+CommandLineFunction", new[] { typeof(Func<List<string>, string>) });
+
+        public static CommandLineFunctionHandle Create(Func<List<string>, string> commandlinefunc)
+        {
                 var commandLineFunction = CommandLineFunctionCtor?.Invoke(commandlinefunc);
                 return commandLineFunction is not null ? new(commandLineFunction) : default;
             }
 
-            public object Object { get; }
+        public object Object { get; }
 
-            private CommandLineFunctionHandle(object obj) => Object = obj;
-        }
+        private CommandLineFunctionHandle(object obj) => Object = obj;
+    }
 
-        private static Harmony? _harmony;
+    private static Harmony? _harmony;
 
-        public static bool Enable(Harmony harmony)
-        {
+    public static bool Enable(Harmony harmony)
+    {
             _harmony = harmony;
 
             return harmony.TryPatch(
@@ -41,8 +41,8 @@ namespace Bannerlord.BLSE.Features.Commands.Patches
                 postfix: AccessTools2.DeclaredMethod(typeof(CommandLineFunctionalityPatch), nameof(CollectCommandLineFunctionsPostfix)));
         }
 
-        private static void CollectCommandLineFunctionsPostfix(IDictionary ___AllFunctions, ref List<string> __result)
-        {
+    private static void CollectCommandLineFunctionsPostfix(IDictionary ___AllFunctions, ref List<string> __result)
+    {
             try
             {
                 foreach (var (name, function) in CommandsFeature.Functions)
@@ -59,5 +59,4 @@ namespace Bannerlord.BLSE.Features.Commands.Patches
                     AccessTools2.DeclaredMethod(typeof(CommandLineFunctionalityPatch), nameof(CollectCommandLineFunctionsPostfix)));
             }
         }
-    }
 }

@@ -9,12 +9,12 @@ using TaleWorlds.Library;
 
 using Module = TaleWorlds.MountAndBlade.Module;
 
-namespace Bannerlord.BLSE.Features.Xbox.Patches
+namespace Bannerlord.BLSE.Features.Xbox.Patches;
+
+internal static class ModulePatch
 {
-    internal static class ModulePatch
+    public static bool Enable(Harmony harmony)
     {
-        public static bool Enable(Harmony harmony)
-        {
             var asm = Assembly.LoadFrom("TaleWorlds.MountAndBlade.Platform.GDK.dll");
             Trace.Assert(asm is not null);
 
@@ -36,23 +36,22 @@ namespace Bannerlord.BLSE.Features.Xbox.Patches
             return true;
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static void ShowedLoginScreenPrefix(ref bool ___ShowedLoginScreen)
-        {
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static void ShowedLoginScreenPrefix(ref bool ___ShowedLoginScreen)
+    {
             ___ShowedLoginScreen = true;
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static bool OnSubModuleLoadPrefix()
-        {
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static bool OnSubModuleLoadPrefix()
+    {
             Common.PlatformFileHelper = new PlatformFileHelperPC("Mount and Blade II Bannerlord");
             return false;
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static bool OnApplicationTickPrefix()
-        {
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static bool OnApplicationTickPrefix()
+    {
             return false;
         }
-    }
 }

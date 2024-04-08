@@ -6,17 +6,17 @@ using System.Runtime.CompilerServices;
 
 using Module = TaleWorlds.MountAndBlade.Module;
 
-namespace Bannerlord.BLSE.Features.Interceptor.Patches
+namespace Bannerlord.BLSE.Features.Interceptor.Patches;
+
+internal static class ModulePatch
 {
-    internal static class ModulePatch
+    public static event Action? OnInitializeSubModulesPrefix;
+    public static event Action? OnLoadSubModulesPostfix;
+
+    private static Harmony? _harmony;
+
+    public static bool Enable(Harmony harmony)
     {
-        public static event Action? OnInitializeSubModulesPrefix;
-        public static event Action? OnLoadSubModulesPostfix;
-
-        private static Harmony? _harmony;
-
-        public static bool Enable(Harmony harmony)
-        {
             _harmony = harmony;
 
             var res1 = harmony.TryPatch(
@@ -32,9 +32,9 @@ namespace Bannerlord.BLSE.Features.Interceptor.Patches
             return true;
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static void InitializeSubModulesPrefix()
-        {
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static void InitializeSubModulesPrefix()
+    {
             OnInitializeSubModulesPrefix?.Invoke();
 
             _harmony?.Unpatch(
@@ -42,14 +42,13 @@ namespace Bannerlord.BLSE.Features.Interceptor.Patches
                 AccessTools2.Method(typeof(ModulePatch), nameof(InitializeSubModulesPrefix)));
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static void LoadSubModulesPostfix()
-        {
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static void LoadSubModulesPostfix()
+    {
             OnLoadSubModulesPostfix?.Invoke();
 
             _harmony?.Unpatch(
                 AccessTools2.Method(typeof(Module), "LoadSubModules"),
                 AccessTools2.Method(typeof(ModulePatch), nameof(LoadSubModulesPostfix)));
         }
-    }
 }

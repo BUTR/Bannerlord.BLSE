@@ -11,12 +11,12 @@ using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade.Launcher.Library;
 using TaleWorlds.MountAndBlade.Launcher.Library.UserDatas;
 
-namespace Bannerlord.LauncherEx.Patches
+namespace Bannerlord.LauncherEx.Patches;
+
+internal static class LauncherVMPatch
 {
-    internal static class LauncherVMPatch
+    public static bool Enable(Harmony harmony)
     {
-        public static bool Enable(Harmony harmony)
-        {
             var res1 = harmony.TryPatch(
                 AccessTools2.Method(typeof(LauncherVM), "ExecuteConfirmUnverifiedDLLStart"),
                 transpiler: AccessTools2.DeclaredMethod(typeof(LauncherVMPatch), nameof(BlankTranspiler)));
@@ -41,12 +41,12 @@ namespace Bannerlord.LauncherEx.Patches
             return true;
         }
 
-        // Disable Vanilla's saving
-        public static bool UpdateAndSaveUserModsDataPrefix() => false;
+    // Disable Vanilla's saving
+    public static bool UpdateAndSaveUserModsDataPrefix() => false;
 
-        [MethodImpl(MethodImplOptions.NoOptimization)]
-        public static bool GetApplicationVersionOfModulePrefix(string id, ref ApplicationVersion __result)
-        {
+    [MethodImpl(MethodImplOptions.NoOptimization)]
+    public static bool GetApplicationVersionOfModulePrefix(string id, ref ApplicationVersion __result)
+    {
             if (FeatureIds.LauncherFeatures.Contains(id))
             {
                 __result = ApplicationVersion.Empty;
@@ -56,7 +56,6 @@ namespace Bannerlord.LauncherEx.Patches
             return true;
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static IEnumerable<CodeInstruction> BlankTranspiler(IEnumerable<CodeInstruction> instructions) => instructions;
-    }
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static IEnumerable<CodeInstruction> BlankTranspiler(IEnumerable<CodeInstruction> instructions) => instructions;
 }

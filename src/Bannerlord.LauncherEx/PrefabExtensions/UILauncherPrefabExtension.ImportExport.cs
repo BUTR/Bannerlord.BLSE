@@ -2,18 +2,18 @@
 
 using System.Xml;
 
-namespace Bannerlord.LauncherEx.PrefabExtensions
+namespace Bannerlord.LauncherEx.PrefabExtensions;
+
+internal sealed class UILauncherPrefabExtension14 : PrefabExtensionInsertAsSiblingPatch
 {
-    internal sealed class UILauncherPrefabExtension14 : PrefabExtensionInsertAsSiblingPatch
+    public static string Movie => "UILauncher";
+    public static string XPath => "descendant::TextWidget[@Text='@VersionText']";
+
+    public override InsertType Type => InsertType.Append;
+    private XmlDocument XmlDocument { get; } = new();
+
+    public UILauncherPrefabExtension14()
     {
-        public static string Movie => "UILauncher";
-        public static string XPath => "descendant::TextWidget[@Text='@VersionText']";
-
-        public override InsertType Type => InsertType.Append;
-        private XmlDocument XmlDocument { get; } = new();
-
-        public UILauncherPrefabExtension14()
-        {
             XmlDocument.LoadXml(@"
 <ListPanel WidthSizePolicy=""CoverChildren"" HeightSizePolicy=""CoverChildren""
            VerticalAlignment=""Bottom""
@@ -36,6 +36,5 @@ namespace Bannerlord.LauncherEx.PrefabExtensions
 ");
         }
 
-        public override XmlDocument GetPrefabExtension() => XmlDocument;
-    }
+    public override XmlDocument GetPrefabExtension() => XmlDocument;
 }

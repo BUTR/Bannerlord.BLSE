@@ -3,21 +3,21 @@ using HarmonyLib.BUTR.Extensions;
 
 using TaleWorlds.Library;
 
-namespace Bannerlord.BLSE.Features.ContinueSaveFile.Patches
-{
-    internal static class InformationManagerPatch
-    {
-        internal static bool SkipChange = false;
+namespace Bannerlord.BLSE.Features.ContinueSaveFile.Patches;
 
-        public static bool Enable(Harmony harmony)
-        {
+internal static class InformationManagerPatch
+{
+    internal static bool SkipChange = false;
+
+    public static bool Enable(Harmony harmony)
+    {
             return harmony.TryPatch(
                 original: AccessTools2.Method(typeof(InformationManager), "ShowInquiry"),
                 prefix: AccessTools2.Method(typeof(InformationManagerPatch), nameof(Prefix)));
         }
 
-        private static bool Prefix(InquiryData data)
-        {
+    private static bool Prefix(InquiryData data)
+    {
             if (SkipChange)
             {
                 data.AffirmativeAction?.Invoke();
@@ -25,5 +25,4 @@ namespace Bannerlord.BLSE.Features.ContinueSaveFile.Patches
             }
             return true;
         }
-    }
 }

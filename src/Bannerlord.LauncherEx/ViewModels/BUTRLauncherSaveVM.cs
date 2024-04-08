@@ -15,74 +15,74 @@ using TaleWorlds.MountAndBlade.Launcher.Library;
 
 using ApplicationVersion = Bannerlord.ModuleManager.ApplicationVersion;
 
-namespace Bannerlord.LauncherEx.ViewModels
+namespace Bannerlord.LauncherEx.ViewModels;
+
+internal sealed class BUTRLauncherSaveVM : BUTRViewModel
 {
-    internal sealed class BUTRLauncherSaveVM : BUTRViewModel
+    private record ModuleListEntry(string Name, ApplicationVersion Version);
+
+    [BUTRDataSourceProperty]
+    public string Name { get => _name; set => SetField(ref _name, value); }
+    private string _name;
+
+    [BUTRDataSourceProperty]
+    public string Version { get => _version; set => SetField(ref _version, value); }
+    private string _version;
+
+    [BUTRDataSourceProperty]
+    public string CharacterName { get => _characterName; set => SetField(ref _characterName, value); }
+    private string _characterName;
+
+    [BUTRDataSourceProperty]
+    public string Level { get => _level; set => SetField(ref _level, value); }
+    private string _level;
+
+    [BUTRDataSourceProperty]
+    public string Days { get => _days; set => SetField(ref _days, value); }
+    private string _days;
+
+    [BUTRDataSourceProperty]
+    public string CreatedAt { get => _createdAt; set => SetField(ref _createdAt, value); }
+    private string _createdAt;
+
+    [BUTRDataSourceProperty]
+    public bool IsSelected { get => _isSelected; set => SetField(ref _isSelected, value); }
+    private bool _isSelected;
+
+    [BUTRDataSourceProperty]
+    public LauncherHintVM? LoadOrderHint { get => _loadOrderHint; set => SetField(ref _loadOrderHint, value); }
+    private LauncherHintVM? _loadOrderHint;
+
+    [BUTRDataSourceProperty]
+    public bool HasWarning { get => _hasWarning; set => SetField(ref _hasWarning, value); }
+    private bool _hasWarning;
+
+    [BUTRDataSourceProperty]
+    public LauncherHintVM? WarningHint { get => _warningHint; set => SetField(ref _warningHint, value); }
+    private LauncherHintVM? _warningHint;
+
+    [BUTRDataSourceProperty]
+    public bool HasError { get => _hasError; set => SetField(ref _hasError, value); }
+    private bool _hasError;
+
+    [BUTRDataSourceProperty]
+    public LauncherHintVM? ErrorHint { get => _errorHint; set => SetField(ref _errorHint, value); }
+    private LauncherHintVM? _errorHint;
+
+    [BUTRDataSourceProperty]
+    public bool IsVisible { get => _isVisible; set => SetField(ref _isVisible, value); }
+    private bool _isVisible = true;
+
+    public string? ModuleListCode { get; private set; }
+
+    private readonly LauncherManagerHandler _launcherManagerHandler = BUTRLauncherManagerHandler.Default;
+    private readonly SaveMetadata _saveMetadata;
+    private readonly Action<BUTRLauncherSaveVM> _select;
+    private readonly Func<string, ModuleInfoExtended?> _getModuleById;
+    private readonly Func<string, ModuleInfoExtended?> _getModuleByName;
+
+    public BUTRLauncherSaveVM(SaveMetadata saveMetadata, Action<BUTRLauncherSaveVM> select, Func<string, ModuleInfoExtended?> getModuleById, Func<string, ModuleInfoExtended?> getModuleByName)
     {
-        private record ModuleListEntry(string Name, ApplicationVersion Version);
-
-        [BUTRDataSourceProperty]
-        public string Name { get => _name; set => SetField(ref _name, value); }
-        private string _name;
-
-        [BUTRDataSourceProperty]
-        public string Version { get => _version; set => SetField(ref _version, value); }
-        private string _version;
-
-        [BUTRDataSourceProperty]
-        public string CharacterName { get => _characterName; set => SetField(ref _characterName, value); }
-        private string _characterName;
-
-        [BUTRDataSourceProperty]
-        public string Level { get => _level; set => SetField(ref _level, value); }
-        private string _level;
-
-        [BUTRDataSourceProperty]
-        public string Days { get => _days; set => SetField(ref _days, value); }
-        private string _days;
-
-        [BUTRDataSourceProperty]
-        public string CreatedAt { get => _createdAt; set => SetField(ref _createdAt, value); }
-        private string _createdAt;
-
-        [BUTRDataSourceProperty]
-        public bool IsSelected { get => _isSelected; set => SetField(ref _isSelected, value); }
-        private bool _isSelected;
-
-        [BUTRDataSourceProperty]
-        public LauncherHintVM? LoadOrderHint { get => _loadOrderHint; set => SetField(ref _loadOrderHint, value); }
-        private LauncherHintVM? _loadOrderHint;
-
-        [BUTRDataSourceProperty]
-        public bool HasWarning { get => _hasWarning; set => SetField(ref _hasWarning, value); }
-        private bool _hasWarning;
-
-        [BUTRDataSourceProperty]
-        public LauncherHintVM? WarningHint { get => _warningHint; set => SetField(ref _warningHint, value); }
-        private LauncherHintVM? _warningHint;
-
-        [BUTRDataSourceProperty]
-        public bool HasError { get => _hasError; set => SetField(ref _hasError, value); }
-        private bool _hasError;
-
-        [BUTRDataSourceProperty]
-        public LauncherHintVM? ErrorHint { get => _errorHint; set => SetField(ref _errorHint, value); }
-        private LauncherHintVM? _errorHint;
-
-        [BUTRDataSourceProperty]
-        public bool IsVisible { get => _isVisible; set => SetField(ref _isVisible, value); }
-        private bool _isVisible = true;
-
-        public string? ModuleListCode { get; private set; }
-
-        private readonly LauncherManagerHandler _launcherManagerHandler = BUTRLauncherManagerHandler.Default;
-        private readonly SaveMetadata _saveMetadata;
-        private readonly Action<BUTRLauncherSaveVM> _select;
-        private readonly Func<string, ModuleInfoExtended?> _getModuleById;
-        private readonly Func<string, ModuleInfoExtended?> _getModuleByName;
-
-        public BUTRLauncherSaveVM(SaveMetadata saveMetadata, Action<BUTRLauncherSaveVM> select, Func<string, ModuleInfoExtended?> getModuleById, Func<string, ModuleInfoExtended?> getModuleByName)
-        {
             _saveMetadata = saveMetadata;
             _select = select;
             _getModuleById = getModuleById;
@@ -98,8 +98,8 @@ namespace Bannerlord.LauncherEx.ViewModels
             ValidateSave();
         }
 
-        private void ValidateSave()
-        {
+    private void ValidateSave()
+    {
             var changeset = _saveMetadata.GetChangeSet();
             var modules = _saveMetadata.GetModules().Select(x =>
             {
@@ -169,19 +169,18 @@ namespace Bannerlord.LauncherEx.ViewModels
             }
         }
 
-        [BUTRDataSourceMethod]
-        public void ExecuteSelect()
-        {
+    [BUTRDataSourceMethod]
+    public void ExecuteSelect()
+    {
             _select(this);
         }
 
-        [BUTRDataSourceMethod]
-        public void ExecuteOpen()
-        {
+    [BUTRDataSourceMethod]
+    public void ExecuteOpen()
+    {
             var saveFilePath = _launcherManagerHandler.GetSaveFilePath(_saveMetadata.Name);
             if (string.IsNullOrEmpty(saveFilePath) || !File.Exists(saveFilePath)) return;
 
             Process.Start("explorer.exe", $"/select,\"{saveFilePath}\"");
         }
-    }
 }

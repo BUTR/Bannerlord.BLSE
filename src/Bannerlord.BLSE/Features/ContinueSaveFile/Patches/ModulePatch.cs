@@ -9,16 +9,16 @@ using System.Linq;
 using TaleWorlds.Engine;
 using TaleWorlds.MountAndBlade;
 
-namespace Bannerlord.BLSE.Features.ContinueSaveFile.Patches
+namespace Bannerlord.BLSE.Features.ContinueSaveFile.Patches;
+
+internal static class ModulePatch
 {
-    internal static class ModulePatch
+    public static event Action<GameStartupInfo, string>? OnSaveGameArgParsed;
+
+    private static Harmony? _harmony;
+
+    public static bool Enable(Harmony harmony)
     {
-        public static event Action<GameStartupInfo, string>? OnSaveGameArgParsed;
-
-        private static Harmony? _harmony;
-
-        public static bool Enable(Harmony harmony)
-        {
             _harmony = harmony;
 
             return harmony.TryPatch(
@@ -26,8 +26,8 @@ namespace Bannerlord.BLSE.Features.ContinueSaveFile.Patches
                 postfix: AccessTools2.DeclaredMethod(typeof(ModulePatch), nameof(ProcessApplicationArgumentsPostfix)));
         }
 
-        private static void ProcessApplicationArgumentsPostfix(Module __instance)
-        {
+    private static void ProcessApplicationArgumentsPostfix(Module __instance)
+    {
             var cli = Utilities.GetFullCommandLineString();
             var array = CommandLineSplitter.SplitCommandLine(cli).ToArray();
             for (var i = 0; i < array.Length; i++)
@@ -42,5 +42,4 @@ namespace Bannerlord.BLSE.Features.ContinueSaveFile.Patches
                 AccessTools2.DeclaredMethod(typeof(Module), "ProcessApplicationArguments"),
                 AccessTools2.DeclaredMethod(typeof(ModulePatch), nameof(ProcessApplicationArgumentsPostfix)));
         }
-    }
 }

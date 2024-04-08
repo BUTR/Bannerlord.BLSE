@@ -14,12 +14,12 @@ using System.Xml.Serialization;
 
 using TaleWorlds.MountAndBlade.Launcher.Library.UserDatas;
 
-namespace Bannerlord.LauncherEx.Patches
+namespace Bannerlord.LauncherEx.Patches;
+
+internal static class UserDataManagerPatch
 {
-    internal static class UserDataManagerPatch
+    public static bool Enable(Harmony harmony)
     {
-        public static bool Enable(Harmony harmony)
-        {
             var res1 = harmony.TryPatch(
                 AccessTools2.DeclaredMethod(typeof(UserDataManager), "LoadUserData"),
                 prefix: AccessTools2.DeclaredMethod(typeof(UserDataManagerPatch), nameof(LoadUserDataPrefix)));
@@ -33,13 +33,13 @@ namespace Bannerlord.LauncherEx.Patches
             return true;
         }
 
-        [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "<Pending>")]
-        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For Resharper")]
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
-        [SuppressMessage("ReSharper", "RedundantAssignment")]
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static bool LoadUserDataPrefix(string ____filePath)
-        {
+    [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "<Pending>")]
+    [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For Resharper")]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "RedundantAssignment")]
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static bool LoadUserDataPrefix(string ____filePath)
+    {
             if (!File.Exists(____filePath))
             {
                 return true;
@@ -61,13 +61,13 @@ namespace Bannerlord.LauncherEx.Patches
             return true;
         }
 
-        [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "<Pending>")]
-        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For Resharper")]
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
-        [SuppressMessage("ReSharper", "RedundantAssignment")]
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static void SaveUserDataPostfix(string ____filePath)
-        {
+    [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "<Pending>")]
+    [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For Resharper")]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "RedundantAssignment")]
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static void SaveUserDataPostfix(string ____filePath)
+    {
             var xDoc = new XmlDocument();
             xDoc.Load(____filePath);
             var rootNode = xDoc.DocumentElement!;
@@ -104,5 +104,4 @@ namespace Bannerlord.LauncherEx.Patches
 
             xDoc.Save(____filePath);
         }
-    }
 }

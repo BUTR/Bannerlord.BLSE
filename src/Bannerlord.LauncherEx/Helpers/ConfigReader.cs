@@ -4,19 +4,19 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Bannerlord.LauncherEx.Helpers
+namespace Bannerlord.LauncherEx.Helpers;
+
+internal static class ConfigReader
 {
-    internal static class ConfigReader
+    private static readonly string BOMMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
+
+    public static readonly string GameConfigPath =
+        Path.Combine($@"{Environment.GetFolderPath(Environment.SpecialFolder.Personal)}", "Mount and Blade II Bannerlord", "Configs", "BannerlordConfig.txt");
+    public static readonly string EngineConfigPath =
+        Path.Combine($@"{Environment.GetFolderPath(Environment.SpecialFolder.Personal)}", "Mount and Blade II Bannerlord", "Configs", "engine_config.txt");
+
+    public static Dictionary<string, string> GetGameOptions(Func<string, byte[]?> readFileContent)
     {
-        private static readonly string BOMMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
-
-        public static readonly string GameConfigPath =
-            Path.Combine($@"{Environment.GetFolderPath(Environment.SpecialFolder.Personal)}", "Mount and Blade II Bannerlord", "Configs", "BannerlordConfig.txt");
-        public static readonly string EngineConfigPath =
-            Path.Combine($@"{Environment.GetFolderPath(Environment.SpecialFolder.Personal)}", "Mount and Blade II Bannerlord", "Configs", "engine_config.txt");
-
-        public static Dictionary<string, string> GetGameOptions(Func<string, byte[]?> readFileContent)
-        {
             var dict = new Dictionary<string, string>();
             if (readFileContent(GameConfigPath) is not { } data) return dict;
             try
@@ -37,8 +37,8 @@ namespace Bannerlord.LauncherEx.Helpers
             catch (Exception) { /* ignore */ }
             return dict;
         }
-        public static Dictionary<string, string> GetEngineOptions(Func<string, byte[]?> readFileContent)
-        {
+    public static Dictionary<string, string> GetEngineOptions(Func<string, byte[]?> readFileContent)
+    {
             var dict = new Dictionary<string, string>();
             if (readFileContent(EngineConfigPath) is not { } data) return dict;
             try
@@ -59,5 +59,4 @@ namespace Bannerlord.LauncherEx.Helpers
             catch (Exception) { /* ignore */ }
             return dict;
         }
-    }
 }

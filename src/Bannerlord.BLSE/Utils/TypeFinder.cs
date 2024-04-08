@@ -8,12 +8,12 @@ using System.Reflection;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
-namespace Bannerlord.BLSE.Utils
+namespace Bannerlord.BLSE.Utils;
+
+internal static class TypeFinder
 {
-    internal static class TypeFinder
+    public static IEnumerable<Type> GetInterceptorTypes(Type attributeType)
     {
-        public static IEnumerable<Type> GetInterceptorTypes(Type attributeType)
-        {
             bool CheckType(Type type) => type.GetCustomAttributes()
                 .Any(att => string.Equals(att.GetType().FullName, attributeType.FullName, StringComparison.Ordinal));
 
@@ -40,8 +40,8 @@ namespace Bannerlord.BLSE.Utils
             }
         }
 
-        private static IEnumerable<string> GetLoadedModulePaths()
-        {
+    private static IEnumerable<string> GetLoadedModulePaths()
+    {
             var configName = Common.ConfigName;
 
             foreach (var moduleInfo in ModuleInfoHelper.GetLoadedModules())
@@ -55,5 +55,4 @@ namespace Bannerlord.BLSE.Utils
                 }
             }
         }
-    }
 }

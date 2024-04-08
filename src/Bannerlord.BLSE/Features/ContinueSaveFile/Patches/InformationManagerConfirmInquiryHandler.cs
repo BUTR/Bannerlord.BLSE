@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace Bannerlord.BLSE.Features.ContinueSaveFile.Patches
+namespace Bannerlord.BLSE.Features.ContinueSaveFile.Patches;
+
+internal class InformationManagerConfirmInquiryHandler : IDisposable
 {
-    internal class InformationManagerConfirmInquiryHandler : IDisposable
-    {
-        public InformationManagerConfirmInquiryHandler() => InformationManagerPatch.SkipChange = true;
-        public void Dispose() => InformationManagerPatch.SkipChange = false;
-    }
+    public InformationManagerConfirmInquiryHandler() => InformationManagerPatch.SkipChange = true;
+    public void Dispose() => InformationManagerPatch.SkipChange = false;
 }

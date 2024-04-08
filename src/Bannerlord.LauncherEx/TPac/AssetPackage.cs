@@ -4,31 +4,31 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace Bannerlord.LauncherEx.TPac
+namespace Bannerlord.LauncherEx.TPac;
+
+internal class AssetPackage
 {
-    internal class AssetPackage
+    public const uint TPAC_MAGIC_NUMBER = 0x43415054;
+
+    public bool HeaderLoaded { get; private set; } = false;
+
+    public FileInfo File { get; }
+
+    public List<AssetItem> Items { get; } = new();
+
+    public AssetPackage(string filePath)
     {
-        public const uint TPAC_MAGIC_NUMBER = 0x43415054;
-
-        public bool HeaderLoaded { get; private set; } = false;
-
-        public FileInfo File { get; }
-
-        public List<AssetItem> Items { get; } = new();
-
-        public AssetPackage(string filePath)
-        {
             File = new FileInfo(filePath);
         }
 
-        public Texture? GetTexture(string id)
-        {
+    public Texture? GetTexture(string id)
+    {
             Load();
             return Items.OfType<Texture>().FirstOrDefault(x => x.Name == id);
         }
 
-        public void Load()
-        {
+    public void Load()
+    {
             if (!HeaderLoaded)
             {
                 using var stream = File.OpenBinaryReader();
@@ -36,8 +36,8 @@ namespace Bannerlord.LauncherEx.TPac
             }
         }
 
-        protected virtual void Load(BinaryReader stream)
-        {
+    protected virtual void Load(BinaryReader stream)
+    {
             if (!stream.BaseStream.CanSeek)
                 throw new IOException("The base stream must support random access (seek).");
             HeaderLoaded = true;
@@ -102,5 +102,4 @@ namespace Bannerlord.LauncherEx.TPac
                 Items.Add(assetItem);
             }
         }
-    }
 }

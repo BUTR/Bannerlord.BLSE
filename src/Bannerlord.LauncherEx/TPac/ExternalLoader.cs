@@ -3,23 +3,23 @@
 using System;
 using System.IO;
 
-namespace Bannerlord.LauncherEx.TPac
-{
-    internal sealed class ExternalLoader<T> : AbstractExternalLoader where T : ExternalData, new()
-    {
-        private const int IMMEDIATELY_GC_THRESHOLD = 128 * 1024 * 1024 - 1;
+namespace Bannerlord.LauncherEx.TPac;
 
-        internal ExternalLoader(FileInfo file)
-        {
+internal sealed class ExternalLoader<T> : AbstractExternalLoader where T : ExternalData, new()
+{
+    private const int IMMEDIATELY_GC_THRESHOLD = 128 * 1024 * 1024 - 1;
+
+    internal ExternalLoader(FileInfo file)
+    {
             _file = file;
             if (!_file.Exists) throw new FileNotFoundException("Cannot find file: " + _file.FullName);
             OwnerGuid = Guid.Empty;
         }
 
-        public ExternalLoader() : this(new T()) { }
+    public ExternalLoader() : this(new T()) { }
 
-        public ExternalLoader(T data)
-        {
+    public ExternalLoader(T data)
+    {
             _file = null;
             //OwnerGuid = Guid.NewGuid(); // sz: don't assign a random guid for it makes no sense
             OwnerGuid = Guid.Empty;
@@ -31,15 +31,15 @@ namespace Bannerlord.LauncherEx.TPac
             TypeGuid = data.TypeGuid;
         }
 
-        private T ReadData()
-        {
+    private T ReadData()
+    {
             if (_file is null) throw new InvalidOperationException("Can't read data from file");
             using var stream = _file.OpenBinaryReader();
             return ReadData(stream);
         }
 
-        private T ReadData(BinaryReader fullStream)
-        {
+    private T ReadData(BinaryReader fullStream)
+    {
             var rawData = GetRawData(fullStream);
             var data = new T();
             using (var stream = rawData.CreateBinaryReader())
@@ -58,8 +58,8 @@ namespace Bannerlord.LauncherEx.TPac
             return data;
         }
 
-        private byte[] GetRawData(BinaryReader stream)
-        {
+    private byte[] GetRawData(BinaryReader stream)
+    {
             byte[]? rawData;
             if (!stream.BaseStream.CanSeek)
                 throw new IOException("The base stream must support random access (seek)");
@@ -86,8 +86,7 @@ namespace Bannerlord.LauncherEx.TPac
             return rawData;
         }
 
-        public T GetData() => ReadData();
+    public T GetData() => ReadData();
 
-        private static byte[] LZ4Decompress(byte[] input, int outLength) => LZ4Codec.Decode(input, 0, input.Length, outLength);
-    }
+    private static byte[] LZ4Decompress(byte[] input, int outLength) => LZ4Codec.Decode(input, 0, input.Length, outLength);
 }

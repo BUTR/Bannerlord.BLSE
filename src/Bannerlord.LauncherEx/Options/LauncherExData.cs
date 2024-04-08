@@ -3,12 +3,12 @@ using System.Diagnostics;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Bannerlord.LauncherEx.Options
+namespace Bannerlord.LauncherEx.Options;
+
+public sealed class LauncherExData
 {
-    public sealed class LauncherExData
+    public static LauncherExData? FromUserDataXml(string path)
     {
-        public static LauncherExData? FromUserDataXml(string path)
-        {
             var xmlSerializer = new XmlSerializer(typeof(LauncherExData), new XmlRootAttribute("UserData"));
             try
             {
@@ -22,32 +22,32 @@ namespace Bannerlord.LauncherEx.Options
             }
         }
 
-        public bool AutomaticallyCheckForUpdates { get; set; }
-        public bool FixCommonIssues { get; set; }
-        public bool CompactModuleList { get; set; }
-        public bool DisableBinaryCheck { get; set; }
-        public bool HideRandomImage { get; set; }
-        public bool BetaSorting { get; set; }
-        public bool BigMode { get; set; }
-        public bool EnableDPIScaling { get; set; }
-        public bool DisableCrashHandlerWhenDebuggerIsAttached { get; set; }
-        public bool DisableCatchAutoGenExceptions { get; set; }
-        public bool UseVanillaCrashHandler { get; set; }
+    public bool AutomaticallyCheckForUpdates { get; set; }
+    public bool FixCommonIssues { get; set; }
+    public bool CompactModuleList { get; set; }
+    public bool DisableBinaryCheck { get; set; }
+    public bool HideRandomImage { get; set; }
+    public bool BetaSorting { get; set; }
+    public bool BigMode { get; set; }
+    public bool EnableDPIScaling { get; set; }
+    public bool DisableCrashHandlerWhenDebuggerIsAttached { get; set; }
+    public bool DisableCatchAutoGenExceptions { get; set; }
+    public bool UseVanillaCrashHandler { get; set; }
 
-        public LauncherExData() { }
-        public LauncherExData(
-            bool automaticallyCheckForUpdates,
-            bool fixCommonIssues,
-            bool compactModuleList,
-            bool hideRandomImage,
-            bool disableBinaryCheck,
-            bool betaSorting,
-            bool bigMode,
-            bool enableDPIScaling,
-            bool disableCrashHandlerWhenDebuggerIsAttached,
-            bool disableCatchAutoGenExceptions,
-            bool useVanillaCrashHandler)
-        {
+    public LauncherExData() { }
+    public LauncherExData(
+        bool automaticallyCheckForUpdates,
+        bool fixCommonIssues,
+        bool compactModuleList,
+        bool hideRandomImage,
+        bool disableBinaryCheck,
+        bool betaSorting,
+        bool bigMode,
+        bool enableDPIScaling,
+        bool disableCrashHandlerWhenDebuggerIsAttached,
+        bool disableCatchAutoGenExceptions,
+        bool useVanillaCrashHandler)
+    {
             AutomaticallyCheckForUpdates = automaticallyCheckForUpdates;
             FixCommonIssues = fixCommonIssues;
             CompactModuleList = compactModuleList;
@@ -60,5 +60,4 @@ namespace Bannerlord.LauncherEx.Options
             DisableCatchAutoGenExceptions = disableCatchAutoGenExceptions;
             UseVanillaCrashHandler = useVanillaCrashHandler;
         }
-    }
 }

@@ -14,13 +14,13 @@ using System.Xml;
 
 using TaleWorlds.GauntletUI.PrefabSystem;
 
-namespace Bannerlord.LauncherEx.Patches
+namespace Bannerlord.LauncherEx.Patches;
+
+// https://github.com/BUTR/Bannerlord.UIExtenderEx/blob/dev/src/Bannerlord.UIExtenderEx/Patches/WidgetPrefabPatch.cs
+internal static class WidgetPrefabPatch
 {
-    // https://github.com/BUTR/Bannerlord.UIExtenderEx/blob/dev/src/Bannerlord.UIExtenderEx/Patches/WidgetPrefabPatch.cs
-    internal static class WidgetPrefabPatch
+    public static bool Enable(Harmony harmony)
     {
-        public static bool Enable(Harmony harmony)
-        {
             PrefabExtensionManager.RegisterPatch(UILauncherPrefabExtension31.Movie, UILauncherPrefabExtension31.XPath, new UILauncherPrefabExtension31());
             PrefabExtensionManager.RegisterPatch(UILauncherPrefabExtension32.Movie, UILauncherPrefabExtension32.XPath, new UILauncherPrefabExtension32());
             PrefabExtensionManager.RegisterPatch(UILauncherPrefabExtension34.Movie, UILauncherPrefabExtension34.XPath, new UILauncherPrefabExtension34());
@@ -102,15 +102,15 @@ namespace Bannerlord.LauncherEx.Patches
             return true;
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static void ProcessMovie(string path, XmlDocument document)
-        {
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static void ProcessMovie(string path, XmlDocument document)
+    {
             var movieName = Path.GetFileNameWithoutExtension(path);
             PrefabExtensionManager.ProcessMovieIfNeeded(movieName, document);
         }
 
-        private static int GetWidgetPrefabConstructorIndex(IList<CodeInstruction> instructions, MethodBase originalMethod)
-        {
+    private static int GetWidgetPrefabConstructorIndex(IList<CodeInstruction> instructions, MethodBase originalMethod)
+    {
             var constructor = AccessTools2.DeclaredConstructor(typeof(WidgetPrefab));
 
             var locals = originalMethod.GetMethodBody()?.LocalVariables;
@@ -134,9 +134,9 @@ namespace Bannerlord.LauncherEx.Patches
             return constructorIndex;
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static IEnumerable<CodeInstruction> WidgetPrefab_LoadFrom_Transpiler(IEnumerable<CodeInstruction> instructions, MethodBase method)
-        {
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static IEnumerable<CodeInstruction> WidgetPrefab_LoadFrom_Transpiler(IEnumerable<CodeInstruction> instructions, MethodBase method)
+    {
             var instructionsList = instructions.ToList();
 
             IEnumerable<CodeInstruction> ReturnDefault()
@@ -159,10 +159,10 @@ namespace Bannerlord.LauncherEx.Patches
         }
 
 
-        // We can call a slightly modified native game call this way
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public static WidgetPrefab? LoadFromDocument(PrefabExtensionContext prefabExtensionContext, WidgetAttributeContext widgetAttributeContext, string path, XmlDocument document)
-        {
+    // We can call a slightly modified native game call this way
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    public static WidgetPrefab? LoadFromDocument(PrefabExtensionContext prefabExtensionContext, WidgetAttributeContext widgetAttributeContext, string path, XmlDocument document)
+    {
             // Replaces reading XML from file with assigning it from the new local variable `XmlDocument document`
             [MethodImpl(MethodImplOptions.NoInlining)]
             static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
@@ -218,5 +218,4 @@ namespace Bannerlord.LauncherEx.Patches
             // make compiler happy
             return null!;
         }
-    }
 }

@@ -10,18 +10,18 @@ using TaleWorlds.MountAndBlade;
 using TaleWorlds.SaveSystem;
 using TaleWorlds.SaveSystem.Load;
 
-namespace Bannerlord.BLSE.Features.ContinueSaveFile.Patches
+namespace Bannerlord.BLSE.Features.ContinueSaveFile.Patches;
+
+internal static class SandBoxSubModulePatch
 {
-    internal static class SandBoxSubModulePatch
+    private delegate void TryLoadSaveDelegate(SaveGameFileInfo saveInfo, Action<LoadResult> onStartGame, Action? onCancel = null);
+
+    public static Func<GameStartupInfo, string?>? GetSaveGameArg;
+
+    private static Harmony? _harmony;
+
+    public static bool Enable(Harmony harmony)
     {
-        private delegate void TryLoadSaveDelegate(SaveGameFileInfo saveInfo, Action<LoadResult> onStartGame, Action? onCancel = null);
-
-        public static Func<GameStartupInfo, string?>? GetSaveGameArg;
-
-        private static Harmony? _harmony;
-
-        public static bool Enable(Harmony harmony)
-        {
             _harmony = harmony;
 
             return harmony.TryPatch(
@@ -29,8 +29,8 @@ namespace Bannerlord.BLSE.Features.ContinueSaveFile.Patches
                 prefix: AccessTools2.DeclaredMethod(typeof(SandBoxSubModulePatch), nameof(OnInitialStatePrefix)));
         }
 
-        private static bool OnInitialStatePrefix(MBSubModuleBase __instance)
-        {
+    private static bool OnInitialStatePrefix(MBSubModuleBase __instance)
+    {
             static void FailedToLoad(string message)
             {
                 try
@@ -71,5 +71,4 @@ namespace Bannerlord.BLSE.Features.ContinueSaveFile.Patches
 
             return false;
         }
-    }
 }

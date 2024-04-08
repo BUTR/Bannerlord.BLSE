@@ -12,12 +12,12 @@ using TaleWorlds.InputSystem;
 using TaleWorlds.MountAndBlade.Launcher.Library;
 using TaleWorlds.MountAndBlade.Launcher.Library.UserDatas;
 
-namespace Bannerlord.LauncherEx.Patches
+namespace Bannerlord.LauncherEx.Patches;
+
+internal static class LauncherUIPatch
 {
-    internal static class LauncherUIPatch
+    public static bool Enable(Harmony harmony)
     {
-        public static bool Enable(Harmony harmony)
-        {
             var res1 = harmony.TryPatch(
                 AccessTools2.DeclaredMethod(typeof(LauncherUI), "Initialize"),
                 postfix: AccessTools2.DeclaredMethod(typeof(LauncherUIPatch), nameof(InitializePostfix)));
@@ -36,9 +36,9 @@ namespace Bannerlord.LauncherEx.Patches
             return true;
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static void InitializePostfix(GauntletMovie ____movie, LauncherVM ____viewModel, UserDataManager ____userDataManager)
-        {
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static void InitializePostfix(GauntletMovie ____movie, LauncherVM ____viewModel, UserDataManager ____userDataManager)
+    {
             BUTRLauncherManagerHandler.Initialize(____userDataManager);
 
             // Add to the existing VM our own properties
@@ -46,8 +46,8 @@ namespace Bannerlord.LauncherEx.Patches
             ____movie.RefreshDataSource(____viewModel);
         }
 
-        private static void UpdatePostfix(UIContext ____context)
-        {
+    private static void UpdatePostfix(UIContext ____context)
+    {
             if (Input.InputManager is BUTRInputManager butrInputManager)
             {
                 if (____context.EventManager?.FocusedWidget is { } focusedWidget)
@@ -63,9 +63,9 @@ namespace Bannerlord.LauncherEx.Patches
             }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static void AdditionalArgsPostfix()
-        {
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static void AdditionalArgsPostfix()
+    {
             if (Input.InputManager is BUTRInputManager butrInputManager)
             {
                 Input.Initialize(butrInputManager.InputManager, null);
@@ -73,7 +73,6 @@ namespace Bannerlord.LauncherEx.Patches
             }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static IEnumerable<CodeInstruction> BlankTranspiler(IEnumerable<CodeInstruction> instructions) => instructions;
-    }
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static IEnumerable<CodeInstruction> BlankTranspiler(IEnumerable<CodeInstruction> instructions) => instructions;
 }
