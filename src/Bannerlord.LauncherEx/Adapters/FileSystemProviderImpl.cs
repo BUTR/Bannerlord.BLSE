@@ -24,7 +24,7 @@ internal sealed class FileSystemProviderImpl : IFileSystemProvider
                 using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
                 var data = new byte[length];
                 fs.Seek(offset, SeekOrigin.Begin);
-                fs.Read(data, 0, length);
+                _ = fs.Read(data, 0, length);
                 return data;
             }
             else
@@ -41,8 +41,6 @@ internal sealed class FileSystemProviderImpl : IFileSystemProvider
 
     public void WriteFileContent(string filePath, byte[]? data)
     {
-        if (!File.Exists(filePath)) return;
-
         try
         {
             if (data is null)

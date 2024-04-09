@@ -5,7 +5,7 @@
     <LangVersion>11.0</LangVersion>
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
-    <DebugType>full</DebugType>
+    <DebugType>portable</DebugType>
     <Version>1.25.0</Version>
     <PolySharpExcludeGeneratedTypes>System.Diagnostics.CodeAnalysis.UnscopedRefAttribute</PolySharpExcludeGeneratedTypes>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
@@ -18,16 +18,15 @@
     <ILRepackMergeDebugSymbols>true</ILRepackMergeDebugSymbols>
     <ILRepackPerformInternalize>true</ILRepackPerformInternalize>
     <ILRepackCopyAttributes>false</ILRepackCopyAttributes>
-    <ILRepackBuildToolingPath Condition="$(Configuration) != 'Debug'">$(PkgBUTR_ILRepack)\tools\net461\ILRepack.exe</ILRepackBuildToolingPath>
-    <!--
-    <GameVersion>1.1.0</GameVersion>
-    <GameVersionFlat>$([System.String]::Copy('$(GameVersion)').Replace('.',''))</GameVersionFlat>
-    <GameVersionConstant>v$(GameVersionFlat)</GameVersionConstant>
-    -->
-
-    <DefineConstants>$(DefineConstants);$(GameVersionConstant)</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="$(Configuration) == 'Debug'">
+    <GameVersion>1.2.0</GameVersion>
+    <GameVersionFlat>$([System.String]::Copy('$(GameVersion)').Replace('.',''))</GameVersionFlat>
+    <GameVersionConstant>v$(GameVersionFlat)</GameVersionConstant>
+    <DefineConstants>$(DefineConstants);$(GameVersionConstant)</DefineConstants>
+  </PropertyGroup>
+  
   <PropertyGroup>
     <PackageId>Bannerlord.LauncherEx</PackageId>
     <Title>Bannerlord.LauncherEx</Title>
@@ -78,12 +77,8 @@
       </AssemblyAttribute>
     </ItemGroup>
   </Target>
-
-  <Target Name="BuildExtended">
-    <CallTarget Targets="Build" />
-  </Target>
-
-  <Target Name="ExcludeAssembliesFromILRepack" BeforeTargets="ILRepackPrepare">
+  
+  <Target Name="ExcludeAssembliesFromILRepack" BeforeTargets="ILRepackPrepareBuild">
     <PropertyGroup>
       <ILRepackExcludeAssemblies>$(ILRepackExcludeAssemblies);$(ProjectDir)$(OutputPath)System.Drawing.dll;</ILRepackExcludeAssemblies>
       <ILRepackExcludeAssemblies>$(ILRepackExcludeAssemblies);$(ProjectDir)$(OutputPath)System.Drawing.Common.dll;</ILRepackExcludeAssemblies>

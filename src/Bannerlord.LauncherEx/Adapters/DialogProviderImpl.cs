@@ -33,7 +33,7 @@ internal sealed class DialogProviderImpl : IDialogProvider
             }
             case DialogType.FileOpen:
             {
-                var filter = string.Join("|", filters.Select(x => $"{x.Name} ({string.Join((string) ", ", (IEnumerable<string>) x.Extensions)}|{string.Join((string) ", ", (IEnumerable<string>) x.Extensions)}"));
+                var filter = string.Join("|", filters.Select(x => $"{x.Name} {string.Join((string) ", ", x.Extensions)}|{string.Join((string) ", ", x.Extensions)}"));
                 var dialog = new OpenFileDialog
                 {
                     Title = title,
@@ -51,7 +51,7 @@ internal sealed class DialogProviderImpl : IDialogProvider
             case DialogType.FileSave:
             {
                 var fileName = message;
-                var filter = string.Join("|", filters.Select(x => $"{x.Name} ({string.Join(", ", x.Extensions)}|{string.Join(", ", x.Extensions)}"));
+                var filter = string.Join("|", filters.Select(x => $"{x.Name} {string.Join(", ", x.Extensions)}|{string.Join(", ", x.Extensions)}"));
                 var dialog = new SaveFileDialog
                 {
                     Title = title,
