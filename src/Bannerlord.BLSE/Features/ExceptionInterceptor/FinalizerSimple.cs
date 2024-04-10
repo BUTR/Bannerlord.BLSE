@@ -27,14 +27,14 @@ internal static class FinalizerSimple
 
     public static void Enable(Harmony harmony, MethodInfo finalizerMethod)
     {
-            harmony.Patch(ModuleInitializeMethod, finalizer: new HarmonyMethod(finalizerMethod));
+        harmony.Patch(ModuleInitializeMethod, finalizer: new HarmonyMethod(finalizerMethod));
 
-            harmony.Patch(ManagedApplicationTickMethod, finalizer: new HarmonyMethod(finalizerMethod));
+        harmony.Patch(ManagedApplicationTickMethod, finalizer: new HarmonyMethod(finalizerMethod));
 
-            harmony.Patch(ScreenManagerPreTickMethod, finalizer: new HarmonyMethod(finalizerMethod));
-            harmony.Patch(ScreenManagerTickMethod, finalizer: new HarmonyMethod(finalizerMethod));
-            harmony.Patch(ScreenManagerLateTickMethod, finalizer: new HarmonyMethod(finalizerMethod));
+        harmony.Patch(ScreenManagerPreTickMethod, finalizer: new HarmonyMethod(finalizerMethod));
+        harmony.Patch(ScreenManagerTickMethod, finalizer: new HarmonyMethod(finalizerMethod));
+        harmony.Patch(ScreenManagerLateTickMethod, finalizer: new HarmonyMethod(finalizerMethod));
 
-            harmony.Patch(ManagedScriptHolderTickComponentsMethod, finalizer: new HarmonyMethod(finalizerMethod));
-        }
+        harmony.Patch(ManagedScriptHolderTickComponentsMethod, finalizer: new HarmonyMethod(finalizerMethod));
+    }
 }

@@ -18,60 +18,60 @@ internal static class LauncherUIPatch
 {
     public static bool Enable(Harmony harmony)
     {
-            var res1 = harmony.TryPatch(
-                AccessTools2.DeclaredMethod(typeof(LauncherUI), "Initialize"),
-                postfix: AccessTools2.DeclaredMethod(typeof(LauncherUIPatch), nameof(InitializePostfix)));
-            if (!res1) return false;
+        var res1 = harmony.TryPatch(
+            AccessTools2.DeclaredMethod(typeof(LauncherUI), "Initialize"),
+            postfix: AccessTools2.DeclaredMethod(typeof(LauncherUIPatch), nameof(InitializePostfix)));
+        if (!res1) return false;
 
-            var res2 = harmony.TryPatch(
-                AccessTools2.DeclaredMethod(typeof(LauncherUI), "Update"),
-                postfix: AccessTools2.DeclaredMethod(typeof(LauncherUIPatch), nameof(UpdatePostfix)));
-            if (!res2) return false;
+        var res2 = harmony.TryPatch(
+            AccessTools2.DeclaredMethod(typeof(LauncherUI), "Update"),
+            postfix: AccessTools2.DeclaredMethod(typeof(LauncherUIPatch), nameof(UpdatePostfix)));
+        if (!res2) return false;
 
-            var res3 = harmony.TryPatch(
-                AccessTools2.DeclaredPropertyGetter(typeof(LauncherUI), "AdditionalArgs"),
-                postfix: AccessTools2.DeclaredMethod(typeof(LauncherUIPatch), nameof(AdditionalArgsPostfix)));
-            if (!res3) return false;
+        var res3 = harmony.TryPatch(
+            AccessTools2.DeclaredPropertyGetter(typeof(LauncherUI), "AdditionalArgs"),
+            postfix: AccessTools2.DeclaredMethod(typeof(LauncherUIPatch), nameof(AdditionalArgsPostfix)));
+        if (!res3) return false;
 
-            return true;
-        }
+        return true;
+    }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
     private static void InitializePostfix(GauntletMovie ____movie, LauncherVM ____viewModel, UserDataManager ____userDataManager)
     {
-            BUTRLauncherManagerHandler.Initialize(____userDataManager);
+        BUTRLauncherManagerHandler.Initialize(____userDataManager);
 
-            // Add to the existing VM our own properties
-            MixinManager.AddMixins(____viewModel);
-            ____movie.RefreshDataSource(____viewModel);
-        }
+        // Add to the existing VM our own properties
+        MixinManager.AddMixins(____viewModel);
+        ____movie.RefreshDataSource(____viewModel);
+    }
 
     private static void UpdatePostfix(UIContext ____context)
     {
-            if (Input.InputManager is BUTRInputManager butrInputManager)
+        if (Input.InputManager is BUTRInputManager butrInputManager)
+        {
+            if (____context.EventManager?.FocusedWidget is { } focusedWidget)
             {
-                if (____context.EventManager?.FocusedWidget is { } focusedWidget)
-                {
-                    butrInputManager.Update();
+                butrInputManager.Update();
 
-                    focusedWidget.HandleInput(butrInputManager.ReleasedChars);
-                }
-            }
-            else
-            {
-                Input.Initialize(new BUTRInputManager(Input.InputManager), null);
+                focusedWidget.HandleInput(butrInputManager.ReleasedChars);
             }
         }
+        else
+        {
+            Input.Initialize(new BUTRInputManager(Input.InputManager), null);
+        }
+    }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
     private static void AdditionalArgsPostfix()
     {
-            if (Input.InputManager is BUTRInputManager butrInputManager)
-            {
-                Input.Initialize(butrInputManager.InputManager, null);
-                butrInputManager.Dispose();
-            }
+        if (Input.InputManager is BUTRInputManager butrInputManager)
+        {
+            Input.Initialize(butrInputManager.InputManager, null);
+            butrInputManager.Dispose();
         }
+    }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
     private static IEnumerable<CodeInstruction> BlankTranspiler(IEnumerable<CodeInstruction> instructions) => instructions;

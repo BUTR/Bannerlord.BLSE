@@ -15,14 +15,14 @@ internal sealed class UILauncherPrefabExtension24 : PrefabExtensionInsertAsSibli
 
     public UILauncherPrefabExtension24()
     {
-            XmlDocument.LoadXml(@"
+        XmlDocument.LoadXml(@"
 <TabToggleWidget DoNotPassEventsToChildren=""true"" WidthSizePolicy=""Fixed"" HeightSizePolicy=""StretchToParent"" SuggestedWidth=""100"" TabControlWidget=""..\..\..\..\ContentPanel"" TabName=""SavesPage"" UpdateChildrenStates=""true"" IsSelected=""@IsSavesDataSelected"" IsVisible=""@IsSingleplayer"">
   <Children>
     <TextWidget Id=""SubMenuText"" Text=""@SavesText"" WidthSizePolicy=""StretchToParent"" HeightSizePolicy=""StretchToParent"" Brush=""Launcher.SubMenuButton.SingleplayerText"" />
   </Children>
 </TabToggleWidget>
 ");
-        }
+    }
 
     public override XmlDocument GetPrefabExtension() => XmlDocument;
 }
@@ -36,10 +36,10 @@ internal sealed class UILauncherPrefabExtension25 : PrefabExtensionInsertAsSibli
 
     public UILauncherPrefabExtension25()
     {
-            XmlDocument.LoadXml(@"
+        XmlDocument.LoadXml(@"
 <Launcher.Saves Id=""SavesPage"" DataSource=""{SavesData}"" IsDisabled=""@IsDisabled"" />
 ");
-        }
+    }
 
     public override XmlDocument GetPrefabExtension() => XmlDocument;
 }

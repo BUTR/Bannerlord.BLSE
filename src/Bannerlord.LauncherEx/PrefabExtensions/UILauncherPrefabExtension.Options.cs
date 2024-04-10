@@ -17,14 +17,14 @@ internal sealed class UILauncherPrefabExtension3 : PrefabExtensionInsertAsSiblin
 
     public UILauncherPrefabExtension3()
     {
-            XmlDocument.LoadXml(@"
+        XmlDocument.LoadXml(@"
 <ButtonWidget DoNotPassEventsToChildren=""true"" WidthSizePolicy=""Fixed"" HeightSizePolicy=""StretchToParent"" SuggestedWidth=""110"" ButtonType=""Radio"" IsSelected=""@IsOptions"" UpdateChildrenStates=""true"">
   <Children>
     <TextWidget WidthSizePolicy=""StretchToParent"" HeightSizePolicy=""StretchToParent"" Brush=""Launcher.GameTypeButton.SingleplayerText"" Text=""@OptionsText"" />
   </Children>
 </ButtonWidget>
 ");
-        }
+    }
 
     public override XmlDocument GetPrefabExtension() => XmlDocument;
 }
@@ -54,10 +54,10 @@ internal sealed class UILauncherPrefabExtension5 : PrefabExtensionInsertAsSiblin
 
     public UILauncherPrefabExtension5()
     {
-            XmlDocument.LoadXml(@"
+        XmlDocument.LoadXml(@"
 <Widget WidthSizePolicy=""Fixed"" HeightSizePolicy=""Fixed"" SuggestedWidth=""2"" SuggestedHeight=""30"" HorizontalAlignment=""Center"" MarginRight=""125"" Sprite=""top_header_divider"" />
 ");
-        }
+    }
 
     public override XmlDocument GetPrefabExtension() => XmlDocument;
 }
@@ -75,14 +75,14 @@ internal sealed class UILauncherPrefabExtension6 : PrefabExtensionInsertAsSiblin
 
     public UILauncherPrefabExtension6()
     {
-            XmlDocument.LoadXml(@"
+        XmlDocument.LoadXml(@"
 <TabToggleWidget DoNotPassEventsToChildren=""true"" WidthSizePolicy=""Fixed"" HeightSizePolicy=""StretchToParent"" SuggestedWidth=""100"" IsSelected=""@IsOptions"" TabControlWidget=""..\..\..\..\ContentPanel"" TabName=""OptionsLauncherPage"" UpdateChildrenStates=""true"" IsVisible=""@IsOptions"">
   <Children>
     <TextWidget Id=""SubMenuText"" Text=""@LauncherText"" WidthSizePolicy=""StretchToParent"" HeightSizePolicy=""StretchToParent"" Brush=""Launcher.SubMenuButton.SingleplayerText"" />
   </Children>
 </TabToggleWidget>
 ");
-        }
+    }
 
     public override XmlDocument GetPrefabExtension() => XmlDocument;
 }
@@ -96,14 +96,14 @@ internal sealed class UILauncherPrefabExtension20 : PrefabExtensionInsertAsSibli
 
     public UILauncherPrefabExtension20()
     {
-            XmlDocument.LoadXml(@"
+        XmlDocument.LoadXml(@"
 <TabToggleWidget DoNotPassEventsToChildren=""true"" WidthSizePolicy=""Fixed"" HeightSizePolicy=""StretchToParent"" SuggestedWidth=""100"" TabControlWidget=""..\..\..\..\ContentPanel"" TabName=""OptionsGamePage"" UpdateChildrenStates=""true"" IsVisible=""@IsOptions"">
   <Children>
     <TextWidget Id=""SubMenuText"" Text=""@GameText"" WidthSizePolicy=""StretchToParent"" HeightSizePolicy=""StretchToParent"" Brush=""Launcher.SubMenuButton.SingleplayerText"" />
   </Children>
 </TabToggleWidget>
 ");
-        }
+    }
 
     public override XmlDocument GetPrefabExtension() => XmlDocument;
 }
@@ -117,14 +117,14 @@ internal sealed class UILauncherPrefabExtension21 : PrefabExtensionInsertAsSibli
 
     public UILauncherPrefabExtension21()
     {
-            XmlDocument.LoadXml(@"
+        XmlDocument.LoadXml(@"
 <TabToggleWidget DoNotPassEventsToChildren=""true"" WidthSizePolicy=""Fixed"" HeightSizePolicy=""StretchToParent"" SuggestedWidth=""100"" TabControlWidget=""..\..\..\..\ContentPanel"" TabName=""OptionsEnginePage"" UpdateChildrenStates=""true"" IsVisible=""@IsOptions"">
   <Children>
     <TextWidget Id=""SubMenuText"" Text=""@EngineText"" WidthSizePolicy=""StretchToParent"" HeightSizePolicy=""StretchToParent"" Brush=""Launcher.SubMenuButton.SingleplayerText"" />
   </Children>
 </TabToggleWidget>
 ");
-        }
+    }
 
     public override XmlDocument GetPrefabExtension() => XmlDocument;
 }
@@ -142,10 +142,10 @@ internal sealed class UILauncherPrefabExtension7 : PrefabExtensionInsertAsSiblin
 
     public UILauncherPrefabExtension7()
     {
-            XmlDocument.LoadXml(@"
+        XmlDocument.LoadXml(@"
 <Launcher.Options Id=""OptionsLauncherPage"" DataSource=""{OptionsLauncherData}"" IsDisabled=""@IsDisabled"" />
 ");
-        }
+    }
 
     public override XmlDocument GetPrefabExtension() => XmlDocument;
 }
@@ -159,10 +159,10 @@ internal sealed class UILauncherPrefabExtension22 : PrefabExtensionInsertAsSibli
 
     public UILauncherPrefabExtension22()
     {
-            XmlDocument.LoadXml(@"
+        XmlDocument.LoadXml(@"
 <Launcher.Options Id=""OptionsGamePage"" DataSource=""{OptionsGameData}"" IsDisabled=""@IsDisabled"" />
 ");
-        }
+    }
 
     public override XmlDocument GetPrefabExtension() => XmlDocument;
 }
@@ -176,10 +176,10 @@ internal sealed class UILauncherPrefabExtension23 : PrefabExtensionInsertAsSibli
 
     public UILauncherPrefabExtension23()
     {
-            XmlDocument.LoadXml(@"
+        XmlDocument.LoadXml(@"
 <Launcher.Options Id=""OptionsEnginePage"" DataSource=""{OptionsEngineData}"" IsDisabled=""@IsDisabled"" />
 ");
-        }
+    }
 
     public override XmlDocument GetPrefabExtension() => XmlDocument;
 }

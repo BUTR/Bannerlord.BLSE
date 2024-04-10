@@ -10,17 +10,17 @@ internal class ExternalData
 
     public ExternalData()
     {
-            TypeGuid = Guid.Empty;
-        }
+        TypeGuid = Guid.Empty;
+    }
 
     public ExternalData(Guid typeGuid)
     {
-            TypeGuid = typeGuid;
-        }
+        TypeGuid = typeGuid;
+    }
 
     public virtual void ReadData(BinaryReader stream, IDictionary<object, object> userdata, int totalSize)
     {
-            stream.BaseStream.Seek(totalSize, SeekOrigin.Current);
-            //_unknownRawData = stream.ReadBytes(totalSize);
-        }
+        stream.BaseStream.Seek(totalSize, SeekOrigin.Current);
+        //_unknownRawData = stream.ReadBytes(totalSize);
+    }
 }

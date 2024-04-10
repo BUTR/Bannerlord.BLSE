@@ -30,24 +30,24 @@ internal class BUTRLauncherMessageBoxVM : BUTRViewModel
 
     public void Show(string title, string description, Action? onConfirm, Action? onCancel)
     {
-            if (IsEnabled) return;
+        if (IsEnabled) return;
 
-            Title = title;
-            Description = description;
-            _onConfirm = onConfirm;
-            _onCancel = onCancel;
-            IsEnabled = true;
-        }
+        Title = title;
+        Description = description;
+        _onConfirm = onConfirm;
+        _onCancel = onCancel;
+        IsEnabled = true;
+    }
 
     private void ExecuteConfirm()
     {
-            _onConfirm?.Invoke();
-            IsEnabled = false;
-        }
+        _onConfirm?.Invoke();
+        IsEnabled = false;
+    }
 
     private void ExecuteCancel()
     {
-            _onCancel?.Invoke();
-            IsEnabled = false;
-        }
+        _onCancel?.Invoke();
+        IsEnabled = false;
+    }
 }

@@ -22,53 +22,53 @@ internal static class SandBoxSubModulePatch
 
     public static bool Enable(Harmony harmony)
     {
-            _harmony = harmony;
+        _harmony = harmony;
 
-            return harmony.TryPatch(
-                AccessTools2.DeclaredMethod("SandBox.SandBoxSubModule:OnInitialState"),
-                prefix: AccessTools2.DeclaredMethod(typeof(SandBoxSubModulePatch), nameof(OnInitialStatePrefix)));
-        }
+        return harmony.TryPatch(
+            AccessTools2.DeclaredMethod("SandBox.SandBoxSubModule:OnInitialState"),
+            prefix: AccessTools2.DeclaredMethod(typeof(SandBoxSubModulePatch), nameof(OnInitialStatePrefix)));
+    }
 
     private static bool OnInitialStatePrefix(MBSubModuleBase __instance)
     {
-            static void FailedToLoad(string message)
+        static void FailedToLoad(string message)
+        {
+            try
             {
-                try
-                {
-                    InformationManagerWrapper.ShowInquiry("Warning!", message);
-                }
-                catch (Exception)
-                {
-                    MessageBoxDialog.Show(message, "Warning!");
-                }
+                InformationManagerWrapper.ShowInquiry("Warning!", message);
             }
-
-            if (AccessTools2.GetDelegate<TryLoadSaveDelegate>("SandBox.SandBoxSaveHelper:TryLoadSave") is not { } tryLoadSave) return true;
-            if (GetSaveGameArg?.Invoke(Module.CurrentModule.StartupInfo) is not { } saveFileName) return true;
-            if (saveFileName.EndsWith(".sav", StringComparison.OrdinalIgnoreCase)) saveFileName = saveFileName.Remove(saveFileName.Length - 4, 4);
-            if (MBSaveLoad.GetSaveFileWithName(saveFileName) is not { } saveFile)
+            catch (Exception)
             {
-                FailedToLoad($"Failed to load Save!\nFailed to find save '{saveFileName}'!");
-                return true;
+                MessageBoxDialog.Show(message, "Warning!");
             }
-            if (AccessTools2.TypeByName("SandBox.SandBoxSubModule") is not { } sandBoxSubModuleType)
-            {
-                FailedToLoad($"Failed to load Save!\nFailed to find 'SandBox' module!");
-                return true;
-            }
-            if (AccessTools2.GetDelegate<Action<LoadResult>>(__instance, sandBoxSubModuleType, "StartGame") is not { } startGame)
-            {
-                FailedToLoad($"Failed to load Save!\nUnexpected 'SandBox' issue! 'StartGame' method not found!");
-                return true;
-            }
-
-            using (var _ = new InformationManagerConfirmInquiryHandler())
-                tryLoadSave(saveFile, startGame);
-
-            _harmony?.Unpatch(
-                AccessTools2.DeclaredMethod("SandBox.SandBoxSubModule:OnInitialState"),
-                AccessTools2.DeclaredMethod(typeof(SandBoxSubModulePatch), nameof(OnInitialStatePrefix)));
-
-            return false;
         }
+
+        if (AccessTools2.GetDelegate<TryLoadSaveDelegate>("SandBox.SandBoxSaveHelper:TryLoadSave") is not { } tryLoadSave) return true;
+        if (GetSaveGameArg?.Invoke(Module.CurrentModule.StartupInfo) is not { } saveFileName) return true;
+        if (saveFileName.EndsWith(".sav", StringComparison.OrdinalIgnoreCase)) saveFileName = saveFileName.Remove(saveFileName.Length - 4, 4);
+        if (MBSaveLoad.GetSaveFileWithName(saveFileName) is not { } saveFile)
+        {
+            FailedToLoad($"Failed to load Save!\nFailed to find save '{saveFileName}'!");
+            return true;
+        }
+        if (AccessTools2.TypeByName("SandBox.SandBoxSubModule") is not { } sandBoxSubModuleType)
+        {
+            FailedToLoad($"Failed to load Save!\nFailed to find 'SandBox' module!");
+            return true;
+        }
+        if (AccessTools2.GetDelegate<Action<LoadResult>>(__instance, sandBoxSubModuleType, "StartGame") is not { } startGame)
+        {
+            FailedToLoad($"Failed to load Save!\nUnexpected 'SandBox' issue! 'StartGame' method not found!");
+            return true;
+        }
+
+        using (var _ = new InformationManagerConfirmInquiryHandler())
+            tryLoadSave(saveFile, startGame);
+
+        _harmony?.Unpatch(
+            AccessTools2.DeclaredMethod("SandBox.SandBoxSubModule:OnInitialState"),
+            AccessTools2.DeclaredMethod(typeof(SandBoxSubModulePatch), nameof(OnInitialStatePrefix)));
+
+        return false;
+    }
 }

@@ -15,16 +15,16 @@ internal class AssetItem
 
     public AssetItem(Guid type)
     {
-            Type = type;
-            Guid = Guid.Empty;
-            Name = string.Empty;
-        }
+        Type = type;
+        Guid = Guid.Empty;
+        Name = string.Empty;
+    }
 
     public virtual void ReadMetadata(BinaryReader stream, int totalSize)
     {
-            stream.BaseStream.Seek(totalSize, SeekOrigin.Current);
-            //_temp_metadata = stream.ReadBytes(totalSize);
-        }
+        stream.BaseStream.Seek(totalSize, SeekOrigin.Current);
+        //_temp_metadata = stream.ReadBytes(totalSize);
+    }
 
     public virtual void ConsumeDataSegments(AbstractExternalLoader[] externalData) { }
 }

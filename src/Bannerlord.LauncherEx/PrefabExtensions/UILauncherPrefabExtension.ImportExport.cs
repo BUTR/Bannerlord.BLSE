@@ -14,7 +14,7 @@ internal sealed class UILauncherPrefabExtension14 : PrefabExtensionInsertAsSibli
 
     public UILauncherPrefabExtension14()
     {
-            XmlDocument.LoadXml(@"
+        XmlDocument.LoadXml(@"
 <ListPanel WidthSizePolicy=""CoverChildren"" HeightSizePolicy=""CoverChildren""
            VerticalAlignment=""Bottom""
            MarginLeft =""5"" MarginBottom=""25""
@@ -34,7 +34,7 @@ internal sealed class UILauncherPrefabExtension14 : PrefabExtensionInsertAsSibli
   </Children>
 </ListPanel>
 ");
-        }
+    }
 
     public override XmlDocument GetPrefabExtension() => XmlDocument;
 }

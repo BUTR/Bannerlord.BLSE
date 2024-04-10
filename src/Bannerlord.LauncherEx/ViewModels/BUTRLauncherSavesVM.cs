@@ -53,11 +53,11 @@ internal sealed class BUTRLauncherSavesVM : BUTRViewModel
         get => _searchText;
         set
         {
-                if (SetField(ref _searchText, value))
-                {
-                    SearchTextChanged();
-                }
+            if (SetField(ref _searchText, value))
+            {
+                SearchTextChanged();
             }
+        }
     }
     private string _searchText = string.Empty;
 
@@ -65,48 +65,48 @@ internal sealed class BUTRLauncherSavesVM : BUTRViewModel
 
     public BUTRLauncherSavesVM(Func<string, ModuleInfoExtended?> getModuleById, Func<string, ModuleInfoExtended?> getModuleByName)
     {
-            _getModuleById = getModuleById;
-            _getModuleByName = getModuleByName;
+        _getModuleById = getModuleById;
+        _getModuleByName = getModuleByName;
 
-            ExecuteRefresh();
-        }
+        ExecuteRefresh();
+    }
 
     private void SelectSave(BUTRLauncherSaveVM saveVM)
     {
-            var previousState = saveVM.IsSelected;
-            foreach (var save in Saves)
-            {
-                save.IsSelected = false;
-            }
-            saveVM.IsSelected = !previousState;
-            OnPropertyChanged("SaveSelected");
+        var previousState = saveVM.IsSelected;
+        foreach (var save in Saves)
+        {
+            save.IsSelected = false;
         }
+        saveVM.IsSelected = !previousState;
+        OnPropertyChanged("SaveSelected");
+    }
 
     private void SearchTextChanged()
     {
-            var searchText = SearchText;
-            if (string.IsNullOrEmpty(searchText))
-            {
-                foreach (var saveVM in Saves)
-                {
-                    saveVM.IsVisible = true;
-                }
-                return;
-            }
-
+        var searchText = SearchText;
+        if (string.IsNullOrEmpty(searchText))
+        {
             foreach (var saveVM in Saves)
             {
-                saveVM.IsVisible = saveVM.Name.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) != -1;
+                saveVM.IsVisible = true;
             }
+            return;
         }
+
+        foreach (var saveVM in Saves)
+        {
+            saveVM.IsVisible = saveVM.Name.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) != -1;
+        }
+    }
 
     [BUTRDataSourceMethod]
     public void ExecuteRefresh()
     {
-            Saves.Clear();
-            foreach (var saveFile in _launcherManagerHandler.GetSaveFiles())
-            {
-                Saves.Add(new BUTRLauncherSaveVM(saveFile, SelectSave, _getModuleById, _getModuleByName));
-            }
+        Saves.Clear();
+        foreach (var saveFile in _launcherManagerHandler.GetSaveFiles())
+        {
+            Saves.Add(new BUTRLauncherSaveVM(saveFile, SelectSave, _getModuleById, _getModuleByName));
         }
+    }
 }
