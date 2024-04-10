@@ -34,13 +34,13 @@ internal sealed class SettingsPropertyVM : BUTRViewModel
         get => IsFloatVisible ? PropertyReference.Value is float val ? val : float.MinValue : 0f;
         set
         {
-                if (IsFloatVisible && FloatValue != value)
-                {
-                    PropertyReference.Value = value;
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(TextBoxValue));
-                }
+            if (IsFloatVisible && FloatValue != value)
+            {
+                PropertyReference.Value = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(TextBoxValue));
             }
+        }
     }
     [BUTRDataSourceProperty]
     public int IntValue
@@ -48,13 +48,13 @@ internal sealed class SettingsPropertyVM : BUTRViewModel
         get => IsIntVisible ? PropertyReference.Value is int val ? val : int.MinValue : 0;
         set
         {
-                if (IsIntVisible && IntValue != value)
-                {
-                    PropertyReference.Value = value;
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(TextBoxValue));
-                }
+            if (IsIntVisible && IntValue != value)
+            {
+                PropertyReference.Value = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(TextBoxValue));
             }
+        }
     }
     [BUTRDataSourceProperty]
     public bool BoolValue
@@ -62,12 +62,12 @@ internal sealed class SettingsPropertyVM : BUTRViewModel
         get => IsBoolVisible && PropertyReference.Value is bool val ? val : false;
         set
         {
-                if (IsBoolVisible && BoolValue != value)
-                {
-                    PropertyReference.Value = value;
-                    OnPropertyChanged();
-                }
+            if (IsBoolVisible && BoolValue != value)
+            {
+                PropertyReference.Value = value;
+                OnPropertyChanged();
             }
+        }
     }
     [BUTRDataSourceProperty]
     public string StringValue
@@ -75,12 +75,12 @@ internal sealed class SettingsPropertyVM : BUTRViewModel
         get => IsStringVisible ? PropertyReference.Value is string val ? val : "ERROR" : string.Empty;
         set
         {
-                if (IsStringVisible && StringValue != value)
-                {
-                    PropertyReference.Value = value;
-                    OnPropertyChanged();
-                }
+            if (IsStringVisible && StringValue != value)
+            {
+                PropertyReference.Value = value;
+                OnPropertyChanged();
             }
+        }
     }
     [BUTRDataSourceProperty]
     public string ButtonValue
@@ -88,12 +88,12 @@ internal sealed class SettingsPropertyVM : BUTRViewModel
         get => IsButtonVisible ? PropertyReference.Value is string val ? val : "ERROR" : string.Empty;
         set
         {
-                if (IsButtonVisible && ButtonValue != value)
-                {
-                    PropertyReference.Value = value;
-                    OnPropertyChanged();
-                }
+            if (IsButtonVisible && ButtonValue != value)
+            {
+                PropertyReference.Value = value;
+                OnPropertyChanged();
             }
+        }
     }
 
     [BUTRDataSourceProperty]
@@ -120,73 +120,73 @@ internal sealed class SettingsPropertyVM : BUTRViewModel
 
     public SettingsPropertyVM(ISettingsPropertyDefinition definition)
     {
-            SettingPropertyDefinition = definition;
+        SettingPropertyDefinition = definition;
 
-            // Moved to constructor
-            IsIntVisible = SettingType == SettingType.Int;
-            IsFloatVisible = SettingType == SettingType.Float;
-            IsBoolVisible = SettingType == SettingType.Bool;
-            IsStringVisible = SettingType == SettingType.String;
-            IsButtonVisible = SettingType == SettingType.Button;
-            // Moved to constructor
+        // Moved to constructor
+        IsIntVisible = SettingType == SettingType.Int;
+        IsFloatVisible = SettingType == SettingType.Float;
+        IsBoolVisible = SettingType == SettingType.Bool;
+        IsStringVisible = SettingType == SettingType.String;
+        IsButtonVisible = SettingType == SettingType.Button;
+        // Moved to constructor
 
-            PropertyReference.PropertyChanged += PropertyReference_OnPropertyChanged;
+        PropertyReference.PropertyChanged += PropertyReference_OnPropertyChanged;
 
-            RefreshValues();
-        }
+        RefreshValues();
+    }
 
     public override void OnFinalize()
     {
-            PropertyReference.PropertyChanged -= PropertyReference_OnPropertyChanged;
+        PropertyReference.PropertyChanged -= PropertyReference_OnPropertyChanged;
 
-            base.OnFinalize();
-        }
+        base.OnFinalize();
+    }
 
     private void PropertyReference_OnPropertyChanged(object? obj, PropertyChangedEventArgs args)
     {
-            RefreshValues();
-        }
+        RefreshValues();
+    }
 
     public override void RefreshValues()
     {
-            base.RefreshValues();
+        base.RefreshValues();
 
-            switch (SettingType)
-            {
-                case SettingType.Bool:
-                    OnPropertyChanged(nameof(BoolValue));
-                    break;
-                case SettingType.Int:
-                    OnPropertyChanged(nameof(IntValue));
-                    break;
-                case SettingType.Float:
-                    OnPropertyChanged(nameof(FloatValue));
-                    break;
-                case SettingType.String:
-                    OnPropertyChanged(nameof(StringValue));
-                    break;
-            }
-            OnPropertyChanged(nameof(TextBoxValue));
+        switch (SettingType)
+        {
+            case SettingType.Bool:
+                OnPropertyChanged(nameof(BoolValue));
+                break;
+            case SettingType.Int:
+                OnPropertyChanged(nameof(IntValue));
+                break;
+            case SettingType.Float:
+                OnPropertyChanged(nameof(FloatValue));
+                break;
+            case SettingType.String:
+                OnPropertyChanged(nameof(StringValue));
+                break;
         }
+        OnPropertyChanged(nameof(TextBoxValue));
+    }
 
     public override string ToString() => Name;
 
     [BUTRDataSourceMethod]
     public void OnHover()
     {
-            if (!string.IsNullOrEmpty(HintText))
-                HintManager.ShowHint(HintText);
-        }
+        if (!string.IsNullOrEmpty(HintText))
+            HintManager.ShowHint(HintText);
+    }
 
     [BUTRDataSourceMethod]
     public void OnHoverEnd()
     {
-            HintManager.HideHint();
-        }
+        HintManager.HideHint();
+    }
 
     [BUTRDataSourceMethod]
     public void OnValueClick()
     {
-            PropertyReference.Value = PropertyReference.Value;
-        }
+        PropertyReference.Value = PropertyReference.Value;
+    }
 }

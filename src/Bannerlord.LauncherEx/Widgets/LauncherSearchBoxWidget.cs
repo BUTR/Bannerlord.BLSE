@@ -12,22 +12,22 @@ internal sealed class LauncherSearchBoxWidget : BrushWidget
         get => _editableTextWidget;
         set
         {
-                if (this.SetField(ref _editableTextWidget, value))
-                {
-                    if (_editableTextWidget is not null)
-                        _editableTextWidget.PropertyChanged -= SearchTextOnPropertyChanged;
+            if (this.SetField(ref _editableTextWidget, value))
+            {
+                if (_editableTextWidget is not null)
+                    _editableTextWidget.PropertyChanged -= SearchTextOnPropertyChanged;
 
-                    if (value is not null)
-                        value.PropertyChanged += SearchTextOnPropertyChanged;
-                }
+                if (value is not null)
+                    value.PropertyChanged += SearchTextOnPropertyChanged;
             }
+        }
     }
 
     private void SearchTextOnPropertyChanged(PropertyOwnerObject propertyOwnerObject, string propertyName, object value)
     {
-            if (propertyName == nameof(TaleWorlds.GauntletUI.BaseTypes.EditableTextWidget.RealText) && value is string searchText)
-                SearchText = searchText;
-        }
+        if (propertyName == nameof(TaleWorlds.GauntletUI.BaseTypes.EditableTextWidget.RealText) && value is string searchText)
+            SearchText = searchText;
+    }
 
     private EditableTextWidget? _editableTextWidget;
 
@@ -36,11 +36,11 @@ internal sealed class LauncherSearchBoxWidget : BrushWidget
         get => _searchText;
         set
         {
-                if (this.SetField(ref _searchText, value) && EditableTextWidget is not null)
-                {
-                    EditableTextWidget.RealText = value;
-                }
+            if (this.SetField(ref _searchText, value) && EditableTextWidget is not null)
+            {
+                EditableTextWidget.RealText = value;
             }
+        }
     }
     private string? _searchText;
 

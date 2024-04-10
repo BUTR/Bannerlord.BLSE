@@ -23,12 +23,12 @@ internal sealed class LauncherToggleButtonWidget : ImageWidget
         get => _toggleIndicator;
         set
         {
-                if (_toggleIndicator != value)
-                {
-                    _toggleIndicator = value;
-                    Refresh();
-                }
+            if (_toggleIndicator != value)
+            {
+                _toggleIndicator = value;
+                Refresh();
             }
+        }
     }
     private Widget? _toggleIndicator;
 
@@ -38,14 +38,14 @@ internal sealed class LauncherToggleButtonWidget : ImageWidget
         get => _isSelected;
         set
         {
-                if (_isSelected != value)
-                {
-                    _isSelected = value;
-                    Refresh();
-                    RefreshState();
-                    OnPropertyChanged(value);
-                }
+            if (_isSelected != value)
+            {
+                _isSelected = value;
+                Refresh();
+                RefreshState();
+                OnPropertyChanged(value);
             }
+        }
     }
     private bool _isSelected;
 
@@ -66,178 +66,178 @@ internal sealed class LauncherToggleButtonWidget : ImageWidget
 
     public LauncherToggleButtonWidget(UIContext context) : base(context)
     {
-            FrictionEnabled = true;
-        }
+        FrictionEnabled = true;
+    }
 
     protected override bool OnPreviewMousePressed()
     {
-            base.OnPreviewMousePressed();
-            return true;
-        }
+        base.OnPreviewMousePressed();
+        return true;
+    }
 
     protected override void RefreshState()
     {
-            base.RefreshState();
-            if (!OverrideDefaultStateSwitchingEnabled)
+        base.RefreshState();
+        if (!OverrideDefaultStateSwitchingEnabled)
+        {
+            if (IsDisabled)
             {
-                if (IsDisabled)
-                {
-                    SetState("Disabled");
-                }
-                else if (IsSelected && DominantSelectedState)
-                {
-                    SetState("Selected");
-                }
-                else if (IsPressed)
-                {
-                    SetState("Pressed");
-                }
-                else if (IsHovered)
-                {
-                    SetState("Hovered");
-                }
-                else if (IsSelected && !DominantSelectedState)
-                {
-                    SetState("Selected");
-                }
-                else
-                {
-                    SetState("Default");
-                }
+                SetState("Disabled");
             }
-
-            if (UpdateChildrenStates)
+            else if (IsSelected && DominantSelectedState)
             {
-                for (var i = 0; i < ChildCount; i++)
+                SetState("Selected");
+            }
+            else if (IsPressed)
+            {
+                SetState("Pressed");
+            }
+            else if (IsHovered)
+            {
+                SetState("Hovered");
+            }
+            else if (IsSelected && !DominantSelectedState)
+            {
+                SetState("Selected");
+            }
+            else
+            {
+                SetState("Default");
+            }
+        }
+
+        if (UpdateChildrenStates)
+        {
+            for (var i = 0; i < ChildCount; i++)
+            {
+                var child = GetChild(i);
+                if (child is not ImageWidget { OverrideDefaultStateSwitchingEnabled: true })
                 {
-                    var child = GetChild(i);
-                    if (child is not ImageWidget { OverrideDefaultStateSwitchingEnabled: true })
-                    {
-                        child.SetState(CurrentState);
-                    }
+                    child.SetState(CurrentState);
                 }
             }
         }
+    }
 
     private void Refresh() => ShowHideToggle();
 
     private void ShowHideToggle()
     {
-            if (ToggleIndicator == null) return;
+        if (ToggleIndicator == null) return;
 
-            if (_isSelected)
-            {
-                ToggleIndicator.Show();
-                return;
-            }
-
-            ToggleIndicator.Hide();
+        if (_isSelected)
+        {
+            ToggleIndicator.Show();
+            return;
         }
+
+        ToggleIndicator.Hide();
+    }
 
     protected override void OnMousePressed()
     {
-            if (_clickState != ButtonClickState.None) return;
+        if (_clickState != ButtonClickState.None) return;
 
-            _clickState = ButtonClickState.HandlingClick;
-            this.SetIsPressed(true);
-            if (!DoNotPassEventsToChildren)
+        _clickState = ButtonClickState.HandlingClick;
+        this.SetIsPressed(true);
+        if (!DoNotPassEventsToChildren)
+        {
+            for (var i = 0; i < ChildCount; i++)
             {
-                for (var i = 0; i < ChildCount; i++)
-                {
-                    var child = GetChild(i);
-                    child?.SetIsPressed(true);
-                }
+                var child = GetChild(i);
+                child?.SetIsPressed(true);
             }
         }
+    }
 
     protected override void OnMouseReleased()
     {
-            if (_clickState != ButtonClickState.HandlingClick) return;
+        if (_clickState != ButtonClickState.HandlingClick) return;
 
-            _clickState = ButtonClickState.None;
-            this.SetIsPressed(false);
-            if (!DoNotPassEventsToChildren)
+        _clickState = ButtonClickState.None;
+        this.SetIsPressed(false);
+        if (!DoNotPassEventsToChildren)
+        {
+            for (var i = 0; i < ChildCount; i++)
             {
-                for (var i = 0; i < ChildCount; i++)
-                {
-                    var child = GetChild(i);
-                    child?.SetIsPressed(false);
-                }
-            }
-
-            if (IsPointInsideMeasuredAreaAndCheckIfVisible())
-            {
-                HandleClick();
+                var child = GetChild(i);
+                child?.SetIsPressed(false);
             }
         }
+
+        if (IsPointInsideMeasuredAreaAndCheckIfVisible())
+        {
+            HandleClick();
+        }
+    }
 
     private bool IsPointInsideMeasuredAreaAndCheckIfVisible() => this.IsPointInsideMeasuredArea() && IsRecursivelyVisible();
 
     protected override void OnMouseAlternatePressed()
     {
-            if (_clickState != ButtonClickState.None) return;
+        if (_clickState != ButtonClickState.None) return;
 
-            _clickState = ButtonClickState.HandlingAlternateClick;
-            this.SetIsPressed(true);
-            if (!DoNotPassEventsToChildren)
+        _clickState = ButtonClickState.HandlingAlternateClick;
+        this.SetIsPressed(true);
+        if (!DoNotPassEventsToChildren)
+        {
+            for (var i = 0; i < ChildCount; i++)
             {
-                for (var i = 0; i < ChildCount; i++)
-                {
-                    var child = GetChild(i);
-                    child?.SetIsPressed(true);
-                }
+                var child = GetChild(i);
+                child?.SetIsPressed(true);
             }
         }
+    }
 
     protected override void OnMouseAlternateReleased()
     {
-            if (_clickState != ButtonClickState.HandlingAlternateClick) return;
+        if (_clickState != ButtonClickState.HandlingAlternateClick) return;
 
-            _clickState = ButtonClickState.None;
-            this.SetIsPressed(false);
-            if (!DoNotPassEventsToChildren)
+        _clickState = ButtonClickState.None;
+        this.SetIsPressed(false);
+        if (!DoNotPassEventsToChildren)
+        {
+            for (var i = 0; i < ChildCount; i++)
             {
-                for (var i = 0; i < ChildCount; i++)
-                {
-                    var child = GetChild(i);
-                    child?.SetIsPressed(false);
-                }
-            }
-
-            if (IsPointInsideMeasuredAreaAndCheckIfVisible())
-            {
-                HandleAlternateClick();
+                var child = GetChild(i);
+                child?.SetIsPressed(false);
             }
         }
+
+        if (IsPointInsideMeasuredAreaAndCheckIfVisible())
+        {
+            HandleAlternateClick();
+        }
+    }
 
     private void HandleClick()
     {
-            foreach (var action in ClickEventHandlers)
-            {
-                action(this);
-            }
-
-            if (!ManualToggle)
-            {
-                IsSelected = !IsSelected;
-            }
-
-            OnClick();
-            EventFired("Click", Array.Empty<object>());
-            if (Context.EventManager.Time - _lastClickTime < _maxDoubleClickDeltaTimeInSeconds)
-            {
-                EventFired("DoubleClick", Array.Empty<object>());
-                return;
-            }
-
-            _lastClickTime = Context.EventManager.Time;
+        foreach (var action in ClickEventHandlers)
+        {
+            action(this);
         }
+
+        if (!ManualToggle)
+        {
+            IsSelected = !IsSelected;
+        }
+
+        OnClick();
+        EventFired("Click", Array.Empty<object>());
+        if (Context.EventManager.Time - _lastClickTime < _maxDoubleClickDeltaTimeInSeconds)
+        {
+            EventFired("DoubleClick", Array.Empty<object>());
+            return;
+        }
+
+        _lastClickTime = Context.EventManager.Time;
+    }
 
     private void HandleAlternateClick()
     {
-            OnAlternateClick();
-            EventFired("AlternateClick", Array.Empty<object>());
-        }
+        OnAlternateClick();
+        EventFired("AlternateClick", Array.Empty<object>());
+    }
 
     private void OnClick() { }
     private void OnAlternateClick() { }

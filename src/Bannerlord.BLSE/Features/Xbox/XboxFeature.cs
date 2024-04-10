@@ -15,9 +15,9 @@ public static class XboxFeature
 
     public static void Enable(Harmony harmony)
     {
-            if (Path.GetFileName(Directory.GetCurrentDirectory()) != "Gaming.Desktop.x64_Shipping_Client")
-                return;
+        if (Path.GetFileName(Directory.GetCurrentDirectory()) != "Gaming.Desktop.x64_Shipping_Client")
+            return;
 
-            ModulePatch.Enable(harmony);
-        }
+        ModulePatch.Enable(harmony);
+    }
 }

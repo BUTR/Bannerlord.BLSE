@@ -9,18 +9,18 @@ public sealed class LauncherExData
 {
     public static LauncherExData? FromUserDataXml(string path)
     {
-            var xmlSerializer = new XmlSerializer(typeof(LauncherExData), new XmlRootAttribute("UserData"));
-            try
-            {
-                using var xmlReader = XmlReader.Create(path);
-                return (LauncherExData) xmlSerializer.Deserialize(xmlReader);
-            }
-            catch (Exception e)
-            {
-                Trace.WriteLine(e);
-                return null;
-            }
+        var xmlSerializer = new XmlSerializer(typeof(LauncherExData), new XmlRootAttribute("UserData"));
+        try
+        {
+            using var xmlReader = XmlReader.Create(path);
+            return (LauncherExData) xmlSerializer.Deserialize(xmlReader);
         }
+        catch (Exception e)
+        {
+            Trace.WriteLine(e);
+            return null;
+        }
+    }
 
     public bool AutomaticallyCheckForUpdates { get; set; }
     public bool FixCommonIssues { get; set; }
@@ -48,16 +48,16 @@ public sealed class LauncherExData
         bool disableCatchAutoGenExceptions,
         bool useVanillaCrashHandler)
     {
-            AutomaticallyCheckForUpdates = automaticallyCheckForUpdates;
-            FixCommonIssues = fixCommonIssues;
-            CompactModuleList = compactModuleList;
-            DisableBinaryCheck = disableBinaryCheck;
-            HideRandomImage = hideRandomImage;
-            BetaSorting = betaSorting;
-            BigMode = bigMode;
-            EnableDPIScaling = enableDPIScaling;
-            DisableCrashHandlerWhenDebuggerIsAttached = disableCrashHandlerWhenDebuggerIsAttached;
-            DisableCatchAutoGenExceptions = disableCatchAutoGenExceptions;
-            UseVanillaCrashHandler = useVanillaCrashHandler;
-        }
+        AutomaticallyCheckForUpdates = automaticallyCheckForUpdates;
+        FixCommonIssues = fixCommonIssues;
+        CompactModuleList = compactModuleList;
+        DisableBinaryCheck = disableBinaryCheck;
+        HideRandomImage = hideRandomImage;
+        BetaSorting = betaSorting;
+        BigMode = bigMode;
+        EnableDPIScaling = enableDPIScaling;
+        DisableCrashHandlerWhenDebuggerIsAttached = disableCrashHandlerWhenDebuggerIsAttached;
+        DisableCatchAutoGenExceptions = disableCatchAutoGenExceptions;
+        UseVanillaCrashHandler = useVanillaCrashHandler;
+    }
 }

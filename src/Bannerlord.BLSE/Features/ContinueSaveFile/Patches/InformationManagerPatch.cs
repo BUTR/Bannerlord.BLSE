@@ -11,18 +11,18 @@ internal static class InformationManagerPatch
 
     public static bool Enable(Harmony harmony)
     {
-            return harmony.TryPatch(
-                original: AccessTools2.Method(typeof(InformationManager), "ShowInquiry"),
-                prefix: AccessTools2.Method(typeof(InformationManagerPatch), nameof(Prefix)));
-        }
+        return harmony.TryPatch(
+            original: AccessTools2.Method(typeof(InformationManager), "ShowInquiry"),
+            prefix: AccessTools2.Method(typeof(InformationManagerPatch), nameof(Prefix)));
+    }
 
     private static bool Prefix(InquiryData data)
     {
-            if (SkipChange)
-            {
-                data.AffirmativeAction?.Invoke();
-                return false;
-            }
-            return true;
+        if (SkipChange)
+        {
+            data.AffirmativeAction?.Invoke();
+            return false;
         }
+        return true;
+    }
 }
