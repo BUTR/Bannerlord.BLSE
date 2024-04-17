@@ -124,6 +124,20 @@
     </Styles>
   </Brush>
 
+  <Brush Name="Launcher.Info">
+    <Layers>
+      <BrushLayer Name="Default" />
+    </Layers>
+    <Styles>
+      <Style Name="Default">
+        <BrushLayer Name="Default" Sprite="caution" Color="#99EB34FF" />
+      </Style>
+      <Style Name="Hovered">
+        <BrushLayer Name="Default" Sprite="caution" Color="#FFFFFFFF" />
+      </Style>
+    </Styles>
+  </Brush>
+
   <Brush Name="Launcher.Warning">
     <Layers>
       <BrushLayer Name="Default" />

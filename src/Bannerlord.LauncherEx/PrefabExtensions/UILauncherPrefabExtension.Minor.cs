@@ -22,10 +22,10 @@ internal sealed class UILauncherPrefabExtension1 : PrefabExtensionInsertAsSiblin
 
     public UILauncherPrefabExtension1()
     {
-            XmlDocument.LoadXml(@$"
-<TextWidget WidthSizePolicy=""StretchToParent"" HeightSizePolicy=""CoverChildren"" VerticalAlignment=""Bottom"" Brush=""Launcher.Version.Text"" MarginLeft=""7"" MarginBottom=""@BLSEVersionMarginBottom"" IsVisible=""@ShowBUTRLoaderVersionText"" Text=""@BLSEVersionText""/>
-");
-        }
+        XmlDocument.LoadXml("""
+<TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" VerticalAlignment="Bottom" Brush="Launcher.Version.Text" MarginLeft="7" MarginBottom="@BLSEVersionMarginBottom" IsVisible="@ShowBUTRLoaderVersionText" Text="@BLSEVersionText"/>
+""");
+    }
 
     public override XmlDocument GetPrefabExtension() => XmlDocument;
 }
@@ -42,10 +42,10 @@ internal sealed class UILauncherPrefabExtension2 : PrefabExtensionInsertAsSiblin
 
     public UILauncherPrefabExtension2()
     {
-            XmlDocument.LoadXml(@$"
-<TextWidget WidthSizePolicy=""StretchToParent"" HeightSizePolicy=""CoverChildren"" VerticalAlignment=""Bottom"" Brush=""Launcher.Version.Text"" MarginLeft=""7"" MarginBottom=""@BUTRLoaderVersionMarginBottom"" IsVisible=""@ShowBUTRLoaderVersionText"" Text=""@BUTRLoaderVersionText""/>
-");
-        }
+        XmlDocument.LoadXml("""
+<TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" VerticalAlignment="Bottom" Brush="Launcher.Version.Text" MarginLeft="7" MarginBottom="@BUTRLoaderVersionMarginBottom" IsVisible="@ShowBUTRLoaderVersionText" Text="@BUTRLoaderVersionText"/>
+""");
+    }
 
     public override XmlDocument GetPrefabExtension() => XmlDocument;
 }
@@ -129,20 +129,20 @@ internal sealed class UILauncherPrefabExtension19 : PrefabExtensionCustomPatch<X
 
     public override void Apply(XmlNode node)
     {
-            foreach (var selectNode in node.OwnerDocument?.SelectNodes("//*")?.OfType<XmlNode>() ?? Enumerable.Empty<XmlNode>())
+        foreach (var selectNode in node.OwnerDocument?.SelectNodes("//*")?.OfType<XmlNode>() ?? Enumerable.Empty<XmlNode>())
+        {
+            foreach (var attribute in selectNode.Attributes?.OfType<XmlAttribute>() ?? Enumerable.Empty<XmlAttribute>())
             {
-                foreach (var attribute in selectNode.Attributes?.OfType<XmlAttribute>() ?? Enumerable.Empty<XmlAttribute>())
+                attribute.Value = attribute.Value switch
                 {
-                    attribute.Value = attribute.Value switch
-                    {
-                        $"@{nameof(LauncherVM.IsSingleplayer)}" => $"@{nameof(LauncherVMMixin.IsSingleplayer2)}",
-                        $"@{nameof(LauncherVM.IsMultiplayer)}" => $"@{nameof(LauncherVMMixin.IsMultiplayer2)}",
-                        $"@{"IsDigitalCompanion"}" => $"@{nameof(LauncherVMMixin.IsDigitalCompanion2)}",
-                        _ => attribute.Value
-                    };
-                }
+                    $"@{nameof(LauncherVM.IsSingleplayer)}" => $"@{nameof(LauncherVMMixin.IsSingleplayer2)}",
+                    $"@{nameof(LauncherVM.IsMultiplayer)}" => $"@{nameof(LauncherVMMixin.IsMultiplayer2)}",
+                    $"@{"IsDigitalCompanion"}" => $"@{nameof(LauncherVMMixin.IsDigitalCompanion2)}",
+                    _ => attribute.Value
+                };
             }
         }
+    }
 }
 
 internal sealed class UILauncherPrefabExtension30 : PrefabExtensionSetAttributePatch
@@ -161,19 +161,19 @@ internal sealed class UILauncherPrefabExtension31 : PrefabExtensionCustomPatch<X
 
     public override void Apply(XmlNode node)
     {
-            foreach (var selectNode in node.OwnerDocument?.SelectNodes("//*")?.OfType<XmlNode>() ?? Enumerable.Empty<XmlNode>())
+        foreach (var selectNode in node.OwnerDocument?.SelectNodes("//*")?.OfType<XmlNode>() ?? Enumerable.Empty<XmlNode>())
+        {
+            foreach (var attribute in selectNode.Attributes?.OfType<XmlAttribute>() ?? Enumerable.Empty<XmlAttribute>())
             {
-                foreach (var attribute in selectNode.Attributes?.OfType<XmlAttribute>() ?? Enumerable.Empty<XmlAttribute>())
-                {
-                    if (attribute.Name != "Text") continue;
-                    if (!attribute.Value.StartsWith("@")) continue;
-                    if (!attribute.Value.EndsWith("Text")) continue;
-                    if (attribute.Value == "@Text") continue;
-                    if (attribute.Value == "@VersionText") continue;
-                    attribute.Value = $"{attribute.Value}2";
-                }
+                if (attribute.Name != "Text") continue;
+                if (!attribute.Value.StartsWith("@")) continue;
+                if (!attribute.Value.EndsWith("Text")) continue;
+                if (attribute.Value == "@Text") continue;
+                if (attribute.Value == "@VersionText") continue;
+                attribute.Value = $"{attribute.Value}2";
             }
         }
+    }
 }
 
 internal sealed class UILauncherPrefabExtension34 : PrefabExtensionCustomPatch<XmlNode>
@@ -183,17 +183,17 @@ internal sealed class UILauncherPrefabExtension34 : PrefabExtensionCustomPatch<X
 
     public override void Apply(XmlNode node)
     {
-            foreach (var selectNode in node.OwnerDocument?.SelectNodes("//*")?.OfType<XmlNode>() ?? Enumerable.Empty<XmlNode>())
+        foreach (var selectNode in node.OwnerDocument?.SelectNodes("//*")?.OfType<XmlNode>() ?? Enumerable.Empty<XmlNode>())
+        {
+            foreach (var attribute in selectNode.Attributes?.OfType<XmlAttribute>() ?? Enumerable.Empty<XmlAttribute>())
             {
-                foreach (var attribute in selectNode.Attributes?.OfType<XmlAttribute>() ?? Enumerable.Empty<XmlAttribute>())
-                {
-                    if (attribute.Name != "Brush") continue;
-                    if (attribute.Value != "Launcher.PlayButton.Text") continue;
-                    if (attribute.Value == "@VersionText") continue;
-                    attribute.Value = "Launcher.Button.Text";
-                }
+                if (attribute.Name != "Brush") continue;
+                if (attribute.Value != "Launcher.PlayButton.Text") continue;
+                if (attribute.Value == "@VersionText") continue;
+                attribute.Value = "Launcher.Button.Text";
             }
         }
+    }
 }
 
 internal sealed class UILauncherPrefabExtension32 : PrefabExtensionInsertAsSiblingPatch
@@ -205,10 +205,10 @@ internal sealed class UILauncherPrefabExtension32 : PrefabExtensionInsertAsSibli
 
     public UILauncherPrefabExtension32()
     {
-            XmlDocument.LoadXml(@"
-<Launcher.MessageBox DataSource=""{MessageBox}""/>
-");
-        }
+        XmlDocument.LoadXml("""
+<Launcher.MessageBox DataSource="{MessageBox}"/>
+""");
+    }
 
     public override XmlDocument GetPrefabExtension() => XmlDocument;
 }

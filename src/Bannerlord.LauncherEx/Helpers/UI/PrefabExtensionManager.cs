@@ -62,167 +62,167 @@ internal static class PrefabExtensionManager
 
     public static void RegisterPatch(string movie, Action<XmlDocument> patcher)
     {
-            if (string.IsNullOrEmpty(movie))
+        if (string.IsNullOrEmpty(movie))
+        {
+            return;
+        }
+
+        MoviePatches.GetOrAdd(movie, _ => new List<Action<XmlDocument>>()).Add(patcher);
+    }
+
+    public static void RegisterPatch(string movie, string? xpath, Action<XmlNode> patcher)
+    {
+        RegisterPatch(movie, document =>
+        {
+            var node = document.SelectSingleNode(xpath ?? string.Empty);
+            if (node is null)
             {
                 return;
             }
 
-            MoviePatches.GetOrAdd(movie, _ => new List<Action<XmlDocument>>()).Add(patcher);
-        }
-
-    public static void RegisterPatch(string movie, string? xpath, Action<XmlNode> patcher)
-    {
-            RegisterPatch(movie, document =>
-            {
-                var node = document.SelectSingleNode(xpath ?? string.Empty);
-                if (node is null)
-                {
-                    return;
-                }
-
-                patcher(node);
-            });
-        }
+            patcher(node);
+        });
+    }
 
     public static void RegisterPatch(string movie, string? xpath, PrefabExtensionCustomPatch<XmlNode> patcher)
     {
-            RegisterPatch(movie, document =>
+        RegisterPatch(movie, document =>
+        {
+            var node = document.SelectSingleNode(xpath ?? string.Empty);
+            if (node is null)
             {
-                var node = document.SelectSingleNode(xpath ?? string.Empty);
-                if (node is null)
-                {
-                    return;
-                }
+                return;
+            }
 
-                patcher.Apply(node);
-            });
-        }
+            patcher.Apply(node);
+        });
+    }
 
     public static void RegisterPatch(string movie, string? xpath, PrefabExtensionSetAttributePatch patch)
     {
-            RegisterPatch(movie, xpath, node =>
+        RegisterPatch(movie, xpath, node =>
+        {
+            var ownerDocument = node as XmlDocument ?? node.OwnerDocument;
+            if (ownerDocument is null)
             {
-                var ownerDocument = node as XmlDocument ?? node.OwnerDocument;
-                if (ownerDocument is null)
-                {
-                    return;
-                }
+                return;
+            }
 
-                if (node.NodeType != XmlNodeType.Element)
-                {
-                    return;
-                }
+            if (node.NodeType != XmlNodeType.Element)
+            {
+                return;
+            }
 
-                if (node.Attributes![patch.Attribute] is null)
-                {
-                    var attribute = ownerDocument.CreateAttribute(patch.Attribute);
-                    node.Attributes.Append(attribute);
-                }
+            if (node.Attributes![patch.Attribute] is null)
+            {
+                var attribute = ownerDocument.CreateAttribute(patch.Attribute);
+                node.Attributes.Append(attribute);
+            }
 
-                node.Attributes![patch.Attribute].Value = patch.Value;
-            });
-        }
+            node.Attributes![patch.Attribute].Value = patch.Value;
+        });
+    }
 
     public static void RegisterPatch(string movie, string? xpath, PrefabExtensionSetAttributesPatch patch)
     {
-            RegisterPatch(movie, xpath, node =>
+        RegisterPatch(movie, xpath, node =>
+        {
+            var ownerDocument = node as XmlDocument ?? node.OwnerDocument;
+            if (ownerDocument is null)
             {
-                var ownerDocument = node as XmlDocument ?? node.OwnerDocument;
-                if (ownerDocument is null)
+                return;
+            }
+
+            if (node.NodeType != XmlNodeType.Element)
+            {
+                return;
+            }
+
+            foreach (var (attribute, value) in patch.Attributes)
+            {
+                if (node.Attributes![attribute] is null)
                 {
-                    return;
+                    var attr = ownerDocument.CreateAttribute(attribute);
+                    node.Attributes.Append(attr);
                 }
 
-                if (node.NodeType != XmlNodeType.Element)
-                {
-                    return;
-                }
-
-                foreach (var (attribute, value) in patch.Attributes)
-                {
-                    if (node.Attributes![attribute] is null)
-                    {
-                        var attr = ownerDocument.CreateAttribute(attribute);
-                        node.Attributes.Append(attr);
-                    }
-
-                    node.Attributes![attribute].Value = value;
-                }
-            });
-        }
+                node.Attributes![attribute].Value = value;
+            }
+        });
+    }
 
     public static void RegisterPatch(string movie, string? xpath, PrefabExtensionReplacePatch patch)
     {
-            RegisterPatch(movie, xpath, node =>
+        RegisterPatch(movie, xpath, node =>
+        {
+            var ownerDocument = node as XmlDocument ?? node.OwnerDocument;
+            if (ownerDocument is null)
             {
-                var ownerDocument = node as XmlDocument ?? node.OwnerDocument;
-                if (ownerDocument is null)
-                {
-                    return;
-                }
+                return;
+            }
 
-                if (node.ParentNode is null)
-                {
-                    return;
-                }
+            if (node.ParentNode is null)
+            {
+                return;
+            }
 
-                var extensionNode = patch.GetPrefabExtension().DocumentElement;
-                if (extensionNode is null)
-                {
-                    return;
-                }
+            var extensionNode = patch.GetPrefabExtension().DocumentElement;
+            if (extensionNode is null)
+            {
+                return;
+            }
 
-                var importedExtensionNode = ownerDocument.ImportNode(extensionNode, true);
+            var importedExtensionNode = ownerDocument.ImportNode(extensionNode, true);
 
-                node.ParentNode.ReplaceChild(importedExtensionNode, node);
-            });
-        }
+            node.ParentNode.ReplaceChild(importedExtensionNode, node);
+        });
+    }
 
     public static void RegisterPatch(string movie, string? xpath, PrefabExtensionInsertAsSiblingPatch patch)
     {
-            RegisterPatch(movie, xpath, node =>
+        RegisterPatch(movie, xpath, node =>
+        {
+            var ownerDocument = node as XmlDocument ?? node.OwnerDocument;
+            if (ownerDocument is null)
             {
-                var ownerDocument = node as XmlDocument ?? node.OwnerDocument;
-                if (ownerDocument is null)
-                {
-                    return;
-                }
+                return;
+            }
 
-                if (node.ParentNode is null)
-                {
-                    return;
-                }
+            if (node.ParentNode is null)
+            {
+                return;
+            }
 
-                var extensionNode = patch.GetPrefabExtension().DocumentElement;
-                if (extensionNode is null)
-                {
-                    return;
-                }
+            var extensionNode = patch.GetPrefabExtension().DocumentElement;
+            if (extensionNode is null)
+            {
+                return;
+            }
 
-                var importedExtensionNode = ownerDocument.ImportNode(extensionNode, true);
+            var importedExtensionNode = ownerDocument.ImportNode(extensionNode, true);
 
-                switch (patch.Type)
-                {
-                    case PrefabExtensionInsertAsSiblingPatch.InsertType.Append:
-                        node.ParentNode.InsertAfter(importedExtensionNode, node);
-                        break;
+            switch (patch.Type)
+            {
+                case PrefabExtensionInsertAsSiblingPatch.InsertType.Append:
+                    node.ParentNode.InsertAfter(importedExtensionNode, node);
+                    break;
 
-                    case PrefabExtensionInsertAsSiblingPatch.InsertType.Prepend:
-                        node.ParentNode.InsertBefore(importedExtensionNode, node);
-                        break;
-                }
-            });
-        }
+                case PrefabExtensionInsertAsSiblingPatch.InsertType.Prepend:
+                    node.ParentNode.InsertBefore(importedExtensionNode, node);
+                    break;
+            }
+        });
+    }
 
 
     public static void ProcessMovieIfNeeded(string movie, XmlDocument document)
     {
-            if (!MoviePatches.TryGetValue(movie, out var patches))
-                return;
+        if (!MoviePatches.TryGetValue(movie, out var patches))
+            return;
 
-            foreach (var patch in patches)
-            {
-                patch(document);
-            }
+        foreach (var patch in patches)
+        {
+            patch(document);
         }
+    }
 }

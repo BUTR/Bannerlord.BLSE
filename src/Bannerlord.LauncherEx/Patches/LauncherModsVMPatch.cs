@@ -16,21 +16,21 @@ internal static class LauncherModsVMPatch
 
     public static bool Enable(Harmony harmony)
     {
-            var res1 = harmony.TryPatch(
-                AccessTools2.Method(typeof(LauncherModsVM), "LoadSubModules"),
-                prefix: AccessTools2.DeclaredMethod(typeof(LauncherModsVMPatch), nameof(LoadSubModulesPrefix)));
+        var res1 = harmony.TryPatch(
+            AccessTools2.Method(typeof(LauncherModsVM), "LoadSubModules"),
+            prefix: AccessTools2.DeclaredMethod(typeof(LauncherModsVMPatch), nameof(LoadSubModulesPrefix)));
 
-            return true;
-        }
+        return true;
+    }
 
     public static bool LoadSubModulesPrefix(LauncherModsVM __instance)
     {
-            if (_userData is null)
-                return true;
+        if (_userData is null)
+            return true;
 
-            if (__instance.GetMixin<LauncherModsVMMixin, LauncherModsVM>() is { } mixin)
-                mixin.Initialize();
+        if (__instance.GetMixin<LauncherModsVMMixin, LauncherModsVM>() is { } mixin)
+            mixin.Initialize();
 
-            return false;
-        }
+        return false;
+    }
 }

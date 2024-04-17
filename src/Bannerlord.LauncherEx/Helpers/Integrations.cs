@@ -12,10 +12,10 @@ public static class Integrations
 
     static Integrations()
     {
-            if (Process.GetCurrentProcess().ParentProcess() is { MainModule.FileVersionInfo.OriginalFilename: "ModOrganizer.exe", MainModule.FileName: { } path })
-            {
-                IsModOrganizer2 = true;
-                ModOrganizer2Path = Path.GetDirectoryName(path);
-            }
+        if (Process.GetCurrentProcess().ParentProcess() is { MainModule.FileVersionInfo.OriginalFilename: "ModOrganizer.exe", MainModule.FileName: { } path })
+        {
+            IsModOrganizer2 = true;
+            ModOrganizer2Path = Path.GetDirectoryName(path);
         }
+    }
 }

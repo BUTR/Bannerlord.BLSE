@@ -83,104 +83,104 @@ internal sealed class BUTRLauncherSaveVM : BUTRViewModel
 
     public BUTRLauncherSaveVM(SaveMetadata saveMetadata, Action<BUTRLauncherSaveVM> select, Func<string, ModuleInfoExtended?> getModuleById, Func<string, ModuleInfoExtended?> getModuleByName)
     {
-            _saveMetadata = saveMetadata;
-            _select = select;
-            _getModuleById = getModuleById;
-            _getModuleByName = getModuleByName;
+        _saveMetadata = saveMetadata;
+        _select = select;
+        _getModuleById = getModuleById;
+        _getModuleByName = getModuleByName;
 
-            _name = _saveMetadata.Name;
-            _version = _saveMetadata.TryGetValue("ApplicationVersion", out var appVersion) && !string.IsNullOrEmpty(appVersion) ? string.Join(".", appVersion.Split('.').Take(3)) : "Save Old";
-            _characterName = _saveMetadata.TryGetValue("CharacterName", out var characterName) && !string.IsNullOrEmpty(characterName) ? characterName : "Save Old";
-            _level = _saveMetadata.TryGetValue("MainHeroLevel", out var level) && !string.IsNullOrEmpty(level) ? level : "Save Old";
-            _days = _saveMetadata.TryGetValue("DayLong", out var daysr) && !string.IsNullOrEmpty(daysr) && float.TryParse(daysr, out var days) ? days.ToString("0") : "Save Old";
-            _createdAt = _saveMetadata.TryGetValue("CreationTime", out var ctr) && !string.IsNullOrEmpty(ctr) && long.TryParse(ctr, out var ticks) ? new DateTime(ticks).ToString("d") : "Save Old";
+        _name = _saveMetadata.Name;
+        _version = _saveMetadata.TryGetValue("ApplicationVersion", out var appVersion) && !string.IsNullOrEmpty(appVersion) ? string.Join(".", appVersion.Split('.').Take(3)) : "Save Old";
+        _characterName = _saveMetadata.TryGetValue("CharacterName", out var characterName) && !string.IsNullOrEmpty(characterName) ? characterName : "Save Old";
+        _level = _saveMetadata.TryGetValue("MainHeroLevel", out var level) && !string.IsNullOrEmpty(level) ? level : "Save Old";
+        _days = _saveMetadata.TryGetValue("DayLong", out var daysr) && !string.IsNullOrEmpty(daysr) && float.TryParse(daysr, out var days) ? days.ToString("0") : "Save Old";
+        _createdAt = _saveMetadata.TryGetValue("CreationTime", out var ctr) && !string.IsNullOrEmpty(ctr) && long.TryParse(ctr, out var ticks) ? new DateTime(ticks).ToString("d") : "Save Old";
 
-            ValidateSave();
-        }
+        ValidateSave();
+    }
 
     private void ValidateSave()
     {
-            var changeset = _saveMetadata.GetChangeSet();
-            var modules = _saveMetadata.GetModules().Select(x =>
-            {
-                var version = _saveMetadata.GetModuleVersion(x);
-                if (version.ChangeSet == changeset)
-                    version = new ApplicationVersion(version.ApplicationVersionType, version.Major, version.Minor, version.Revision, 0);
-                return new ModuleListEntry(x, version);
-            }).ToArray();
+        var changeset = _saveMetadata.GetChangeSet();
+        var modules = _saveMetadata.GetModules().Select(x =>
+        {
+            var version = _saveMetadata.GetModuleVersion(x);
+            if (version.ChangeSet == changeset)
+                version = new ApplicationVersion(version.ApplicationVersionType, version.Major, version.Minor, version.Revision, 0);
+            return new ModuleListEntry(x, version);
+        }).ToArray();
 
-            var existingModules = modules.Select(x => _getModuleByName(x.Name)).OfType<ModuleInfoExtended>().ToArray();
-            var nameDuplicates = existingModules.Select(x => x.Name).GroupBy(i => i).Where(g => g.Count() > 1).Select(g => g.Key).ToList();
-            if (nameDuplicates.Count > 0)
+        var existingModules = modules.Select(x => _getModuleByName(x.Name)).OfType<ModuleInfoExtended>().ToArray();
+        var nameDuplicates = existingModules.Select(x => x.Name).GroupBy(i => i).Where(g => g.Count() > 1).Select(g => g.Key).ToList();
+        if (nameDuplicates.Count > 0)
+        {
+            HasError = true;
+            ErrorHint = new LauncherHintVM(new BUTRTextObject("{=vCwH9226}Duplicate Module Names:{NL}{MODULENAMES}")
+                .SetTextVariable("MODULENAMES", string.Join("\n", nameDuplicates)).ToString());
+            return;
+        }
+        var existingModulesByName = existingModules.ToDictionary(x => x.Name, x => x);
+
+        ModuleListCode = $"_MODULES_*{string.Join("*", existingModules.Select(x => x.Id))}*_MODULES_";
+
+        var missingNames = modules.Select(x => x.Name).Except(existingModulesByName.Keys).ToArray();
+        var loadOrderIssues = LoadOrderChecker.IsLoadOrderCorrect(existingModules).ToList();
+
+        //LoadOrderHint = new LauncherHintVM($"Load Order:\n{string.Join("\n", existingModules.Select(x => x.Id))}\n\nUnknown Mod Names:{string.Join("\n", missingNames)}");
+        LoadOrderHint = new LauncherHintVM(new BUTRTextObject("{=sd6M4KRd}Load Order:{NL}{LOADORDER}")
+            .SetTextVariable("LOADORDER", string.Join("\n", modules.Select(x => _getModuleByName(x.Name)?.Id ?? $"{x.Name} {new BUTRTextObject("{=kxqLbSqe}(Unknown ID)")}"))).ToString());
+
+        if (missingNames.Length > 0 || loadOrderIssues.Count > 0)
+        {
+            var text = string.Empty;
+            if (loadOrderIssues.Count > 0)
             {
-                HasError = true;
-                ErrorHint = new LauncherHintVM(new BUTRTextObject("{=vCwH9226}Duplicate Module Names:{NL}{MODULENAMES}")
-                    .SetTextVariable("MODULENAMES", string.Join("\n", nameDuplicates)).ToString());
-                return;
+                text += new BUTRTextObject("{=HvvA78sZ}Load Order Issues:{NL}{LOADORDERISSUES}")
+                    .SetTextVariable("LOADORDERISSUES", string.Join("\n\n", loadOrderIssues));
+                text += missingNames.Length > 0 ? "\n\n\n" : string.Empty;
             }
-            var existingModulesByName = existingModules.ToDictionary(x => x.Name, x => x);
-
-            ModuleListCode = $"_MODULES_*{string.Join("*", existingModules.Select(x => x.Id))}*_MODULES_";
-
-            var missingNames = modules.Select(x => x.Name).Except(existingModulesByName.Keys).ToArray();
-            var loadOrderIssues = LoadOrderChecker.IsLoadOrderCorrect(existingModules).ToList();
-
-            //LoadOrderHint = new LauncherHintVM($"Load Order:\n{string.Join("\n", existingModules.Select(x => x.Id))}\n\nUnknown Mod Names:{string.Join("\n", missingNames)}");
-            LoadOrderHint = new LauncherHintVM(new BUTRTextObject("{=sd6M4KRd}Load Order:{NL}{LOADORDER}")
-                .SetTextVariable("LOADORDER", string.Join("\n", modules.Select(x => _getModuleByName(x.Name)?.Id ?? $"{x.Name} {new BUTRTextObject("{=kxqLbSqe}(Unknown ID)")}"))).ToString());
-
-            if (missingNames.Length > 0 || loadOrderIssues.Count > 0)
+            if (missingNames.Length > 0)
             {
-                var text = string.Empty;
-                if (loadOrderIssues.Count > 0)
-                {
-                    text += new BUTRTextObject("{=HvvA78sZ}Load Order Issues:{NL}{LOADORDERISSUES}")
-                        .SetTextVariable("LOADORDERISSUES", string.Join("\n\n", loadOrderIssues));
-                    text += missingNames.Length > 0 ? "\n\n\n" : string.Empty;
-                }
-                if (missingNames.Length > 0)
-                {
-                    text += new BUTRTextObject("{=GtDRbC3m}Missing Modules:{NL}{MODULES}")
-                        .SetTextVariable("MODULES", string.Join("\n", missingNames)).ToString();
-                }
-
-                HasError = true;
-                ErrorHint = new LauncherHintVM(text);
-                return;
+                text += new BUTRTextObject("{=GtDRbC3m}Missing Modules:{NL}{MODULES}")
+                    .SetTextVariable("MODULES", string.Join("\n", missingNames)).ToString();
             }
 
-            var issues = new List<string>();
-            foreach (var module in modules)
+            HasError = true;
+            ErrorHint = new LauncherHintVM(text);
+            return;
+        }
+
+        var issues = new List<string>();
+        foreach (var module in modules)
+        {
+            var existingModule = existingModulesByName[module.Name];
+            if (module.Version != existingModule.Version)
             {
-                var existingModule = existingModulesByName[module.Name];
-                if (module.Version != existingModule.Version)
-                {
-                    issues.Add(new BUTRTextObject("{=nYVWoomO}{MODULEID}. Required {REQUIREDVERSION}. Actual {ACTUALVERSION}")
-                        .SetTextVariable("MODULEID", existingModule.Id)
-                        .SetTextVariable("REQUIREDVERSION", module.Version.ToString())
-                        .SetTextVariable("ACTUALVERSION", existingModule.Version.ToString()).ToString());
-                }
-            }
-            if (issues.Count > 0)
-            {
-                HasWarning = true;
-                WarningHint = new LauncherHintVM(new BUTRTextObject("{=BuMom4Jt}Mismatched Module Versions:{NL}{MODULEVERSIONS}")
-                    .SetTextVariable("MODULEVERSIONS", string.Join("\n\n", issues)).ToString());
+                issues.Add(new BUTRTextObject("{=nYVWoomO}{MODULEID}. Required {REQUIREDVERSION}. Actual {ACTUALVERSION}")
+                    .SetTextVariable("MODULEID", existingModule.Id)
+                    .SetTextVariable("REQUIREDVERSION", module.Version.ToString())
+                    .SetTextVariable("ACTUALVERSION", existingModule.Version.ToString()).ToString());
             }
         }
+        if (issues.Count > 0)
+        {
+            HasWarning = true;
+            WarningHint = new LauncherHintVM(new BUTRTextObject("{=BuMom4Jt}Mismatched Module Versions:{NL}{MODULEVERSIONS}")
+                .SetTextVariable("MODULEVERSIONS", string.Join("\n\n", issues)).ToString());
+        }
+    }
 
     [BUTRDataSourceMethod]
     public void ExecuteSelect()
     {
-            _select(this);
-        }
+        _select(this);
+    }
 
     [BUTRDataSourceMethod]
     public void ExecuteOpen()
     {
-            var saveFilePath = _launcherManagerHandler.GetSaveFilePath(_saveMetadata.Name);
-            if (string.IsNullOrEmpty(saveFilePath) || !File.Exists(saveFilePath)) return;
+        var saveFilePath = _launcherManagerHandler.GetSaveFilePath(_saveMetadata.Name);
+        if (string.IsNullOrEmpty(saveFilePath) || !File.Exists(saveFilePath)) return;
 
-            Process.Start("explorer.exe", $"/select,\"{saveFilePath}\"");
-        }
+        Process.Start("explorer.exe", $"/select,\"{saveFilePath}\"");
+    }
 }

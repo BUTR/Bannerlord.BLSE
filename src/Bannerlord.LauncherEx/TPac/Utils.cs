@@ -9,26 +9,26 @@ internal static class Utils
 {
     public static string ReadSizedString(this BinaryReader stream)
     {
-            var num = stream.ReadInt32();
-            if (num == 0)
-            {
-                return string.Empty;
-            }
-
-            var array = stream.ReadBytes(num);
-            return Encoding.UTF8.GetString(array);
+        var num = stream.ReadInt32();
+        if (num == 0)
+        {
+            return string.Empty;
         }
+
+        var array = stream.ReadBytes(num);
+        return Encoding.UTF8.GetString(array);
+    }
 
     public static List<string> ReadStringList(this BinaryReader stream)
     {
-            var num = stream.ReadInt32();
-            var list = new List<string>(num);
-            for (var i = 0; i < num; i++)
-            {
-                list.Add(stream.ReadSizedString());
-            }
-            return list;
+        var num = stream.ReadInt32();
+        var list = new List<string>(num);
+        for (var i = 0; i < num; i++)
+        {
+            list.Add(stream.ReadSizedString());
         }
+        return list;
+    }
 
     public static Guid ReadGuid(this BinaryReader stream) => new Guid(stream.ReadBytes(16));
 

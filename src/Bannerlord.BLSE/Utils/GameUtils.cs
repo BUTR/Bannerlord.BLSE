@@ -17,11 +17,11 @@ internal static class GameUtils
 
     public static string[]? GetModulesNames()
     {
-            var iUtil = IUtilField.Value?.Invoke();
-            // Don't use Trace, as this is used in critical code like AssemblyResolver.
-            // The less we trigger custom code, the better
-            // A custom Trace listener will break the resolver if it will trigger a recursive assembly resolution
-            var getModulesCode = AccessTools2.GetDelegate<GetModulesCodeDelegate>(iUtil, "GetModulesCode", logErrorInTrace: false);
-            return iUtil is not null && getModulesCode is not null ? getModulesCode(iUtil)?.Split('*') : null;
-        }
+        var iUtil = IUtilField.Value?.Invoke();
+        // Don't use Trace, as this is used in critical code like AssemblyResolver.
+        // The less we trigger custom code, the better
+        // A custom Trace listener will break the resolver if it will trigger a recursive assembly resolution
+        var getModulesCode = AccessTools2.GetDelegate<GetModulesCodeDelegate>(iUtil, "GetModulesCode", logErrorInTrace: false);
+        return iUtil is not null && getModulesCode is not null ? getModulesCode(iUtil)?.Split('*') : null;
+    }
 }

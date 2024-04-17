@@ -17,38 +17,38 @@ internal static class ModulePatch
 
     public static bool Enable(Harmony harmony)
     {
-            _harmony = harmony;
+        _harmony = harmony;
 
-            var res1 = harmony.TryPatch(
-                AccessTools2.Method(typeof(Module), "LoadSubModules"),
-                postfix: AccessTools2.Method(typeof(ModulePatch), nameof(LoadSubModulesPostfix)));
-            if (!res1) return false;
+        var res1 = harmony.TryPatch(
+            AccessTools2.Method(typeof(Module), "LoadSubModules"),
+            postfix: AccessTools2.Method(typeof(ModulePatch), nameof(LoadSubModulesPostfix)));
+        if (!res1) return false;
 
-            var res2 = harmony.TryPatch(
-                AccessTools2.Method(typeof(Module), "InitializeSubModules"),
-                prefix: AccessTools2.Method(typeof(ModulePatch), nameof(InitializeSubModulesPrefix)));
-            if (!res2) return false;
+        var res2 = harmony.TryPatch(
+            AccessTools2.Method(typeof(Module), "InitializeSubModules"),
+            prefix: AccessTools2.Method(typeof(ModulePatch), nameof(InitializeSubModulesPrefix)));
+        if (!res2) return false;
 
-            return true;
-        }
+        return true;
+    }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
     private static void InitializeSubModulesPrefix()
     {
-            OnInitializeSubModulesPrefix?.Invoke();
+        OnInitializeSubModulesPrefix?.Invoke();
 
-            _harmony?.Unpatch(
-                AccessTools2.Method(typeof(Module), "InitializeSubModules"),
-                AccessTools2.Method(typeof(ModulePatch), nameof(InitializeSubModulesPrefix)));
-        }
+        _harmony?.Unpatch(
+            AccessTools2.Method(typeof(Module), "InitializeSubModules"),
+            AccessTools2.Method(typeof(ModulePatch), nameof(InitializeSubModulesPrefix)));
+    }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
     private static void LoadSubModulesPostfix()
     {
-            OnLoadSubModulesPostfix?.Invoke();
+        OnLoadSubModulesPostfix?.Invoke();
 
-            _harmony?.Unpatch(
-                AccessTools2.Method(typeof(Module), "LoadSubModules"),
-                AccessTools2.Method(typeof(ModulePatch), nameof(LoadSubModulesPostfix)));
-        }
+        _harmony?.Unpatch(
+            AccessTools2.Method(typeof(Module), "LoadSubModules"),
+            AccessTools2.Method(typeof(ModulePatch), nameof(LoadSubModulesPostfix)));
+    }
 }

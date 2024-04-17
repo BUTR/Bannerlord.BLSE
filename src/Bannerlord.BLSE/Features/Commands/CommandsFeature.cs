@@ -18,6 +18,6 @@ public static class CommandsFeature
 
     public static void Enable(Harmony harmony)
     {
-            CommandLineFunctionalityPatch.Enable(harmony);
-        }
+        CommandLineFunctionalityPatch.Enable(harmony);
+    }
 }

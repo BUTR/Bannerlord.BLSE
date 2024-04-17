@@ -5,8 +5,10 @@
     <LangVersion>11.0</LangVersion>
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
-    <DebugType>portable</DebugType>
     <Version>1.25.0</Version>
+    <BUTRCompatibilityScoreUrl>$(BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL)</BUTRCompatibilityScoreUrl>
+    <DebugType>portable</DebugType>
+    
     <PolySharpExcludeGeneratedTypes>System.Diagnostics.CodeAnalysis.UnscopedRefAttribute</PolySharpExcludeGeneratedTypes>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
 
@@ -59,6 +61,7 @@
     <PackageReference Include="lz4net" Version="1.0.15.93" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.229-beta" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Mono.Cecil" Version="0.11.5" IncludeAssets="compile" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" PrivateAssets="all" />
     <PackageReference Include="PolySharp" Version="1.14.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="StbSharp" Version="0.7.2.38" PrivateAssets="all" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
@@ -84,6 +87,16 @@
       <ILRepackExcludeAssemblies>$(ILRepackExcludeAssemblies);$(ProjectDir)$(OutputPath)System.Drawing.Common.dll;</ILRepackExcludeAssemblies>
       <ILRepackExcludeAssemblies>$(ILRepackExcludeAssemblies);$(ProjectDir)$(OutputPath)System.Drawing.Primitives.dll;</ILRepackExcludeAssemblies>
     </PropertyGroup>
+  </Target>
+
+  <Target Name="SetBUTRCompatibilityScoreUrl" BeforeTargets="BeforeCompile">
+    <ItemGroup Condition="$(BUTRCompatibilityScoreUrl) != ''">
+      <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+        <_Parameter1>BUTRCompatibilityScoreUrl</_Parameter1>
+        <_Parameter2>$(BUTRCompatibilityScoreUrl)</_Parameter2>
+      </AssemblyAttribute>
+    </ItemGroup>
+    <Warning Condition="$(BUTRCompatibilityScoreUrl) == ''" Text="Environment variable 'BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL' is not set!" />
   </Target>
 
 </Project>

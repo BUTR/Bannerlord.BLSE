@@ -14,27 +14,27 @@ internal sealed class UILauncherPrefabExtension14 : PrefabExtensionInsertAsSibli
 
     public UILauncherPrefabExtension14()
     {
-            XmlDocument.LoadXml(@"
-<ListPanel WidthSizePolicy=""CoverChildren"" HeightSizePolicy=""CoverChildren""
-           VerticalAlignment=""Bottom""
-           MarginLeft =""5"" MarginBottom=""25""
-           LayoutImp.LayoutMethod=""HorizontalLeftToRight"" IsVisible=""@ShowImportExport"">
+        XmlDocument.LoadXml("""
+<ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren"
+           VerticalAlignment="Bottom"
+           MarginLeft ="5" MarginBottom="25"
+           LayoutImp.LayoutMethod="HorizontalLeftToRight" IsVisible="@ShowImportExport">
   <Children>
-    <ButtonWidget WidthSizePolicy=""Fixed"" HeightSizePolicy=""Fixed"" SuggestedWidth=""40"" SuggestedHeight=""40""
-                  VerticalAlignment=""Bottom""
-                  MarginLeft =""3"" MarginRight=""3"" MarginTop=""3"" MarginBottom=""3""
-                  Brush=""Launcher.Import""
-                  Command.Click=""ExecuteImport"" Command.HoverBegin=""ExecuteBeginHintImport"" Command.HoverEnd=""ExecuteEndHint""/>
+    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40"
+                  VerticalAlignment="Bottom"
+                  MarginLeft ="3" MarginRight="3" MarginTop="3" MarginBottom="3"
+                  Brush="Launcher.Import"
+                  Command.Click="ExecuteImport" Command.HoverBegin="ExecuteBeginHintImport" Command.HoverEnd="ExecuteEndHint"/>
 
-    <ButtonWidget WidthSizePolicy=""Fixed"" HeightSizePolicy=""Fixed"" SuggestedWidth=""40"" SuggestedHeight=""40""
-                  VerticalAlignment=""Bottom""
-                  MarginLeft =""3"" MarginRight=""3"" MarginTop=""3"" MarginBottom=""3""
-                  Brush=""Launcher.Export""
-                  Command.Click=""ExecuteExport"" Command.HoverBegin=""ExecuteBeginHintExport"" Command.HoverEnd=""ExecuteEndHint""/>
+    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40"
+                  VerticalAlignment="Bottom"
+                  MarginLeft ="3" MarginRight="3" MarginTop="3" MarginBottom="3"
+                  Brush="Launcher.Export"
+                  Command.Click="ExecuteExport" Command.HoverBegin="ExecuteBeginHintExport" Command.HoverEnd="ExecuteEndHint"/>
   </Children>
 </ListPanel>
-");
-        }
+""");
+    }
 
     public override XmlDocument GetPrefabExtension() => XmlDocument;
 }

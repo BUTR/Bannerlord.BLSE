@@ -33,10 +33,10 @@ internal sealed class UILauncherPrefabExtension13 : PrefabExtensionReplacePatch
 
     public UILauncherPrefabExtension13()
     {
-            XmlDocument.LoadXml(@"
-<Launcher.Mods2 Id=""ModsPage"" DataSource=""{ModsData}"" IsDisabled=""@IsDisabled2"" />
-");
-        }
+        XmlDocument.LoadXml("""
+<Launcher.Mods2 Id="ModsPage" DataSource="{ModsData}" IsDisabled="@IsDisabled2" />
+""");
+    }
 
     public override XmlDocument GetPrefabExtension() => XmlDocument;
 }

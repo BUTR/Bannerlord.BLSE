@@ -19,27 +19,27 @@ internal static class ModulePatch
 
     public static bool Enable(Harmony harmony)
     {
-            _harmony = harmony;
+        _harmony = harmony;
 
-            return harmony.TryPatch(
-                AccessTools2.DeclaredMethod(typeof(Module), "ProcessApplicationArguments"),
-                postfix: AccessTools2.DeclaredMethod(typeof(ModulePatch), nameof(ProcessApplicationArgumentsPostfix)));
-        }
+        return harmony.TryPatch(
+            AccessTools2.DeclaredMethod(typeof(Module), "ProcessApplicationArguments"),
+            postfix: AccessTools2.DeclaredMethod(typeof(ModulePatch), nameof(ProcessApplicationArgumentsPostfix)));
+    }
 
     private static void ProcessApplicationArgumentsPostfix(Module __instance)
     {
-            var cli = Utilities.GetFullCommandLineString();
-            var array = CommandLineSplitter.SplitCommandLine(cli).ToArray();
-            for (var i = 0; i < array.Length; i++)
-            {
-                if (!string.Equals(array[i], "/continuesave", StringComparison.OrdinalIgnoreCase)) continue;
-                if (array.Length <= i + 1) continue;
-                var saveGame = array[i + 1];
-                OnSaveGameArgParsed?.Invoke(__instance.StartupInfo, saveGame);
-            }
-
-            _harmony?.Unpatch(
-                AccessTools2.DeclaredMethod(typeof(Module), "ProcessApplicationArguments"),
-                AccessTools2.DeclaredMethod(typeof(ModulePatch), nameof(ProcessApplicationArgumentsPostfix)));
+        var cli = Utilities.GetFullCommandLineString();
+        var array = CommandLineSplitter.SplitCommandLine(cli).ToArray();
+        for (var i = 0; i < array.Length; i++)
+        {
+            if (!string.Equals(array[i], "/continuesave", StringComparison.OrdinalIgnoreCase)) continue;
+            if (array.Length <= i + 1) continue;
+            var saveGame = array[i + 1];
+            OnSaveGameArgParsed?.Invoke(__instance.StartupInfo, saveGame);
         }
+
+        _harmony?.Unpatch(
+            AccessTools2.DeclaredMethod(typeof(Module), "ProcessApplicationArguments"),
+            AccessTools2.DeclaredMethod(typeof(ModulePatch), nameof(ProcessApplicationArgumentsPostfix)));
+    }
 }

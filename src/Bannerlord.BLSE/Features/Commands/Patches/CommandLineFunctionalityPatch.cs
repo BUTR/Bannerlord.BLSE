@@ -21,9 +21,9 @@ internal static class CommandLineFunctionalityPatch
 
         public static CommandLineFunctionHandle Create(Func<List<string>, string> commandlinefunc)
         {
-                var commandLineFunction = CommandLineFunctionCtor?.Invoke(commandlinefunc);
-                return commandLineFunction is not null ? new(commandLineFunction) : default;
-            }
+            var commandLineFunction = CommandLineFunctionCtor?.Invoke(commandlinefunc);
+            return commandLineFunction is not null ? new(commandLineFunction) : default;
+        }
 
         public object Object { get; }
 
@@ -34,29 +34,29 @@ internal static class CommandLineFunctionalityPatch
 
     public static bool Enable(Harmony harmony)
     {
-            _harmony = harmony;
+        _harmony = harmony;
 
-            return harmony.TryPatch(
-                AccessTools2.DeclaredMethod(typeof(CommandLineFunctionality), nameof(CommandLineFunctionality.CollectCommandLineFunctions)),
-                postfix: AccessTools2.DeclaredMethod(typeof(CommandLineFunctionalityPatch), nameof(CollectCommandLineFunctionsPostfix)));
-        }
+        return harmony.TryPatch(
+            AccessTools2.DeclaredMethod(typeof(CommandLineFunctionality), nameof(CommandLineFunctionality.CollectCommandLineFunctions)),
+            postfix: AccessTools2.DeclaredMethod(typeof(CommandLineFunctionalityPatch), nameof(CollectCommandLineFunctionsPostfix)));
+    }
 
     private static void CollectCommandLineFunctionsPostfix(IDictionary ___AllFunctions, ref List<string> __result)
     {
-            try
+        try
+        {
+            foreach (var (name, function) in CommandsFeature.Functions)
             {
-                foreach (var (name, function) in CommandsFeature.Functions)
-                {
-                    if (CommandLineFunctionHandle.Create(function) is not { Object: { } cmdFuncObject }) continue;
-                    ___AllFunctions.Add(name, cmdFuncObject);
-                    __result.Add(name);
-                }
-            }
-            finally
-            {
-                _harmony?.Unpatch(
-                    AccessTools2.DeclaredMethod(typeof(CommandLineFunctionality), nameof(CommandLineFunctionality.CollectCommandLineFunctions)),
-                    AccessTools2.DeclaredMethod(typeof(CommandLineFunctionalityPatch), nameof(CollectCommandLineFunctionsPostfix)));
+                if (CommandLineFunctionHandle.Create(function) is not { Object: { } cmdFuncObject }) continue;
+                ___AllFunctions.Add(name, cmdFuncObject);
+                __result.Add(name);
             }
         }
+        finally
+        {
+            _harmony?.Unpatch(
+                AccessTools2.DeclaredMethod(typeof(CommandLineFunctionality), nameof(CommandLineFunctionality.CollectCommandLineFunctions)),
+                AccessTools2.DeclaredMethod(typeof(CommandLineFunctionalityPatch), nameof(CollectCommandLineFunctionsPostfix)));
+        }
+    }
 }

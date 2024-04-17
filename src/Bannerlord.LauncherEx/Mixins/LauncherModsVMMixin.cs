@@ -1,21 +1,31 @@
-﻿using Bannerlord.LauncherEx.Helpers;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+using Bannerlord.LauncherEx.Helpers;
 using Bannerlord.LauncherEx.ViewModels;
 using Bannerlord.LauncherManager.Localization;
 using Bannerlord.LauncherManager.Models;
 using Bannerlord.LauncherManager.Utils;
 using Bannerlord.ModuleManager;
 
+using Newtonsoft.Json;
+
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade.Launcher.Library;
 
+using ApplicationVersion = TaleWorlds.Library.ApplicationVersion;
+
 namespace Bannerlord.LauncherEx.Mixins;
 
+// TODO:
 internal enum ModuleType { Framework, Graphical, Standard, Patches }
 
 internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, LauncherModsVM>/*, IHasOrderer*/
@@ -64,8 +74,25 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
     [BUTRDataSourceProperty]
     public string VersionCategoryText2 => new BUTRTextObject("{=14WBFIS1}Version").ToString();
 
+    [BUTRDataSourceProperty]
+    public LauncherHintVM? GlobalCheckboxHint { get => _globalCheckboxHint; set => SetField(ref _globalCheckboxHint, value); }
+    private LauncherHintVM? _globalCheckboxHint;
+
+    [BUTRDataSourceProperty]
+    public LauncherHintVM? RefreshHint { get => _refreshHint; set => SetField(ref _refreshHint, value); }
+    private LauncherHintVM? _refreshHint;
+
+    [BUTRDataSourceProperty]
+    public LauncherHintVM? UpdateInfoHint { get => _updateInfoHint; set => SetField(ref _updateInfoHint, value); }
+    private LauncherHintVM? _updateInfoHint;
+
     public LauncherModsVMMixin(LauncherModsVM launcherModsVM) : base(launcherModsVM)
     {
+        GlobalCheckboxHint = new LauncherHintVM(new BUTRTextObject("{=q5quVWMI}Toggle All Modules").ToString());
+        RefreshHint = new LauncherHintVM(new BUTRTextObject("{=H5nMY4WU}Refresh Modules").ToString());
+        UpdateInfoHint = new LauncherHintVM(new BUTRTextObject("{=zXWdahH9}Get Update Recommendations{NL}Clicking on this button will send your module list to the BUTR server to get compatibility scores and recommended versions.{NL}They are based on the crash reports from ButterLib.{NL}{NL}(Requires Internet Connection)")
+            .SetTextVariable("NL", Environment.NewLine).ToString());
+
         _launcherManagerHandler.RegisterModuleViewModelProvider(() => _modules, () => Modules2, SetViewModels);
 
         _launcherManagerHandler.RefreshModules();
@@ -193,6 +220,58 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
                 }, CancellationToken.None, TaskCreationOptions.AttachedToParent, TaskScheduler.Current);
             });
         }
+    }
+
+    [BUTRDataSourceMethod]
+    public void ExecuteUpdateCheck()
+    {
+        try
+        {
+            var uploadUrlAttr = typeof(LauncherModsVMMixin).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().FirstOrDefault(a => a.Key == "BUTRCompatibilityScoreUrl");
+            if (uploadUrlAttr is null)
+                return;
+
+            var gameVersion = ApplicationVersionHelper.GameVersion() ?? ApplicationVersion.Empty;
+            var selectedModules = Modules2.Select(x => new
+            {
+                ModuleId = x.ModuleInfoExtended.Id,
+                ModuleVersion = x.ModuleInfoExtended.Version.ToString()
+            }).ToArray();
+            var data = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new
+            {
+                GameVersion = $"{ApplicationVersion.GetPrefix(gameVersion.ApplicationVersionType)}{gameVersion.Major}.{gameVersion.Minor}.{gameVersion.Revision}",
+                Modules = selectedModules
+            }));
+
+            var responseDefinition = new { Modules = new[] { new { ModuleId = "", Compatibility = 0d, RecommendedModuleVersion = "" } } };
+
+            var httpWebRequest = WebRequest.CreateHttp(uploadUrlAttr.Value);
+            httpWebRequest.Method = "POST";
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.UserAgent = $"BLSE LauncherEx v{typeof(LauncherModsVMMixin).Assembly.GetName().Version}";
+            httpWebRequest.Headers.Add("Tenant", "1");
+
+            using var writeStream = httpWebRequest.GetRequestStream();
+            writeStream.Write(data, 0, data.Length);
+
+            using var response = httpWebRequest.GetResponse();
+            using var stream = response.GetResponseStream();
+            using var responseReader = new StreamReader(stream ?? Stream.Null);
+            var json = responseReader.ReadLine() ?? string.Empty;
+            var result = JsonConvert.DeserializeAnonymousType(json, responseDefinition);
+            if (result is null) return;
+
+            foreach (var moduleVM in Modules2)
+                moduleVM.RemoveUpdateInfo();
+
+            foreach (var module in result.Modules)
+            {
+                if (Modules2.FirstOrDefault(x => x.ModuleInfoExtended.Id == module.ModuleId) is not { } moduleVM) continue;
+                if (module.Compatibility > 0d)
+                    moduleVM.SetUpdateInfo(module.Compatibility, module.RecommendedModuleVersion);
+            }
+        }
+        catch (Exception) { /* ignore */ }
     }
 
     [BUTRDataSourceMethod]

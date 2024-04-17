@@ -33,37 +33,37 @@ internal sealed class PropertyRef : IRef, IEquatable<PropertyRef>
         get => PropertyInfo.GetValue(Instance);
         set
         {
-                if (PropertyInfo.CanWrite)
-                {
-                    PropertyInfo.SetValue(Instance, value);
-                    OnPropertyChanged();
-                }
+            if (PropertyInfo.CanWrite)
+            {
+                PropertyInfo.SetValue(Instance, value);
+                OnPropertyChanged();
             }
+        }
     }
 
     public PropertyRef(PropertyInfo propInfo, object instance)
     {
-            PropertyInfo = propInfo;
-            Instance = instance;
-        }
+        PropertyInfo = propInfo;
+        Instance = instance;
+    }
 
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
     public bool Equals(PropertyRef? other)
     {
-            if (other is null) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return PropertyInfo.Equals(other.PropertyInfo) && Instance.Equals(other.Instance);
-        }
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return PropertyInfo.Equals(other.PropertyInfo) && Instance.Equals(other.Instance);
+    }
     /// <inheritdoc/>
     public override bool Equals(object? obj)
     {
-            if (obj is null) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((PropertyRef) obj);
-        }
+        if (obj is null) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != GetType()) return false;
+        return Equals((PropertyRef) obj);
+    }
     /// <inheritdoc/>
     public override int GetHashCode() => PropertyInfo.GetHashCode() ^ Instance.GetHashCode();
     public static bool operator ==(PropertyRef? left, PropertyRef? right) => Equals(left, right);
@@ -82,19 +82,19 @@ internal sealed class StorageRef<T> : IRef
         get => _value;
         set
         {
-                if (value is T val && !Equals(_value, val))
-                {
-                    _value = val;
-                    OnPropertyChanged();
-                }
+            if (value is T val && !Equals(_value, val))
+            {
+                _value = val;
+                OnPropertyChanged();
             }
+        }
     }
 
     public StorageRef(T? value)
     {
-            _value = value;
-            Type = value?.GetType() ?? typeof(T);
-        }
+        _value = value;
+        Type = value?.GetType() ?? typeof(T);
+    }
 
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -116,19 +116,19 @@ internal class ProxyRef<T> : IRef, IEquatable<ProxyRef<T>>
         get => _getter();
         set
         {
-                if (_setter is not null && value is T val)
-                {
-                    _setter(val);
-                    OnPropertyChanged();
-                }
+            if (_setter is not null && value is T val)
+            {
+                _setter(val);
+                OnPropertyChanged();
             }
+        }
     }
 
     public ProxyRef(Func<T> getter, Action<T>? setter)
     {
-            _getter = getter ?? throw new ArgumentNullException(nameof(getter));
-            _setter = setter;
-        }
+        _getter = getter ?? throw new ArgumentNullException(nameof(getter));
+        _setter = setter;
+    }
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -136,27 +136,27 @@ internal class ProxyRef<T> : IRef, IEquatable<ProxyRef<T>>
     /// <inheritdoc/>
     public bool Equals(ProxyRef<T>? other)
     {
-            if (other is null) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return _getter.Equals(other._getter) && Equals(_setter, other._setter);
-        }
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return _getter.Equals(other._getter) && Equals(_setter, other._setter);
+    }
     /// <inheritdoc/>
     public override bool Equals(object? obj)
     {
-            if (obj is null) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((ProxyRef<T>) obj);
-        }
+        if (obj is null) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != GetType()) return false;
+        return Equals((ProxyRef<T>) obj);
+    }
     /// <inheritdoc/>
     public override int GetHashCode()
     {
-            var hash = 269;
-            hash = (hash * 47) + _getter.GetHashCode();
-            if (_setter is not null)
-                hash = (hash * 47) + _setter.GetHashCode();
-            return hash;
-        }
+        var hash = 269;
+        hash = (hash * 47) + _getter.GetHashCode();
+        if (_setter is not null)
+            hash = (hash * 47) + _setter.GetHashCode();
+        return hash;
+    }
     public static bool operator ==(ProxyRef<T>? left, ProxyRef<T>? right) => Equals(left, right);
     public static bool operator !=(ProxyRef<T>? left, ProxyRef<T>? right) => !Equals(left, right);
 }
