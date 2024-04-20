@@ -4,16 +4,13 @@
     <Constant Name="ModToggle.Width"  BrushName="Launcher.Mods.ModToggle" BrushLayer="Default" BrushValueType="Width" />
     <Constant Name="ModToggle.Height" BrushName="Launcher.Mods.ModToggle" BrushLayer="Default" BrushValueType="Height" />
 
-    <Constant Name="ModSorter.Width"  BrushName="Launcher.Mods.ModSorter" BrushLayer="Default" BrushValueType="Width" />
-    <Constant Name="ModSorter.Height" BrushName="Launcher.Mods.ModSorter" BrushLayer="Default" BrushValueType="Height" />
-    
     <Constant Name="VersionText.Width" Value="150" />
 
     <Constant Name="ModuleType.Width" Value="27" />
     
     <Constant Name="Icon.Size" Value="20" />
     
-    <Constant Name="Margin.Left" Value="3" />
+    <Constant Name="Margin.Left" Value="5" />
   </Constants>
   <Window>
     <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsDisabled="@IsDisabled2">
@@ -30,7 +27,7 @@
             </BrushWidget>
             
             <!-- Toggle All -->
-            <Widget WidthSizePolicy="Fixed"           HeightSizePolicy="Fixed"           SuggestedWidth="!ModToggle.Width"  SuggestedHeight="!ModToggle.Height"                                                              PositionYOffset="2">
+            <Widget WidthSizePolicy="Fixed"           HeightSizePolicy="Fixed"           SuggestedWidth="!ModToggle.Width"  SuggestedHeight="!ModToggle.Height" VerticalAlignment="Center"                           PositionYOffset="2">
               <Children>
                 <Launcher.ToggleButton WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Command.Click="ExecuteGlobalCheckbox" IsSelected="@GlobalCheckboxState" ManualToggle="true">
                   <Children>
@@ -39,8 +36,8 @@
                 </Launcher.ToggleButton>
               </Children>
             </Widget>
-            <!-- Refresh -->
-            <Widget WidthSizePolicy="Fixed"           HeightSizePolicy="Fixed"           SuggestedWidth="!ModToggle.Width"  SuggestedHeight="!ModToggle.Height" VerticalAlignment="Center" MarginLeft="10" MarginRight="-10" >
+            <!-- Refresh / Module Type Icon Offset -->
+            <Widget WidthSizePolicy="Fixed"           HeightSizePolicy="Fixed"           SuggestedWidth="!ModToggle.Width"  SuggestedHeight="!ModToggle.Height" VerticalAlignment="Center" MarginLeft="!Margin.Left" >
               <Children>
                 <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Launcher.Refresh" Command.Click="ExecuteRefresh">
                   <Children>
@@ -49,34 +46,30 @@
                 </ButtonWidget>
               </Children>
             </Widget>
-            <!-- Module Type Icon Offset -->
-            <Widget WidthSizePolicy="Fixed"           HeightSizePolicy="Fixed"           SuggestedWidth="!ModuleType.Width" SuggestedHeight="!Icon.Size"        VerticalAlignment="Center" MarginLeft="!Margin.Left" />
-            <!-- Dependencies Offset -->
-            <Widget WidthSizePolicy="Fixed"           HeightSizePolicy="Fixed"           SuggestedWidth="!Icon.Size"        SuggestedHeight="!Icon.Size"        VerticalAlignment="Center" MarginLeft="!Margin.Left" />
             <!-- Dangerous Offset -->
-            <Widget WidthSizePolicy="Fixed"           HeightSizePolicy="Fixed"           SuggestedWidth="!Icon.Size"        SuggestedHeight="!Icon.Size"        VerticalAlignment="Center" MarginLeft="!Margin.Left" />
+            <Widget WidthSizePolicy="Fixed"           HeightSizePolicy="Fixed"           SuggestedWidth="!ModToggle.Width"  SuggestedHeight="!ModToggle.Height" VerticalAlignment="Center" MarginLeft="!Margin.Left" />
             <!-- Mod Name -->
-            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent"                                                                                                   MarginLeft="10" >
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent"                                                                                                   MarginLeft="!Margin.Left" >
               <Children>
                 <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Text="@NameCategoryText2" Brush="Launcher.Mods.ModNameText" Brush.TextHorizontalAlignment="Left" />
               </Children>
             </Widget>
             <!-- Mod Search -->
-            <Widget WidthSizePolicy="Fixed"           HeightSizePolicy="StretchToParent" SuggestedWidth="200"                                                   VerticalAlignment="Center" >
+            <Widget WidthSizePolicy="Fixed"           HeightSizePolicy="Fixed"           SuggestedWidth="200"               SuggestedHeight="30"                VerticalAlignment="Center" MarginLeft="!Margin.Left" >
               <Children>
                 <Launcher.SearchBox WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" SearchText="@SearchText" />
               </Children>
             </Widget>
             <!-- Mod Version -->
-            <Widget WidthSizePolicy="Fixed"           HeightSizePolicy="StretchToParent" SuggestedWidth="!VersionText.Width" >
+            <Widget WidthSizePolicy="Fixed"           HeightSizePolicy="StretchToParent" SuggestedWidth="!VersionText.Width"                                                               MarginLeft="!Margin.Left" >
               <Children>
                 <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Text="@VersionCategoryText2" Brush="Launcher.Mods.ModNameText" />
               </Children>
             </Widget>
             <!-- Issue Expand Indicator Offset -->
-            <Widget WidthSizePolicy="Fixed"           HeightSizePolicy="Fixed"           SuggestedWidth="40"                SuggestedHeight="40"                VerticalAlignment="Center" />
+            <Widget WidthSizePolicy="Fixed"           HeightSizePolicy="Fixed"           SuggestedWidth="30"                SuggestedHeight="30"                VerticalAlignment="Center" MarginLeft="!Margin.Left" />
             <!-- Update Info Button -->
-            <Widget WidthSizePolicy="Fixed"           HeightSizePolicy="Fixed"           SuggestedWidth="!ModToggle.Width"  SuggestedHeight="!ModToggle.Height" VerticalAlignment="Center"                 MarginRight="10" >
+            <Widget WidthSizePolicy="Fixed"           HeightSizePolicy="Fixed"           SuggestedWidth="!ModToggle.Width"  SuggestedHeight="!ModToggle.Height" VerticalAlignment="Center" MarginLeft="!Margin.Left" >
               <Children>
                 <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Launcher.Refresh" Command.Click="ExecuteUpdateCheck" >
                   <Children>
@@ -86,7 +79,7 @@
               </Children>
             </Widget>
             <!-- Folder Icon Offset -->
-            <Widget WidthSizePolicy="Fixed"           HeightSizePolicy="Fixed"           SuggestedWidth="!ModToggle.Width"  SuggestedHeight="!ModToggle.Height" VerticalAlignment="Center"                 MarginRight="20" />
+            <Widget WidthSizePolicy="Fixed"           HeightSizePolicy="Fixed"           SuggestedWidth="!ModToggle.Width"  SuggestedHeight="!ModToggle.Height" VerticalAlignment="Center" MarginLeft="!Margin.Left" MarginRight="20" />
             
           </Children>
         </ListPanel>

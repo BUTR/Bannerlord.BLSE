@@ -56,162 +56,162 @@
 
   <Brush Name="Launcher.Import">
     <Layers>
-      <BrushLayer Name="Default" />
+      <BrushLayer Name="Default" Sprite="launcher_import" />
     </Layers>
     <Styles>
       <Style Name="Default">
-        <BrushLayer Name="Default" Sprite="launcher_import" Color="#E6C8A6FF" />
+        <BrushLayer Name="Default" Color="#E6C8A6FF" />
       </Style>
       <Style Name="Hovered">
-        <BrushLayer Name="Default" Sprite="launcher_import" Color="#FFFFFFFF" />
+        <BrushLayer Name="Default" Color="#FFFFFFFF" />
       </Style>
     </Styles>
   </Brush>
 
   <Brush Name="Launcher.Export">
     <Layers>
-      <BrushLayer Name="Default" />
+      <BrushLayer Name="Default" Sprite="launcher_export" />
     </Layers>
     <Styles>
       <Style Name="Default">
-        <BrushLayer Name="Default" Sprite="launcher_export" Color="#E6C8A6FF" />
+        <BrushLayer Name="Default" Color="#E6C8A6FF" />
       </Style>
       <Style Name="Hovered">
-        <BrushLayer Name="Default" Sprite="launcher_export" Color="#FFFFFFFF" />
+        <BrushLayer Name="Default" Color="#FFFFFFFF" />
       </Style>
     </Styles>
   </Brush>
 
   <Brush Name="Launcher.Refresh">
     <Layers>
-      <BrushLayer Name="Default" />
+      <BrushLayer Name="Default" Sprite="launcher_refresh" />
     </Layers>
     <Styles>
       <Style Name="Default">
-        <BrushLayer Name="Default" Sprite="launcher_refresh" Color="#E6C8A6FF" />
+        <BrushLayer Name="Default" Color="#E6C8A6FF" />
       </Style>
       <Style Name="Hovered">
-        <BrushLayer Name="Default" Sprite="launcher_refresh" Color="#FFFFFFFF" />
+        <BrushLayer Name="Default" Color="#FFFFFFFF" />
       </Style>
     </Styles>
   </Brush>
 
   <Brush Name="Launcher.Folder">
     <Layers>
-      <BrushLayer Name="Default" />
+      <BrushLayer Name="Default" Sprite="launcher_folder" />
     </Layers>
     <Styles>
       <Style Name="Default">
-        <BrushLayer Name="Default" Sprite="launcher_folder" Color="#E6C8A6FF" />
+        <BrushLayer Name="Default" Color="#E6C8A6FF" />
       </Style>
       <Style Name="Hovered">
-        <BrushLayer Name="Default" Sprite="launcher_folder" Color="#FFFFFFFF" />
+        <BrushLayer Name="Default" Color="#FFFFFFFF" />
       </Style>
     </Styles>
   </Brush>
 
   <Brush Name="Launcher.Search">
     <Layers>
-      <BrushLayer Name="Default" />
+      <BrushLayer Name="Default" Sprite="launcher_search" />
     </Layers>
     <Styles>
       <Style Name="Default">
-        <BrushLayer Name="Default" Sprite="launcher_search" Color="#E6C8A6FF" />
+        <BrushLayer Name="Default" Color="#E6C8A6FF" />
       </Style>
       <Style Name="Hovered">
-        <BrushLayer Name="Default" Sprite="launcher_search" Color="#FFFFFFFF" />
+        <BrushLayer Name="Default" Color="#FFFFFFFF" />
       </Style>
     </Styles>
   </Brush>
 
   <Brush Name="Launcher.Info">
     <Layers>
-      <BrushLayer Name="Default" />
+      <BrushLayer Name="Default" Sprite="caution" />
     </Layers>
     <Styles>
       <Style Name="Default">
-        <BrushLayer Name="Default" Sprite="caution" Color="#99EB34FF" />
+        <BrushLayer Name="Default" Color="#99EB34FF" />
       </Style>
       <Style Name="Hovered">
-        <BrushLayer Name="Default" Sprite="caution" Color="#FFFFFFFF" />
+        <BrushLayer Name="Default" Color="#FFFFFFFF" />
       </Style>
     </Styles>
   </Brush>
 
   <Brush Name="Launcher.Warning">
     <Layers>
-      <BrushLayer Name="Default" />
+      <BrushLayer Name="Default" Sprite="caution" />
     </Layers>
     <Styles>
       <Style Name="Default">
-        <BrushLayer Name="Default" Sprite="caution" Color="#EB8634FF" />
+        <BrushLayer Name="Default" Color="#EB8634FF" />
       </Style>
       <Style Name="Hovered">
-        <BrushLayer Name="Default" Sprite="caution" Color="#FFFFFFFF" />
+        <BrushLayer Name="Default" Color="#FFFFFFFF" />
       </Style>
     </Styles>
   </Brush>
 
   <Brush Name="Launcher.Error">
     <Layers>
-      <BrushLayer Name="Default" />
+      <BrushLayer Name="Default" Sprite="caution" />
     </Layers>
     <Styles>
       <Style Name="Default">
-        <BrushLayer Name="Default" Sprite="caution" Color="#FF0000FF" />
+        <BrushLayer Name="Default" Color="#FF0000FF" />
       </Style>
       <Style Name="Hovered">
-        <BrushLayer Name="Default" Sprite="caution" Color="#FFFFFFFF" />
+        <BrushLayer Name="Default" Color="#FFFFFFFF" />
       </Style>
     </Styles>
   </Brush>
 
   <Brush Name="Launcher.Official">
     <Layers>
-      <BrushLayer Name="Default" />
+      <BrushLayer Name="Default" Sprite="official_mod" />
     </Layers>
     <Styles>
       <Style Name="Default">
-        <BrushLayer Name="Default" Sprite="official_mod" />
+        <BrushLayer Name="Default" />
       </Style>
       <Style Name="Hovered">
-        <BrushLayer Name="Default" Sprite="official_mod" Color="#FFFFFFFF" />
+        <BrushLayer Name="Default" Color="#FFFFFFFF" />
       </Style>
     </Styles>
   </Brush>
 
   <Brush Name="Launcher.Community">
     <Layers>
-      <BrushLayer Name="Default" />
+      <BrushLayer Name="Default" Sprite="community_mod" />
     </Layers>
     <Styles>
       <Style Name="Default">
-        <BrushLayer Name="Default" Sprite="community_mod" Color="#D69846FF" />
+        <BrushLayer Name="Default" Color="#D69846FF" />
       </Style>
       <Style Name="Hovered">
-        <BrushLayer Name="Default" Sprite="community_mod" Color="#FFFFFFFF" />
+        <BrushLayer Name="Default" Color="#FFFFFFFF" />
       </Style>
     </Styles>
   </Brush>
 
   <Brush Name="Launcher.Scrollbar.Filler">
     <Layers>
-      <BrushLayer Name="Default" />
+      <BrushLayer Name="Default" Sprite="BlankWhiteSquare_9" />
     </Layers>
     <Styles>
       <Style Name="Default">
-        <BrushLayer Name="Default" Sprite="BlankWhiteSquare_9" Color="#5A4033FF" />
+        <BrushLayer Name="Default" Color="#5A4033FF" />
       </Style>
     </Styles>
   </Brush>
 
   <Brush Name="Launcher.Scrollbar.Handle">
     <Layers>
-      <BrushLayer Name="Default" />
+      <BrushLayer Name="Default" Sprite="BlankWhiteSquare_9" />
     </Layers>
     <Styles>
       <Style Name="Default">
-        <BrushLayer Name="Default" Sprite="BlankWhiteSquare_9" Color="#E6C8A6FF" />
+        <BrushLayer Name="Default" Color="#E6C8A6FF" />
       </Style>
     </Styles>
   </Brush>

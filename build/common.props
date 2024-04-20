@@ -14,10 +14,10 @@
     <Version>1.5.0</Version>
     <HarmonyVersion>2.2.2</HarmonyVersion>
     <BUTRSharedVersion>3.0.0.138</BUTRSharedVersion>
-    <BUTRModuleManagerVersion>5.0.221</BUTRModuleManagerVersion>
+    <BUTRModuleManagerVersion>5.0.222</BUTRModuleManagerVersion>
     <HarmonyExtensionsVersion>3.2.0.77</HarmonyExtensionsVersion>
     <HarmonyAnalyzerVersion>1.0.1.50</HarmonyAnalyzerVersion>
-    <LauncherManagerVersion>1.0.93</LauncherManagerVersion>
+    <LauncherManagerVersion>1.0.100</LauncherManagerVersion>
     <DebugType>full</DebugType>
   </PropertyGroup>
 
