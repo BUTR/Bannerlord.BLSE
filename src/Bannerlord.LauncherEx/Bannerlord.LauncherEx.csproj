@@ -22,12 +22,14 @@
     <ILRepackCopyAttributes>false</ILRepackCopyAttributes>
   </PropertyGroup>
 
+  <!--
   <PropertyGroup Condition="$(Configuration) == 'Debug'">
     <GameVersion>1.2.0</GameVersion>
     <GameVersionFlat>$([System.String]::Copy('$(GameVersion)').Replace('.',''))</GameVersionFlat>
     <GameVersionConstant>v$(GameVersionFlat)</GameVersionConstant>
     <DefineConstants>$(DefineConstants);$(GameVersionConstant)</DefineConstants>
   </PropertyGroup>
+  -->
   
   <PropertyGroup>
     <PackageId>Bannerlord.LauncherEx</PackageId>
