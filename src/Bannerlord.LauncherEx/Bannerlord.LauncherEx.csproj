@@ -68,6 +68,10 @@
     <PackageReference Include="System.Memory" Version="4.5.5" />
   </ItemGroup>
 
+  <Target Name="BuildExtended">
+    <CallTarget Targets="Build" />
+  </Target>
+  
   <Target Name="SetLauncherExMetadata" BeforeTargets="BeforeCompile">
     <ItemGroup>
       <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
