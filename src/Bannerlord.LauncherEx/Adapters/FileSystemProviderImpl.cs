@@ -56,5 +56,5 @@ internal sealed class FileSystemProviderImpl : IFileSystemProvider
 
     public string[]? ReadDirectoryFileList(string directoryPath) => Directory.Exists(directoryPath) ? Directory.GetFiles(directoryPath) : null;
 
-    public string[]? ReadDirectoryList(string directoryPath) => Directory.Exists(directoryPath) ? Directory.GetFiles(directoryPath) : null;
+    public string[]? ReadDirectoryList(string directoryPath) => Directory.Exists(directoryPath) ? Directory.GetDirectories(directoryPath) : null;
 }

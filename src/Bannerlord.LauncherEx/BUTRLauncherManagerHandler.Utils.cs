@@ -2,7 +2,6 @@
 using Bannerlord.LauncherManager.Models;
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bannerlord.LauncherEx;
@@ -15,8 +14,6 @@ partial class BUTRLauncherManagerHandler
     public override string GetGameVersion() => ApplicationVersionHelper.GameVersionStr();
 
     public override int GetChangeset() => typeof(TaleWorlds.Library.ApplicationVersion).GetField("DefaultChangeSet")?.GetValue(null) as int? ?? 0;
-
-    protected override IEnumerable<ModuleInfoExtendedWithPath> ReloadModules() => ModuleInfoHelper.GetModules().Select(x => new ModuleInfoExtendedWithPath(x, x.Path));
 
 
     // More of a reminder how the callbacks should be handled if needed in C#
@@ -42,4 +39,6 @@ partial class BUTRLauncherManagerHandler
     }
 
     public new LoadOrder LoadLoadOrder() => base.LoadLoadOrder();
+
+    public new IReadOnlyList<ModuleInfoExtendedWithMetadata> GetAllModules() => base.GetAllModules();
 }

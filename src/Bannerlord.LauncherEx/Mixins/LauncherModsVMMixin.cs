@@ -33,6 +33,7 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
     private readonly BUTRLauncherManagerHandler _launcherManagerHandler = BUTRLauncherManagerHandler.Default;
     private readonly MBBindingList<BUTRLauncherModuleVM> _modules = new();
     private readonly Dictionary<string, BUTRLauncherModuleVM> _modulesLookup = new();
+    private IReadOnlyList<ModuleInfoExtendedWithMetadata> _allModuleInfos;
 
     [BUTRDataSourceProperty]
     public bool GlobalCheckboxState { get => _checkboxState; set => SetField(ref _checkboxState, value); }
@@ -96,9 +97,10 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
         _launcherManagerHandler.RegisterModuleViewModelProvider(() => _modules, () => Modules2, SetViewModels);
 
         _launcherManagerHandler.RefreshModules();
-        foreach (var moduleInfoExtended in _launcherManagerHandler.ExtendedModuleInfoCache.Values.OfType<ModuleInfoExtendedWithPath>())
+        _allModuleInfos = _launcherManagerHandler.GetAllModules();
+        foreach (var moduleInfoExtended in _launcherManagerHandler.ExtendedModuleInfoCache.Values.OfType<ModuleInfoExtendedWithMetadata>())
         {
-            var moduleVM = new BUTRLauncherModuleVM(moduleInfoExtended, ToggleModuleSelection, ValidateModule);
+            var moduleVM = new BUTRLauncherModuleVM(moduleInfoExtended, ToggleModuleSelection, ValidateModule, GetPossibleProviders);
             _modules.Add(moduleVM);
             _modulesLookup[moduleVM.ModuleInfoExtended.Id] = moduleVM;
         }
@@ -144,9 +146,15 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
         foreach (var viewModel in orderedModuleViewModels.OfType<BUTRLauncherModuleVM>())
             Modules2.Add(viewModel);
 
+        _launcherManagerHandler.RefreshModules();
+        _allModuleInfos = _launcherManagerHandler.GetAllModules();
+
         // Validate all VM's after they were selected and ordered
         foreach (var modules in Modules2)
+        {
             modules.Validate();
+            modules.Refresh();
+        }
 
         _launcherManagerHandler.SetGameParametersLoadOrder(Modules2);
     }
@@ -157,6 +165,10 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
         SortHelper.ToggleModuleSelection(Modules2, _modulesLookup, moduleVM);
         _launcherManagerHandler.SetGameParametersLoadOrder(Modules2);
     }
+    private ICollection<ModuleProviderType> GetPossibleProviders(ModuleInfoExtendedWithMetadata moduleInfo) => _allModuleInfos
+        .Where(x => x.Id == moduleInfo.Id && x.ModuleProviderType != moduleInfo.ModuleProviderType)
+        .Select(x => x.ModuleProviderType)
+        .ToList();
 
     private void ChangeModulePosition(BUTRLauncherModuleVM targetModuleVM, int insertIndex, Action<IReadOnlyCollection<string>>? onIssues = null)
     {
@@ -201,6 +213,12 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
         Modules2.Sort(new ByIndexComparer<BUTRLauncherModuleVM>(x => sorted.TryGetValue(x.ModuleInfoExtended.Id, out var idx) ? idx : -1));
         //var sorted = Sort(Modules2.Select(x => x.ModuleInfoExtended)).Select(x => x.Id).ToList();
         //SortBy(sorted);
+
+        _launcherManagerHandler.RefreshModules();
+        _allModuleInfos = _launcherManagerHandler.GetAllModules();
+        foreach (var moduleVM in Modules2)
+            moduleVM.Refresh();
+
         _launcherManagerHandler.SetGameParametersLoadOrder(Modules2);
     }
 

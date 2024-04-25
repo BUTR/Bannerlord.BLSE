@@ -1,5 +1,4 @@
 ﻿using Bannerlord.BUTR.Shared.Helpers;
-using Bannerlord.LauncherManager.Extensions;
 using Bannerlord.LauncherManager.Models;
 using Bannerlord.ModuleManager;
 
@@ -7,7 +6,6 @@ using Mono.Cecil;
 using Mono.Cecil.Rocks;
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -18,13 +16,7 @@ namespace Bannerlord.LauncherEx.Helpers;
 // TODO: NativeAOT won't cover that?
 internal static class ModuleChecker
 {
-    private static readonly HashSet<string> MainModules = ModuleInfoHelper.GetPhysicalModules().Select(x => x.Id).ToHashSet();
-    private static readonly HashSet<string> ExternalModules = ModuleInfoHelper.GetPlatformModules().Select(x => x.Id).ToHashSet();
-
-    public static bool IsInstalledInMainAndExternalModuleDirectory(ModuleInfoExtendedWithPath moduleInfoExtended) =>
-        MainModules.Contains(moduleInfoExtended.Id) && ExternalModules.Contains(moduleInfoExtended.Id);
-
-    public static bool IsObfuscated(ModuleInfoExtendedWithPath moduleInfoExtended)
+    public static bool IsObfuscated(ModuleInfoExtendedWithMetadata moduleInfoExtended)
     {
         static bool CanBeLoaded(SubModuleInfoExtended x) =>
             ModuleInfoHelper.CheckIfSubModuleCanBeLoaded(x, ApplicationPlatform.CurrentPlatform, ApplicationPlatform.CurrentRuntimeLibrary, TaleWorlds.MountAndBlade.DedicatedServerType.None, false);

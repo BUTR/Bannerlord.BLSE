@@ -19,8 +19,9 @@ internal sealed class BUTRLauncherModuleVM : BUTRViewModel, IModuleViewModel
 {
     private readonly Action<BUTRLauncherModuleVM> _select;
     private readonly Func<BUTRLauncherModuleVM, IEnumerable<string>> _validate;
+    private readonly Func<ModuleInfoExtendedWithMetadata, ICollection<ModuleProviderType>> _getPossibleProviders;
 
-    public ModuleInfoExtendedWithPath ModuleInfoExtended { get; }
+    public ModuleInfoExtendedWithMetadata ModuleInfoExtended { get; }
 
     public int Index { get; set; }
 
@@ -118,11 +119,13 @@ internal sealed class BUTRLauncherModuleVM : BUTRViewModel, IModuleViewModel
     public LauncherHintVM? UpdateHint { get => _updateHint; set => SetField(ref _updateHint, value); }
     private LauncherHintVM? _updateHint;
 
-    public BUTRLauncherModuleVM(ModuleInfoExtendedWithPath moduleInfoExtended, Action<BUTRLauncherModuleVM> select, Func<BUTRLauncherModuleVM, IEnumerable<string>> validate)
+    public BUTRLauncherModuleVM(ModuleInfoExtendedWithMetadata moduleInfoExtended, Action<BUTRLauncherModuleVM> select, Func<BUTRLauncherModuleVM, IEnumerable<string>> validate,
+        Func<ModuleInfoExtendedWithMetadata, ICollection<ModuleProviderType>> getPossibleProviders)
     {
         ModuleInfoExtended = moduleInfoExtended;
         _select = select;
         _validate = validate;
+        _getPossibleProviders = getPossibleProviders;
 
         if (ModuleDependencyConstructor.GetDependencyHint(moduleInfoExtended) is { } str)
         {
@@ -130,12 +133,26 @@ internal sealed class BUTRLauncherModuleVM : BUTRViewModel, IModuleViewModel
             AnyDependencyAvailable = !string.IsNullOrEmpty(str);
         }
 
+        Refresh();
+    }
+
+    public void Validate()
+    {
+        var validationIssues = _validate(this).ToList();
+
+        IssuesText = validationIssues.Count > 0
+            ? string.Join("\n", validationIssues)
+            : string.Empty;
+    }
+
+    public void Refresh()
+    {
         var dangerous = string.Empty;
-        if (ModuleChecker.IsInstalledInMainAndExternalModuleDirectory(moduleInfoExtended))
+        if (_getPossibleProviders(ModuleInfoExtended) is { } providers && providers.Any(x => x == ModuleProviderType.Steam))
         {
             dangerous += new BUTRTextObject("{=kfMQEOFS}The Module is installed in the game's /Modules folder and on Steam Workshop!{NL}The /Modules version will be used!").ToString();
         }
-        if (ModuleChecker.IsObfuscated(moduleInfoExtended))
+        if (ModuleChecker.IsObfuscated(ModuleInfoExtended))
         {
             if (dangerous.Length != 0) dangerous += "\n";
             dangerous += new BUTRTextObject("{=aAYdk1zd}The DLL is obfuscated!{NL}There is no guarantee that the code is safe!{NL}The BUTR Team warns of consequences arising from running obfuscated code!").ToString();
@@ -150,15 +167,6 @@ internal sealed class BUTRLauncherModuleVM : BUTRViewModel, IModuleViewModel
             IsDangerous = false;
             DangerousHint = new LauncherHintVM(dangerous);
         }
-    }
-
-    public void Validate()
-    {
-        var validationIssues = _validate(this).ToList();
-
-        IssuesText = validationIssues.Count > 0
-            ? string.Join("\n", validationIssues)
-            : string.Empty;
     }
 
     [BUTRDataSourceMethod]

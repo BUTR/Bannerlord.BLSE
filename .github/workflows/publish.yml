@@ -76,13 +76,13 @@ jobs:
   ###########################
   publish-on-nexusmods:
     if: github.ref == 'refs/heads/master'
-    needs: ["get-changelog", "build"]
+    needs: [get-changelog, build]
     uses: BUTR/workflows/.github/workflows/release-nexusmods.yml@master
     with:
       nexusmods_game_id: mountandblade2bannerlord
       nexusmods_mod_id: 1
       mod_filename: 'Bannerlord Software Extender (BLSE)'
-      mod_version: ${{ needs.build-changelog.outputs.mod_version }}
+      mod_version: ${{ needs.get-changelog.outputs.mod_version }}
       mod_description: ${{ needs.build.outputs.mod_description }}
       artifact_name: bannerlord
     secrets:
@@ -94,11 +94,11 @@ jobs:
   ###########################
   publish-on-github:
     if: github.ref == 'refs/heads/master'
-    needs: ["get-changelog", "build"]
+    needs: [get-changelog, build]
     uses: BUTR/workflows/.github/workflows/release-github.yml@master
     with:
       mod_id: Bannerlord.BLSE
-      mod_version: ${{ needs.build-changelog.outputs.mod_version }}
+      mod_version: ${{ needs.get-changelog.outputs.mod_version }}
       mod_description: ${{ needs.build.outputs.mod_description }}
       artifact_name: bannerlord
 
@@ -107,7 +107,7 @@ jobs:
   ###########################
   publish-on-steam:
     if: github.ref == 'refs/heads/master'
-    needs: ["get-changelog", "build"]
+    needs: [get-changelog, build]
     runs-on: ubuntu-latest
     steps:
       - name: Download Module artifact
@@ -123,7 +123,7 @@ jobs:
           ssfnFileName: ${{ secrets.STEAM_SSFN_FILE_NAME }}
           ssfnFileContents: ${{ secrets.STEAM_SSFN_FILE_CONTENTS }}
           appId: ${{ secrets.STEAM_APPID }}
-          buildDescription: ${{ needs.build-changelog.outputs.mod_version }}
+          buildDescription: ${{ needs.get-changelog.outputs.mod_version }}
           rootPath: build
           depot1Path: ./artifact
           releaseBranch: prerelease

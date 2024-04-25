@@ -94,23 +94,33 @@ internal class BUTRInputManager : IInputManager, IDisposable
     public void UpdateKeyData(byte[] keyData) => InputManager.UpdateKeyData(keyData);
 
     public bool IsControllerConnected() => InputManager.IsControllerConnected();
-#if v100 || v101 || v102 || v103 || v110 || v111 || v112 || v113 || v114 || v115
+
+#if v100 || v110
         public InputKey GetControllerClickKey() => InputManager.GetControllerClickKey();
 #endif
 
-#if v110 || v111
-        public void SetRumbleEffect(float[] lowFrequencyLevels, float[] lowFrequencyDurations, int numLowFrequencyElements, float[] highFrequencyLevels,
-            float[] highFrequencyDurations, int numHighFrequencyElements) =>
-            InputManager.SetRumbleEffect(lowFrequencyLevels, lowFrequencyDurations, numLowFrequencyElements, highFrequencyLevels, highFrequencyDurations, numHighFrequencyElements);
-        public void SetTriggerFeedback(byte leftTriggerPosition, byte leftTriggerStrength, byte rightTriggerPosition, byte rightTriggerStrength) =>
-            InputManager.SetTriggerFeedback(leftTriggerPosition, leftTriggerStrength, rightTriggerPosition, rightTriggerStrength);
-        public void SetTriggerWeaponEffect(byte leftStartPosition, byte leftEnd_position, byte leftStrength, byte rightStartPosition, byte rightEndPosition, byte rightStrength) =>
-            InputManager.SetTriggerWeaponEffect(leftStartPosition, leftEnd_position, leftStrength, rightStartPosition, rightEndPosition, rightStrength);
-        public void SetTriggerVibration(float[] leftTriggerAmplitudes, float[] leftTriggerFrequencies, float[] leftTriggerDurations, int numLeftTriggerElements,
-            float[] rightTriggerAmplitudes, float[] rightTriggerFrequencies, float[] rightTriggerDurations, int numRightTriggerElements) =>
-            InputManager.SetTriggerVibration(leftTriggerAmplitudes, leftTriggerFrequencies, leftTriggerDurations, numLeftTriggerElements, rightTriggerAmplitudes,
-                rightTriggerFrequencies, rightTriggerDurations, numRightTriggerElements);
-        public void SetLightbarColor(float red, float green, float blue) => InputManager.SetLightbarColor(red, green, blue);
+#if v110 || v120
+    public void SetRumbleEffect(float[] lowFrequencyLevels, float[] lowFrequencyDurations, int numLowFrequencyElements, float[] highFrequencyLevels, float[] highFrequencyDurations, int numHighFrequencyElements) =>
+        InputManager.SetRumbleEffect(lowFrequencyLevels, lowFrequencyDurations, numLowFrequencyElements, highFrequencyLevels, highFrequencyDurations, numHighFrequencyElements);
+    public void SetTriggerFeedback(byte leftTriggerPosition, byte leftTriggerStrength, byte rightTriggerPosition, byte rightTriggerStrength) =>
+        InputManager.SetTriggerFeedback(leftTriggerPosition, leftTriggerStrength, rightTriggerPosition, rightTriggerStrength);
+    public void SetTriggerWeaponEffect(byte leftStartPosition, byte leftEnd_position, byte leftStrength, byte rightStartPosition, byte rightEndPosition, byte rightStrength) =>
+        InputManager.SetTriggerWeaponEffect(leftStartPosition, leftEnd_position, leftStrength, rightStartPosition, rightEndPosition, rightStrength);
+    public void SetTriggerVibration(float[] leftTriggerAmplitudes, float[] leftTriggerFrequencies, float[] leftTriggerDurations, int numLeftTriggerElements, float[] rightTriggerAmplitudes, float[] rightTriggerFrequencies, float[] rightTriggerDurations, int numRightTriggerElements) =>
+        InputManager.SetTriggerVibration(leftTriggerAmplitudes, leftTriggerFrequencies, leftTriggerDurations, numLeftTriggerElements, rightTriggerAmplitudes, rightTriggerFrequencies, rightTriggerDurations, numRightTriggerElements);
+    public void SetLightbarColor(float red, float green, float blue) => InputManager.SetLightbarColor(red, green, blue);
+#endif
+
+#if v120
+    public TaleWorlds.InputSystem.Input.ControllerTypes GetControllerType() => InputManager.GetControllerType();
+
+    public float GetGyroX() => InputManager.GetGyroX();
+    public float GetGyroY() => InputManager.GetGyroY();
+    public float GetGyroZ() => InputManager.GetGyroZ();
+
+    public InputKey[] GetClickKeys() => InputManager.GetClickKeys();
+
+    public bool IsAnyTouchActive() => InputManager.IsAnyTouchActive();
 #endif
 
     private static TReturn IsAction<TReturn>(InputKey key, Func<Keys, TReturn> action, Func<InputKey, TReturn> fallback)
@@ -138,31 +148,6 @@ internal class BUTRInputManager : IInputManager, IDisposable
         return action(rawKey);
     }
 
-#if v120
-    public TaleWorlds.InputSystem.Input.ControllerTypes GetControllerType() => InputManager.GetControllerType();
-
-    public float GetGyroX() => InputManager.GetGyroX();
-    public float GetGyroY() => InputManager.GetGyroY();
-    public float GetGyroZ() => InputManager.GetGyroZ();
-
-    public InputKey[] GetClickKeys() => InputManager.GetClickKeys();
-
-    public void SetRumbleEffect(float[] lowFrequencyLevels, float[] lowFrequencyDurations, int numLowFrequencyElements, float[] highFrequencyLevels, float[] highFrequencyDurations, int numHighFrequencyElements) =>
-        InputManager.SetRumbleEffect(lowFrequencyLevels, lowFrequencyDurations, numLowFrequencyElements, highFrequencyLevels, highFrequencyDurations, numHighFrequencyElements);
-
-    public void SetTriggerFeedback(byte leftTriggerPosition, byte leftTriggerStrength, byte rightTriggerPosition, byte rightTriggerStrength) =>
-        InputManager.SetTriggerFeedback(leftTriggerPosition, leftTriggerStrength, rightTriggerPosition, rightTriggerStrength);
-
-    public void SetTriggerWeaponEffect(byte leftStartPosition, byte leftEnd_position, byte leftStrength, byte rightStartPosition, byte rightEndPosition, byte rightStrength) =>
-        InputManager.SetTriggerWeaponEffect(leftStartPosition, leftEnd_position, leftStrength, rightStartPosition, rightEndPosition, rightStrength);
-
-    public void SetTriggerVibration(float[] leftTriggerAmplitudes, float[] leftTriggerFrequencies, float[] leftTriggerDurations, int numLeftTriggerElements, float[] rightTriggerAmplitudes, float[] rightTriggerFrequencies, float[] rightTriggerDurations, int numRightTriggerElements) =>
-        InputManager.SetTriggerVibration(leftTriggerAmplitudes, leftTriggerFrequencies, leftTriggerDurations, numLeftTriggerElements, rightTriggerAmplitudes, rightTriggerFrequencies, rightTriggerDurations, numRightTriggerElements);
-
-    public void SetLightbarColor(float red, float green, float blue) => InputManager.SetLightbarColor(red, green, blue);
-
-    public bool IsAnyTouchActive() => InputManager.IsAnyTouchActive();
-#endif
 
     public void Dispose()
     {

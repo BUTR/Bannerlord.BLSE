@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>11.0</LangVersion>
+    <LangVersion>12.0</LangVersion>
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
     <OutputType>library</OutputType>
@@ -79,8 +79,8 @@
     </PropertyGroup>
     <Message Text="dotnet clean $(LauncherExProjectFull) -p:Configuration=$(Configuration)_%(GameAPIVersion.Flat)" Importance="High" />
     <Exec Command="dotnet clean $(LauncherExProjectFull) -p:Configuration=$(Configuration)_%(GameAPIVersion.Flat)" />
-    <Message Text="dotnet build $(LauncherExProjectFull) --force -p:GameVersion=%(GameAPIVersion.GameVersion) -p:Configuration=$(Configuration)_%(GameAPIVersion.Flat)" Importance="High" />
-    <Exec Command="dotnet build $(LauncherExProjectFull) --force -p:GameVersion=%(GameAPIVersion.GameVersion) -p:Configuration=$(Configuration)_%(GameAPIVersion.Flat)" />
+    <Message Text="dotnet build $(LauncherExProjectFull) -p:Configuration=$(Configuration)_%(GameAPIVersion.Flat) -p:GameVersion=%(GameAPIVersion.GameVersion)" Importance="High" />
+    <Exec Command="dotnet build $(LauncherExProjectFull) -p:Configuration=$(Configuration)_%(GameAPIVersion.Flat) -p:GameVersion=%(GameAPIVersion.GameVersion)" />
   </Target>
   <Target Condition="$(Configuration) == 'Release'" Name="BeforeBuildCompress" AfterTargets="BeforeBuildLauncherEx">
     <GZip Files="@(EmbeddedResource)">
