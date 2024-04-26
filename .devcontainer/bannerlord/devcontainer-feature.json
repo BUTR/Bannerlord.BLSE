@@ -1,0 +1,18 @@
+{
+    "id": "bannerlord",
+    "version": "1.0.0",
+    "name": "Bannerlord",
+    "documentationURL": "",
+    "description": "Bannerlord",
+    "containerEnv": {
+		"BANNERLORD_GAME_DIR": "/bannerlord",
+		"BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL": "${localEnv:BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL}"
+	},
+    "mounts": [
+       {
+          "source":"${localEnv:BANNERLORD_GAME_DIR}",
+          "target":"/bannerlord",
+          "type":"bind"
+       }
+    ]
+}

@@ -5,10 +5,16 @@
 		"cacheFrom": "ghcr.io/butr/bannerlord.blse:latest"
 	},
 	"features": {
+		"./upgrade": {
+
+		},
 		"ghcr.io/devcontainers/features/git:1": {
             "version": "latest",
             "ppa": "false"
         },
+		"./mono": {
+			
+		},
         "ghcr.io/devcontainers/features/dotnet:2": {
 
         },
@@ -17,23 +23,30 @@
 		}
 	},
 	"overrideFeatureInstallOrder": [
+		"./upgrade",
 		"ghcr.io/devcontainers/features/git",
+		"./mono",
 		"ghcr.io/devcontainers/features/dotnet",
 		"ghcr.io/devcontainers/features/powershell"
 	],
-	"mounts": [
-		"source=${localEnv:BANNERLORD_GAME_DIR},target=/bannerlord,type=bind,consistency=default"
-	],
 	"containerEnv": {
-		"BANNERLORD_GAME_DIR": "/bannerlord",
-		"BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL": "${localEnv:BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL}"
+		"DOTNET_CLI_TELEMETRY_OPTOUT": "true",
+		"DOTNET_HTTPREPL_TELEMETRY_OPTOUT": "true",
+		"DOTNET_NOLOGO": "true",
+		"DOTNET_SKIP_FIRST_TIME_EXPERIENCE": "true",
+		"DOTNET_USE_POLLING_FILE_WATCHER": "true",
+		"NUGET_XMLDOC_MODE": "skip"
 	},
+	"postStartCommand": {
+		"dotnet restore": "dotnet restore src/Bannerlord.BLSE.sln"
+	  },
 	"postAttachCommand": "dotnet restore src/Bannerlord.BLSE.sln",
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"ms-vscode.powershell",
+				"editorconfig.editorconfig",
 				"github.vscode-github-actions",
+				"ms-vscode.powershell",
 				"ms-azuretools.vscode-docker",
 				"ms-dotnettools.csdevkit"
 			],
@@ -46,7 +59,9 @@
 				},
 				"powershell.powerShellAdditionalExePaths": {
 					"pwsh": "/usr/local/bin/pwsh"
-				}
+				},
+				"telemetry.telemetryLevel": "off",
+				"dotnetAcquisitionExtension.enableTelemetry": false
 			}
 		}
 	}
