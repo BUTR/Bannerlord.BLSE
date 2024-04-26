@@ -32,7 +32,7 @@ internal sealed class FileSystemProviderImpl : IFileSystemProvider
                 return null;
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             //_logger.LogError(ex, "Bannerlord IO Read Operation failed! {Path}", filePath);
             return null;
@@ -48,7 +48,7 @@ internal sealed class FileSystemProviderImpl : IFileSystemProvider
             else
                 File.WriteAllBytes(filePath, data);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             //_logger.LogError(ex, "Bannerlord IO Write Operation failed! {Path}", filePath);
         }
