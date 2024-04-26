@@ -1,11 +1,53 @@
 {
-	"name": ".NET Core & Mono",
+	"name": ".NET & Mono & Powershell",
+    "dockerFile": "Dockerfile",
 	"build": {
-		"dockerfile": "Dockerfile"
+		"cacheFrom": "ghcr.io/butr/bannerlord.blse:latest"
 	},
 	"features": {
+		"ghcr.io/devcontainers/features/git:1": {
+            "version": "latest",
+            "ppa": "false"
+        },
+        "ghcr.io/devcontainers/features/dotnet:2": {
+
+        },
 		"ghcr.io/devcontainers/features/powershell:1": {
-			"version": "latest"
+            "version": "latest"
+		}
+	},
+	"overrideFeatureInstallOrder": [
+		"ghcr.io/devcontainers/features/git",
+		"ghcr.io/devcontainers/features/dotnet",
+		"ghcr.io/devcontainers/features/powershell"
+	],
+	"mounts": [
+		"source=${localEnv:BANNERLORD_GAME_DIR},target=/bannerlord,type=bind,consistency=default"
+	],
+	"containerEnv": {
+		"BANNERLORD_GAME_DIR": "/bannerlord",
+		"BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL": "${localEnv:BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL}"
+	},
+	"postAttachCommand": "dotnet restore src/Bannerlord.BLSE.sln",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-vscode.powershell",
+				"github.vscode-github-actions",
+				"ms-azuretools.vscode-docker",
+				"ms-dotnettools.csdevkit"
+			],
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "pwsh", 
+				"terminal.integrated.profiles.linux": {
+					"path": {
+						"path": "/usr/local/bin/pwsh"
+					}
+				},
+				"powershell.powerShellAdditionalExePaths": {
+					"pwsh": "/usr/local/bin/pwsh"
+				}
+			}
 		}
 	}
 }
