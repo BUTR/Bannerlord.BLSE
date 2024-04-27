@@ -2,7 +2,7 @@
 	"name": ".NET & Mono & Powershell",
     "dockerFile": "Dockerfile",
 	"build": {
-		"cacheFrom": "ghcr.io/butr/bannerlord.blse:latest"
+		"cacheFrom": "ghcr.io/butr/bannerlord.blse-devcontainer:latest"
 	},
 	"features": {
 		"./upgrade": {
