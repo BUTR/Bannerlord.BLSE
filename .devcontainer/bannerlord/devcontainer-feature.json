@@ -5,8 +5,7 @@
     "documentationURL": "",
     "description": "Bannerlord",
     "containerEnv": {
-		"BANNERLORD_GAME_DIR": "/bannerlord",
-		"BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL": "${localEnv:BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL}"
+		"BANNERLORD_GAME_DIR": "/bannerlord"
 	},
     "mounts": [
        {
