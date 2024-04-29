@@ -4,7 +4,7 @@
     <OutputType>winexe</OutputType>
     <PlatformTarget>x64</PlatformTarget>
     <TargetFramework>net472</TargetFramework>
-    <LangVersion>11.0</LangVersion>
+    <LangVersion>12.0</LangVersion>
     <Nullable>enable</Nullable>
     <ApplicationIcon>../../resources/BLSE_SMALL.ico</ApplicationIcon>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>

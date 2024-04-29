@@ -2,11 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>11.0</LangVersion>
+    <LangVersion>12.0</LangVersion>
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
-    <DebugType>full</DebugType>
-    <Version>1.24.3</Version>
+    <Version>1.25.0</Version>
+    <BUTRCompatibilityScoreUrl>$(BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL)</BUTRCompatibilityScoreUrl>
+    <DebugType>portable</DebugType>
+    
     <PolySharpExcludeGeneratedTypes>System.Diagnostics.CodeAnalysis.UnscopedRefAttribute</PolySharpExcludeGeneratedTypes>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
 
@@ -18,16 +20,18 @@
     <ILRepackMergeDebugSymbols>true</ILRepackMergeDebugSymbols>
     <ILRepackPerformInternalize>true</ILRepackPerformInternalize>
     <ILRepackCopyAttributes>false</ILRepackCopyAttributes>
-    <ILRepackBuildToolingPath Condition="$(Configuration) != 'Debug'">$(PkgBUTR_ILRepack)\tools\net461\ILRepack.exe</ILRepackBuildToolingPath>
-    <!--
-    <GameVersion>1.1.0</GameVersion>
-    <GameVersionFlat>$([System.String]::Copy('$(GameVersion)').Replace('.',''))</GameVersionFlat>
-    <GameVersionConstant>v$(GameVersionFlat)</GameVersionConstant>
-    -->
-
-    <DefineConstants>$(DefineConstants);$(GameVersionConstant)</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="$(Configuration) == 'Debug'">
+    <GameVersion>1.2.0</GameVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GameVersionFlat>$([System.String]::Copy('$(GameVersion)').Replace('.',''))</GameVersionFlat>
+    <GameVersionConstant>v$(GameVersionFlat)</GameVersionConstant>
+    <DefineConstants>$(DefineConstants);$(GameVersionConstant)</DefineConstants>
+  </PropertyGroup>
+  
   <PropertyGroup>
     <PackageId>Bannerlord.LauncherEx</PackageId>
     <Title>Bannerlord.LauncherEx</Title>
@@ -46,9 +50,8 @@
 
   <ItemGroup>
     <!-- BUTR.ILRepack breaks debugging -->
-    <PackageReference Condition="$(Configuration) != 'Debug'" Update="ILRepack" PrivateAssets="all" IncludeAssets="none" />
-    <PackageReference Condition="$(Configuration) != 'Debug'" Include="BUTR.ILRepack" Version="2.1.9-beta7" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    <PackageReference Include="ILRepack.FullAuto" Version="1.2.0" PrivateAssets="all" />
+    <PackageReference Include="ILRepack" Version="2.0.31" PrivateAssets="all" />
+    <PackageReference Include="ILRepack.FullAuto" Version="1.5.0" PrivateAssets="all" />
 
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
 
@@ -61,7 +64,8 @@
     <PackageReference Include="lz4net" Version="1.0.15.93" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.229-beta" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Mono.Cecil" Version="0.11.5" IncludeAssets="compile" />
-    <PackageReference Include="PolySharp" Version="1.13.2" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" PrivateAssets="all" />
+    <PackageReference Include="PolySharp" Version="1.14.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="StbSharp" Version="0.7.2.38" PrivateAssets="all" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
     <PackageReference Include="System.Memory" Version="4.5.5" />
@@ -79,17 +83,23 @@
       </AssemblyAttribute>
     </ItemGroup>
   </Target>
-
-  <Target Name="BuildExtended">
-    <CallTarget Targets="Build" />
-  </Target>
-
-  <Target Name="ExcludeAssembliesFromILRepack" BeforeTargets="ILRepackPrepare">
+  
+  <Target Name="ExcludeAssembliesFromILRepack" BeforeTargets="ILRepackPrepareBuild">
     <PropertyGroup>
       <ILRepackExcludeAssemblies>$(ILRepackExcludeAssemblies);$(ProjectDir)$(OutputPath)System.Drawing.dll;</ILRepackExcludeAssemblies>
       <ILRepackExcludeAssemblies>$(ILRepackExcludeAssemblies);$(ProjectDir)$(OutputPath)System.Drawing.Common.dll;</ILRepackExcludeAssemblies>
       <ILRepackExcludeAssemblies>$(ILRepackExcludeAssemblies);$(ProjectDir)$(OutputPath)System.Drawing.Primitives.dll;</ILRepackExcludeAssemblies>
     </PropertyGroup>
+  </Target>
+
+  <Target Name="SetBUTRCompatibilityScoreUrl" BeforeTargets="BeforeCompile">
+    <ItemGroup Condition="$(BUTRCompatibilityScoreUrl) != ''">
+      <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+        <_Parameter1>BUTRCompatibilityScoreUrl</_Parameter1>
+        <_Parameter2>$(BUTRCompatibilityScoreUrl)</_Parameter2>
+      </AssemblyAttribute>
+    </ItemGroup>
+    <Warning Condition="$(BUTRCompatibilityScoreUrl) == ''" Text="Environment variable 'BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL' is not set!" />
   </Target>
 
 </Project>

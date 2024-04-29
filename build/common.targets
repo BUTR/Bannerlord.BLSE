@@ -37,9 +37,10 @@ if (Files.Length > 0)
         Log.LogMessage(MessageImportance.Normal, $"EmbeddedResource Src: {sourceItemSpec}");
               
         using (var sourceStream = File.OpenRead(sourcePath))
-        using (var destinationStream = File.OpenWrite(destinationPath))
+        using (var destinationStream = new FileStream(destinationPath, FileMode.OpenOrCreate, FileAccess.Write))
         using (var destinationGZip = new GZipStream(destinationStream, CompressionLevel.Optimal))
         {
+            destinationStream.SetLength(0);
             sourceStream.CopyTo(destinationGZip);
         }
               

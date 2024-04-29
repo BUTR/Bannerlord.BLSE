@@ -10,30 +10,29 @@ using System.Reflection;
 
 using TaleWorlds.Library;
 
-namespace Bannerlord.LauncherEx.Patches
+namespace Bannerlord.LauncherEx.Patches;
+
+internal static class ViewModelPatch
 {
-    internal static class ViewModelPatch
+    public static bool Enable(Harmony harmony)
     {
-        public static bool Enable(Harmony harmony)
+        var res1 = harmony.TryPatch(
+            AccessTools2.DeclaredConstructor(typeof(ViewModel)),
+            prefix: AccessTools2.DeclaredMethod(typeof(ViewModelPatch), nameof(ViewModelCtorPrefix)));
+        if (!res1) return false;
+
+        return true;
+    }
+
+    private static bool ViewModelCtorPrefix(ViewModel __instance, ref Type ____type, ref object ____propertiesAndMethods)
+    {
+        if (__instance is BUTRViewModel && ViewModelExtensions.DataSourceTypeBindingPropertiesCollectionCtor is { } ctor)
         {
-            var res1 = harmony.TryPatch(
-                AccessTools2.DeclaredConstructor(typeof(ViewModel)),
-                prefix: AccessTools2.DeclaredMethod(typeof(ViewModelPatch), nameof(ViewModelCtorPrefix)));
-            if (!res1) return false;
+            ____type = __instance.GetType();
+            ____propertiesAndMethods = ctor(new Dictionary<string, PropertyInfo>(), new Dictionary<string, MethodInfo>());
 
-            return true;
+            return false;
         }
-
-        private static bool ViewModelCtorPrefix(ViewModel __instance, ref Type ____type, ref object ____propertiesAndMethods)
-        {
-            if (__instance is BUTRViewModel && ViewModelExtensions.DataSourceTypeBindingPropertiesCollectionCtor is { } ctor)
-            {
-                ____type = __instance.GetType();
-                ____propertiesAndMethods = ctor(new Dictionary<string, PropertyInfo>(), new Dictionary<string, MethodInfo>());
-
-                return false;
-            }
-            return true;
-        }
+        return true;
     }
 }

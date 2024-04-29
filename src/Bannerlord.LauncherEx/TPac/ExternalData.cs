@@ -2,26 +2,25 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Bannerlord.LauncherEx.TPac
+namespace Bannerlord.LauncherEx.TPac;
+
+internal class ExternalData
 {
-    internal class ExternalData
+    public Guid TypeGuid { get; protected internal set; }
+
+    public ExternalData()
     {
-        public Guid TypeGuid { get; protected internal set; }
+        TypeGuid = Guid.Empty;
+    }
 
-        public ExternalData()
-        {
-            TypeGuid = Guid.Empty;
-        }
+    public ExternalData(Guid typeGuid)
+    {
+        TypeGuid = typeGuid;
+    }
 
-        public ExternalData(Guid typeGuid)
-        {
-            TypeGuid = typeGuid;
-        }
-
-        public virtual void ReadData(BinaryReader stream, IDictionary<object, object> userdata, int totalSize)
-        {
-            stream.BaseStream.Seek(totalSize, SeekOrigin.Current);
-            //_unknownRawData = stream.ReadBytes(totalSize);
-        }
+    public virtual void ReadData(BinaryReader stream, IDictionary<object, object> userdata, int totalSize)
+    {
+        stream.BaseStream.Seek(totalSize, SeekOrigin.Current);
+        //_unknownRawData = stream.ReadBytes(totalSize);
     }
 }

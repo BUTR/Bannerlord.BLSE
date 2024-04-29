@@ -6,50 +6,49 @@ using System.Runtime.CompilerServices;
 
 using Module = TaleWorlds.MountAndBlade.Module;
 
-namespace Bannerlord.BLSE.Features.Interceptor.Patches
+namespace Bannerlord.BLSE.Features.Interceptor.Patches;
+
+internal static class ModulePatch
 {
-    internal static class ModulePatch
+    public static event Action? OnInitializeSubModulesPrefix;
+    public static event Action? OnLoadSubModulesPostfix;
+
+    private static Harmony? _harmony;
+
+    public static bool Enable(Harmony harmony)
     {
-        public static event Action? OnInitializeSubModulesPrefix;
-        public static event Action? OnLoadSubModulesPostfix;
+        _harmony = harmony;
 
-        private static Harmony? _harmony;
+        var res1 = harmony.TryPatch(
+            AccessTools2.Method(typeof(Module), "LoadSubModules"),
+            postfix: AccessTools2.Method(typeof(ModulePatch), nameof(LoadSubModulesPostfix)));
+        if (!res1) return false;
 
-        public static bool Enable(Harmony harmony)
-        {
-            _harmony = harmony;
+        var res2 = harmony.TryPatch(
+            AccessTools2.Method(typeof(Module), "InitializeSubModules"),
+            prefix: AccessTools2.Method(typeof(ModulePatch), nameof(InitializeSubModulesPrefix)));
+        if (!res2) return false;
 
-            var res1 = harmony.TryPatch(
-                AccessTools2.Method(typeof(Module), "LoadSubModules"),
-                postfix: AccessTools2.Method(typeof(ModulePatch), nameof(LoadSubModulesPostfix)));
-            if (!res1) return false;
+        return true;
+    }
 
-            var res2 = harmony.TryPatch(
-                AccessTools2.Method(typeof(Module), "InitializeSubModules"),
-                prefix: AccessTools2.Method(typeof(ModulePatch), nameof(InitializeSubModulesPrefix)));
-            if (!res2) return false;
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static void InitializeSubModulesPrefix()
+    {
+        OnInitializeSubModulesPrefix?.Invoke();
 
-            return true;
-        }
+        _harmony?.Unpatch(
+            AccessTools2.Method(typeof(Module), "InitializeSubModules"),
+            AccessTools2.Method(typeof(ModulePatch), nameof(InitializeSubModulesPrefix)));
+    }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static void InitializeSubModulesPrefix()
-        {
-            OnInitializeSubModulesPrefix?.Invoke();
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static void LoadSubModulesPostfix()
+    {
+        OnLoadSubModulesPostfix?.Invoke();
 
-            _harmony?.Unpatch(
-                AccessTools2.Method(typeof(Module), "InitializeSubModules"),
-                AccessTools2.Method(typeof(ModulePatch), nameof(InitializeSubModulesPrefix)));
-        }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static void LoadSubModulesPostfix()
-        {
-            OnLoadSubModulesPostfix?.Invoke();
-
-            _harmony?.Unpatch(
-                AccessTools2.Method(typeof(Module), "LoadSubModules"),
-                AccessTools2.Method(typeof(ModulePatch), nameof(LoadSubModulesPostfix)));
-        }
+        _harmony?.Unpatch(
+            AccessTools2.Method(typeof(Module), "LoadSubModules"),
+            AccessTools2.Method(typeof(ModulePatch), nameof(LoadSubModulesPostfix)));
     }
 }

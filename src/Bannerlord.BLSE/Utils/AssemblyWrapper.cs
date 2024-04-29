@@ -1,11 +1,10 @@
 ﻿using System.Reflection;
 
-namespace Bannerlord.BLSE.Utils
-{
-    internal class AssemblyWrapper : Assembly
-    {
-        public override string Location { get; }
+namespace Bannerlord.BLSE.Utils;
 
-        public AssemblyWrapper(string location) => Location = location;
-    }
+internal class AssemblyWrapper : Assembly
+{
+    public override string Location { get; }
+
+    public AssemblyWrapper(string location) => Location = location;
 }

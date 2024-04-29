@@ -6,39 +6,38 @@ using System;
 
 using TaleWorlds.MountAndBlade;
 
-namespace Bannerlord.BLSE.Features.ContinueSaveFile
+namespace Bannerlord.BLSE.Features.ContinueSaveFile;
+
+public static class ContinueSaveFileFeature
 {
-    public static class ContinueSaveFileFeature
+    public static string Id = FeatureIds.ContinueSaveFileId;
+
+    private static string? _currentSaveFile;
+    private static Harmony? _harmony;
+
+    public static void Enable(Harmony harmony)
     {
-        public static string Id = FeatureIds.ContinueSaveFileId;
+        _harmony = harmony;
+        ModulePatch.OnSaveGameArgParsed += (_, saveFile) => _currentSaveFile = saveFile;
+        ModulePatch.Enable(harmony);
 
-        private static string? _currentSaveFile;
-        private static Harmony? _harmony;
+        AppDomain.CurrentDomain.AssemblyLoad += CurrentDomainOnAssemblyLoad;
+    }
 
-        public static void Enable(Harmony harmony)
+    private static void CurrentDomainOnAssemblyLoad(object? sender, AssemblyLoadEventArgs args)
+    {
+        if (_harmony is null) return;
+
+        if (args.LoadedAssembly.GetName().Name == "SandBox")
         {
-            _harmony = harmony;
-            ModulePatch.OnSaveGameArgParsed += (_, saveFile) => _currentSaveFile = saveFile;
-            ModulePatch.Enable(harmony);
-
-            AppDomain.CurrentDomain.AssemblyLoad += CurrentDomainOnAssemblyLoad;
+            SandBoxSubModulePatch.GetSaveGameArg = GetSaveFile;
+            SandBoxSubModulePatch.Enable(_harmony);
+            InformationManagerPatch.Enable(_harmony);
         }
+    }
 
-        private static void CurrentDomainOnAssemblyLoad(object? sender, AssemblyLoadEventArgs args)
-        {
-            if (_harmony is null) return;
-
-            if (args.LoadedAssembly.GetName().Name == "SandBox")
-            {
-                SandBoxSubModulePatch.GetSaveGameArg = GetSaveFile;
-                SandBoxSubModulePatch.Enable(_harmony);
-                InformationManagerPatch.Enable(_harmony);
-            }
-        }
-
-        private static string? GetSaveFile(GameStartupInfo startupInfo)
-        {
-            return _currentSaveFile;
-        }
+    private static string? GetSaveFile(GameStartupInfo startupInfo)
+    {
+        return _currentSaveFile;
     }
 }

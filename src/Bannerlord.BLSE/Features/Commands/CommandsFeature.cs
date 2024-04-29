@@ -5,20 +5,19 @@ using HarmonyLib;
 using System;
 using System.Collections.Generic;
 
-namespace Bannerlord.BLSE.Features.Commands
+namespace Bannerlord.BLSE.Features.Commands;
+
+public static class CommandsFeature
 {
-    public static class CommandsFeature
+    public static string Id = FeatureIds.CommandsId;
+
+    public static readonly Dictionary<string, Func<List<string>, string>> Functions = new()
     {
-        public static string Id = FeatureIds.CommandsId;
+        { "blse.version", BLSECommands.GetVersion }
+    };
 
-        public static readonly Dictionary<string, Func<List<string>, string>> Functions = new()
-        {
-            { "blse.version", BLSECommands.GetVersion }
-        };
-
-        public static void Enable(Harmony harmony)
-        {
-            CommandLineFunctionalityPatch.Enable(harmony);
-        }
+    public static void Enable(Harmony harmony)
+    {
+        CommandLineFunctionalityPatch.Enable(harmony);
     }
 }

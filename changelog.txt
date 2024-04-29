@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.5.0
+Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.1.6,v1.2.x
+* BETA Release!
+* Switched to new launcher manager backend
+* Added Update Recommendations - based on BUTR Analytics Server (based on ButterLib Crash Reports)
+---------------------------------------------------------------------------------------------------
 Version: 1.4.12
 Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.1.6,v1.2.9
 * Adapted to v1.2.9. Thanks to jzebedee!
