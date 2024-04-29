@@ -46,7 +46,7 @@ internal static class FontFactoryManager
         AccessTools2.GetDelegate<TryAddFontDefinitionDelegate>(typeof(FontFactory), "TryAddFontDefinition");
 
     private static readonly AddFontDefinitionDelegate? AddFontDefinitionOptimistic =
-        AddFontDefinition ?? new((instance, fontPath, fontName, spriteData) => TryAddFontDefinition?.Invoke(instance, fontPath, fontName, spriteData));
+        AddFontDefinition ?? ((instance, fontPath, fontName, spriteData) => TryAddFontDefinition?.Invoke(instance, fontPath, fontName, spriteData));
 
     private static SpriteData WithData(this SpriteData spriteData, string spriteName)
     {
@@ -59,7 +59,7 @@ internal static class FontFactoryManager
 
     private static void LoadAllFontsPostfix(ref FontFactory __instance)
     {
-        if (AddFontDefinitionOptimistic is not AddFontDefinitionDelegate addFont)
+        if (AddFontDefinitionOptimistic is not { } addFont)
         {
             return;
         }
