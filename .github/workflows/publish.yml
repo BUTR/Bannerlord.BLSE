@@ -70,6 +70,8 @@ jobs:
         with:
           name: bannerlord-${{matrix.project}}-${{matrix.configuration}}
           path: ./bannerlord/
+    env:
+      BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL: ${{ secrets.BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL }}
 
   ###########################
   #        NEXUSMODS        #
