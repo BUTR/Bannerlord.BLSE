@@ -118,13 +118,13 @@ internal sealed class BUTRLauncherModuleVM : BUTRViewModel, IModuleViewModel
 
     [BUTRDataSourceProperty]
     public bool IsUpdateHintHigh => UpdateInfoAvailable && CompatibilityScore >= 75d;
-    
+
     [BUTRDataSourceProperty]
     public bool IsUpdateHintMedium => UpdateInfoAvailable && CompatibilityScore is >= 50d and < 75d;
-    
+
     [BUTRDataSourceProperty]
     public bool IsUpdateHintLow => UpdateInfoAvailable && CompatibilityScore is >= 0d and < 50d;
-    
+
     public BUTRLauncherModuleVM(ModuleInfoExtendedWithMetadata moduleInfoExtended, Action<BUTRLauncherModuleVM> select, Func<BUTRLauncherModuleVM, IEnumerable<string>> validate,
         Func<ModuleInfoExtendedWithMetadata, ICollection<ModuleProviderType>> getPossibleProviders)
     {
@@ -216,7 +216,7 @@ internal sealed class BUTRLauncherModuleVM : BUTRViewModel, IModuleViewModel
             .SetTextVariable("CURRENTVERSION", VersionText)
             .SetTextVariable("RECOMMENDEDVERSION", RecommendedVersion)
             .SetTextVariable("GAMEVERSION", ApplicationVersionHelper.GameVersionStr()).ToString());
-        
+
         OnPropertyChanged(nameof(IsUpdateHintHigh));
         OnPropertyChanged(nameof(IsUpdateHintMedium));
         OnPropertyChanged(nameof(IsUpdateHintLow));
@@ -228,7 +228,7 @@ internal sealed class BUTRLauncherModuleVM : BUTRViewModel, IModuleViewModel
         CompatibilityScore = 0d;
         RecommendedVersion = string.Empty;
         UpdateHint = null;
-        
+
         OnPropertyChanged(nameof(IsUpdateHintHigh));
         OnPropertyChanged(nameof(IsUpdateHintMedium));
         OnPropertyChanged(nameof(IsUpdateHintLow));

@@ -1,4 +1,4 @@
-using Bannerlord.LauncherManager.Localization;
+﻿using Bannerlord.LauncherManager.Localization;
 
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
