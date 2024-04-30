@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LanguageData id="简体中文" name="简体中文" subtitle_extension="zh-HANS" supported_iso="zh-HANS,zh,zho,chi,zh-cn,zh-sg" under_development="false">
+<LanguageData id="English" name="English" subtitle_extension="en-GB" supported_iso="en-GB,en-US,en,eng,en-us,en-gb,en-au,en-bz,en-ca,en-ie,en-jm,en-nz,en-za,en-tt" under_development="false">
   <strings>
     <!-- BUTRLauncherModuleVM -->
     <string id="kfMQEOFS" text="该模组被安装在 游戏目录/Modules 以及 steam创意工坊！{NL}将使用 游戏目录/Modules 的版本。"/>
@@ -30,87 +30,87 @@
     <string id="uKUsA3Sp" text="LauncherEx 在首次启动时会进行备份。这将恢复该备份"/>
     <string id="TLDgPay9" text="恢复"/>
     <string id="5XzSM7RN" text="恢复“引擎”选项备份"/>
-    <string id="JusnHy6S" text="启动 Windows DPI 缩放以移除 UI 界面模糊"/>
+    <string id="JusnHy6S" text="名称"/>
 
     <!-- BUTRLauncherSavesVM -->
-    <string id="JtelOsIW" text="名称"/>
-    <string id="14WBFIS1" text="版本"/>
-    <string id="OJsGrGVi" text="角色"/>
-    <string id="JxpEEQdF" text="等级"/>
-    <string id="qkkTPycE" text="天数"/>
-    <string id="aYWWDkKX" text="创建日期"/>
+    <string id="JtelOsIW" text="版本"/>
+    <string id="14WBFIS1" text="角色"/>
+    <string id="OJsGrGVi" text="等级"/>
+    <string id="JxpEEQdF" text="天数"/>
+    <string id="qkkTPycE" text="创建日期"/>
+    <string id="aYWWDkKX" text="取消"/>
 
     <!-- LauncherConfirmStartVMMixin -->
-    <string id="DzJmcvsP" text="取消"/>
-    <string id="epTxGUqT" text="确认"/>
+    <string id="DzJmcvsP" text="确认"/>
+    <string id="epTxGUqT" text="模组排列顺序使用的是默认算法！{NL}原因：{NL}{REASONS}"/>
 
     <!-- LauncherModsVMMixin -->
-    <string id="pZVVdI5d" text="模组排列顺序使用的是默认算法！{NL}原因：{NL}{REASONS}"/>
-    <string id="sP1a61KE" text="未能正确放置模组！将放置在最近的位置！{NL}原因：{NL}{REASONS}"/>
-    <string id="sLf3eIpH" text="模组列表排序失败！"/>
+    <string id="pZVVdI5d" text="未能正确放置模组！将放置在最近的位置！{NL}原因：{NL}{REASONS}"/>
+    <string id="sP1a61KE" text="模组列表排序失败！"/>
+    <string id="sLf3eIpH" text="选项"/>
 
     <!-- LauncherVMMixin -->
-    <string id="yS5hbWCL" text="选项"/>
-    <string id="V66qoU6n" text="启动器"/>
-    <string id="ro4RMgyt" text="游戏"/>
-    <string id="q4rQuTgG" text="引擎"/>
-    <string id="d5OjKcGE" text="存档"/>
-    <string id="Aws9irMU" text="导入加载顺序"/>
-    <string id="4wKr76gx" text="导入该存档的加载顺序"/>
-    <string id="XdZGqnFW" text="导出当前加载顺序"/>
-    <string id="G55IdM6M" text="导出该存档的加载顺序"/>
-    <string id="MlYQ0uX7" text="可能会出现不稳定的体验。"/>
-    <string id="qvzptzrE" text="你希望继续加载该存档吗？"/>
-    <string id="dDprK7Mz" text="警告"/>
+    <string id="yS5hbWCL" text="启动器"/>
+    <string id="V66qoU6n" text="游戏"/>
+    <string id="ro4RMgyt" text="引擎"/>
+    <string id="q4rQuTgG" text="存档"/>
+    <string id="d5OjKcGE" text="导入加载顺序"/>
+    <string id="Aws9irMU" text="导入该存档的加载顺序"/>
+    <string id="4wKr76gx" text="导出当前加载顺序"/>
+    <string id="XdZGqnFW" text="导出该存档的加载顺序"/>
+    <string id="G55IdM6M" text="可能会出现不稳定的体验。"/>
+    <string id="MlYQ0uX7" text="你希望继续加载该存档吗？"/>
+    <string id="qvzptzrE" text="警告"/>
+    <string id="dDprK7Mz" text="单人游戏"/>
 
-    <string id="Hk7FBBSa" text="单人游戏"/>
-    <string id="UOGhdUWE" text="多人游戏"/>
-    <string id="VDTcZpPr" text="数字伙伴"/>
-    <string id="Tg0If68v" text="新闻"/>
-    <string id="YGU9eXM0" text="Mods"/>
-    <string id="xYv4iv7C" text="游玩"/>
-    <string id="6B3iZLqR" text="继续"/>
-    <string id="eUt6GKkQ" text="启动"/>
+    <string id="Hk7FBBSa" text="多人游戏"/>
+    <string id="UOGhdUWE" text="数字伙伴"/>
+    <string id="VDTcZpPr" text="新闻"/>
+    <string id="Tg0If68v" text="Mods"/>
+    <string id="YGU9eXM0" text="游玩"/>
+    <string id="xYv4iv7C" text="继续"/>
+    <string id="6B3iZLqR" text="启动"/>
+    <string id="eUt6GKkQ" text="取消导入！"/>
 
     <!-- LauncherVMMixin -->
-    <string id="WJnTxf3v" text="取消导入！"/>
-    <string id="BjtJ4Lxw" text="取消导出！"/>
-    <string id="eohqbvHU" text="成功导入排序！"/>
-    <string id="VwFQTk5z" text="成功导出排序！"/>
+    <string id="WJnTxf3v" text="取消导出！"/>
+    <string id="BjtJ4Lxw" text="成功导入排序！"/>
+    <string id="eohqbvHU" text="成功导出排序！"/>
+    <string id="VwFQTk5z" text="（未知ID）"/>
 
     <!-- Issues -->
-    <string id="kxqLbSqe" text="（未知ID）"/>
+    <string id="kxqLbSqe" text="重复的模组ID：{NL}{MODULEIDS}"/>
 
-    <string id="izSm5f85" text="重复的模组ID：{NL}{MODULEIDS}"/>
-    <string id="vCwH9226" text="重复的模组名称：{NL}{MODULENAMES}"/>
-    <string id="GtDRbC3m" text="缺失模组：{NL}{MODULES}"/>
-    <string id="BuMom4Jt" text="模组版本不匹配：{NL}{MODULEVERSIONS}"/>
+    <string id="izSm5f85" text="重复的模组名称：{NL}{MODULENAMES}"/>
+    <string id="vCwH9226" text="缺失模组：{NL}{MODULES}"/>
+    <string id="GtDRbC3m" text="模组版本不匹配：{NL}{MODULEVERSIONS}"/>
+    <string id="BuMom4Jt" text="{MODULEID}。需要版本 {REQUIREDVERSION}。当前版本{ACTUALVERSION}"/>
 
-    <string id="nYVWoomO" text="{MODULEID}。需要版本 {REQUIREDVERSION}。当前版本{ACTUALVERSION}"/>
-    <string id="sd6M4KRd" text="加载顺序：{NL}{LOADORDER}"/>
-    <string id="HvvA78sZ" text="加载顺序问题：{NL}{LOADORDERISSUES}"/>
+    <string id="nYVWoomO" text="加载顺序：{NL}{LOADORDER}"/>
+    <string id="sd6M4KRd" text="加载顺序问题：{NL}{LOADORDERISSUES}"/>
+    <string id="HvvA78sZ" text="无法找到存档文件！"/>
 
-    <string id="B64DbmWp" text="无法找到存档文件！"/>
-    <string id="epU06HID" text="无法读取存档文件！"/>
+    <string id="B64DbmWp" text="无法读取存档文件！"/>
+    <string id="epU06HID" text="使用一个加载顺序加载存档"/>
 
-    <string id="DKRNkst2" text="使用一个加载顺序加载存档"/>
-    <string id="XSxlKweM" text="保存一个霸主模组排序"/>
+    <string id="DKRNkst2" text="保存一个霸主模组排序"/>
+    <string id="XSxlKweM" text="继续导入？"/>
 
-    <string id="hgew15HH" text="继续导入？"/>
+    <string id="hgew15HH" text="LauncherEx 在游戏根目录检测到 0Harmony.dll！{NL}这将导致游戏无法运行，删掉它吗？"/>
 
-    <string id="tqjPGPtP" text="LauncherEx 在游戏根目录检测到 0Harmony.dll！{NL}这将导致游戏无法运行，删掉它吗？"/>
+    <string id="tqjPGPtP" text="模组列表缺失 '{ID}' {VERSION}"/>
 
-    <string id="J3Uh6MV4" text="模组列表缺失 '{ID}' {VERSION}"/>
-    <string id="3eQSr6wt" text="缺失 '{ID}' {VERSION}"/>
-    <string id="U858vdQX" text="'{ID}' 缺失前置模组！"/>
-    <string id="1LS8Z5DU" text="'{ID}' 有未解决的问题！"/>
-    <string id="Vjz9HQ41" text="'{ID}' 版本错误 &lt;= {VERSION}"/>
-    <string id="ZvnlL7VE" text="'{ID}' 版本错误 &lt; [{VERSION}]"/>
-    <string id="EfNuH2bG" text="'{ID}' 版本错误 &gt; [{VERSION}]"/>
-    <string id="zXDidmpQ" text="'{ID}' 与此模组冲突"/>
-    <string id="4KFwqKgG" text="'{ID}' 模组同时作为前置并与其他模组冲突"/>
-    <string id="9DRB6yXv" text="'{ID}' 模组同时作为前置并加载顺序冲突"/>
-    <string id="RC1V9BbP" text="循环依赖。 '{TARGETID}' 和 '{SOURCEID}' 相互需要"/>
+    <string id="J3Uh6MV4" text="缺失 '{ID}' {VERSION}"/>
+    <string id="3eQSr6wt" text="'{ID}' 缺失前置模组！"/>
+    <string id="U858vdQX" text="'{ID}' 有未解决的问题！"/>
+    <string id="1LS8Z5DU" text="'{ID}' 版本错误 &lt;= {VERSION}"/>
+    <string id="Vjz9HQ41" text="'{ID}' 版本错误 &lt; [{VERSION}]"/>
+    <string id="ZvnlL7VE" text="'{ID}' 版本错误 &gt; [{VERSION}]"/>
+    <string id="EfNuH2bG" text="'{ID}' 与此模组冲突"/>
+    <string id="zXDidmpQ" text="'{ID}' 模组同时作为前置并与其他模组冲突"/>
+    <string id="4KFwqKgG" text="'{ID}' 模组同时作为前置并加载顺序冲突"/>
+    <string id="9DRB6yXv" text="循环依赖。 '{TARGETID}' 和 '{SOURCEID}' 相互需要"/>
+    <string id="RC1V9BbP" text="'{TARGETID}' 应当在 '{SOURCEID}' 之前加载"/>
     <string id="s3xbuejE" text="'{SOURCEID}' 应当在 '{TARGETID}' 之前加载"/>
     <string id="2ALJB7z2" text="'{SOURCEID}' 应当在 '{TARGETID}' 之后加载"/>
 
@@ -119,5 +119,13 @@
     <string id="f9hYP7mk" text="需要模组："/>
     <string id="eGJ387f7" text="冲突模组："/>
     <string id="eW76jyd7" text="需要在其之前加载："/>
+
+
+    <string id="HdnFwgVA" text="基于BUTR分析工具：{NL}{NL}无需更新。{NL}兼容性评分：{SCORE}%{NL}{NL}{CURRENTVERSION}版本目前最适合本体{GAMEVERSION}版本。"/>
+    <string id="HdnFwgVB" text="基于BUTR分析工具：{NL}{NL}推荐升级到{RECOMMENDEDVERSION}版本。{NL}兼容性评分：{SCORE}%{NL}{NL}相比{CURRENTVERSION}版本，{RECOMMENDEDVERSION}版本更适合本体{GAMEVERSION}版本！"/>
+   
+    <string id="q5quVWMI" text="勾选所有模组"/>
+    <string id="H5nMY4WU" text="刷新模组"/>
+    <string id="zXWdahH9" text="获取更新建议{NL}点击此按钮，将模组列表发送到BUTR服务器，获取兼容性评分和推荐版本。{NL}数据基于ButterLib的崩溃报告。{NL}{NL}（需要连网）"/>
   </strings>
 </LanguageData>
