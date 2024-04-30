@@ -108,7 +108,7 @@ jobs:
   #          STEAM          #
   ###########################
   publish-on-steam:
-    if: github.ref == 'refs/heads/master'
+    if: false && github.ref == 'refs/heads/master'
     needs: [get-changelog, build]
     runs-on: ubuntu-latest
     steps:
