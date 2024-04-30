@@ -261,7 +261,7 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
                 Modules = selectedModules
             }));
 
-            var responseDefinition = new { Modules = new[] { new { ModuleId = "", Compatibility = 0d, RecommendedModuleVersion = "" } } };
+            var responseDefinition = new { Modules = new[] { new { ModuleId = "", Compatibility = 0d, RecommendedCompatibility = (double?) null, RecommendedModuleVersion = (string?) null } } };
 
             var httpWebRequest = WebRequest.CreateHttp(uploadUrlAttr.Value);
             httpWebRequest.Method = "POST";
@@ -285,8 +285,7 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
             foreach (var module in result.Modules)
             {
                 if (Modules2.FirstOrDefault(x => x.ModuleInfoExtended.Id == module.ModuleId) is not { } moduleVM) continue;
-                if (module.Compatibility > 0d)
-                    moduleVM.SetUpdateInfo(module.Compatibility, module.RecommendedModuleVersion);
+                moduleVM.SetUpdateInfo(module.Compatibility, module.RecommendedCompatibility, module.RecommendedModuleVersion);
             }
         }
         catch (Exception) { /* ignore */ }

@@ -108,12 +108,9 @@ internal sealed class BUTRLauncherModuleVM : BUTRViewModel, IModuleViewModel
     private bool _updateInfoAvailable;
 
     [BUTRDataSourceProperty]
-    public double CompatibilityScore { get => _compatibilityScore; set => SetField(ref _compatibilityScore, value); }
-    private double _compatibilityScore = 1d;
-
-    [BUTRDataSourceProperty]
-    public string RecommendedVersion { get => _recommendedVersion; set => SetField(ref _recommendedVersion, value); }
-    private string _recommendedVersion = string.Empty;
+    public double CompatibilityScore { get; set; }
+    public double RecommendedCompatibilityScore { get; set; }
+    public string RecommendedVersion { get; set; }
 
     [BUTRDataSourceProperty]
     public LauncherHintVM? UpdateHint { get => _updateHint; set => SetField(ref _updateHint, value); }
@@ -121,13 +118,13 @@ internal sealed class BUTRLauncherModuleVM : BUTRViewModel, IModuleViewModel
 
     [BUTRDataSourceProperty]
     public bool IsUpdateHintHigh => UpdateInfoAvailable && CompatibilityScore >= 75d;
-    
+
     [BUTRDataSourceProperty]
     public bool IsUpdateHintMedium => UpdateInfoAvailable && CompatibilityScore is >= 50d and < 75d;
-    
+
     [BUTRDataSourceProperty]
     public bool IsUpdateHintLow => UpdateInfoAvailable && CompatibilityScore is >= 0d and < 50d;
-    
+
     public BUTRLauncherModuleVM(ModuleInfoExtendedWithMetadata moduleInfoExtended, Action<BUTRLauncherModuleVM> select, Func<BUTRLauncherModuleVM, IEnumerable<string>> validate,
         Func<ModuleInfoExtendedWithMetadata, ICollection<ModuleProviderType>> getPossibleProviders)
     {
@@ -202,22 +199,24 @@ internal sealed class BUTRLauncherModuleVM : BUTRViewModel, IModuleViewModel
         Process.Start(ModuleInfoExtended.Path);
     }
 
-    public void SetUpdateInfo(double compatibilityScore, string? recommendedVersion)
+    public void SetUpdateInfo(double compatibilityScore, double? recommendedCompatibilityScore, string? recommendedVersion)
     {
         UpdateInfoAvailable = true;
         CompatibilityScore = compatibilityScore;
+        RecommendedCompatibilityScore = recommendedCompatibilityScore ?? 0d;
         RecommendedVersion = recommendedVersion ?? string.Empty;
 
         var hasRecommendedVersion = !string.IsNullOrEmpty(recommendedVersion);
 
         UpdateHint = new LauncherHintVM(new BUTRTextObject(hasRecommendedVersion
-                ? "{=HdnFwgVB}Based on BUTR analytics:{NL}{NL}Suggesting to update to {RECOMMENDEDVERSION}.{NL}Compatibility Score {SCORE}%{NL}{NL}{RECOMMENDEDVERSION} has a better compatibility for game {GAMEVERSION} rather than {CURRENTVERSION}!"
+                ? "{=HdnFwgVB}Based on BUTR analytics:{NL}{NL}Compatibility Score {SCORE}%{NL}{NL}Suggesting to update to {RECOMMENDEDVERSION}.{NL}Compatibility Score {RECOMMENDEDSCORE}%{NL}{NL}{RECOMMENDEDVERSION} has a better compatibility for game {GAMEVERSION} rather than {CURRENTVERSION}!"
                 : "{=HdnFwgVA}Based on BUTR analytics:{NL}{NL}Update is not requiured.{NL}Compatibility Score {SCORE}%{NL}{NL}{CURRENTVERSION} is one of the best version for game {GAMEVERSION}")
             .SetTextVariable("SCORE", CompatibilityScore.ToString(CultureInfo.InvariantCulture))
+            .SetTextVariable("RECOMMENDEDSCORE", RecommendedCompatibilityScore.ToString(CultureInfo.InvariantCulture))
             .SetTextVariable("CURRENTVERSION", VersionText)
             .SetTextVariable("RECOMMENDEDVERSION", RecommendedVersion)
             .SetTextVariable("GAMEVERSION", ApplicationVersionHelper.GameVersionStr()).ToString());
-        
+
         OnPropertyChanged(nameof(IsUpdateHintHigh));
         OnPropertyChanged(nameof(IsUpdateHintMedium));
         OnPropertyChanged(nameof(IsUpdateHintLow));
@@ -229,7 +228,7 @@ internal sealed class BUTRLauncherModuleVM : BUTRViewModel, IModuleViewModel
         CompatibilityScore = 0d;
         RecommendedVersion = string.Empty;
         UpdateHint = null;
-        
+
         OnPropertyChanged(nameof(IsUpdateHintHigh));
         OnPropertyChanged(nameof(IsUpdateHintMedium));
         OnPropertyChanged(nameof(IsUpdateHintLow));
