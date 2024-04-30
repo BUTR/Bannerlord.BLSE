@@ -122,7 +122,7 @@
 
 
     <string id="HdnFwgVA" text="Based on BUTR analytics:{NL}{NL}Update is not requiured.{NL}Compatibility Score {SCORE}%{NL}{NL}{CURRENTVERSION} is one of the best version for game {GAMEVERSION}" />
-    <string id="HdnFwgVB" text="Based on BUTR analytics:{NL}{NL}Suggesting to update to {RECOMMENDEDVERSION}.{NL}Compatibility Score {SCORE}%{NL}{NL}{RECOMMENDEDVERSION} has a better compatibility for game {GAMEVERSION} rather than {CURRENTVERSION}!" />
+    <string id="HdnFwgVB" text="Based on BUTR analytics:{NL}{NL}Compatibility Score {SCORE}%{NL}{NL}Suggesting to update to {RECOMMENDEDVERSION}.{NL}Compatibility Score {RECOMMENDEDSCORE}%{NL}{NL}{RECOMMENDEDVERSION} has a better compatibility for game {GAMEVERSION} rather than {CURRENTVERSION}!" />
    
     <string id="q5quVWMI" text="Toggle All Modules" />
     <string id="H5nMY4WU" text="Refresh Modules" />
