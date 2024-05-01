@@ -63,6 +63,22 @@ jobs:
         run: |
           mkdir bannerlord;
           dotnet build src/${{matrix.project}}/${{matrix.project}}.csproj --configuration Release -p:GameConfiguration="${{matrix.configuration}}" -p:GameFolder="$PWD/bannerlord" -p:BuildShared="false" /nowarn:MSB4011;
+        env:
+          BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL: ${{ secrets.BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL }}
+        shell: pwsh
+
+      - name: Add GPU acceleration hint
+        run: |
+          # dotnet tool install -g Topten.nvpatch;
+          # $env:DOTNET_ROLL_FORWARD="Major";
+          dotnet tool install -g dotnet-script;
+          
+          $fileNames = Get-ChildItem -Path "bannerlord/" -Recurse -Include *.exe;
+          foreach ($f in $fileNames) {
+            echo $f.FullName;
+            # nvpatch --enable $f.FullName;
+            dotnet script build/gpu.csx -- --enable-gpu "$f";
+          }
         shell: pwsh
 
       - name: Upload Bannerlord folder
@@ -70,8 +86,6 @@ jobs:
         with:
           name: bannerlord-${{matrix.project}}-${{matrix.configuration}}
           path: ./bannerlord/
-    env:
-      BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL: ${{ secrets.BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL }}
 
   ###########################
   #        NEXUSMODS        #
