@@ -19,7 +19,7 @@
     <string id="lmpQeQBS" text="禁用启动器检测Mods的二进制兼容性"/>
     <string id="iD27wEq7" text="隐藏骑手图像"/>
     <string id="LaPvZjwC" text="隐藏右方骑手图像，使启动器更紧凑"/>
-    <string id="JT7QnJJA" text="解锁dll"/>
+    <string id="JT7QnJJA" text="解锁dll文件"/>
     <string id="VMIp4503" text="解锁 游戏目录/Modules 中所有的dll文件"/>
     <string id="RDLKkiVk" text="解锁"/>
     <string id="QJSBiZdJ" text="测试版自动排序"/>
@@ -119,5 +119,13 @@
     <string id="f9hYP7mk" text="需要模组："/>
     <string id="eGJ387f7" text="冲突模组："/>
     <string id="eW76jyd7" text="需要在其之前加载："/>
+
+
+    <string id="HdnFwgVA" text="基于BUTR分析工具：{NL}{NL}无需更新。{NL}兼容性评分：{SCORE}%{NL}{NL}{CURRENTVERSION}版本目前最适合本体{GAMEVERSION}版本。"/>
+    <string id="HdnFwgVB" text="基于BUTR分析工具：{NL}{NL}兼容性评分：{SCORE}%{NL}{NL}推荐更新到{RECOMMENDEDVERSION}版本。{NL}兼容性评分：{RECOMMENDEDSCORE}%{NL}{NL}相比{CURRENTVERSION}版本，{RECOMMENDEDVERSION}版本更适合本体{GAMEVERSION}版本。"/>
+   
+    <string id="q5quVWMI" text="勾选所有模组"/>
+    <string id="H5nMY4WU" text="刷新模组"/>
+    <string id="zXWdahH9" text="获取更新建议{NL}点击此按钮，将模组列表发送到BUTR服务器，获取兼容性评分和推荐版本。{NL}数据基于ButterLib的崩溃报告。{NL}{NL}（需要连网）"/>
   </strings>
 </LanguageData>
