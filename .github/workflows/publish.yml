@@ -72,8 +72,8 @@ jobs:
           dotnet tool install -g dotnet-script;
           
           $fileNames = Get-ChildItem -Path "src/" -Recurse -Include *.exe;
-          foreach ($f in $files){
-            dotnet script build/gpu.csx -- --enable-gpu $f.FullName
+          foreach ($f in $fileNames) {
+            dotnet script build/gpu.csx -- --enable-gpu $f.FullName;
           }
         shell: pwsh
 
