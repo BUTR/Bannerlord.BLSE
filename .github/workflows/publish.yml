@@ -69,12 +69,12 @@ jobs:
 
       - name: Add GPU acceleration hint
         run: |
-          dotnet tool install -g dotnet-script;
+          dotnet tool install -g Topten.nvpatch;
           
           $fileNames = Get-ChildItem -Path "bannerlord/" -Recurse -Include *.exe;
           foreach ($f in $fileNames) {
             echo $f.FullName;
-            dotnet script build/gpu.csx -- --enable-gpu "$f";
+            nvpatch --enable "$f";
           }
         shell: pwsh
 
