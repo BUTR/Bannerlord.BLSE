@@ -73,7 +73,7 @@ jobs:
           
           Get-ChildItem "src/" -Filter *.exe | 
           Foreach-Object {
-            dotnet script foo.csx -- --enable-gpu "$_.FullName"
+            dotnet script build/gpu.csx -- --enable-gpu "$_.FullName"
           }
         shell: pwsh
 

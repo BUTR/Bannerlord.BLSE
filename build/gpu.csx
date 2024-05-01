@@ -9,7 +9,6 @@ using System.Linq;
 using System.IO;
 using System;
 
-namespace EditBinPE;
 class Program
 {
     private static readonly string ExePath = AppDomain.CurrentDomain.BaseDirectory, ConfigPath = ExePath + "/config";
@@ -21,8 +20,10 @@ class Program
         new("AmdPowerXpressRequestHighPerformance")
     };
 
-    public static unsafe int Main(string[] args)
+    public static unsafe int Main(IList<string> args2)
     {
+        var args = args2.ToArray();
+
         // Local vars
         List<ExportSymbol> exportSymbols = new();
         var inFile = string.Empty;
@@ -274,3 +275,5 @@ class Program
         Console.WriteLine(help);
     }
 }
+
+Program.Main(Args);
