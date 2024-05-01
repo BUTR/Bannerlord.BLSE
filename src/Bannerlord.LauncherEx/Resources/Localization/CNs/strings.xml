@@ -122,7 +122,7 @@
 
 
     <string id="HdnFwgVA" text="基于BUTR分析工具：{NL}{NL}无需更新。{NL}兼容性评分：{SCORE}%{NL}{NL}{CURRENTVERSION}版本目前最适合本体{GAMEVERSION}版本。"/>
-    <string id="HdnFwgVB" text="基于BUTR分析工具：{NL}{NL}推荐升级到{RECOMMENDEDVERSION}版本。{NL}兼容性评分：{SCORE}%{NL}{NL}相比{CURRENTVERSION}版本，{RECOMMENDEDVERSION}版本更适合本体{GAMEVERSION}版本！"/>
+    <string id="HdnFwgVB" text="基于BUTR分析工具：{NL}{NL}兼容性评分：{SCORE}%{NL}{NL}推荐更新到{RECOMMENDEDVERSION}版本。{NL}兼容性评分：{RECOMMENDEDSCORE}%{NL}{NL}相比{CURRENTVERSION}版本，{RECOMMENDEDVERSION}版本更适合本体{GAMEVERSION}版本。"/>
    
     <string id="q5quVWMI" text="勾选所有模组"/>
     <string id="H5nMY4WU" text="刷新模组"/>
