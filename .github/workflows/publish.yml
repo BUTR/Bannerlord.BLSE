@@ -71,7 +71,7 @@ jobs:
         run: |
           dotnet tool install -g dotnet-script;
           
-          $fileNames = Get-ChildItem -Path "src/" -Recurse -Include *.exe;
+          $fileNames = Get-ChildItem -Path "bannerlord/" -Recurse -Include *.exe;
           foreach ($f in $fileNames) {
             echo $f.FullName;
             dotnet script build/gpu.csx -- --enable-gpu "$f";
