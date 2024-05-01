@@ -73,7 +73,8 @@ jobs:
           
           $fileNames = Get-ChildItem -Path "src/" -Recurse -Include *.exe;
           foreach ($f in $fileNames) {
-            dotnet script build/gpu.csx -- --enable-gpu $f.FullName;
+            echo $f.FullName;
+            dotnet script build/gpu.csx -- --enable-gpu "$f.FullName";
           }
         shell: pwsh
 
