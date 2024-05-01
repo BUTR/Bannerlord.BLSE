@@ -70,6 +70,7 @@ jobs:
       - name: Add GPU acceleration hint
         run: |
           dotnet tool install -g Topten.nvpatch;
+          $env:DOTNET_ROLL_FORWARD=Major;
           
           $fileNames = Get-ChildItem -Path "bannerlord/" -Recurse -Include *.exe;
           foreach ($f in $fileNames) {
