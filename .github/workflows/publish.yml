@@ -75,7 +75,7 @@ jobs:
           $fileNames = Get-ChildItem -Path "bannerlord/" -Recurse -Include *.exe;
           foreach ($f in $fileNames) {
             echo $f.FullName;
-            nvpatch --enable "$f" "$f";
+            nvpatch --enable $f.FullName;
           }
         shell: pwsh
 
