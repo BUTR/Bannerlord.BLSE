@@ -1,5 +1,13 @@
 #r "nuget: AsmResolver.DotNet, 5.5.1"
 
+using AsmResolver;
+using AsmResolver.PE;
+using AsmResolver.PE.DotNet;
+using AsmResolver.PE.DotNet.Builder;
+using AsmResolver.PE.Exports;
+using AsmResolver.PE.File;
+using AsmResolver.PE.File.Headers;
+
 var image = PEImage.FromFile(Args[0]);
 
 // Force mixed-mode.
