@@ -112,8 +112,15 @@ jobs:
           # Then we decompile them with ILDasm
           # Then we compile them back to .exe with ILAsm and with the .il file for exporting the global variable
           # Then we set the icon back because ILAsm doesn't support setting the icon
+          
           $workingDir = "$PWD";
           mkdir tmp;
+
+          cd build/set-icon;
+          yarn ci;
+          cd $workingDir;
+
+
           $fileNames = Get-ChildItem -Path "bannerlord/" -Recurse -Include *.exe;
           foreach ($f in $fileNames) {
             cd $workingDir/tmp;
@@ -155,7 +162,7 @@ jobs:
       - name: Upload Bannerlord folder
         uses: actions/upload-artifact@v4
         with:
-          name: bannerlord-${{matrix.project}}-${{matrix.configuration}}
+          name: bannerlord
           path: ./bannerlord/
 
   ###########################
@@ -170,7 +177,7 @@ jobs:
       nexusmods_mod_id: 1
       mod_filename: 'Bannerlord Software Extender (BLSE)'
       mod_version: ${{ needs.get-changelog.outputs.mod_version }}
-      mod_description: ${{ needs.build.outputs.mod_description }}
+      mod_description: ${{ needs.get-changelog.outputs.mod_description }}
       artifact_name: bannerlord
     secrets:
       NEXUSMODS_APIKEY: ${{ secrets.ARAGAS_NEXUSMODS_API_KEY }}
@@ -186,7 +193,7 @@ jobs:
     with:
       mod_id: Bannerlord.BLSE
       mod_version: ${{ needs.get-changelog.outputs.mod_version }}
-      mod_description: ${{ needs.build.outputs.mod_description }}
+      mod_description: ${{ needs.get-changelog.outputs.mod_description }}
       artifact_name: bannerlord
 
   ###########################
