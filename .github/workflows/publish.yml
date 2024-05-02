@@ -101,7 +101,7 @@ jobs:
 
             $fileDirname = $f.DirectoryName;
             $dirname = [System.IO.Path]::GetFileNameWithoutExtension($f.FullName);
-            mkdir $dirname/$runtime;
+            New-Item -ItemType Directory -Path $dirname/$runtime -Force
             cd $dirname/$runtime;
 
             # Decompile to IL Code
