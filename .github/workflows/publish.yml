@@ -117,7 +117,7 @@ jobs:
           mkdir tmp;
 
           cd build/set-icon;
-          yarn ci;
+          yarn install;
           cd $workingDir;
 
 
