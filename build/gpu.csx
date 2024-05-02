@@ -43,5 +43,6 @@ newFile.Sections.Add(new PESection(
 ));
 
 // Write to disk.
-string outputPath = Path.ChangeExtension(inputPath, ".patched" + Path.GetExtension(inputPath));
+//string outputPath = Path.ChangeExtension(inputPath, ".patched" + Path.GetExtension(inputPath));
+string outputPath = inputPath;
 newFile.Write(outputPath);
