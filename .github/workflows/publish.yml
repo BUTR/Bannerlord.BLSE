@@ -69,9 +69,12 @@ jobs:
 
       - name: Add Dedicated GPU Hint
         run: |
+          echo "Downloading ILAsm";
           Invoke-WebRequest https://globalcdn.nuget.org/packages/runtime.linux-x64.microsoft.netcore.ildasm.8.0.0.nupkg -OutFile ildasm.nupkg;
+          echo "Extracting ILAsm";
           Expand-Archive ildasm.nupkg -d tools/ildasm;
-          chmod +x tools/ilasm/runtimes/linux-x64/native/ilasm
+          echo "chmod ILAsm";
+          chmod +x tools/ildasm/runtimes/linux-x64/native/ildasm;
 
           # So what is happening here?
           # We're not able to export global variables from C#
