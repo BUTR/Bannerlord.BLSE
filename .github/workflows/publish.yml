@@ -67,18 +67,57 @@ jobs:
           BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL: ${{ secrets.BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL }}
         shell: pwsh
 
-      - name: Add GPU acceleration hint
+      - name: Add Dedicated GPU Hint
         run: |
-          # dotnet tool install -g Topten.nvpatch;
-          # $env:DOTNET_ROLL_FORWARD="Major";
-          dotnet tool install -g dotnet-script;
-          
+          Invoke-WebRequest https://globalcdn.nuget.org/packages/runtime.linux-x64.microsoft.netcore.ildasm.8.0.0.nupkg -OutFile ildasm.nupkg;
+          Expand-Archive ildasm.nupkg -d tools/ildasm;
+          chmod +x tools/ilasm/runtimes/linux-x64/native/ilasm
+
+          # So what is happening here?
+          # We're not able to export global variables from C#
+          # But ILAsm is able to do it
+          # So we compile our .exe files from C#
+          # Then we decompile them with ILDasm
+          # Then we compile them back to .exe with ILAsm and with the .il file for exporting the global variable
+          # Then we set the icon back because ILAsm doesn't support setting the icon
+          $workingDir = "$PWD";
+          mkdir tmp;
           $fileNames = Get-ChildItem -Path "bannerlord/" -Recurse -Include *.exe;
           foreach ($f in $fileNames) {
+            cd $workingDir/tmp;
+           
             echo $f.FullName;
-            # nvpatch --enable $f.FullName;
-            dotnet script build/gpu.csx -- --enable-gpu "$f";
+
+            $runtime = "";
+            If ($f.FullName.Contains("Win64_Shipping_Client")) {
+              $runtime = "Win64_Shipping_Client";
+            }
+            If ($f.FullName.Contains("Gaming.Desktop.x64_Shipping_Client")) {
+              $runtime = "Gaming.Desktop.x64_Shipping_Client";
+            }
+
+            $fileDirname = $f.DirectoryName;
+            $dirname = [System.IO.Path]::GetFileNameWithoutExtension($f.FullName);
+            mkdir $dirname/$runtime;
+            cd $dirname/$runtime;
+
+            # Decompile to IL Code
+            & "$workingDir/tools/ildasm/runtimes/linux-x64/native/ildasm.exe" "$f" /OUT=Code.il
+            Copy-Item -Path $workingDir/build/ilassembler/ILAssembler.ilproj -Destination ILAssembler.ilproj;
+            Copy-Item -Path $workingDir/build/ilassembler/ForceDedicatedGraphicCard.il -Destination ForceDedicatedGraphicCard.il;
+            
+            # Recompile to .exe
+            dotnet build ILAssembler.ilproj -c Release -p:AssemblyName="$dirname" -p:OutDir="$PWD";
+            
+            # Set Icon
+            cd $workingDir/build/set-icon;
+            node index.js "$workingDir/tmp/$dirname/$runtime/$dirname.exe" "$workingDir/resources/BLSE_SMALL.ico";
+
+            Copy-Item -Path "$workingDir/tmp/$dirname/$runtime/$dirname.exe" -Destination "$fileDirname/$dirname.exe" -force
+
           }
+          cd $workingDir;
+          rmdir tmp -Recurse -Force;
         shell: pwsh
 
       - name: Upload Bannerlord folder

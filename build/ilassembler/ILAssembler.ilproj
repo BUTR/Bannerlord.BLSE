@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.IL/8.0.0">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <IlasmFlags>/X64</IlasmFlags>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+ 
+</Project>
