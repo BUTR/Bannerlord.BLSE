@@ -166,3 +166,13 @@ jobs:
           rootPath: build
           depot1Path: ./artifact
           releaseBranch: prerelease
+
+  cleanup-build-output:
+    name: Cleanup Build Output
+    needs: [publish-on-nexusmods, publish-on-github, publish-on-steam]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - uses: joutvhu/delete-artifact@v2
+        with:
+          pattern: bannerlord-tmp-*
