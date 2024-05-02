@@ -105,7 +105,7 @@ jobs:
             cd $dirname/$runtime;
 
             # Decompile to IL Code
-            & "$workingDir/tools/ildasm/runtimes/linux-x64/native/ildasm.exe" "$f" /OUT=Code.il
+            & "$workingDir/tools/ildasm/runtimes/linux-x64/native/ildasm" "$f" /OUT=Code.il
             Copy-Item -Path $workingDir/build/ilassembler/ILAssembler.ilproj -Destination ILAssembler.ilproj;
             Copy-Item -Path $workingDir/build/ilassembler/ForceDedicatedGraphicCard.il -Destination ForceDedicatedGraphicCard.il;
             
