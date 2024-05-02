@@ -8,7 +8,8 @@ using AsmResolver.PE.Exports;
 using AsmResolver.PE.File;
 using AsmResolver.PE.File.Headers;
 
-var image = PEImage.FromFile(Args[0]);
+var inputPath = Args[0];
+var image = PEImage.FromFile(inputPath);
 
 // Force mixed-mode.
 image.DotNetDirectory!.Flags &= ~DotNetDirectoryFlags.ILOnly;
