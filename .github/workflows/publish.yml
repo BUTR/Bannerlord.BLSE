@@ -67,24 +67,102 @@ jobs:
           BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL: ${{ secrets.BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL }}
         shell: pwsh
 
-      - name: Add GPU acceleration hint
+      - name: Upload Bannerlord folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: bannerlord-tmp-${{matrix.project}}-${{matrix.configuration}}
+          path: ./bannerlord/
+
+  gpu-hint:
+    name: Add GPU Hints
+    needs: [build]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: butr/actions-common-setup@v2
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Download Bannerlord Temp artifact Pattern
+        uses: actions/download-artifact@v4
+        with:
+          pattern: bannerlord-tmp-*
+          merge-multiple: true
+          path: ./bannerlord
+        continue-on-error: true
+
+      - name: Add Dedicated GPU Hint
         run: |
-          # dotnet tool install -g Topten.nvpatch;
-          # $env:DOTNET_ROLL_FORWARD="Major";
-          dotnet tool install -g dotnet-script;
+          echo "Downloading ILAsm";
+          Invoke-WebRequest https://globalcdn.nuget.org/packages/runtime.win-x64.microsoft.netcore.ilasm.8.0.0.nupkg -OutFile ilasm.nupkg;
+          Invoke-WebRequest https://globalcdn.nuget.org/packages/runtime.win-x64.microsoft.netcore.ildasm.8.0.0.nupkg -OutFile ildasm.nupkg;
+          echo "Extracting ILAsm";
+          Expand-Archive ilasm.nupkg -d tools/ilasm;
+          Expand-Archive ildasm.nupkg -d tools/ildasm;
+          #echo "chmod ILAsm";
+          #chmod +x tools/ilasm/runtimes/linux-x64/native/ilasm;
+          #chmod +x tools/ildasm/runtimes/linux-x64/native/ildasm;
+
+          # So what is happening here?
+          # We're not able to export global variables from C#
+          # But ILAsm is able to do it
+          # So we compile our .exe files from C#
+          # Then we decompile them with ILDasm
+          # Then we compile them back to .exe with ILAsm and with the .il file for exporting the global variable
+          # Then we set the icon back because ILAsm doesn't support setting the icon
           
+          $workingDir = "$PWD";
+          mkdir tmp;
+
+          cd build/set-icon;
+          yarn install;
+          cd $workingDir;
+
+
           $fileNames = Get-ChildItem -Path "bannerlord/" -Recurse -Include *.exe;
           foreach ($f in $fileNames) {
+            cd $workingDir/tmp;
+           
             echo $f.FullName;
-            # nvpatch --enable $f.FullName;
-            dotnet script build/gpu.csx -- --enable-gpu "$f";
+
+            $runtime = "";
+            If ($f.FullName.Contains("Win64_Shipping_Client")) {
+              $runtime = "Win64_Shipping_Client";
+            }
+            If ($f.FullName.Contains("Gaming.Desktop.x64_Shipping_Client")) {
+              $runtime = "Gaming.Desktop.x64_Shipping_Client";
+            }
+
+            $fileDirname = $f.DirectoryName;
+            $dirname = [System.IO.Path]::GetFileNameWithoutExtension($f.FullName);
+            New-Item -ItemType Directory -Path $dirname/$runtime -Force
+            cd $dirname/$runtime;
+
+            # Decompile to IL Code
+            & "$workingDir/tools/ildasm/runtimes/win-x64/native/ildasm.exe" "$f" /OUT=Code.il
+            #& "$workingDir/tools/ildasm/runtimes/linux-x64/native/ildasm" "$f" -OUT="Code.il"
+            Copy-Item -Path $workingDir/build/ForceDedicatedGraphicCard.il -Destination ForceDedicatedGraphicCard.il;
+            
+            # Recompile to .exe
+            & "$workingDir/tools/ilasm/runtimes/win-x64/native/ilasm.exe" -QUIET -NOLOGO -OPTIMIZE -EXE /X64 -OUTPUT="$dirname.exe" Code.il ForceDedicatedGraphicCard.il
+            #& "$workingDir/tools/ilasm/runtimes/linux-x64/native/ilasm" -QUIET -NOLOGO -OPTIMIZE -EXE -X64 -OUTPUT="$dirname.exe" Code.il ForceDedicatedGraphicCard.il
+            
+            # Set Icon
+            cd $workingDir/build/set-icon;
+            node index.js "$workingDir/tmp/$dirname/$runtime/$dirname.exe" "$workingDir/resources/BLSE_SMALL.ico";
+
+            Copy-Item -Path "$workingDir/tmp/$dirname/$runtime/$dirname.exe" -Destination "$fileDirname/$dirname.exe" -force
           }
+          cd $workingDir;
+          rmdir tmp -Recurse -Force;
         shell: pwsh
 
       - name: Upload Bannerlord folder
         uses: actions/upload-artifact@v4
         with:
-          name: bannerlord-${{matrix.project}}-${{matrix.configuration}}
+          name: bannerlord
           path: ./bannerlord/
 
   ###########################
@@ -92,14 +170,14 @@ jobs:
   ###########################
   publish-on-nexusmods:
     if: github.ref == 'refs/heads/master'
-    needs: [get-changelog, build]
+    needs: [get-changelog, build, gpu-hint]
     uses: BUTR/workflows/.github/workflows/release-nexusmods.yml@master
     with:
       nexusmods_game_id: mountandblade2bannerlord
       nexusmods_mod_id: 1
       mod_filename: 'Bannerlord Software Extender (BLSE)'
       mod_version: ${{ needs.get-changelog.outputs.mod_version }}
-      mod_description: ${{ needs.build.outputs.mod_description }}
+      mod_description: ${{ needs.get-changelog.outputs.mod_description }}
       artifact_name: bannerlord
     secrets:
       NEXUSMODS_APIKEY: ${{ secrets.ARAGAS_NEXUSMODS_API_KEY }}
@@ -110,12 +188,12 @@ jobs:
   ###########################
   publish-on-github:
     if: github.ref == 'refs/heads/master'
-    needs: [get-changelog, build]
+    needs: [get-changelog, build, gpu-hint]
     uses: BUTR/workflows/.github/workflows/release-github.yml@master
     with:
       mod_id: Bannerlord.BLSE
       mod_version: ${{ needs.get-changelog.outputs.mod_version }}
-      mod_description: ${{ needs.build.outputs.mod_description }}
+      mod_description: ${{ needs.get-changelog.outputs.mod_description }}
       artifact_name: bannerlord
 
   ###########################
@@ -123,7 +201,7 @@ jobs:
   ###########################
   publish-on-steam:
     if: false && github.ref == 'refs/heads/master'
-    needs: [get-changelog, build]
+    needs: [get-changelog, build, gpu-hint]
     runs-on: ubuntu-latest
     steps:
       - name: Download Module artifact
