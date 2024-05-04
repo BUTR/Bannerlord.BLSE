@@ -60,7 +60,7 @@ public static class ExceptionInterceptorFeature
             OnException?.Invoke(exception);
     }
 
-    private static void HandleException(Exception exception)
+    public static void HandleException(Exception exception)
     {
         try
         {

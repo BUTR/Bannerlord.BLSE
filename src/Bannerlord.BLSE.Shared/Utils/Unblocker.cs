@@ -22,11 +22,8 @@ internal static class Unblocker
         if (_currentUnblockingThread is not null)
             return;
 
-        var asm = Assembly.LoadFrom("TaleWorlds.Starter.Library.dll");
-        Trace.Assert(asm is not null);
-
         var result = _harmony.TryPatch(
-            AccessTools2.DeclaredMethod("TaleWorlds.Starter.Library.Program:Main"),
+            SymbolExtensions2.GetMethodInfo((string[] args_) => TaleWorlds.Starter.Library.Program.Main(args_)),
             prefix: AccessTools2.Method(typeof(Unblocker), nameof(MainPrefix)));
 
         if (result)

@@ -7,8 +7,9 @@ using HarmonyLib.BUTR.Extensions;
 using System;
 using System.Linq;
 using System.Reflection;
-
+using Bannerlord.BLSE.Shared.Utils;
 using TaleWorlds.Library;
+using TaleWorlds.ModuleManager;
 using TaleWorlds.MountAndBlade.Launcher.Library;
 using TaleWorlds.TwoDimension.Standalone;
 using TaleWorlds.TwoDimension.Standalone.Native.Windows;
@@ -17,6 +18,14 @@ namespace Bannerlord.BLSE.Shared.NoExceptions;
 
 public sealed class ProgramEx
 {
+    private delegate void SetLauncherModeDelegate(bool isLauncherModeActive);
+    private static readonly SetLauncherModeDelegate? SetLauncherMode =
+        AccessTools2.GetDelegate<SetLauncherModeDelegate>(typeof(LauncherPlatform), "SetLauncherMode");
+    
+    private delegate void SetInvariantCultureDelegate();
+    private static readonly SetInvariantCultureDelegate? SetInvariantCulture =
+        AccessTools2.GetDelegate<SetInvariantCultureDelegate>(typeof(Common), "SetInvariantCulture");
+    
     private record LauncherExContext(GraphicsForm GraphicsForm, StandaloneUIDomain StandaloneUIDomain, WindowsFrameworkEx WindowsFramework)
     {
         public static LauncherExContext Create()
@@ -59,9 +68,8 @@ public sealed class ProgramEx
 
     public static void Main(string[] args)
     {
-#if v110 || v111
-        TaleWorlds.Library.Common.SetInvariantCulture();
-#endif
+        SetInvariantCulture?.Invoke();
+
         Common.PlatformFileHelper = new PlatformFileHelperPC("Mount and Blade II Bannerlord");
         Debug.DebugManager = new LauncherDebugManager();
         AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
@@ -73,14 +81,18 @@ public sealed class ProgramEx
         _gameData = _gameData with { Args = args.ToArray() };
 
         LauncherPlatform.Initialize();
+        SetLauncherMode?.Invoke(true);
+        
         _context = LauncherExContext.Create();
         _context.Initialize();
+        
+        SetLauncherMode?.Invoke(false);
         LauncherPlatform.Destroy();
 
         AppDomain.CurrentDomain.AssemblyResolve -= OnAssemblyResolve;
 
         if (_gameData.ShouldStart)
-            TaleWorlds.Starter.Library.Program.Main(_gameData.Args.ToArray());
+            GameEntrypointHandler.Entrypoint(_gameData.Args.ToArray());
     }
 
     public static bool StartGamePrefix()

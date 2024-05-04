@@ -9,10 +9,11 @@ using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.ModuleManager;
 
 using HarmonyLib;
-using HarmonyLib.BUTR.Extensions;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 
 using TaleWorlds.Core;
@@ -21,7 +22,7 @@ using TaleWorlds.MountAndBlade.Launcher.Library;
 using TaleWorlds.SaveSystem;
 
 using Windows.Win32;
-
+using HarmonyLib.BUTR.Extensions;
 using MessageBoxButtons = Bannerlord.BLSE.Shared.Utils.MessageBoxButtons;
 using MessageBoxDefaultButton = Bannerlord.BLSE.Shared.Utils.MessageBoxDefaultButton;
 using MessageBoxIcon = Bannerlord.BLSE.Shared.Utils.MessageBoxIcon;
@@ -112,14 +113,24 @@ Press Yes to exit, press No to continue loading
 
         ModuleInitializer.Disable();
 
-        _featureHarmony.TryPatch(
-            AccessTools2.DeclaredMethod("TaleWorlds.Starter.Library.Program:Main"),
-            prefix: SymbolExtensions2.GetMethodInfo(static (string[] x) => MainPrefix(ref x)));
+        GameOriginalEntrypointHandler.Initialize();
 
+        _featureHarmony.TryPatch(
+            SymbolExtensions2.GetMethodInfo((string[] args_) => TaleWorlds.Starter.Library.Program.Main(args_)),
+            transpiler: SymbolExtensions2.GetMethodInfo(static () => MainTranspiler(null!)));
+
+        // Just to keep the original method call in the stacktrace
         TaleWorlds.Starter.Library.Program.Main(args);
     }
 
-    private static void MainPrefix(ref string[] args)
+    private static IEnumerable<CodeInstruction> MainTranspiler(IEnumerable<CodeInstruction> codeInstructions) => new []
+    {
+        new CodeInstruction(OpCodes.Ldarg_0),
+        new CodeInstruction(OpCodes.Call, SymbolExtensions2.GetMethodInfo((string[] args) => Entrypoint(args))),
+        new CodeInstruction(OpCodes.Ret),
+    };
+    
+    private static int Entrypoint(string[] args)
     {
         var disableCrashHandler = !args.Contains("/enablecrashhandlerwhendebuggerisattached") && DebuggerUtils.IsDebuggerAttached();
         if (!disableCrashHandler)
@@ -133,9 +144,7 @@ Press Yes to exit, press No to continue loading
             Array.Resize(ref args, args.Length + 1);
             args[args.Length - 1] = "no_watchdog";
         }
-
-        _featureHarmony.Unpatch(
-            AccessTools2.DeclaredMethod("TaleWorlds.Starter.Library.Program:Main"),
-            SymbolExtensions2.GetMethodInfo(static (string[] x) => MainPrefix(ref x)));
+        
+        return GameEntrypointHandler.Entrypoint(args);
     }
 }

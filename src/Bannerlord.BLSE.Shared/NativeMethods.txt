@@ -8,3 +8,6 @@ GetTokenInformation
 NtQueryInformationProcess
 LoadLibrary
 VirtualProtect
+AddVectoredExceptionHandler
+RemoveVectoredExceptionHandler
+SetThreadStackGuarantee
