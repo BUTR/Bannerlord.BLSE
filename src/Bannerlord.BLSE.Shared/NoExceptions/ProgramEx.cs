@@ -1,4 +1,5 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
+﻿using Bannerlord.BLSE.Shared.Utils;
+using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.LauncherEx;
 
 using HarmonyLib;
@@ -7,7 +8,7 @@ using HarmonyLib.BUTR.Extensions;
 using System;
 using System.Linq;
 using System.Reflection;
-using Bannerlord.BLSE.Shared.Utils;
+
 using TaleWorlds.Library;
 using TaleWorlds.ModuleManager;
 using TaleWorlds.MountAndBlade.Launcher.Library;
@@ -21,11 +22,11 @@ public sealed class ProgramEx
     private delegate void SetLauncherModeDelegate(bool isLauncherModeActive);
     private static readonly SetLauncherModeDelegate? SetLauncherMode =
         AccessTools2.GetDelegate<SetLauncherModeDelegate>(typeof(LauncherPlatform), "SetLauncherMode");
-    
+
     private delegate void SetInvariantCultureDelegate();
     private static readonly SetInvariantCultureDelegate? SetInvariantCulture =
         AccessTools2.GetDelegate<SetInvariantCultureDelegate>(typeof(Common), "SetInvariantCulture");
-    
+
     private record LauncherExContext(GraphicsForm GraphicsForm, StandaloneUIDomain StandaloneUIDomain, WindowsFrameworkEx WindowsFramework)
     {
         public static LauncherExContext Create()
@@ -82,10 +83,10 @@ public sealed class ProgramEx
 
         LauncherPlatform.Initialize();
         SetLauncherMode?.Invoke(true);
-        
+
         _context = LauncherExContext.Create();
         _context.Initialize();
-        
+
         SetLauncherMode?.Invoke(false);
         LauncherPlatform.Destroy();
 
