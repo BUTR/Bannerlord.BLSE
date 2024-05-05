@@ -1,6 +1,7 @@
-using System;
-using HarmonyLib;
+﻿using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
+
+using System;
 
 namespace Bannerlord.BLSE.Shared.Utils;
 

@@ -35,7 +35,7 @@ public static class Launcher
         XboxFeature.Enable(_featureHarmony);
 
         ModuleInitializer.Disable();
-        
+
         GameOriginalEntrypointHandler.Initialize();
 
         _featureHarmony.TryPatch(
@@ -44,8 +44,8 @@ public static class Launcher
 
         GameLauncherEntrypointHandler.Entrypoint(args);
     }
-    
-    private static IEnumerable<CodeInstruction> MainTranspiler(IEnumerable<CodeInstruction> codeInstructions) => new []
+
+    private static IEnumerable<CodeInstruction> MainTranspiler(IEnumerable<CodeInstruction> codeInstructions) => new[]
     {
         new CodeInstruction(OpCodes.Ldarg_0),
         new CodeInstruction(OpCodes.Call, SymbolExtensions2.GetMethodInfo((string[] args) => Entrypoint(args))),
@@ -65,7 +65,7 @@ public static class Launcher
 
         SpecialKILoader.LoadSpecialKIfNeeded();
         ReShadeLoader.LoadReShadeIfNeeded();
-        
+
         return GameEntrypointHandler.Entrypoint(args);
     }
 }
