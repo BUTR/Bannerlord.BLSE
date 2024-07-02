@@ -105,6 +105,16 @@ Can opted-in by passing **/unblock** in command-line args.
 * **Import/Export Mod List** - provides a way to export and import Mod Lists with the correct load order and module versions. If a module version is incorrect, with highlight that.
 * **Supports Mod Organizer 2** - full support for MO2 with its virtual FS. [Here's how to add BLSE to MO2](https://www.nexusmods.com/mountandblade2bannerlord/articles/768).
 
+## Community Metadata
+We've added the following new attributes to SubModule.xml
+* `<Url>`  
+Used to link the module with a specific NexusMods mod.  
+Can be used to make it easier for players to find the module page for the mod  
+Can be used for various integrations like the [BUTR Site](https://butr.github.io/BUTR.Site.NexusMods) to show the crash reports for the mod  
+```xml
+<Url value="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" />
+```
+
 ## Community Dependency Metadata
 BLSE adds support for a new tag DependedModuleMetadatas that allows you to better define your load order, see the example below
 ```xml
