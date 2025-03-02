@@ -40,12 +40,12 @@ internal class SettingsPropertyDefinition : ISettingsPropertyDefinition
 {
     public string DisplayName { get; init; } = string.Empty;
     public string HintText { get; init; } = string.Empty;
-    public IRef PropertyReference { get; init; } = default!;
-    public SettingType SettingType { get; init; } = default!;
+    public IRef PropertyReference { get; init; } = null!;
+    public SettingType SettingType { get; init; }
 
-    public decimal MinValue { get; init; } = default!;
-    public decimal MaxValue { get; init; } = default!;
-    public string Content { get; init; } = default!;
+    public decimal MinValue { get; init; } = 0;
+    public decimal MaxValue { get; init; } = 0;
+    public string Content { get; init; } = null!;
 }
 internal class ConfigSettingsPropertyDefinition : SettingsPropertyDefinition
 {

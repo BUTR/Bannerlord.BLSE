@@ -5,6 +5,8 @@ using Bannerlord.LauncherManager.Models;
 using Bannerlord.LauncherManager.Utils;
 using Bannerlord.ModuleManager;
 
+using JetBrains.Annotations;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -73,6 +75,7 @@ internal sealed class BUTRLauncherSaveVM : BUTRViewModel
     public bool IsVisible { get => _isVisible; set => SetField(ref _isVisible, value); }
     private bool _isVisible = true;
 
+    [UsedImplicitly]
     public string? ModuleListCode { get; private set; }
 
     private readonly LauncherManagerHandler _launcherManagerHandler = BUTRLauncherManagerHandler.Default;
@@ -176,11 +179,18 @@ internal sealed class BUTRLauncherSaveVM : BUTRViewModel
     }
 
     [BUTRDataSourceMethod]
-    public void ExecuteOpen()
+    public async void ExecuteOpen()
     {
-        var saveFilePath = _launcherManagerHandler.GetSaveFilePath(_saveMetadata.Name);
-        if (string.IsNullOrEmpty(saveFilePath) || !File.Exists(saveFilePath)) return;
+        try
+        {
+            var saveFilePath = await _launcherManagerHandler.GetSaveFilePathAsync(_saveMetadata.Name);
+            if (string.IsNullOrEmpty(saveFilePath) || !File.Exists(saveFilePath)) return;
 
-        Process.Start("explorer.exe", $"/select,\"{saveFilePath}\"");
+            Process.Start("explorer.exe", $"/select,\"{saveFilePath}\"");
+        }
+        catch (Exception e)
+        {
+            Manager.LogException(e);
+        }
     }
 }

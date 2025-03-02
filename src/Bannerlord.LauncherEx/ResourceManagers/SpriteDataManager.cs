@@ -26,9 +26,9 @@ internal static class SpriteDataManager
             {
                 SpriteSheets =
                     {
-                        texture
+                        texture,
                     },
-                SpriteSheetCount = 1
+                SpriteSheetCount = 1,
             };
             SetIsLoaded?.Invoke(category, true);
 
@@ -51,7 +51,7 @@ internal static class SpriteDataManager
         private static readonly AccessTools.StructFieldRef<SpriteDrawData, bool>? FieldVerticalFlip = AccessTools2.StructFieldRefAccess<SpriteDrawData, bool>("VerticalFlip");
 
         private static readonly Type? Vector2 = Type.GetType("System.Numerics.Vector2, System.Numerics.Vectors");
-        private static readonly ConstructorInfo? Vector2Constructor = AccessTools2.Constructor(Vector2!, new[] { typeof(float), typeof(float) });
+        private static readonly ConstructorInfo? Vector2Constructor = AccessTools2.Constructor(Vector2!, [typeof(float), typeof(float)]);
         private static readonly MethodInfo? CreateQuad = AccessTools2.Method("TaleWorlds.TwoDimension.DrawObject2D:CreateQuad");
 
 
@@ -133,7 +133,7 @@ internal static class SpriteDataManager
             PopulateTextureCoordinates(_uvs, 0, horizontalFlip, verticalFlip);
             var drawObject2D2 = new DrawObject2D(MeshTopology.Triangles, _vertices.ToArray(), _uvs.ToArray(), _indices.ToArray(), 6)
             {
-                DrawObjectType = DrawObjectType.Mesh
+                DrawObjectType = DrawObjectType.Mesh,
             };
 
             CachedDrawData = spriteDrawData;
@@ -234,6 +234,4 @@ internal static class SpriteDataManager
             SpriteNames[sprite.Name] = sprite;
         }
     }
-
-    private static IEnumerable<CodeInstruction> BlankTranspiler(IEnumerable<CodeInstruction> instructions) => instructions;
 }

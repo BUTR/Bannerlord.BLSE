@@ -21,31 +21,31 @@ internal static class WidgetExtensions
 
     private delegate void OnPropertyChangedDelegate2(PropertyOwnerObject instance, bool value, [CallerMemberName] string? propertyName = null);
     private static readonly OnPropertyChangedDelegate2? OnPropertyChanged2 =
-        AccessTools2.GetDelegate<OnPropertyChangedDelegate2>(typeof(PropertyOwnerObject), "OnPropertyChanged", new[] { typeof(bool), typeof(string) });
+        AccessTools2.GetDelegate<OnPropertyChangedDelegate2>(typeof(PropertyOwnerObject), "OnPropertyChanged", [typeof(bool), typeof(string)]);
 
     private delegate void OnPropertyChangedDelegate3(PropertyOwnerObject instance, int value, [CallerMemberName] string? propertyName = null);
     private static readonly OnPropertyChangedDelegate3? OnPropertyChanged3 =
-        AccessTools2.GetDelegate<OnPropertyChangedDelegate3>(typeof(PropertyOwnerObject), "OnPropertyChanged", new[] { typeof(int), typeof(string) });
+        AccessTools2.GetDelegate<OnPropertyChangedDelegate3>(typeof(PropertyOwnerObject), "OnPropertyChanged", [typeof(int), typeof(string)]);
 
     private delegate void OnPropertyChangedDelegate4(PropertyOwnerObject instance, float value, [CallerMemberName] string? propertyName = null);
     private static readonly OnPropertyChangedDelegate4? OnPropertyChanged4 =
-        AccessTools2.GetDelegate<OnPropertyChangedDelegate4>(typeof(PropertyOwnerObject), "OnPropertyChanged", new[] { typeof(float), typeof(string) });
+        AccessTools2.GetDelegate<OnPropertyChangedDelegate4>(typeof(PropertyOwnerObject), "OnPropertyChanged", [typeof(float), typeof(string)]);
 
     private delegate void OnPropertyChangedDelegate5(PropertyOwnerObject instance, uint value, [CallerMemberName] string? propertyName = null);
     private static readonly OnPropertyChangedDelegate5? OnPropertyChanged5 =
-        AccessTools2.GetDelegate<OnPropertyChangedDelegate5>(typeof(PropertyOwnerObject), "OnPropertyChanged", new[] { typeof(uint), typeof(string) });
+        AccessTools2.GetDelegate<OnPropertyChangedDelegate5>(typeof(PropertyOwnerObject), "OnPropertyChanged", [typeof(uint), typeof(string)]);
 
     private delegate void OnPropertyChangedDelegate6(PropertyOwnerObject instance, Color value, [CallerMemberName] string? propertyName = null);
     private static readonly OnPropertyChangedDelegate6? OnPropertyChanged6 =
-        AccessTools2.GetDelegate<OnPropertyChangedDelegate6>(typeof(PropertyOwnerObject), "OnPropertyChanged", new[] { typeof(Color), typeof(string) });
+        AccessTools2.GetDelegate<OnPropertyChangedDelegate6>(typeof(PropertyOwnerObject), "OnPropertyChanged", [typeof(Color), typeof(string)]);
 
     private delegate void OnPropertyChangedDelegate7(PropertyOwnerObject instance, double value, [CallerMemberName] string? propertyName = null);
     private static readonly OnPropertyChangedDelegate7? OnPropertyChanged7 =
-        AccessTools2.GetDelegate<OnPropertyChangedDelegate7>(typeof(PropertyOwnerObject), "OnPropertyChanged", new[] { typeof(double), typeof(string) });
+        AccessTools2.GetDelegate<OnPropertyChangedDelegate7>(typeof(PropertyOwnerObject), "OnPropertyChanged", [typeof(double), typeof(string)]);
 
     private delegate void OnPropertyChangedDelegate8(PropertyOwnerObject instance, Vec2 value, [CallerMemberName] string? propertyName = null);
     private static readonly OnPropertyChangedDelegate8? OnPropertyChanged8 =
-        AccessTools2.GetDelegate<OnPropertyChangedDelegate8>(typeof(PropertyOwnerObject), "OnPropertyChanged", new[] { typeof(Vec2), typeof(string) });
+        AccessTools2.GetDelegate<OnPropertyChangedDelegate8>(typeof(PropertyOwnerObject), "OnPropertyChanged", [typeof(Vec2), typeof(string)]);
 
 
     private delegate void OnPropertyChangedDelegate<in T>(PropertyOwnerObject instance, T value, [CallerMemberName] string? propertyName = null);
@@ -64,7 +64,7 @@ internal static class WidgetExtensions
         if (method is null || property is null)
             return false;
 
-        if (method.Invoke(widget, new[] { property.GetValue(widget.EventManager) }) is not bool result)
+        if (method.Invoke(widget, [property.GetValue(widget.EventManager)]) is not bool result)
             return false;
 
         return result;

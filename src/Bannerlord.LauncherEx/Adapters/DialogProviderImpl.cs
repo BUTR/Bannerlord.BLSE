@@ -6,6 +6,8 @@ using Bannerlord.LauncherManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Bannerlord.LauncherEx.Adapters;
 
@@ -13,58 +15,67 @@ internal sealed class DialogProviderImpl : IDialogProvider
 {
     public static readonly DialogProviderImpl Instance = new();
 
-    public void SendDialog(DialogType type, string title, string message, IReadOnlyList<DialogFileFilter> filters, Action<string> onResult)
+    public Task<string> SendDialogAsync(DialogType type, string title, string message, IReadOnlyList<DialogFileFilter> filters)
     {
-        switch (type)
+        var res = string.Empty;
+        var thread = new Thread(() =>
         {
-            case DialogType.Warning:
+            switch (type)
             {
-                var split = message.Split(new[] { "--CONTENT-SPLIT--" }, StringSplitOptions.RemoveEmptyEntries);
-                var result = MessageBoxDialog.Show(
-                    string.Join("\n", split),
-                    new BUTRTextObject(title).ToString(),
-                    MessageBoxButtons.OkCancel,
-                    MessageBoxIcon.Warning,
-                    0,
-                    0
-                );
-                onResult(result == MessageBoxResult.Ok ? "true" : "false");
-                return;
-            }
-            case DialogType.FileOpen:
-            {
-                var filter = string.Join("|", filters.Select(x => $"{x.Name} {string.Join((string) ", ", x.Extensions)}|{string.Join((string) ", ", x.Extensions)}"));
-                var dialog = new OpenFileDialog
+                case DialogType.Warning:
                 {
-                    Title = title,
-                    Filter = filter,
-
-                    CheckFileExists = true,
-                    CheckPathExists = true,
-                    ReadOnlyChecked = true,
-                    Multiselect = false,
-                    ValidateNames = true,
-                };
-                onResult(dialog.ShowDialog() ? dialog.FileName ?? string.Empty : string.Empty);
-                return;
-            }
-            case DialogType.FileSave:
-            {
-                var fileName = message;
-                var filter = string.Join("|", filters.Select(x => $"{x.Name} {string.Join(", ", x.Extensions)}|{string.Join(", ", x.Extensions)}"));
-                var dialog = new SaveFileDialog
+                    var split = message.Split(["--CONTENT-SPLIT--"], StringSplitOptions.RemoveEmptyEntries);
+                    var result = MessageBoxDialog.Show(
+                        string.Join("\n", split),
+                        new BUTRTextObject(title).ToString(),
+                        MessageBoxButtons.OkCancel,
+                        MessageBoxIcon.Warning,
+                        0,
+                        0
+                    );
+                    res = result == MessageBoxResult.Ok ? "true" : "false";
+                    break;
+                }
+                case DialogType.FileOpen:
                 {
-                    Title = title,
-                    Filter = filter,
-                    FileName = fileName,
+                    var filter = string.Join("|", filters.Select(x => $"{x.Name} {string.Join((string) ", ", x.Extensions)}|{string.Join((string) ", ", x.Extensions)}"));
+                    var dialog = new OpenFileDialog
+                    {
+                        Title = title,
+                        Filter = filter,
 
-                    CheckPathExists = false,
+                        CheckFileExists = true,
+                        CheckPathExists = true,
+                        ReadOnlyChecked = true,
+                        Multiselect = false,
+                        ValidateNames = true,
+                    };
+                    res = dialog.ShowDialog() ? dialog.FileName ?? string.Empty : string.Empty;
+                    break;
+                }
+                case DialogType.FileSave:
+                {
+                    var fileName = message;
+                    var filter = string.Join("|", filters.Select(x => $"{x.Name} {string.Join(", ", x.Extensions)}|{string.Join(", ", x.Extensions)}"));
+                    var dialog = new SaveFileDialog
+                    {
+                        Title = title,
+                        Filter = filter,
+                        FileName = fileName,
 
-                    ValidateNames = true,
-                };
-                onResult(dialog.ShowDialog() ? dialog.FileName : string.Empty);
-                return;
+                        CheckPathExists = false,
+
+                        ValidateNames = true,
+                    };
+                    res = dialog.ShowDialog() ? dialog.FileName : string.Empty;
+                    break;
+                }
             }
-        }
+        });
+        thread.SetApartmentState(ApartmentState.STA);
+        thread.Start();
+        thread.Join();
+
+        return Task.FromResult(res);
     }
 }

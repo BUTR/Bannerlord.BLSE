@@ -34,7 +34,7 @@ internal static class LauncherVMPatch
 
         // Preventing inlining ExecuteConfirmUnverifiedDLLStart
         harmony.TryPatch(
-            AccessTools2.Constructor(typeof(LauncherVM), new[] { typeof(UserDataManager), typeof(Action), typeof(Action) }),
+            AccessTools2.Constructor(typeof(LauncherVM), [typeof(UserDataManager), typeof(Action), typeof(Action)]),
             transpiler: AccessTools2.DeclaredMethod(typeof(LauncherVMPatch), nameof(BlankTranspiler)));
         // Preventing inlining ExecuteConfirmUnverifiedDLLStart
 

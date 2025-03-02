@@ -161,7 +161,7 @@ internal static class WidgetPrefabPatch
 
     // We can call a slightly modified native game call this way
     [MethodImpl(MethodImplOptions.NoInlining)]
-    public static WidgetPrefab? LoadFromDocument(PrefabExtensionContext prefabExtensionContext, WidgetAttributeContext widgetAttributeContext, string path, XmlDocument document)
+    public static WidgetPrefab LoadFromDocument(PrefabExtensionContext prefabExtensionContext, WidgetAttributeContext widgetAttributeContext, string path, XmlDocument document)
     {
         // Replaces reading XML from file with assigning it from the new local variable `XmlDocument document`
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -170,7 +170,7 @@ internal static class WidgetPrefabPatch
             var returnNull = new List<CodeInstruction>
                 {
                     new (OpCodes.Ldnull),
-                    new (OpCodes.Ret)
+                    new (OpCodes.Ret),
                 }.AsEnumerable();
 
             var instructionsList = instructions.ToList();
@@ -199,7 +199,7 @@ internal static class WidgetPrefabPatch
                 {
                     new (OpCodes.Ldarg_S, 2),
                     new (OpCodes.Ldloc_S, xmlDocumentLocal.LocalIndex),
-                    new (OpCodes.Call, AccessTools2.DeclaredMethod(typeof(WidgetPrefabPatch), nameof(ProcessMovie)))
+                    new (OpCodes.Call, AccessTools2.DeclaredMethod(typeof(WidgetPrefabPatch), nameof(ProcessMovie))),
                 });
 
 

@@ -141,7 +141,7 @@ and the Steam Workshop folder that can conflict with each other!
         var resources = typeof(ModuleInitializer).Assembly.GetManifestResourceNames().Select(x => x.Remove(0, @namespace.Length));
         var versions = resources.Where(x => x.StartsWith("Bannerlord.LauncherEx_")).Select(x =>
         {
-            var split = x.Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries);
+            var split = x.Split(["_"], StringSplitOptions.RemoveEmptyEntries);
             return (@namespace + x, ApplicationVersion.TryParse(split[1], out var v) ? v : ApplicationVersion.Empty);
         }).ToArray();
         var gv = ApplicationVersionHelper.GameVersion() ?? TaleWorlds.Library.ApplicationVersion.Empty;

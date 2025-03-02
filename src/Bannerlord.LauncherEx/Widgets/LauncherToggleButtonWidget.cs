@@ -1,5 +1,7 @@
 ﻿using Bannerlord.LauncherEx.Extensions;
 
+using JetBrains.Annotations;
+
 using System;
 using System.Collections.Generic;
 
@@ -18,6 +20,7 @@ internal sealed class LauncherToggleButtonWidget : ImageWidget
     }
 
     //[Editor]
+    [UsedImplicitly]
     public Widget? ToggleIndicator
     {
         get => _toggleIndicator;
@@ -33,6 +36,7 @@ internal sealed class LauncherToggleButtonWidget : ImageWidget
     private Widget? _toggleIndicator;
 
     //[Editor]
+    [UsedImplicitly]
     public bool IsSelected
     {
         get => _isSelected;
@@ -50,10 +54,12 @@ internal sealed class LauncherToggleButtonWidget : ImageWidget
     private bool _isSelected;
 
     //[Editor]
+    [UsedImplicitly]
     public bool DominantSelectedState { get => _dominantSelectedState; set => this.SetField(ref _dominantSelectedState, value); }
     private bool _dominantSelectedState = true;
 
     //[Editor]
+    [UsedImplicitly]
     public bool ManualToggle { get => _manualToggle; set => this.SetField(ref _manualToggle, value); }
     private bool _manualToggle;
 
@@ -62,6 +68,7 @@ internal sealed class LauncherToggleButtonWidget : ImageWidget
 
     private ButtonClickState _clickState;
 
+    [UsedImplicitly]
     public List<Action<Widget>> ClickEventHandlers = new();
 
     public LauncherToggleButtonWidget(UIContext context) : base(context)

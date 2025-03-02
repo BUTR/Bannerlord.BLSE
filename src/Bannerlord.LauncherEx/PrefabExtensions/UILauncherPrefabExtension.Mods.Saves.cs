@@ -49,20 +49,20 @@ internal sealed class UILauncherPrefabExtension26 : PrefabExtensionSetAttributes
     public static string Movie => "UILauncher";
     public static string XPath => "descendant::ButtonWidget[@Id='PlaySingleplayerButton']";
 
-    public override List<Attribute> Attributes => new()
-    {
+    public override List<Attribute> Attributes =>
+    [
         new Attribute("IsHidden", ""),
         new Attribute("IsVisible", "@ShowPlaySingleplayerButton"),
-    };
+    ];
 }
 internal sealed class UILauncherPrefabExtension33 : PrefabExtensionSetAttributesPatch
 {
     public static string Movie => "UILauncher";
     public static string XPath => "descendant::ButtonWidget[@Id='ContinueSingleplayerButton']";
 
-    public override List<Attribute> Attributes => new()
-    {
+    public override List<Attribute> Attributes =>
+    [
         new Attribute("IsHidden", ""),
         new Attribute("IsVisible", "@ShowContinueSingleplayerButton"),
-    };
+    ];
 }

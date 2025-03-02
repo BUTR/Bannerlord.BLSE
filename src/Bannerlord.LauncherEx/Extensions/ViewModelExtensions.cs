@@ -31,7 +31,7 @@ internal static class ViewModelExtensions
     public delegate object DataSourceTypeBindingPropertiesCollectionCtorDelegate(Dictionary<string, PropertyInfo> properties, Dictionary<string, MethodInfo> methods);
     public static readonly DataSourceTypeBindingPropertiesCollectionCtorDelegate? DataSourceTypeBindingPropertiesCollectionCtor =
         AccessTools2.GetDeclaredConstructorDelegate<DataSourceTypeBindingPropertiesCollectionCtorDelegate>(
-            "TaleWorlds.Library.ViewModel+DataSourceTypeBindingPropertiesCollection", new[] { typeof(Dictionary<string, PropertyInfo>), typeof(Dictionary<string, MethodInfo>) });
+            "TaleWorlds.Library.ViewModel+DataSourceTypeBindingPropertiesCollection", [typeof(Dictionary<string, PropertyInfo>), typeof(Dictionary<string, MethodInfo>)]);
 
     public static void AddProperty(this ViewModel viewModel, string name, PropertyInfo propertyInfo)
     {
@@ -64,7 +64,7 @@ internal static class ViewModelExtensions
             return false;
 
         var type = viewModel.GetType();
-        if (!staticStorageDict.Contains(type)) // There is not static storage to copy from, fast exit
+        if (!staticStorageDict.Contains(type)) // There is no static storage to copy from, fast exit
             return true;
 
         if (staticStorageDict[type] is not { } staticStorage)

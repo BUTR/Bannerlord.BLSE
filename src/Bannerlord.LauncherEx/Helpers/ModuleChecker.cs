@@ -33,12 +33,12 @@ internal static class ModuleChecker
                 var hasObfuscationAttributeUsed = moduleDefinition.GetCustomAttributes().Any(x => x.Constructor.DeclaringType.Name switch
                 {
                     "ConfusedByAttribute" => true,
-                    _ => false
+                    _ => false,
                 });
                 var hasObfuscationAttributeDeclared = moduleDefinition.Types.Any(x => x.Name switch
                 {
                     "ConfusedByAttribute" => true,
-                    _ => false
+                    _ => false,
                 });
                 // Every module should have a module initializer. If it's missing, someone is hiding it
                 var hasModuleInitializer = moduleDefinition.GetAllTypes().Any(x => x.Name == "<Module>");

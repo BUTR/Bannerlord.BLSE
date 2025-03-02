@@ -23,7 +23,7 @@ internal static class ProgramPatch
     {
         if (LauncherSettings.FixCommonIssues)
         {
-            BUTRLauncherManagerHandler.Default.CheckForRootHarmony();
+            BUTRLauncherManagerHandler.Default.CheckForRootHarmonyAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         Manager.Disable();

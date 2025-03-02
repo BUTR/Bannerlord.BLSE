@@ -95,12 +95,12 @@ internal static class BrushFactoryManager
 
     private static bool GetBrushPrefix(string name, Dictionary<string, Brush> ____brushes, ref Brush __result)
     {
-        if (____brushes.ContainsKey(name) || !CustomBrushes.ContainsKey(name))
+        if (____brushes.ContainsKey(name) || !CustomBrushes.TryGetValue(name, out var customBrush))
             return true;
 
-        if (CustomBrushes[name] is { } brush)
+        if (customBrush != null)
         {
-            __result = brush;
+            __result = customBrush;
             return false;
         }
 
@@ -116,6 +116,4 @@ internal static class BrushFactoryManager
             AccessTools2.Method(typeof(BrushFactory), "LoadBrushes"),
             AccessTools2.DeclaredMethod(typeof(BrushFactoryManager), nameof(LoadBrushesPostfix)));
     }
-
-    private static IEnumerable<CodeInstruction> BlankTranspiler(IEnumerable<CodeInstruction> instructions) => instructions;
 }

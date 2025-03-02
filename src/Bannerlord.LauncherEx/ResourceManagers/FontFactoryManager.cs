@@ -97,6 +97,4 @@ internal static class FontFactoryManager
 
         return true;
     }
-
-    private static IEnumerable<CodeInstruction> BlankTranspiler(IEnumerable<CodeInstruction> instructions) => instructions;
 }

@@ -3,6 +3,8 @@
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
+using JetBrains.Annotations;
+
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
@@ -72,7 +74,4 @@ internal static class LauncherUIPatch
             butrInputManager.Dispose();
         }
     }
-
-    [MethodImpl(MethodImplOptions.NoInlining)]
-    private static IEnumerable<CodeInstruction> BlankTranspiler(IEnumerable<CodeInstruction> instructions) => instructions;
 }

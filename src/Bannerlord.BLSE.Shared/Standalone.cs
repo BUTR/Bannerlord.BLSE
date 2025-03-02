@@ -9,6 +9,7 @@ using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.ModuleManager;
 
 using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ using TaleWorlds.MountAndBlade.Launcher.Library;
 using TaleWorlds.SaveSystem;
 
 using Windows.Win32;
-using HarmonyLib.BUTR.Extensions;
+
 using MessageBoxButtons = Bannerlord.BLSE.Shared.Utils.MessageBoxButtons;
 using MessageBoxDefaultButton = Bannerlord.BLSE.Shared.Utils.MessageBoxDefaultButton;
 using MessageBoxIcon = Bannerlord.BLSE.Shared.Utils.MessageBoxIcon;
@@ -37,7 +38,7 @@ public static class Standalone
     {
         if (!metadata.TryGetValue("Modules", out var text))
         {
-            return Array.Empty<string>();
+            return [];
         }
         return text.Split(';');
     }
@@ -74,7 +75,7 @@ public static class Standalone
             var missingNames = moduleNames.Select(x => x).Except(existingModulesByName.Keys).ToArray();
             if (missingNames.Length == 0)
             {
-                args = args.Concat(new[] { $"_MODULES_*{string.Join("*", existingModules.Select(x => x.Id))}*_MODULES_" }).ToArray();
+                args = args.Concat([$"_MODULES_*{string.Join("*", existingModules.Select(x => x.Id))}*_MODULES_"]).ToArray();
                 return;
             }
 
@@ -123,13 +124,13 @@ Press Yes to exit, press No to continue loading
         TaleWorlds.Starter.Library.Program.Main(args);
     }
 
-    private static IEnumerable<CodeInstruction> MainTranspiler(IEnumerable<CodeInstruction> codeInstructions) => new []
-    {
+    private static IEnumerable<CodeInstruction> MainTranspiler(IEnumerable<CodeInstruction> codeInstructions) =>
+    [
         new CodeInstruction(OpCodes.Ldarg_0),
         new CodeInstruction(OpCodes.Call, SymbolExtensions2.GetMethodInfo((string[] args) => Entrypoint(args))),
         new CodeInstruction(OpCodes.Ret),
-    };
-    
+    ];
+
     private static int Entrypoint(string[] args)
     {
         var disableCrashHandler = !args.Contains("/enablecrashhandlerwhendebuggerisattached") && DebuggerUtils.IsDebuggerAttached();
@@ -144,7 +145,7 @@ Press Yes to exit, press No to continue loading
             Array.Resize(ref args, args.Length + 1);
             args[args.Length - 1] = "no_watchdog";
         }
-        
+
         return GameEntrypointHandler.Entrypoint(args);
     }
 }

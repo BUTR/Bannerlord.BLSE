@@ -59,12 +59,12 @@ public static class LauncherEx
         }
     }
 
-    private static IEnumerable<CodeInstruction> MainTranspiler(IEnumerable<CodeInstruction> codeInstructions) => new []
-    {
+    private static IEnumerable<CodeInstruction> MainTranspiler(IEnumerable<CodeInstruction> codeInstructions) =>
+    [
         new CodeInstruction(OpCodes.Ldarg_0),
         new CodeInstruction(OpCodes.Call, SymbolExtensions2.GetMethodInfo((string[] args) => Entrypoint(args))),
         new CodeInstruction(OpCodes.Ret),
-    };
+    ];
 
     private static int Entrypoint(string[] args)
     {
@@ -83,7 +83,7 @@ public static class LauncherEx
 
         SpecialKILoader.LoadSpecialKIfNeeded();
         ReShadeLoader.LoadReShadeIfNeeded();
-        
+
         return GameEntrypointHandler.Entrypoint(args);
     }
 }

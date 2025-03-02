@@ -8,37 +8,36 @@ namespace Bannerlord.LauncherEx;
 
 partial class BUTRLauncherManagerHandler
 {
-    public void SetGameParametersLoadOrder(IEnumerable<IModuleViewModel> modules) => SaveLoadOrder(GetFromViewModel(modules));
-
-
-    public override string GetGameVersion() => ApplicationVersionHelper.GameVersionStr();
-
-    public override int GetChangeset() => typeof(TaleWorlds.Library.ApplicationVersion).GetField("DefaultChangeSet")?.GetValue(null) as int? ?? 0;
-
-
-    // More of a reminder how the callbacks should be handled if needed in C#
-    public Task<bool> ShowWarning(string title, string contentPrimary, string contentSecondary)
+    public async Task SetGameParametersLoadOrderAsync(IEnumerable<IModuleViewModel> modules)
     {
-        var tcs = new TaskCompletionSource<bool>();
-        base.ShowWarning(title, contentPrimary, contentSecondary, tcs.SetResult);
-        return tcs.Task;
+        var loadOrder = GetFromViewModel(modules);
+        await SetGameParameterLoadOrderAsync(loadOrder);
+        await RefreshGameParametersAsync();
+        SaveTWLoadOrder(loadOrder);
     }
 
-    public Task<string> ShowFileOpen(string title, IReadOnlyList<DialogFileFilter> filters)
+
+    public override Task<string> GetGameVersionAsync() => Task.FromResult(ApplicationVersionHelper.GameVersionStr());
+
+    public override Task<int> GetChangesetAsync() => Task.FromResult(typeof(TaleWorlds.Library.ApplicationVersion).GetField("DefaultChangeSet")?.GetValue(null) as int? ?? 0);
+
+
+    public Task<bool> ShowWarningAsync(string title, string contentPrimary, string contentSecondary)
     {
-        var tcs = new TaskCompletionSource<string>();
-        base.ShowFileOpen(title, filters, tcs.SetResult);
-        return tcs.Task;
+        return base.ShowWarningAsync(title, contentPrimary, contentSecondary);
     }
 
-    public Task<string> ShowFileSave(string title, string fileName, IReadOnlyList<DialogFileFilter> filters)
+    public Task<string> ShowFileOpenAsync(string title, IReadOnlyList<DialogFileFilter> filters)
     {
-        var tcs = new TaskCompletionSource<string>();
-        base.ShowFileSave(title, fileName, filters, tcs.SetResult);
-        return tcs.Task;
+        return base.ShowFileOpenAsync(title, filters);
     }
 
-    public new LoadOrder LoadLoadOrder() => base.LoadLoadOrder();
+    public Task<string> ShowFileSaveAsync(string title, string fileName, IReadOnlyList<DialogFileFilter> filters)
+    {
+        return base.ShowFileSaveAsync(title, fileName, filters);
+    }
 
-    public new IReadOnlyList<ModuleInfoExtendedWithMetadata> GetAllModules() => base.GetAllModules();
+    public LoadOrder LoadLoadOrder() => LoadTWLoadOrder();
+
+    public new Task<IReadOnlyList<ModuleInfoExtendedWithMetadata>> GetAllModulesAsync() => base.GetAllModulesAsync();
 }

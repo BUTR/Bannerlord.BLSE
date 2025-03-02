@@ -67,7 +67,7 @@ internal static class PrefabExtensionManager
             return;
         }
 
-        MoviePatches.GetOrAdd(movie, _ => new List<Action<XmlDocument>>()).Add(patcher);
+        MoviePatches.GetOrAdd(movie, _ => []).Add(patcher);
     }
 
     public static void RegisterPatch(string movie, string? xpath, Action<XmlNode> patcher)

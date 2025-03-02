@@ -185,6 +185,4 @@ internal static class WidgetFactoryManager
             AccessTools2.Method(typeof(WidgetFactory), "Initialize"),
             AccessTools2.DeclaredMethod(typeof(WidgetFactoryManager), nameof(InitializePostfix)));
     }
-
-    private static IEnumerable<CodeInstruction> BlankTranspiler(IEnumerable<CodeInstruction> instructions) => instructions;
 }

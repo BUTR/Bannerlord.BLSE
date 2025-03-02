@@ -16,12 +16,12 @@ file enum TOKEN_ELEVATION_TYPE
 {
     TokenElevationTypeDefault = 1,
     TokenElevationTypeFull,
-    TokenElevationTypeLimited
+    TokenElevationTypeLimited,
 }
 
 public static class UacHelper
 {
-    private const string UacRegistryKey = "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System";
+    private const string UacRegistryKey = @"Software\Microsoft\Windows\CurrentVersion\Policies\System";
     private const string UacRegistryValue = "EnableLUA";
 
     private static uint STANDARD_RIGHTS_READ = 0x00020000;

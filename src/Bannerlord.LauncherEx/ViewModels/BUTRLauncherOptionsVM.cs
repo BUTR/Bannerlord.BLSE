@@ -205,7 +205,10 @@ internal sealed class BUTRLauncherOptionsVM : BUTRViewModel
                 SettingProperties.Add(CreateSettingsPropertyVM(key, value, ToSeparateWords));
             }
         }
-        catch (Exception) { /* ignore */ }
+        catch (Exception e)
+        {
+            Manager.LogException(e);
+        }
     }
     private void RefreshEngineOptions()
     {
@@ -220,7 +223,10 @@ internal sealed class BUTRLauncherOptionsVM : BUTRViewModel
                 SettingProperties.Add(CreateSettingsPropertyVM(key, value, x => ToTitleCase(x.Replace("_", " "))));
             }
         }
-        catch (Exception) { /* ignore */ }
+        catch (Exception e)
+        {
+            Manager.LogException(e);
+        }
     }
 
     public void Save()
@@ -376,7 +382,7 @@ internal sealed class BUTRLauncherOptionsVM : BUTRViewModel
             SettingType.Int => (IRef) new ProxyRef<int>(() => (int) storage.Value!, val => { storage.Value = val; }),
             SettingType.Float => (IRef) new ProxyRef<float>(() => (float) storage.Value!, val => { storage.Value = val; }),
             SettingType.String => (IRef) new ProxyRef<string>(() => (string) storage.Value!, val => { storage.Value = val; }),
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException(),
         };
         return new SettingsPropertyVM(new ConfigSettingsPropertyDefinition
         {
@@ -384,7 +390,7 @@ internal sealed class BUTRLauncherOptionsVM : BUTRViewModel
             OriginalValue = value,
             DisplayName = keyProcessor(key),
             SettingType = settingsType,
-            PropertyReference = propertyRef
+            PropertyReference = propertyRef,
         });
     }
 

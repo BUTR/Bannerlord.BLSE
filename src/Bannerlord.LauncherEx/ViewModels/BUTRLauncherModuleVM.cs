@@ -195,8 +195,9 @@ internal sealed class BUTRLauncherModuleVM : BUTRViewModel, IModuleViewModel
             return;
         }
 
-        if (!Directory.Exists(ModuleInfoExtended.Path)) return;
-        Process.Start(ModuleInfoExtended.Path);
+        var directory = Path.GetDirectoryName(ModuleInfoExtended.Path);
+        if (!Directory.Exists(directory)) return;
+        Process.Start(directory);
     }
 
     public void SetUpdateInfo(double compatibilityScore, double? recommendedCompatibilityScore, string? recommendedVersion)

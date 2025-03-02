@@ -13,12 +13,12 @@ internal sealed class UILauncherPrefabExtension9 : PrefabExtensionSetAttributesP
     public static string Movie => "UILauncher";
     public static string XPath => "descendant::TabToggleWidget[2]";
 
-    public override List<Attribute> Attributes => new()
-    {
+    public override List<Attribute> Attributes =>
+    [
         new Attribute("IsHidden", ""),
         new Attribute("IsVisible", "@ShowMods"),
         new Attribute("IsSelected", "@IsModsDataSelected"),
-    };
+    ];
 }
 
 /// <summary>

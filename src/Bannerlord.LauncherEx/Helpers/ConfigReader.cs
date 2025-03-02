@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace Bannerlord.LauncherEx.Helpers;
@@ -11,9 +10,9 @@ internal static class ConfigReader
     private static readonly string BOMMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
 
     public static readonly string GameConfigPath =
-        Path.Combine($@"{Environment.GetFolderPath(Environment.SpecialFolder.Personal)}", "Mount and Blade II Bannerlord", "Configs", "BannerlordConfig.txt");
+        Path.Combine($"{Environment.GetFolderPath(Environment.SpecialFolder.Personal)}", "Mount and Blade II Bannerlord", "Configs", "BannerlordConfig.txt");
     public static readonly string EngineConfigPath =
-        Path.Combine($@"{Environment.GetFolderPath(Environment.SpecialFolder.Personal)}", "Mount and Blade II Bannerlord", "Configs", "engine_config.txt");
+        Path.Combine($"{Environment.GetFolderPath(Environment.SpecialFolder.Personal)}", "Mount and Blade II Bannerlord", "Configs", "engine_config.txt");
 
     public static Dictionary<string, string> GetGameOptions(Func<string, byte[]?> readFileContent)
     {
@@ -25,16 +24,19 @@ internal static class ConfigReader
             if (content.StartsWith(BOMMarkUtf8, StringComparison.Ordinal))
                 content = content.Remove(0, BOMMarkUtf8.Length);
 
-            foreach (var keyValue in content.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var keyValue in content.Split(["\r\n", "\r", "\n"], StringSplitOptions.RemoveEmptyEntries))
             {
-                var split = keyValue.Split(new[] { "=" }, StringSplitOptions.RemoveEmptyEntries);
+                var split = keyValue.Split(["="], StringSplitOptions.RemoveEmptyEntries);
                 if (split.Length != 2) continue;
                 var key = split[0].Trim();
                 var value = split[1].Trim();
                 dict[key] = value;
             }
         }
-        catch (Exception) { /* ignore */ }
+        catch (Exception e)
+        {
+            Manager.LogException(e);
+        }
         return dict;
     }
     public static Dictionary<string, string> GetEngineOptions(Func<string, byte[]?> readFileContent)
@@ -47,16 +49,19 @@ internal static class ConfigReader
             if (content.StartsWith(BOMMarkUtf8, StringComparison.Ordinal))
                 content = content.Remove(0, BOMMarkUtf8.Length);
 
-            foreach (var keyValue in content.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var keyValue in content.Split(["\r\n", "\r", "\n"], StringSplitOptions.RemoveEmptyEntries))
             {
-                var split = keyValue.Split(new[] { "=" }, StringSplitOptions.RemoveEmptyEntries);
+                var split = keyValue.Split(["="], StringSplitOptions.RemoveEmptyEntries);
                 if (split.Length != 2) continue;
                 var key = split[0].Trim();
                 var value = split[1].Trim();
                 dict[key] = value;
             }
         }
-        catch (Exception) { /* ignore */ }
+        catch (Exception e)
+        {
+            Manager.LogException(e);
+        }
         return dict;
     }
 }

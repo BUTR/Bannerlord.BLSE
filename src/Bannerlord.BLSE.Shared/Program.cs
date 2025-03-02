@@ -24,14 +24,14 @@ public static class Program
         {
             case "launcher":
             {
-                // Users can opt-out of unblocking for I guess performance reasons?
+                // Users can opt out of unblocking for I guess performance reasons?
                 if (!args.Contains("/nounblock")) Unblocker.Unblock();
                 Launcher.Launch(args.Skip(1).ToArray());
                 break;
             }
             case "launcherex":
             {
-                // Users can opt-out of unblocking for I guess performance reasons?
+                // Users can opt out of unblocking for I guess performance reasons?
                 if (!args.Contains("/nounblock")) Unblocker.Unblock();
                 LauncherEx.Launch(args.Skip(1).ToArray());
                 break;
@@ -60,7 +60,7 @@ public static class Program
     public static int NativeEntry2(string args)
     {
         GetEntryAssembly.Enable();
-        Main(args.Split(new[] { "|||" }, StringSplitOptions.RemoveEmptyEntries));
+        Main(args.Split(["|||"], StringSplitOptions.RemoveEmptyEntries));
         return 0;
     }
 }

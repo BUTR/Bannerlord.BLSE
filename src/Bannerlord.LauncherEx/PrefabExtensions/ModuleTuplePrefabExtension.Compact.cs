@@ -9,11 +9,11 @@ internal sealed class ModuleTuplePrefabExtension4 : PrefabExtensionSetAttributes
     public static string Movie => "Launcher.Mods.ModuleTuple2";
     public static string XPath => "descendant::ListPanel[@Id='EntryPanel']";
 
-    public override List<Attribute> Attributes => new()
-    {
+    public override List<Attribute> Attributes =>
+    [
         new Attribute("SuggestedHeight", LauncherSettings.CompactModuleList ? "24" : "26"),
         new Attribute("MarginBottom", LauncherSettings.CompactModuleList ? "2" : "10"),
-    };
+    ];
 }
 internal sealed class ModuleTuplePrefabExtension6 : PrefabExtensionSetAttributePatch
 {
@@ -38,11 +38,11 @@ internal sealed class ModuleTuplePrefabExtension14 : PrefabExtensionSetAttribute
     public static string Movie => "Launcher.Saves.SaveTuple";
     public static string XPath => "descendant::ListPanel[@Id='EntryPanel']";
 
-    public override List<Attribute> Attributes => new()
-    {
+    public override List<Attribute> Attributes =>
+    [
         new Attribute("SuggestedHeight", LauncherSettings.CompactModuleList ? "24" : "26"),
         new Attribute("MarginBottom", LauncherSettings.CompactModuleList ? "2" : "10"),
-    };
+    ];
 }
 internal sealed class ModuleTuplePrefabExtension8 : PrefabExtensionSetAttributePatch
 {

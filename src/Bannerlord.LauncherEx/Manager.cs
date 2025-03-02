@@ -28,6 +28,9 @@ public static class Manager
     private static readonly Harmony _launcherHarmony = new("Bannerlord.LauncherEx");
 
     public static event Action? OnDisable;
+    public static event Action<Exception>? OnException;
+    internal static void LogException(Exception exception) => OnException?.Invoke(exception);
+
 
     public static string GetActiveLanguage() => ConfigReader.GetGameOptions(path => File.Exists(path) ? File.ReadAllBytes(path) : null).TryGetValue("Language", out var lang) ? lang : "English";
 

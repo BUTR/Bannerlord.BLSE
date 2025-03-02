@@ -14,7 +14,7 @@ namespace Bannerlord.LauncherEx.ResourceManagers;
 
 internal static class GraphicsContextManager
 {
-    public static WeakReference<GraphicsContext?> Instance { get; private set; } = default!;
+    public static WeakReference<GraphicsContext?> Instance { get; private set; } = null!;
 
     private static readonly Dictionary<string, OpenGLTexture> Textures = new();
     private static readonly Dictionary<string, Func<OpenGLTexture>> DeferredInitialization = new();
@@ -81,6 +81,4 @@ internal static class GraphicsContextManager
             Textures[name] = func();
         }
     }
-
-    private static IEnumerable<CodeInstruction> BlankTranspiler(IEnumerable<CodeInstruction> instructions) => instructions;
 }

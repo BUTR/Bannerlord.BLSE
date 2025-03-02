@@ -47,8 +47,7 @@ internal readonly struct KeyboardState
         {
             if ((span[_definedKeyCodes[i]] & 0x80) == 0) continue;
             var key = (Keys) _definedKeyCodes[i];
-            if (keys.Contains(key)) continue;
-            keys.Add(key);
+            if (!keys.Add(key)) continue;
 
             var mask = (uint) 1 << ((int) key & 0x1f);
             switch ((int) key >> 5)
@@ -77,7 +76,7 @@ internal readonly struct KeyboardState
     public Keys[] GetPressedKeys()
     {
         var count = GetPressedKeyCount();
-        if (count == 0) return Array.Empty<Keys>();
+        if (count == 0) return [];
         var keys = new Keys[count];
 
         var index = 0;
@@ -152,7 +151,7 @@ internal readonly struct KeyboardState
     private static uint CountBits(uint v)
     {
         // http://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel
-        v = v - ((v >> 1) & 0x55555555);                       // reuse input as temporary
+        v -= (v >> 1) & 0x55555555;                            // reuse input as temporary
         v = (v & 0x33333333) + ((v >> 2) & 0x33333333);        // temp
         return ((v + (v >> 4) & 0xF0F0F0F) * 0x1010101) >> 24; // count
     }

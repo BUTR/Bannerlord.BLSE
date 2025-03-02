@@ -13,7 +13,7 @@ public sealed class WindowsFrameworkEx
     private bool _isActive;
     private FrameworkDomain[]? _frameworkDomains;
     private Thread[]? _frameworkDomainThreads;
-    private readonly List<IMessageCommunicator> _messageCommunicators = new();
+    private readonly List<IMessageCommunicator> _messageCommunicators = [];
     private int _abortedThreadCount;
 
     public WindowsFrameworkThreadConfig ThreadConfig { get; set; }

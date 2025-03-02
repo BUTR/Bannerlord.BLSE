@@ -12,13 +12,13 @@ internal static class ReShadeLoader
     public static void LoadReShadeIfNeeded()
     {
         var dxgi = new FileInfo("dxgi.dll");
-        if (dxgi.Exists)
-        {
-            var dxgiVersionInfo = FileVersionInfo.GetVersionInfo(dxgi.FullName);
-            var isReShade = dxgiVersionInfo is { CompanyName: "crosire", ProductName: "ReShade" };
-            if (!isReShade) return;
+        if (!dxgi.Exists) return;
+        
+        var dxgiVersionInfo = FileVersionInfo.GetVersionInfo(dxgi.FullName);
+        
+        var isReShade = dxgiVersionInfo is { CompanyName: "crosire", ProductName: "ReShade" };
+        if (!isReShade) return;
 
-            _reShade = PInvoke.LoadLibrary(dxgi.FullName);
-        }
+        _reShade = PInvoke.LoadLibrary(dxgi.FullName);
     }
 }

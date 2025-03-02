@@ -1,5 +1,6 @@
 ﻿using Bannerlord.LauncherEx.Helpers;
 
+using System;
 using System.ComponentModel;
 using System.Globalization;
 
@@ -34,7 +35,7 @@ internal sealed class SettingsPropertyVM : BUTRViewModel
         get => IsFloatVisible ? PropertyReference.Value is float val ? val : float.MinValue : 0f;
         set
         {
-            if (IsFloatVisible && FloatValue != value)
+            if (IsFloatVisible && Math.Abs(FloatValue - value) > float.Epsilon)
             {
                 PropertyReference.Value = value;
                 OnPropertyChanged();
@@ -105,7 +106,7 @@ internal sealed class SettingsPropertyVM : BUTRViewModel
     {
         SettingType.Int when PropertyReference.Value is int val => val.ToString(),
         SettingType.Float when PropertyReference.Value is float val => val.ToString("0.0000", CultureInfo.InvariantCulture),
-        _ => string.Empty
+        _ => string.Empty,
     };
 
     public string ValueAsString => SettingType switch
@@ -115,7 +116,7 @@ internal sealed class SettingsPropertyVM : BUTRViewModel
         SettingType.String when PropertyReference.Value is string val => val,
         SettingType.Bool when PropertyReference.Value is bool val => val ? "True" : "False",
         SettingType.Button when PropertyReference.Value is string val => val,
-        _ => string.Empty
+        _ => string.Empty,
     };
 
     public SettingsPropertyVM(ISettingsPropertyDefinition definition)

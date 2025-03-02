@@ -1,12 +1,11 @@
 ﻿using Bannerlord.BLSE.Features.ExceptionInterceptor;
+using Bannerlord.LauncherEx;
 
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
 using System;
-using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Text;
 
 namespace Bannerlord.BLSE.Shared.Utils;
@@ -24,6 +23,7 @@ internal static class LauncherExceptionHandler
         // If ButterLib/BEW is not available or the stage is too early, use our built-in just in case
         ExceptionInterceptorFeature.Enable();
         ExceptionInterceptorFeature.OnException += ExceptionInterceptorFeatureOnException;
+        Manager.OnException += ExceptionInterceptorFeatureOnException;
     }
 
     private static void ExceptionInterceptorFeatureOnException(Exception exception)
@@ -48,6 +48,7 @@ Version: {typeof(LauncherExceptionHandler).Assembly.GetName().Version}
     private static void MainPrefix()
     {
         // After launch we rely on ButterLib/BEW being available
+        Manager.OnException -= ExceptionInterceptorFeatureOnException;
         ExceptionInterceptorFeature.OnException -= ExceptionInterceptorFeatureOnException;
         ExceptionInterceptorFeature.Disable();
 

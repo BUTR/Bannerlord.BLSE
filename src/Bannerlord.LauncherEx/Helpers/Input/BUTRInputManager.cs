@@ -39,7 +39,7 @@ internal class BUTRInputManager : IInputManager, IDisposable
         }
         for (; i < ReleasedChars.Length; i++)
         {
-            ReleasedChars[i] = default;
+            ReleasedChars[i] = 0;
         }
     }
 
@@ -129,7 +129,7 @@ internal class BUTRInputManager : IInputManager, IDisposable
         {
             InputKey.BackSpace => Keys.Back,
             InputKey.Enter => Keys.Enter,
-            _ => Enum.TryParse<Keys>(key.ToString(), out var keyVal) ? keyVal : Keys.None
+            _ => Enum.TryParse<Keys>(key.ToString(), out var keyVal) ? keyVal : Keys.None,
         };
         if (key is >= InputKey.ControllerLStickUp and <= InputKey.ControllerRTrigger or InputKey.ControllerLStick or InputKey.ControllerRStick)
         {

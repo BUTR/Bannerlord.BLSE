@@ -8,15 +8,16 @@ namespace Bannerlord.LauncherEx;
 
 partial class BUTRLauncherManagerHandler
 {
-    private LauncherState GetStateCallback() => _getState?.Invoke() ?? LauncherState.Empty;
+    private void GetStateCallback(Action<LauncherState> callback) => callback(_getState?.Invoke() ?? LauncherState.Empty);
 
-    private IModuleViewModel[] GetAllModuleViewModelsCallback() => _getAllModuleViewModels?.Invoke()?.ToArray() ?? Array.Empty<IModuleViewModel>();
-    private IModuleViewModel[] GetModuleViewModelsCallback() => _getModuleViewModels?.Invoke()?.ToArray() ?? Array.Empty<IModuleViewModel>();
-    private void SetModuleViewModelsCallback(IReadOnlyList<IModuleViewModel> orderedViewModels) => _setModuleViewModels?.Invoke(orderedViewModels);
+    private void GetAllModuleViewModelsCallback(Action<IModuleViewModel[]?> callback) => callback(_getAllModuleViewModels?.Invoke()?.ToArray() ?? []);
+    private void GetModuleViewModelsCallback(Action<IModuleViewModel[]?> callback) => callback(_getModuleViewModels?.Invoke()?.ToArray() ?? []);
+    private void SetModuleViewModelsCallback(IReadOnlyList<IModuleViewModel> orderedViewModels, Action callback) => _setModuleViewModels?.Invoke(orderedViewModels);
 
-    private void SetGameParametersCallback(string executable, IReadOnlyList<string> parameters)
+    private void SetGameParametersCallback(string executable, IReadOnlyList<string> parameters, Action callback)
     {
         _executable = executable;
         _executableParameters = string.Join(" ", parameters);
+        callback();
     }
 }

@@ -101,12 +101,19 @@ internal sealed class BUTRLauncherSavesVM : BUTRViewModel
     }
 
     [BUTRDataSourceMethod]
-    public void ExecuteRefresh()
+    public async void ExecuteRefresh()
     {
-        Saves.Clear();
-        foreach (var saveFile in _launcherManagerHandler.GetSaveFiles())
+        try
         {
-            Saves.Add(new BUTRLauncherSaveVM(saveFile, SelectSave, _getModuleById, _getModuleByName));
+            Saves.Clear();
+            foreach (var saveFile in await _launcherManagerHandler.GetSaveFilesAsync())
+            {
+                Saves.Add(new BUTRLauncherSaveVM(saveFile, SelectSave, _getModuleById, _getModuleByName));
+            }
+        }
+        catch (Exception e)
+        {
+            Manager.LogException(e);
         }
     }
 }

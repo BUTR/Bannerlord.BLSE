@@ -82,11 +82,11 @@ internal sealed class UILauncherPrefabExtension17 : PrefabExtensionSetAttributes
     public static string Movie => "UILauncher";
     public static string XPath => "descendant::LauncherRandomImageWidget";
 
-    public override List<Attribute> Attributes => new()
-    {
+    public override List<Attribute> Attributes =>
+    [
         new Attribute("IsHidden", ""),
         new Attribute("IsVisible", "@ShowRandomImage"),
-    };
+    ];
 }
 
 /// <summary>
@@ -129,16 +129,16 @@ internal sealed class UILauncherPrefabExtension19 : PrefabExtensionCustomPatch<X
 
     public override void Apply(XmlNode node)
     {
-        foreach (var selectNode in node.OwnerDocument?.SelectNodes("//*")?.OfType<XmlNode>() ?? Enumerable.Empty<XmlNode>())
+        foreach (var selectNode in node.OwnerDocument?.SelectNodes("//*")?.OfType<XmlNode>() ?? [])
         {
-            foreach (var attribute in selectNode.Attributes?.OfType<XmlAttribute>() ?? Enumerable.Empty<XmlAttribute>())
+            foreach (var attribute in selectNode.Attributes?.OfType<XmlAttribute>() ?? [])
             {
                 attribute.Value = attribute.Value switch
                 {
                     $"@{nameof(LauncherVM.IsSingleplayer)}" => $"@{nameof(LauncherVMMixin.IsSingleplayer2)}",
                     $"@{nameof(LauncherVM.IsMultiplayer)}" => $"@{nameof(LauncherVMMixin.IsMultiplayer2)}",
                     $"@{"IsDigitalCompanion"}" => $"@{nameof(LauncherVMMixin.IsDigitalCompanion2)}",
-                    _ => attribute.Value
+                    _ => attribute.Value,
                 };
             }
         }
@@ -161,9 +161,9 @@ internal sealed class UILauncherPrefabExtension31 : PrefabExtensionCustomPatch<X
 
     public override void Apply(XmlNode node)
     {
-        foreach (var selectNode in node.OwnerDocument?.SelectNodes("//*")?.OfType<XmlNode>() ?? Enumerable.Empty<XmlNode>())
+        foreach (var selectNode in node.OwnerDocument?.SelectNodes("//*")?.OfType<XmlNode>() ?? [])
         {
-            foreach (var attribute in selectNode.Attributes?.OfType<XmlAttribute>() ?? Enumerable.Empty<XmlAttribute>())
+            foreach (var attribute in selectNode.Attributes?.OfType<XmlAttribute>() ?? [])
             {
                 if (attribute.Name != "Text") continue;
                 if (!attribute.Value.StartsWith("@")) continue;
@@ -183,9 +183,9 @@ internal sealed class UILauncherPrefabExtension34 : PrefabExtensionCustomPatch<X
 
     public override void Apply(XmlNode node)
     {
-        foreach (var selectNode in node.OwnerDocument?.SelectNodes("//*")?.OfType<XmlNode>() ?? Enumerable.Empty<XmlNode>())
+        foreach (var selectNode in node.OwnerDocument?.SelectNodes("//*")?.OfType<XmlNode>() ?? [])
         {
-            foreach (var attribute in selectNode.Attributes?.OfType<XmlAttribute>() ?? Enumerable.Empty<XmlAttribute>())
+            foreach (var attribute in selectNode.Attributes?.OfType<XmlAttribute>() ?? [])
             {
                 if (attribute.Name != "Brush") continue;
                 if (attribute.Value != "Launcher.PlayButton.Text") continue;
@@ -219,8 +219,8 @@ internal sealed class UILauncherPrefabExtension35 : PrefabExtensionSetAttributes
     public static string Movie => "UILauncher";
     public static string XPath => "descendant::ButtonWidget[@Id='PlayMultiplayerButton']";
 
-    public override List<Attribute> Attributes => new()
-    {
+    public override List<Attribute> Attributes =>
+    [
         new Attribute("IsDisabled", "true"),
-    };
+    ];
 }

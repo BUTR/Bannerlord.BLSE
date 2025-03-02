@@ -2,7 +2,6 @@
 using Bannerlord.LauncherEx.Adapters;
 using Bannerlord.LauncherManager;
 using Bannerlord.LauncherManager.External;
-using Bannerlord.LauncherManager.External.UI;
 using Bannerlord.LauncherManager.Models;
 using Bannerlord.ModuleManager;
 
@@ -13,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading.Tasks;
 
 using TaleWorlds.MountAndBlade.Launcher.Library;
 using TaleWorlds.MountAndBlade.Launcher.Library.UserDatas;
@@ -22,7 +22,7 @@ namespace Bannerlord.LauncherEx;
 internal partial class BUTRLauncherManagerHandler : LauncherManagerHandler
 {
     private static readonly Harmony _harmony = new("Bannerlord.LauncherEx.launchermanager");
-    public static BUTRLauncherManagerHandler Default = default!;
+    public static BUTRLauncherManagerHandler Default = null!;
 
     public static void Initialize(UserDataManager userDataManager) => Default = new BUTRLauncherManagerHandler(userDataManager);
 
@@ -52,13 +52,9 @@ internal partial class BUTRLauncherManagerHandler : LauncherManagerHandler
             notificationProvider: NotificationProviderImpl.Instance,
             fileSystemProvider: FileSystemProviderImpl.Instance,
             gameInfoProvider: GameInfoProviderImpl.Instance,
-            loadOrderPersistenceProvider: new CallbackLoadOrderPersistenceProvider(
-                loadLoadOrder: LoadTWLoadOrder,
-                saveLoadOrder: SaveTWLoadOrder
-            ),
             launcherStateProvider: new CallbackLauncherStateProvider(
                 setGameParameters: SetGameParametersCallback,
-                getOptions: GetTWOptions,
+                getOptions: callback => callback(GetTWOptions()),
                 getState: GetStateCallback
             ),
             loadOrderStateProvider: new CallbackLoadOrderStateProvider(
@@ -73,7 +69,7 @@ internal partial class BUTRLauncherManagerHandler : LauncherManagerHandler
             LauncherPlatformType.Epic => GameStore.Epic,
             LauncherPlatformType.Gog => GameStore.GOG,
             LauncherPlatformType.Gdk => GameStore.Xbox,
-            _ => GameStore.Unknown
+            _ => GameStore.Unknown,
         });
     }
     private static void AdditionalArgsPostfix(ref string __result)
@@ -117,7 +113,7 @@ internal partial class BUTRLauncherManagerHandler : LauncherManagerHandler
         _userDataManager.SaveUserData();
     }
 
-    public LauncherOptions GetTWOptions() => new()
+    public LauncherExLauncherOptions GetTWOptions() => new()
     {
         BetaSorting = LauncherSettings.BetaSorting,
         FixCommonIssues = LauncherSettings.FixCommonIssues,
@@ -125,7 +121,6 @@ internal partial class BUTRLauncherManagerHandler : LauncherManagerHandler
         Language = Manager.GetActiveLanguage(),
     };
 
-    public new bool TryOrderByLoadOrderTW(IEnumerable<string> loadOrder, Func<string, bool> isModuleSelected, [NotNullWhen(false)] out IReadOnlyList<string>? issues,
-        out IReadOnlyList<IModuleViewModel> orderedModules, bool overwriteWhenFailure = false)
-        => base.TryOrderByLoadOrderTW(loadOrder, isModuleSelected, out issues, out orderedModules, overwriteWhenFailure);
+    public Task<OrderByLoadOrderResult> TryOrderByLoadOrderTWAsync(IEnumerable<string> loadOrder, Func<string, bool> isModuleSelected, bool overwriteWhenFailure = false) =>
+        base.TryOrderByLoadOrderTWAsync(loadOrder, isModuleSelected, overwriteWhenFailure);
 }

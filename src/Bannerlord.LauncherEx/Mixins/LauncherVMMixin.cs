@@ -8,10 +8,10 @@ using Bannerlord.LauncherManager.Utils;
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
+using System;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading;
 
 using TaleWorlds.GauntletUI;
 using TaleWorlds.MountAndBlade.Launcher.Library;
@@ -421,120 +421,118 @@ internal sealed class LauncherVMMixin : ViewModelMixin<LauncherVMMixin, Launcher
     }
 
     [BUTRDataSourceMethod]
-    public void ExecuteImport()
+    public async void ExecuteImport()
     {
-        if (ViewModel is null || _launcherModsVMMixin is null || UpdateAndSaveUserModsDataMethod is null) return;
-
-        _currentModuleListHandler = new ModuleListHandler(_launcherManagerHandler);
-
-        if (IsSingleplayer2 && IsModsDataSelected)
+        try
         {
-            var thread = new Thread(() =>
+            if (ViewModel is null || _launcherModsVMMixin is null || UpdateAndSaveUserModsDataMethod is null) return;
+
+            _currentModuleListHandler = new ModuleListHandler(_launcherManagerHandler);
+
+            if (IsSingleplayer2 && IsModsDataSelected)
             {
-                _currentModuleListHandler.Import(result =>
-                {
-                    if (!result) return;
-                    UpdateAndSaveUserModsDataMethod(ViewModel, false);
-                    HintManager.ShowHint(new BUTRTextObject("{=eohqbvHU}Successfully imported list!"));
-                });
-            });
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-            thread.Join();
+                var result = await _currentModuleListHandler.ImportAsync();
+                if (!result) return;
+                UpdateAndSaveUserModsDataMethod(ViewModel, false);
+                HintManager.ShowHint(new BUTRTextObject("{=eohqbvHU}Successfully imported list!"));
+            }
+
+            if (IsSingleplayer2 && IsSavesDataSelected && SavesData?.Selected?.Name is { } saveName)
+            {
+                var result = await _currentModuleListHandler.ImportSaveFileAsync(saveName);
+                if (!result) return;
+                UpdateAndSaveUserModsDataMethod(ViewModel, false);
+                HintManager.ShowHint(new BUTRTextObject("{=eohqbvHU}Successfully imported list!"));
+            }
         }
-        if (IsSingleplayer2 && IsSavesDataSelected && SavesData?.Selected?.Name is { } saveName)
+        catch (Exception e)
         {
-            var thread = new Thread(() =>
-            {
-                _currentModuleListHandler.ImportSaveFile(saveName, result =>
-                {
-                    if (!result) return;
-                    UpdateAndSaveUserModsDataMethod(ViewModel, false);
-                    HintManager.ShowHint(new BUTRTextObject("{=eohqbvHU}Successfully imported list!"));
-                });
-            });
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-            thread.Join();
+            HintManager.ShowHint(new BUTRTextObject("{=WJnTxf3v}Cancelled Import!"));
+            Manager.LogException(e);
         }
     }
 
     [BUTRDataSourceMethod]
-    public void ExecuteExport()
+    public async void ExecuteExport()
     {
-        if (ViewModel is null || _launcherModsVMMixin is null) return;
-
-        _currentModuleListHandler = new ModuleListHandler(_launcherManagerHandler);
-
-        if (IsSingleplayer2 && IsModsDataSelected)
+        try
         {
-            var thread = new Thread(() =>
+            if (ViewModel is null || _launcherModsVMMixin is null) return;
+
+            _currentModuleListHandler = new ModuleListHandler(_launcherManagerHandler);
+
+            if (IsSingleplayer2 && IsModsDataSelected)
             {
-                _currentModuleListHandler.Export();
-            });
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-            thread.Join();
+                await _currentModuleListHandler.ExportAsync();
+            }
+
+            if (IsSingleplayer2 && IsSavesDataSelected && SavesData?.Selected?.Name is { } saveName)
+            {
+                await _currentModuleListHandler.ExportSaveFileAsync(saveName);
+            }
         }
-        if (IsSingleplayer2 && IsSavesDataSelected && SavesData?.Selected?.Name is { } saveName)
+        catch (Exception e)
         {
-            var thread = new Thread(() =>
-            {
-                _currentModuleListHandler.ExportSaveFile(saveName);
-            });
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-            thread.Join();
+            HintManager.ShowHint(new BUTRTextObject("{=BjtJ4Lxw}Cancelled Export!"));
+            Manager.LogException(e);
         }
     }
 
     [BUTRDataSourceMethod(OverrideName = "ExecuteStartGame")]
-    public void ExecuteStartGameOverride(int mode)
+    public async void ExecuteStartGameOverride(int mode)
     {
-        if (ViewModel is null || ExecuteStartGame is null) return;
-
-        if (IsSavesDataSelected && SavesData?.Selected is { } saveVM)
+        try
         {
-            _launcherManagerHandler.SetGameParameterSaveFile(saveVM.Name);
-            if (saveVM.HasWarning || saveVM.HasError)
+            if (ViewModel is null || ExecuteStartGame is null) return;
+
+            if (IsSavesDataSelected && SavesData?.Selected is { } saveVM)
             {
-                var description = new StringBuilder();
-                if (saveVM.HasError)
+                await _launcherManagerHandler.SetGameParameterSaveFileAsync(saveVM.Name);
+                if (saveVM.HasWarning || saveVM.HasError)
                 {
-                    description.Append(saveVM.ErrorHint?.Text ?? string.Empty);
-                }
+                    var description = new StringBuilder();
+                    if (saveVM.HasError)
+                    {
+                        description.Append(saveVM.ErrorHint?.Text ?? string.Empty);
+                    }
 
-                if (saveVM is { HasError: true, HasWarning: true })
-                {
+                    if (saveVM is { HasError: true, HasWarning: true })
+                    {
+                        description.Append("\n");
+                    }
+
+                    if (saveVM.HasWarning)
+                    {
+                        description.Append(saveVM.WarningHint?.Text ?? string.Empty);
+                    }
+
+                    description.Append("\n\n");
+                    description.Append(new BUTRTextObject("{=MlYQ0uX7}An unstable experience could occur."));
                     description.Append("\n");
+                    description.Append(new BUTRTextObject("{=qvzptzrE}Do you wish to continue loading the save?"));
+
+                    MessageBox?.Show(new BUTRTextObject("{=dDprK7Mz}WARNING").ToString(), description.ToString(), () => ExecuteStartGame(ViewModel, 0), null);
+                    return;
                 }
 
-                if (saveVM.HasWarning)
-                {
-                    description.Append(saveVM.WarningHint?.Text ?? string.Empty);
-                }
-
-                description.Append("\n\n");
-                description.Append(new BUTRTextObject("{=MlYQ0uX7}An unstable experience could occur."));
-                description.Append("\n");
-                description.Append(new BUTRTextObject("{=qvzptzrE}Do you wish to continue loading the save?"));
-
-                MessageBox?.Show(new BUTRTextObject("{=dDprK7Mz}WARNING").ToString(), description.ToString(), () => ExecuteStartGame(ViewModel, 0), null);
+                ExecuteStartGame(ViewModel, 0);
                 return;
             }
 
-            ExecuteStartGame(ViewModel, 0);
-            return;
-        }
+            if (mode == 1)
+            {
+                await _launcherManagerHandler.SetGameParameterContinueLastSaveFileAsync(true);
 
-        if (mode == 1)
+                ExecuteStartGame(ViewModel, 1);
+                return;
+            }
+
+            ExecuteStartGame(ViewModel, mode);
+        }
+        catch (Exception e)
         {
-            _launcherManagerHandler.SetGameParameterContinueLastSaveFile(true);
-
-            ExecuteStartGame(ViewModel, 1);
-            return;
+            //HintManager.ShowHint(new BUTRTextObject("{=VwFQTk5z}Successfully exported list!"));
+            Manager.LogException(e);
         }
-
-        ExecuteStartGame(ViewModel, mode);
     }
 }

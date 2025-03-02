@@ -8,11 +8,11 @@ namespace Bannerlord.LauncherEx.Extensions;
 internal static class PlatformFileHelperPCExtended
 {
     private delegate string GetDirectoryFullPathDelegate(object instance, PlatformDirectoryPath directoryPath);
-    private static GetDirectoryFullPathDelegate? GetDirectoryFullPathMethod =
+    private static readonly GetDirectoryFullPathDelegate? GetDirectoryFullPathMethod =
         AccessTools2.GetDelegate<GetDirectoryFullPathDelegate>("TaleWorlds.Library.PlatformFileHelperPC:GetDirectoryFullPath");
 
     private delegate object GetPlatformFileHelperDelegate();
-    private static GetPlatformFileHelperDelegate? GetPlatformFileHelper =
+    private static readonly GetPlatformFileHelperDelegate? GetPlatformFileHelper =
         AccessTools2.GetPropertyGetterDelegate<GetPlatformFileHelperDelegate>("TaleWorlds.Library.Common:PlatformFileHelper");
 
     public static string? GetDirectoryFullPath(PlatformDirectoryPath directoryPath) =>

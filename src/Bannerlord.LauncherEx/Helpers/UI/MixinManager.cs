@@ -5,6 +5,8 @@ using Bannerlord.LauncherEx.Mixins;
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
+using JetBrains.Annotations;
+
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -15,12 +17,12 @@ using TaleWorlds.MountAndBlade.Launcher.Library;
 
 namespace Bannerlord.LauncherEx.Helpers;
 
-[AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
+[AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false), MeansImplicitUse]
 internal class BUTRDataSourcePropertyAttribute : Attribute
 {
     public string? OverrideName { get; set; }
 }
-[AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false), MeansImplicitUse]
 internal class BUTRDataSourceMethodAttribute : Attribute
 {
     public string? OverrideName { get; set; }
@@ -155,7 +157,7 @@ internal static class MixinManager
         }
         else
         {
-            Mixins.Add(viewModel, new List<object> { mixin });
+            Mixins.Add(viewModel, [mixin]);
         }
     }
 

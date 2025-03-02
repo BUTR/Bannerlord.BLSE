@@ -1,5 +1,7 @@
 ﻿using Bannerlord.LauncherEx.Extensions;
 
+using JetBrains.Annotations;
+
 using TaleWorlds.GauntletUI;
 using TaleWorlds.GauntletUI.BaseTypes;
 
@@ -7,6 +9,7 @@ namespace Bannerlord.LauncherEx.Widgets;
 
 internal sealed class LauncherSearchBoxWidget : BrushWidget
 {
+    [UsedImplicitly]
     public EditableTextWidget? EditableTextWidget
     {
         get => _editableTextWidget;
@@ -31,6 +34,7 @@ internal sealed class LauncherSearchBoxWidget : BrushWidget
 
     private EditableTextWidget? _editableTextWidget;
 
+    [UsedImplicitly]
     public string? SearchText
     {
         get => _searchText;

@@ -31,7 +31,7 @@ internal enum ModuleType { Framework, Graphical, Standard, Patches }
 internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, LauncherModsVM>/*, IHasOrderer*/
 {
     private readonly BUTRLauncherManagerHandler _launcherManagerHandler = BUTRLauncherManagerHandler.Default;
-    private readonly MBBindingList<BUTRLauncherModuleVM> _modules = new();
+    private readonly MBBindingList<BUTRLauncherModuleVM> _modules = [];
     private readonly Dictionary<string, BUTRLauncherModuleVM> _modulesLookup = new();
     private IReadOnlyList<ModuleInfoExtendedWithMetadata> _allModuleInfos;
 
@@ -44,7 +44,7 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
     private bool _isDisabled2;
 
     [BUTRDataSourceProperty]
-    public MBBindingList<BUTRLauncherModuleVM> Modules2 { get; } = new();
+    public MBBindingList<BUTRLauncherModuleVM> Modules2 { get; } = [];
 
     // Fast lookup for the ViewModels
 
@@ -96,8 +96,8 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
 
         _launcherManagerHandler.RegisterModuleViewModelProvider(() => _modules, () => Modules2, SetViewModels);
 
-        _launcherManagerHandler.RefreshModules();
-        _allModuleInfos = _launcherManagerHandler.GetAllModules();
+        _launcherManagerHandler.RefreshModulesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        _allModuleInfos = _launcherManagerHandler.GetAllModulesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         foreach (var moduleInfoExtended in _launcherManagerHandler.ExtendedModuleInfoCache.Values.OfType<ModuleInfoExtendedWithMetadata>())
         {
             var moduleVM = new BUTRLauncherModuleVM(moduleInfoExtended, ToggleModuleSelection, ValidateModule, GetPossibleProviders);
@@ -122,7 +122,8 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
         }
         */
 
-        if (_launcherManagerHandler.TryOrderByLoadOrder(loadOrder.Keys, x => loadOrder.TryGetValue(x, out var isSelected) && isSelected, out var issues, out var orderedModules))
+        var (result, issues, orderedModules) = _launcherManagerHandler.TryOrderByLoadOrderAsync(loadOrder.Keys, x => loadOrder.TryGetValue(x, out var isSelected) && isSelected).ConfigureAwait(false).GetAwaiter().GetResult();
+        if (result)
         {
             SetViewModels(orderedModules);
             IsForceSorted = false;
@@ -130,11 +131,11 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
         else
         {
             IsForceSorted = true;
-            ForceSortedHint = new LauncherHintVM(new BUTRTextObject("{=pZVVdI5d}The Load Order was re-sorted with the default algorithm!{NL}Reasons:{NL}{REASONS}").SetTextVariable("REASONS", string.Join("\n", issues)).ToString());
+            ForceSortedHint = new LauncherHintVM(new BUTRTextObject("{=pZVVdI5d}The Load Order was re-sorted with the default algorithm!{NL}Reasons:{NL}{REASONS}").SetTextVariable("REASONS", string.Join("\n", issues ?? [])).ToString());
 
             // Beta sorting algorithm will fail currently in some cases, use the TW fallback
-            _launcherManagerHandler.TryOrderByLoadOrderTW(Enumerable.Empty<string>(), x => loadOrder.TryGetValue(x, out var isSelected) && isSelected, out _, out orderedModules, true);
-            SetViewModels(orderedModules); // Set the ViewModels regarding the result
+            var (_, _, orderedModules2) = _launcherManagerHandler.TryOrderByLoadOrderTWAsync([], x => loadOrder.TryGetValue(x, out var isSelected) && isSelected, true).ConfigureAwait(false).GetAwaiter().GetResult();
+            SetViewModels(orderedModules2); // Set the ViewModels regarding the result
 
             //TryOrderByLoadOrder(Enumerable.Empty<string>(), x => loadOrder.TryGetValue(x, out var isSelected) && isSelected);
         }
@@ -146,8 +147,8 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
         foreach (var viewModel in orderedModuleViewModels.OfType<BUTRLauncherModuleVM>())
             Modules2.Add(viewModel);
 
-        _launcherManagerHandler.RefreshModules();
-        _allModuleInfos = _launcherManagerHandler.GetAllModules();
+        _launcherManagerHandler.RefreshModulesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        _allModuleInfos = _launcherManagerHandler.GetAllModulesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
 
         // Validate all VM's after they were selected and ordered
         foreach (var modules in Modules2)
@@ -156,14 +157,14 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
             modules.Refresh();
         }
 
-        _launcherManagerHandler.SetGameParametersLoadOrder(Modules2);
+        _launcherManagerHandler.SetGameParametersLoadOrderAsync(Modules2).ConfigureAwait(false).GetAwaiter().GetResult();
     }
 
     private IEnumerable<string> ValidateModule(BUTRLauncherModuleVM moduleVM) => SortHelper.ValidateModule(Modules2, _modulesLookup, moduleVM);
     private void ToggleModuleSelection(BUTRLauncherModuleVM moduleVM)
     {
         SortHelper.ToggleModuleSelection(Modules2, _modulesLookup, moduleVM);
-        _launcherManagerHandler.SetGameParametersLoadOrder(Modules2);
+        _launcherManagerHandler.SetGameParametersLoadOrderAsync(Modules2).ConfigureAwait(false).GetAwaiter().GetResult();
     }
     private ICollection<ModuleProviderType> GetPossibleProviders(ModuleInfoExtendedWithMetadata moduleInfo) => _allModuleInfos
         .Where(x => x.Id == moduleInfo.Id && x.ModuleProviderType != moduleInfo.ModuleProviderType)
@@ -172,10 +173,11 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
 
     private void ChangeModulePosition(BUTRLauncherModuleVM targetModuleVM, int insertIndex, Action<IReadOnlyCollection<string>>? onIssues = null)
     {
-        if (SortHelper.ChangeModulePosition(Modules2, _modulesLookup, targetModuleVM, insertIndex, onIssues))
-        {
-            _launcherManagerHandler.SetGameParametersLoadOrder(Modules2);
-        }
+        var (result, issues) = SortHelper.ChangeModulePosition(Modules2, _modulesLookup, targetModuleVM, insertIndex);
+        if (result)
+            _launcherManagerHandler.SetGameParametersLoadOrderAsync(Modules2).ConfigureAwait(false).GetAwaiter().GetResult();
+        if (issues.Count > 0)
+            onIssues?.Invoke(issues);
     }
 
     private void SearchTextChanged()
@@ -197,29 +199,36 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
     }
 
     [BUTRDataSourceMethod]
-    public void ExecuteRefresh()
+    public async void ExecuteRefresh()
     {
-        static IEnumerable<ModuleInfoExtended> Sort(IEnumerable<ModuleInfoExtended> source)
+        try
         {
-            var orderedModules = source
-                .OrderByDescending(x => x.IsOfficial)
-                .ThenBy(x => x.Id, new AlphanumComparatorFast())
-                .ToArray();
+            static IEnumerable<ModuleInfoExtended> Sort(IEnumerable<ModuleInfoExtended> source)
+            {
+                var orderedModules = source
+                    .OrderByDescending(x => x.IsOfficial)
+                    .ThenBy(x => x.Id, new AlphanumComparatorFast())
+                    .ToArray();
 
-            return ModuleSorter.TopologySort(orderedModules, module => ModuleUtilities.GetDependencies(orderedModules, module));
+                return ModuleSorter.TopologySort(orderedModules, module => ModuleUtilities.GetDependencies(orderedModules, module));
+            }
+
+            var sorted = Sort(Modules2.Select(x => x.ModuleInfoExtended)).Select((x, i) => new { Item = x.Id, Index = i }).ToDictionary(x => x.Item, x => x.Index);
+            Modules2.Sort(new ByIndexComparer<BUTRLauncherModuleVM>(x => sorted.TryGetValue(x.ModuleInfoExtended.Id, out var idx) ? idx : -1));
+            //var sorted = Sort(Modules2.Select(x => x.ModuleInfoExtended)).Select(x => x.Id).ToList();
+            //SortBy(sorted);
+
+            await _launcherManagerHandler.RefreshModulesAsync();
+            _allModuleInfos = await _launcherManagerHandler.GetAllModulesAsync();
+            foreach (var moduleVM in Modules2)
+                moduleVM.Refresh();
+
+            await _launcherManagerHandler.SetGameParametersLoadOrderAsync(Modules2);
         }
-
-        var sorted = Sort(Modules2.Select(x => x.ModuleInfoExtended)).Select((x, i) => new { Item = x.Id, Index = i }).ToDictionary(x => x.Item, x => x.Index);
-        Modules2.Sort(new ByIndexComparer<BUTRLauncherModuleVM>(x => sorted.TryGetValue(x.ModuleInfoExtended.Id, out var idx) ? idx : -1));
-        //var sorted = Sort(Modules2.Select(x => x.ModuleInfoExtended)).Select(x => x.Id).ToList();
-        //SortBy(sorted);
-
-        _launcherManagerHandler.RefreshModules();
-        _allModuleInfos = _launcherManagerHandler.GetAllModules();
-        foreach (var moduleVM in Modules2)
-            moduleVM.Refresh();
-
-        _launcherManagerHandler.SetGameParametersLoadOrder(Modules2);
+        catch (Exception e)
+        {
+            Manager.LogException(e);
+        }
     }
 
     [BUTRDataSourceMethod]
@@ -250,18 +259,17 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
                 return;
 
             var gameVersion = ApplicationVersionHelper.GameVersion() ?? ApplicationVersion.Empty;
-            var selectedModules = Modules2.Select(x => new
-            {
-                ModuleId = x.ModuleInfoExtended.Id,
-                ModuleVersion = x.ModuleInfoExtended.Version.ToString()
-            }).ToArray();
+            var selectedModules = Modules2.Select(x => new {ModuleId = x.ModuleInfoExtended.Id, ModuleVersion = x.ModuleInfoExtended.Version.ToString(),}).ToArray();
             var data = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new
             {
                 GameVersion = $"{ApplicationVersion.GetPrefix(gameVersion.ApplicationVersionType)}{gameVersion.Major}.{gameVersion.Minor}.{gameVersion.Revision}",
-                Modules = selectedModules
+                Modules = selectedModules,
             }));
 
-            var responseDefinition = new { Modules = new[] { new { ModuleId = "", Compatibility = 0d, RecommendedCompatibility = (double?) null, RecommendedModuleVersion = (string?) null } } };
+            var responseDefinition = new
+            {
+                Modules = new[] {new {ModuleId = "", Compatibility = 0d, RecommendedCompatibility = (double?) null, RecommendedModuleVersion = (string?) null}}
+            };
 
             var httpWebRequest = WebRequest.CreateHttp(uploadUrlAttr.Value);
             httpWebRequest.Method = "POST";
@@ -288,7 +296,10 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
                 moduleVM.SetUpdateInfo(module.Compatibility, module.RecommendedCompatibility, module.RecommendedModuleVersion);
             }
         }
-        catch (Exception) { /* ignore */ }
+        catch (Exception e)
+        {
+            Manager.LogException(e);
+        }
     }
 
     [BUTRDataSourceMethod]

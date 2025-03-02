@@ -2,6 +2,7 @@
 
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Bannerlord.LauncherEx.Adapters;
 
@@ -9,37 +10,42 @@ internal sealed class FileSystemProviderImpl : IFileSystemProvider
 {
     public static readonly FileSystemProviderImpl Instance = new();
 
-    public byte[]? ReadFileContent(string filePath, int offset, int length)
+    public Task<byte[]?> ReadFileContentAsync(string filePath, int position, int length)
     {
-        if (!File.Exists(filePath)) return null;
-
+        FileStream? fileStream = null;
         try
         {
-            if (offset == 0 && length == -1)
+            fileStream = File.OpenRead(filePath);
+
+            if (length == -1)
+                length = (int) fileStream.Length;
+
+            if (length == 0)
+                return Task.FromResult<byte[]?>([]);
+
+            var buffer = new byte[length];
+            fileStream.Seek(position, SeekOrigin.Begin);
+            var offset = 0;
+            while (length > 0)
             {
-                return File.ReadAllBytes(filePath);
+                var read = fileStream.Read(buffer, offset, length);
+                if (read == 0) break;
+                offset += read;
+                length -= read;
             }
-            else if (offset >= 0 && length > 0)
-            {
-                using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-                var data = new byte[length];
-                fs.Seek(offset, SeekOrigin.Begin);
-                _ = fs.Read(data, 0, length);
-                return data;
-            }
-            else
-            {
-                return null;
-            }
+            return Task.FromResult<byte[]?>(buffer);
         }
-        catch (Exception)
+        catch
         {
-            //_logger.LogError(ex, "Bannerlord IO Read Operation failed! {Path}", filePath);
-            return null;
+            return Task.FromResult<byte[]?>(null);
+        }
+        finally
+        {
+            fileStream?.Dispose();
         }
     }
 
-    public void WriteFileContent(string filePath, byte[]? data)
+    public Task WriteFileContentAsync(string filePath, byte[]? data)
     {
         try
         {
@@ -52,9 +58,10 @@ internal sealed class FileSystemProviderImpl : IFileSystemProvider
         {
             //_logger.LogError(ex, "Bannerlord IO Write Operation failed! {Path}", filePath);
         }
+        return Task.CompletedTask;
     }
 
-    public string[]? ReadDirectoryFileList(string directoryPath) => Directory.Exists(directoryPath) ? Directory.GetFiles(directoryPath) : null;
+    public Task<string[]?> ReadDirectoryFileListAsync(string directoryPath) => Task.FromResult(Directory.Exists(directoryPath) ? Directory.GetFiles(directoryPath) : null);
 
-    public string[]? ReadDirectoryList(string directoryPath) => Directory.Exists(directoryPath) ? Directory.GetDirectories(directoryPath) : null;
+    public Task<string[]?> ReadDirectoryListAsync(string directoryPath) => Task.FromResult(Directory.Exists(directoryPath) ? Directory.GetDirectories(directoryPath) : null);
 }
