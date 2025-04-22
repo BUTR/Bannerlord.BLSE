@@ -9,10 +9,10 @@
   <a converter_ignore href="https://github.com/BUTR/Bannerlord.BLSE/actions/workflows/test.yml?query=branch%3Amaster"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/BUTR/Bannerlord.BLSE/test.yml?branch=master&label=Game%20Stable%20and%20Beta"></a>
   <br converter_ignore>
   <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/badge/NexusMods-BLSE-yellow.svg" /></a>
-  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-version-pzk4e0ejol6j.runkit.sh%3FgameId%3Dmountandblade2bannerlord%26modId%3D1" /></a>
-  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dunique%26gameId%3D3174%26modId%3D1" /></a>
-  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dtotal%26gameId%3D3174%26modId%3D1" /></a>
-  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dviews%26gameId%3D3174%26modId%3D1" /></a>
+  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fmod-version%3FgameId%3D3174%26modId%3D1" /></a>
+  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fdownloads%3Ftype%3Dunique%26gameId%3D3174%26modId%3D1" /></a>
+  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fdownloads%3Ftype%3Dtotal%26gameId%3D3174%26modId%3D1" /></a>
+  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fdownloads%3Ftype%3Dviews%26gameId%3D3174%26modId%3D1" /></a>
   <!--
   <br>
   <img src="https://staticdelivery.nexusmods.com/mods/3174/images/2513/2513-1612129311-35018174.png" width="800">
