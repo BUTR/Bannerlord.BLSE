@@ -23,7 +23,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="$(Configuration) == 'Debug'">
-    <GameVersion>1.2.0</GameVersion>
+    <GameVersion>1.3.0</GameVersion>
   </PropertyGroup>
 
   <PropertyGroup>
