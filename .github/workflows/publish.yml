@@ -28,7 +28,7 @@ jobs:
       mod_version: ${{ steps.changelog.outputs.mod_version }}
       mod_description: ${{ steps.changelog.outputs.mod_description }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install and Run ChangelogParser
         id: changelog
@@ -52,7 +52,7 @@ jobs:
         project: [ 'Bannerlord.BLSE.Loaders.Standalone', 'Bannerlord.BLSE.Loaders.Launcher', 'Bannerlord.BLSE.Loaders.LauncherEx', 'Bannerlord.BLSE.Shared' ]
         configuration: [ 'Win64_Shipping_Client', 'Gaming.Desktop.x64_Shipping_Client' ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup
         uses: butr/actions-common-setup@v2
@@ -78,7 +78,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup
         uses: butr/actions-common-setup@v2
@@ -86,7 +86,7 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
 
       - name: Download Bannerlord Temp artifact Pattern
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           pattern: bannerlord-tmp-*
           merge-multiple: true
@@ -126,7 +126,7 @@ jobs:
       artifact_name: bannerlord
     secrets:
       NEXUSMODS_APIKEY: ${{ secrets.ARAGAS_NEXUSMODS_API_KEY }}
-      NEXUSMODS_COOKIES: ${{ secrets.ARAGAS_NEXUSMODS_COOKIE_SID_DEVELOP }}
+      NEXUSMODS_SESSION_COOKIE: ${{ secrets.ARAGAS_NEXUSMODS_SESSION_COOKIE }}
 
   ###########################
   #         GITHUB          #
@@ -150,7 +150,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download Module artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: bannerlord
           path: ./artifact

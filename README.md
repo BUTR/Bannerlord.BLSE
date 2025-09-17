@@ -9,10 +9,10 @@
   <a converter_ignore href="https://github.com/BUTR/Bannerlord.BLSE/actions/workflows/test.yml?query=branch%3Amaster"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/BUTR/Bannerlord.BLSE/test.yml?branch=master&label=Game%20Stable%20and%20Beta"></a>
   <br converter_ignore>
   <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/badge/NexusMods-BLSE-yellow.svg" /></a>
-  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-version-pzk4e0ejol6j.runkit.sh%3FgameId%3Dmountandblade2bannerlord%26modId%3D1" /></a>
-  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dunique%26gameId%3D3174%26modId%3D1" /></a>
-  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dtotal%26gameId%3D3174%26modId%3D1" /></a>
-  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dviews%26gameId%3D3174%26modId%3D1" /></a>
+  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fmod-version%3FgameId%3D3174%26modId%3D1" /></a>
+  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fdownloads%3Ftype%3Dunique%26gameId%3D3174%26modId%3D1" /></a>
+  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fdownloads%3Ftype%3Dtotal%26gameId%3D3174%26modId%3D1" /></a>
+  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fdownloads%3Ftype%3Dviews%26gameId%3D3174%26modId%3D1" /></a>
   <!--
   <br>
   <img src="https://staticdelivery.nexusmods.com/mods/3174/images/2513/2513-1612129311-35018174.png" width="800">
@@ -104,6 +104,16 @@ Can opted-in by passing **/unblock** in command-line args.
 * **Binary Compatibility Check** - the launcher will check whether the are ABI issues in the module with the current game version. ABI issues mean the module won't work in the game and will need a new updated version.
 * **Import/Export Mod List** - provides a way to export and import Mod Lists with the correct load order and module versions. If a module version is incorrect, with highlight that.
 * **Supports Mod Organizer 2** - full support for MO2 with its virtual FS. [Here's how to add BLSE to MO2](https://www.nexusmods.com/mountandblade2bannerlord/articles/768).
+
+## Community Metadata
+We've added the following new attributes to SubModule.xml
+* `<Url>`  
+Used to link the module with a specific NexusMods mod.  
+Can be used to make it easier for players to find the module page for the mod  
+Can be used for various integrations like the [BUTR Site](https://butr.github.io/BUTR.Site.NexusMods) to show the crash reports for the mod  
+```xml
+<Url value="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" />
+```
 
 ## Community Dependency Metadata
 BLSE adds support for a new tag DependedModuleMetadatas that allows you to better define your load order, see the example below

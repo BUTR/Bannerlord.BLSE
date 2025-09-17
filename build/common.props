@@ -11,10 +11,10 @@
 
   <!--Development Variables-->
   <PropertyGroup>
-    <Version>1.5.7</Version>
+    <Version>1.5.8</Version>
     <HarmonyVersion>2.2.2</HarmonyVersion>
-    <BUTRSharedVersion>3.0.0.139</BUTRSharedVersion>
-    <BUTRModuleManagerVersion>5.0.222</BUTRModuleManagerVersion>
+    <BUTRSharedVersion>3.0.0.142</BUTRSharedVersion>
+    <BUTRModuleManagerVersion>6.0.247</BUTRModuleManagerVersion>
     <HarmonyExtensionsVersion>3.2.0.77</HarmonyExtensionsVersion>
     <HarmonyAnalyzerVersion>1.0.1.50</HarmonyAnalyzerVersion>
     <LauncherManagerVersion>1.0.107</LauncherManagerVersion>

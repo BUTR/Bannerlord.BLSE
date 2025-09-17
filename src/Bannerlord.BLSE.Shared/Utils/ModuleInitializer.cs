@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
+// ReSharper disable once CheckNamespace
 internal static class ModuleInitializer
 {
     private static int _isAttached;

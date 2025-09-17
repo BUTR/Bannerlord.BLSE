@@ -4,6 +4,7 @@ using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
 using System;
+using System.Globalization;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
 using System.Security;
@@ -20,11 +21,16 @@ public static class ExceptionInterceptorFeature
     private static readonly MethodInfo FinalizerMethod = AccessTools2.Method(typeof(ExceptionInterceptorFeature), nameof(Finalizer))!;
 
     public static event Action<Exception>? OnException;
+    private static CultureInfo _defaultCulture = CultureInfo.InvariantCulture;
 
     public static void Enable()
     {
         AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
         OnException += HandleException;
+
+        _defaultCulture = CultureInfo.DefaultThreadCurrentUICulture;
+        CultureInfo.CurrentUICulture = CultureInfo.InvariantCulture;
+        CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
     }
 
     public static void EnableAutoGens()
@@ -39,6 +45,8 @@ public static class ExceptionInterceptorFeature
         OnException -= HandleException;
         AppDomain.CurrentDomain.AssemblyLoad -= CurrentDomainOnAssemblyLoad;
         ExceptionHandler.UnpatchAll(ExceptionHandler.Id);
+
+        CultureInfo.DefaultThreadCurrentUICulture = _defaultCulture;
     }
 
     private static void CurrentDomainOnAssemblyLoad(object sender, AssemblyLoadEventArgs args)
@@ -60,7 +68,7 @@ public static class ExceptionInterceptorFeature
             OnException?.Invoke(exception);
     }
 
-    private static void HandleException(Exception exception)
+    public static void HandleException(Exception exception)
     {
         try
         {

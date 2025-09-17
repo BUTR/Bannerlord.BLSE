@@ -8,7 +8,7 @@ internal static class GameConsistencyChecker
 {
     public static void Verify()
     {
-        var assemblyFile = new FileInfo(typeof(GameConsistencyChecker).Assembly.Location);
+        var assemblyFile = new FileInfo(AppContext.BaseDirectory);
 
         var platform = assemblyFile.Directory!.Name;
         if (platform is not "Win64_Shipping_Client" and not "Gaming.Desktop.x64_Shipping_Client")

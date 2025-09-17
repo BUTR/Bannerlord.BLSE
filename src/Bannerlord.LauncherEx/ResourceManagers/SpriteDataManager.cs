@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
+using TaleWorlds.Library;
 using TaleWorlds.TwoDimension;
 
 namespace Bannerlord.LauncherEx.ResourceManagers;
 
 internal static class SpriteDataManager
 {
+#if v100 || v110 || v120
     // Replaces the Sprite Sheet mechanism with a single texture
     private sealed class SpriteGenericFromTexture : SpriteGeneric
     {
@@ -185,15 +187,59 @@ internal static class SpriteDataManager
             outUVs[uvsStartIndex + 7] = minV;
         }
     }
+#elif v130
+    internal class SpriteFromTexture : Sprite
+    {
+        private readonly Texture _texture;
+        public override Texture Texture => _texture;
+
+        public SpriteFromTexture(Texture texture, int width, int height)
+            : base("Sprite", width, height, SpriteNinePatchParameters.Empty)
+        {
+            _texture = texture;
+        }
+
+        public override Vec2 GetMinUvs() => Vec2.Zero;
+        public override Vec2 GetMaxUvs() => Vec2.One;
+    }
+#else
+#error DEFINE
+#endif
 
 
     private static readonly Dictionary<string, Sprite> SpriteNames = new();
     private static readonly List<Func<Sprite>> DeferredInitialization = new();
 
-    public static Sprite? Create(string name) => GraphicsContextManager.Instance.TryGetTarget(out var gc) && gc is not null
-        ? new SpriteFromTexture(name, new Texture(gc.GetTexture(name))) : null;
-    public static Sprite? CreateGeneric(string name) => GraphicsContextManager.Instance.TryGetTarget(out var gc) && gc is not null
-        ? new SpriteGenericFromTexture(name, new Texture(gc.GetTexture(name))) : null;
+    public static Sprite? Create(string name)
+    {
+#if v100 || v110 || v120
+        return GraphicsContextManager.Instance.TryGetTarget(out var gc) && gc is not null
+            ? new SpriteFromTexture(name, new Texture(gc.GetTexture(name)))
+            : null;
+#elif v130
+        return GraphicsContextManager.Instance.TryGetTarget(out var gc) && gc is not null
+            ? new Texture(gc.GetTexture(name)) is { } tex ? new SpriteFromTexture(tex, tex.Width, tex.Height) : null!
+            : null;
+#else
+#error DEFINE
+#endif
+    }
+
+    public static Sprite? CreateGeneric(string name)
+    {
+#if v100 || v110 || v120
+        return GraphicsContextManager.Instance.TryGetTarget(out var gc) && gc is not null
+            ? new SpriteGenericFromTexture(name, new Texture(gc.GetTexture(name)))
+            : null;
+#elif v130
+        return GraphicsContextManager.Instance.TryGetTarget(out var gc) && gc is not null
+            ? new Texture(gc.GetTexture(name)) is { } tex ? new SpriteFromTexture(tex, tex.Width, tex.Height) : null!
+            : null;
+#else
+#error DEFINE
+#endif
+    }
+
     public static void Register(Func<Sprite> func) => DeferredInitialization.Add(func);
     public static void CreateAndRegister(string name) => Register(() => Create(name)!);
     public static void CreateGenericAndRegister(string name) => Register(() => CreateGeneric(name)!);
@@ -231,6 +277,7 @@ internal static class SpriteDataManager
         foreach (var func in DeferredInitialization)
         {
             var sprite = func();
+            if (sprite is null) continue;
             SpriteNames[sprite.Name] = sprite;
         }
     }

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData id="Français" name="Français" subtitle_extension="fr" supported_iso="fr,fra,fr-fr,fr-be,fr-ca,fr-ch" under_development="false">
+  <strings>
+    <!-- BUTRLauncherModuleVM -->
+    <string id="kfMQEOFS" text="Le module est installé dans le dossier /Modules du jeu et sur le Steam Workshop !{NL}La version /Modules sera utilisée !"/>
+    <string id="aAYdk1zd" text="Le DLL est obfusqué !{NL}Il n'y a aucune garantie que le code est sûr !{NL}L'équipe de BUTR met en garde contre les conséquences possibles de l'exécution de code obfusqué !"/>
+
+    <!-- BUTRLauncherOptionsVM -->
+    <string id="z9WqFewN" text="DÉSACTIVÉ !"/>
+    <string id="44qrhQ6g" text="Redémarrage requis !"/>
+
+    <string id="zHo3tzQT" text="Débloquer les fichiers au démarrage"/>
+    <string id="sOInYH9V" text="Débloque automatiquement les fichiers .dll au démarrage"/>
+    <string id="LXlsSS8t" text="Corriger les problèmes courants"/>
+    <string id="J9VbkLW4" text="Corrige des problèmes tels que la présence de 0Harmony.dll dans le dossier /bin"/>
+    <string id="vUAqDj9H" text="Liste compacte des modules"/>
+    <string id="Qn1aPNQM" text="Réduit la taille du contenu de l'onglet Mods"/>
+    <string id="GUWbD65T" text="Désactiver la vérification de compatibilité binaire"/>
+    <string id="lmpQeQBS" text="Désactive la vérification de compatibilité des mods par le Launcher"/>
+    <string id="iD27wEq7" text="Masquer l'image aléatoire"/>
+    <string id="LaPvZjwC" text="Cacher l'image du Cavalier pour que le Launcher soit plus compact"/>
+    <string id="JT7QnJJA" text="Débloquer les fichiers"/>
+    <string id="VMIp4503" text="Débloque tous les fichiers .dll dans le dossier /Modules"/>
+    <string id="RDLKkiVk" text="Débloquer"/>
+    <string id="QJSBiZdJ" text="Tri expérimental"/>
+    <string id="HVhaqeb4" text="Utilise le nouvel algorithme de tri après la v1.12.x. Désactiver pour utiliser l'ancien algorithme"/>
+    <string id="1zt99vTt" text="Mode agrandi"/>
+    <string id="XUSDSpvf" text="Augmente la hauteur du Launcher"/>
+    <string id="IsR2rbnG" text="Restaurer la sauvegarde des options de jeu"/>
+    <string id="uKUsA3Sp" text="LauncherEx fait toujours une sauvegarde avant d'enregistrer pour la première fois. Cela restaurera les fichiers d'origine"/>
+    <string id="TLDgPay9" text="Restaurer"/>
+    <string id="5XzSM7RN" text="Restaurer la sauvegarde des options du moteur"/>
+    <string id="JusnHy6S" text="Active le redimensionnement DPI de Windows pour éliminer le flou des éléments de l'interface utilisateur"/>
+
+    <!-- BUTRLauncherSavesVM -->
+    <string id="JtelOsIW" text="Nom"/>
+    <string id="14WBFIS1" text="Version"/>
+    <string id="OJsGrGVi" text="Personnage"/>
+    <string id="JxpEEQdF" text="Niveau"/>
+    <string id="qkkTPycE" text="Jours"/>
+    <string id="aYWWDkKX" text="Créé le"/>
+
+    <!-- LauncherConfirmStartVMMixin -->
+    <string id="DzJmcvsP" text="Annuler"/>
+    <string id="epTxGUqT" text="Confirmer"/>
+
+    <!-- LauncherModsVMMixin -->
+    <string id="pZVVdI5d" text="L'ordre de chargement a été réorganisé avec l'algorithme par défaut !{NL}Raisons :{NL}{REASONS}"/>
+    <string id="sP1a61KE" text="Impossible de placer le module à la position souhaitée ! Placement au plus proche disponible !{NL}Raison :{NL}{REASONS}"/>
+    <string id="sLf3eIpH" text="Échec du tri de la liste des modules !"/>
+
+    <!-- LauncherVMMixin -->
+    <string id="yS5hbWCL" text="Options"/>
+    <string id="V66qoU6n" text="Launcher"/>
+    <string id="ro4RMgyt" text="Jeu"/>
+    <string id="q4rQuTgG" text="Moteur"/>
+    <string id="d5OjKcGE" text="Sauvegardes"/>
+    <string id="Aws9irMU" text="Importer l'ordre de chargement"/>
+    <string id="4wKr76gx" text="Importer l'ordre de chargement de la sauvegarde"/>
+    <string id="XdZGqnFW" text="Exporter l'ordre de charge actuel"/>
+    <string id="G55IdM6M" text="Exporter l'ordre de chargement de la sauvegarde"/>
+    <string id="MlYQ0uX7" text="Des instabilités pourraient survenir."/>
+    <string id="qvzptzrE" text="Souhaitez-vous continuer à charger la sauvegarde ?"/>
+    <string id="dDprK7Mz" text="ATTENTION"/>
+
+    <string id="Hk7FBBSa" text="Solo"/>
+    <string id="UOGhdUWE" text="Multijoueur"/>
+    <string id="VDTcZpPr" text="Compagnon Digital"/>
+    <string id="Tg0If68v" text="Actualités"/>
+    <string id="YGU9eXM0" text="Mods"/>
+    <string id="xYv4iv7C" text="JOUER"/>
+    <string id="6B3iZLqR" text="CONTINUER"/>
+    <string id="eUt6GKkQ" text="LANCER"/>
+
+    <!-- LauncherVMMixin -->
+    <string id="WJnTxf3v" text="Importation annulée !"/>
+    <string id="BjtJ4Lxw" text="Exportation annulée"/>
+    <string id="eohqbvHU" text="Liste importée avec succès !"/>
+    <string id="VwFQTk5z" text="Liste exportée avec succès !"/>
+
+    <!-- Issues -->
+    <string id="kxqLbSqe" text="(ID inconnu)"/>
+
+    <string id="izSm5f85" text="IDs des modules en double :{NL}{MODULEIDS}"/>
+    <string id="vCwH9226" text="Noms des modules en double :{NL}{MODULENAMES}"/>
+    <string id="GtDRbC3m" text="Modules manquants :{NL}{MODULES}"/>
+    <string id="BuMom4Jt" text="Versions de modules incompatibles :{NL}{MODULEVERSIONS}"/>
+
+    <string id="nYVWoomO" text="{MODULEID}. Requis {REQUIREDVERSION}. Installé {ACTUALVERSION}"/>
+    <string id="sd6M4KRd" text="Ordre de chargement :{NL}{LOADORDER}"/>
+    <string id="HvvA78sZ" text="Problèmes d'ordre de chargement :{NL}{LOADORDERISSUES}"/>
+
+    <string id="B64DbmWp" text="Fichier de sauvegarde introuvable !"/>
+    <string id="epU06HID" text="Échec de la lecture du fichier de sauvegarde !"/>
+
+    <string id="DKRNkst2" text="Ouvrir un fichier avec un ordre de chargement"/>
+    <string id="XSxlKweM" text="Enregistrer la liste de modules de Bannerlord"/>
+
+    <string id="hgew15HH" text="Continuer l'importation ?"/>
+
+    <string id="tqjPGPtP" text="LauncherEx a détecté 0Harmony.dll dans le dossier racine /bin du jeu !{NL}Cela pourrait causer des problèmes, souhaitez-vous le supprimer ?"/>
+
+    <string id="J3Uh6MV4" text="'{ID}' {VERSION} manquant dans la liste des modules"/>
+    <string id="3eQSr6wt" text="'{ID}' {VERSION} manquant"/>
+    <string id="U858vdQX" text="'{ID}' a une ou plusieurs dépendances manquantes !"/>
+    <string id="1LS8Z5DU" text="'{ID}' a des problèmes non résolus !"/>
+    <string id="Vjz9HQ41" text="Mauvaise version de '{ID}' &lt;= {VERSION}"/>
+    <string id="ZvnlL7VE" text="Mauvaise version de '{ID}' &lt;= [{VERSION}]"/>
+    <string id="EfNuH2bG" text="Mauvaise version de '{ID}' &gt;= [{VERSION}]"/>
+    <string id="zXDidmpQ" text="'{ID}' est incompatible avec ce module"/>
+    <string id="4KFwqKgG" text="Le module '{ID}' est à la fois requis et marqué comme incompatible"/>
+    <string id="9DRB6yXv" text="Le module '{ID}' est à la fois requis en tant que LoadBefore et LoadAfter"/>
+    <string id="RC1V9BbP" text="Dépendances circulaires. '{TARGETID}' et '{SOURCEID}' dépendent l'un de l'autre"/>
+    <string id="s3xbuejE" text="'{SOURCEID}' doit être chargé avant '{TARGETID}'"/>
+    <string id="2ALJB7z2" text="'{SOURCEID}' doit être chargé après '{TARGETID}'"/>
+
+    <!-- Dependency Constructor -->
+    <string id="8ldMJPhQ" text=" (optionnel)"/>
+    <string id="f9hYP7mk" text="Dépend de :"/>
+    <string id="eGJ387f7" text="Incompatible avec :"/>
+    <string id="eW76jyd7" text="Doit être chargé avant :"/>
+
+
+    <string id="HdnFwgVA" text="Basé sur les analyses de BUTR :{NL}{NL}Mise à jour non requise.{NL}Score de compatibilité {SCORE}%{NL}{NL}{CURRENTVERSION} est l'une des meilleures versions pour le jeu {GAMEVERSION}"/>
+    <string id="HdnFwgVB" text="Basé sur les analyses de BUTR :{NL}{NL}Score de compatibilité {SCORE}%{NL}{NL}Suggère de mettre à jour vers {RECOMMENDEDVERSION}.{NL}Score de compatibilité {RECOMMENDEDSCORE}%{NL}{NL}{RECOMMENDEDVERSION} a une meilleure compatibilité pour le jeu {GAMEVERSION} plutôt que {CURRENTVERSION} !"/>
+   
+    <string id="q5quVWMI" text="Basculer tous les modules"/>
+    <string id="H5nMY4WU" text="Actualiser les modules"/>
+    <string id="zXWdahH9" text="Obtenir des recommandations de mise à jour{NL}Cliquer sur ce bouton enverra votre liste de modules au serveur de BUTR pour obtenir les scores de compatibilité et les versions recommandées.{NL}Ils sont basés sur les rapports de crash de ButterLib.{NL}{NL}(Nécessite une connexion Internet)"/>
+  </strings>
+</LanguageData>
