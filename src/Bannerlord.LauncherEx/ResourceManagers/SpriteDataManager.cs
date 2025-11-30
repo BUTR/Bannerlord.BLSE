@@ -187,7 +187,7 @@ internal static class SpriteDataManager
             outUVs[uvsStartIndex + 7] = minV;
         }
     }
-#elif v130
+#elif v134
     internal class SpriteFromTexture : Sprite
     {
         private readonly Texture _texture;
@@ -216,7 +216,7 @@ internal static class SpriteDataManager
         return GraphicsContextManager.Instance.TryGetTarget(out var gc) && gc is not null
             ? new SpriteFromTexture(name, new Texture(gc.GetTexture(name)))
             : null;
-#elif v130
+#elif v134
         return GraphicsContextManager.Instance.TryGetTarget(out var gc) && gc is not null
             ? new Texture(gc.GetTexture(name)) is { } tex ? new SpriteFromTexture(tex, tex.Width, tex.Height) : null!
             : null;
@@ -231,7 +231,7 @@ internal static class SpriteDataManager
         return GraphicsContextManager.Instance.TryGetTarget(out var gc) && gc is not null
             ? new SpriteGenericFromTexture(name, new Texture(gc.GetTexture(name)))
             : null;
-#elif v130
+#elif v134
         return GraphicsContextManager.Instance.TryGetTarget(out var gc) && gc is not null
             ? new Texture(gc.GetTexture(name)) is { } tex ? new SpriteFromTexture(tex, tex.Width, tex.Height) : null!
             : null;

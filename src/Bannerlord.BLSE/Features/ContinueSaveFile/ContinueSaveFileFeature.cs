@@ -34,6 +34,13 @@ public static class ContinueSaveFileFeature
             SandBoxSubModulePatch.Enable(_harmony);
             InformationManagerPatch.Enable(_harmony);
         }
+        
+        if (args.LoadedAssembly.GetName().Name == "SandBox.View")
+        {
+            SandBoxViewSubModulePatch.GetSaveGameArg = GetSaveFile;
+            SandBoxViewSubModulePatch.Enable(_harmony);
+            InformationManagerPatch.Enable(_harmony);
+        }
     }
 
     private static string? GetSaveFile(GameStartupInfo startupInfo)

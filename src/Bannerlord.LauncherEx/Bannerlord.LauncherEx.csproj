@@ -23,8 +23,9 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="$(Configuration) == 'Debug'">
-    <GameVersion>1.3.0</GameVersion>
+    <GameVersion>1.3.4</GameVersion>
   </PropertyGroup>
+  
 
   <PropertyGroup>
     <GameVersionFlat>$([System.String]::Copy('$(GameVersion)').Replace('.',''))</GameVersionFlat>
