@@ -36,7 +36,9 @@ public sealed class ProgramEx
             resourceDepot.CollectResources();
             resourceDepot.StartWatchingChangesInDepot();
 
-            var graphicsForm = new GraphicsForm(1154, 701, resourceDepot, true, true, true, "M&B II: Bannerlord");
+            User32.GetClientRect(User32.GetDesktopWindow(), out var lpRect);
+            float num = (float)lpRect.Height / 1350f;
+            var graphicsForm = new GraphicsForm((int)(num * 1154f), (int)(num * 701f), resourceDepot, true, true, true, "M&B II: Bannerlord");
             var standaloneUIDomain = new StandaloneUIDomain(graphicsForm, resourceDepot);
             var windowsFrameworkEx = new WindowsFrameworkEx { ThreadConfig = WindowsFrameworkThreadConfig.NoThread };
 
@@ -81,7 +83,7 @@ public sealed class ProgramEx
 
         _gameData = _gameData with { Args = args.ToArray() };
 
-        LauncherPlatform.Initialize();
+        LauncherPlatformHelper.Initialize(args);
         SetLauncherMode?.Invoke(true);
 
         _context = LauncherExContext.Create();
