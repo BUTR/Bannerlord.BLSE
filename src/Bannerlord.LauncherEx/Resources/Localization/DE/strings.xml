@@ -2,8 +2,8 @@
 <LanguageData id="Deutsch" name="Deutsch" subtitle_extension="de" supported_iso="de,deu,ger,de-de,de-at,de-li,de-lu,de-ch" under_development="false">
   <strings>
     <!-- BUTRLauncherModuleVM -->
-    <string id="kfMQEOFS" text="Das Modul ist im /Modules Ordner des Spiels und im Steam Workshop installiert!{NL}Es wird die /Modules Version verwendet!"/>
-    <string id="aAYdk1zd" text="Die DLL ist verschleiert!{NL}Es gibt keine Garantie dafür, dass der Code sicher ist!{NL}Das BUTR-Team warnt vor Konsequenzen, die aus dem Ausführen von verschleiertem Code entstehen!"/>
+    <string id="kfMQEOFS" text="Das Modul ist im /Modules-Ordner des Spiels und im Steam Workshop installiert!{NL} Es wird die /Modules Version verwendet!"/>
+    <string id="aAYdk1zd" text="Die DLL ist verschleiert!{NL} Es gibt keine Garantie dafür, dass der Code sicher ist! {NL}Das BUTR-Team warnt vor Konsequenzen, die aus dem Ausführen von verschleiertem Code entstehen!"/>
 
     <!-- BUTRLauncherOptionsVM -->
     <string id="z9WqFewN" text="DEAKTIVIERT!"/>
@@ -20,7 +20,7 @@
     <string id="iD27wEq7" text="Zufälliges Bild ausblenden"/>
     <string id="LaPvZjwC" text="Versteckt das Bild des Reiters, damit der Launcher kompakter aussieht"/>
     <string id="JT7QnJJA" text="Dateien entsperren"/>
-    <string id="VMIp4503" text="Entsperrt alle .dll Dateien im /Moduls-Ordner"/>
+    <string id="VMIp4503" text="Entsperrt alle .dll Dateien im /Modules-Ordner"/>
     <string id="RDLKkiVk" text="Entblocken"/>
     <string id="QJSBiZdJ" text="Beta-Sortierung"/>
     <string id="HVhaqeb4" text="Verwendet den neuen Sortieralgorithmus nach v1.12.x. Deaktivieren, um den alten Algorithmus zu verwenden"/>
@@ -45,8 +45,8 @@
     <string id="epTxGUqT" text="Bestätigen"/>
 
     <!-- LauncherModsVMMixin -->
-    <string id="pZVVdI5d" text="Die Ladereihenfolge wurde mit dem Standardalgorithmus neu sortiert!{NL}Gründe:{NL}{REASONS}"/>
-    <string id="sP1a61KE" text="Das Modul konnte nicht an die gewünschte Position platziert werden! Es wird an die nächste verfügbare Stelle platziert{NL}Grund:{NL}{REASONS}"/>
+    <string id="pZVVdI5d" text="Die Ladereihenfolge wurde mit dem Standardalgorithmus neu sortiert! {NL}Gründe:{NL}{REASONS}"/>
+    <string id="sP1a61KE" text="Das Modul konnte nicht an die gewünschte Position platziert werden! Es wird an die nächste verfügbare Stelle platziert. {NL}Grund:{NL}{REASONS}"/>
     <string id="sLf3eIpH" text="Die Modulliste konnte nicht geordnet werden!"/>
 
     <!-- LauncherVMMixin -->
@@ -81,24 +81,24 @@
     <!-- Issues -->
     <string id="kxqLbSqe" text="(Unbekannte ID)"/>
 
-    <string id="izSm5f85" text="Doppelt vorhandene Module Ids:{NL}{MODULEIDS}"/>
-    <string id="vCwH9226" text="Doppelt vorhandene Module Namen:{NL}{MODULENAMES}"/>
+    <string id="izSm5f85" text="Doppelt vorhandene Module:{NL}{MODULEIDS}"/>
+    <string id="vCwH9226" text="Doppelt vorhandene Modulnamen:{NL}{MODULENAMES}"/>
     <string id="GtDRbC3m" text="Fehlende Module:{NL}{MODULES}"/>
     <string id="BuMom4Jt" text="Nicht passende Modulversionen:{NL}{MODULEVERSIONS}"/>
 
-    <string id="nYVWoomO" text="{MODULEID}. Benötigt {REQUIREDVERSION}. {ACTUALVERSION} ist installiert"/>
+    <string id="nYVWoomO" text="{MODULEID}: Benötigt {REQUIREDVERSION}. Installiert ist {ACTUALVERSION}"/>
     <string id="sd6M4KRd" text="Ladereihenfolge:{NL}{LOADORDER}"/>
-    <string id="HvvA78sZ" text="Ladereihenfolge-Probleme:{NL}{LOADORDERISSUES}"/>
+    <string id="HvvA78sZ" text="Probleme mit der Ladereihenfolge:{NL}{LOADORDERISSUES}"/>
 
     <string id="B64DbmWp" text="Speicherstand nicht gefunden!"/>
     <string id="epU06HID" text="Der Speicherstand konnte nicht gelesen werden!"/>
 
     <string id="DKRNkst2" text="Datei mit einer Ladereihenfolge öffnen"/>
-    <string id="XSxlKweM" text="Speichere eine Bannerlord Modul-Listen-Datei"/>
+    <string id="XSxlKweM" text="Speichere die Modulliste in einer Datei für Bannerlord"/>
 
     <string id="hgew15HH" text="Importieren fortsetzen?"/>
 
-    <string id="tqjPGPtP" text="LauncherEx erkannte 0Harmony.dll im root bin Verzeichnis des Spiels!{NL}Dies könnte zu Problemen führen, entfernen?"/>
+    <string id="tqjPGPtP" text="LauncherEx erkennt eine 0Harmony.dll im /root/bin Verzeichnis des Spiels!{NL} Dies könnte zu Problemen führen. Entfernen?"/>
 
     <string id="J3Uh6MV4" text="'{ID}' {VERSION} fehlt in der Modulliste"/>
     <string id="3eQSr6wt" text="'{ID}' {VERSION} fehlt"/>
@@ -111,13 +111,21 @@
     <string id="4KFwqKgG" text="Modul '{ID}' ist gleichzeitig als abhängig und auch als inkompatibel markiert"/>
     <string id="9DRB6yXv" text="Modul '{ID}' ist sowohl als LoadBefore als auch als LoadAfter benötigt"/>
     <string id="RC1V9BbP" text="Zirkuläre Abhängigkeiten. '{TARGETID}' und '{SOURCEID}' hängen voneinander ab"/>
-    <string id="s3xbuejE" text="'{SOURCEID}' sollte vor '{TARGETID} ' geladen werden"/>
-    <string id="2ALJB7z2" text="'{SOURCEID}' sollte nach '{TARGETID} ' geladen werden"/>
+    <string id="s3xbuejE" text="'{SOURCEID}' sollte vor '{TARGETID}' geladen werden"/>
+    <string id="2ALJB7z2" text="'{SOURCEID}' sollte nach '{TARGETID}' geladen werden"/>
 
     <!-- Dependency Constructor -->
     <string id="8ldMJPhQ" text=" (optional)"/>
     <string id="f9hYP7mk" text="Abhängig von:"/>
     <string id="eGJ387f7" text="Inkompatibel mit:"/>
     <string id="eW76jyd7" text="Muss laden vor:"/>
+
+
+    <string id="HdnFwgVA" text="Anhand der BUTR-Analyse:{NL}{NL}Kein Update notwendig.{NL} Kompatibilitätswert {SCORE}%{NL}{NL}{CURRENTVERSION} ist einer der besten Werte für Spielversion {GAMEVERSION}"/>
+    <string id="HdnFwgVB" text="Anhand der BUTR-Analyse: {NL}{NL} Kompatibilitätswert {SCORE}%{NL}{NL}. Ein Update auf Version {RECOMMENDEDVERSION} ist empfohlen.{NL} Der Kompatibilitätswert von {RECOMMENDEDSCORE}%{NL}{NL}{RECOMMENDEDVERSION} hat eine bessere Kompatibilität zu Spielversion {GAMEVERSION} als die aktuell verwendete {CURRENTVERSION}!"/>
+   
+    <string id="q5quVWMI" text="Status aller Module umschalten"/>
+    <string id="H5nMY4WU" text="Module aktualisieren"/>
+    <string id="zXWdahH9" text="Update-Empfehlungen erhalten:{NL}Mit diesem Button werden deine installierten Module an die BUTR-Server gesendet, um Kompatibilitätswerte und empfohlene Versionen anzuzeigen.{NL} Diese basieren auf Crash-Reports von ButterLib.{NL}{NL} (Internetverbindung erforderlich)"/>
   </strings>
 </LanguageData>

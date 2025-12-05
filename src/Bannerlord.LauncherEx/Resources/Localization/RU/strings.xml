@@ -119,5 +119,13 @@
     <string id="f9hYP7mk" text="Зависит от:"/>
     <string id="eGJ387f7" text="Несовместимо с:"/>
     <string id="eW76jyd7" text="Должно быть загружено перед:"/>
+
+
+    <string id="HdnFwgVA" text="На основе аналитики BUTR:{NL}{NL}Обновление не требуется.{NL} Оценка совместимости {SCORE}%{NL}{NL}{CURRENTVERSION} это одна из лучших версий для игры {GAMEVERSION}"/>
+    <string id="HdnFwgVB" text="На основе аналитики BUTR:{NL}{NL} Оценка совместимости {SCORE}%{NL}{NL}Предлагая обновить до {RECOMMENDEDVERSION}.{NL} Оценка совместимости {RECOMMENDEDSCORE}%{NL}{NL}{RECOMMENDEDVERSION} обладает лучшей совместимостью с игрой {GAMEVERSION} rather than {CURRENTVERSION}!"/>
+   
+    <string id="q5quVWMI" text="Переключение всех модулей"/>
+    <string id="H5nMY4WU" text="Обновление модулей"/>
+    <string id="zXWdahH9" text="Получать рекомендации по обновлению{NL}При нажатии на эту кнопку список ваших модулей будет отправлен на сервер BUTR для получения оценок совместимости и рекомендуемых версий.{NL}При нажатии на эту кнопку список ваших модулей будет отправлен на сервер BUTR для получения оценок совместимости и рекомендуемых версий.{NL}{NL}(Требуется подключение к Интернету)"/>
   </strings>
 </LanguageData>
