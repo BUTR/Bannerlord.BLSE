@@ -12,7 +12,7 @@ using TaleWorlds.SaveSystem.Load;
 
 namespace Bannerlord.BLSE.Features.ContinueSaveFile.Patches;
 
-internal static class SandBoxSubModulePatch
+internal static class SandBoxViewSubModulePatch
 {
     private delegate void TryLoadSaveDelegate(SaveGameFileInfo saveInfo, Action<LoadResult> onStartGame, Action? onCancel = null);
 
@@ -25,8 +25,8 @@ internal static class SandBoxSubModulePatch
         _harmony = harmony;
 
         return harmony.TryPatch(
-                   AccessTools2.DeclaredMethod("SandBox.SandBoxSubModule:OnInitialState"),
-                   prefix: AccessTools2.DeclaredMethod(typeof(SandBoxSubModulePatch), nameof(OnInitialStatePrefix)));
+                   AccessTools2.DeclaredMethod("SandBox.View.SandBoxViewSubModule:OnInitialState"),
+                   prefix: AccessTools2.DeclaredMethod(typeof(SandBoxViewSubModulePatch), nameof(OnInitialStatePrefix)));
     }
 
     private static bool OnInitialStatePrefix(MBSubModuleBase __instance)
@@ -51,7 +51,7 @@ internal static class SandBoxSubModulePatch
             FailedToLoad($"Failed to load Save!\nFailed to find save '{saveFileName}'!");
             return true;
         }
-        if (AccessTools2.TypeByName("SandBox.SandBoxSubModule") is not { } sandBoxSubModuleType)
+        if (AccessTools2.TypeByName("SandBox.View.SandBoxViewSubModule") is not { } sandBoxSubModuleType)
         {
             FailedToLoad($"Failed to load Save!\nFailed to find 'SandBox' module!");
             return true;
@@ -66,8 +66,8 @@ internal static class SandBoxSubModulePatch
             tryLoadSave(saveFile, startGame);
 
         _harmony?.Unpatch(
-            AccessTools2.DeclaredMethod("SandBox.SandBoxSubModule:OnInitialState"),
-            AccessTools2.DeclaredMethod(typeof(SandBoxSubModulePatch), nameof(OnInitialStatePrefix)));
+            AccessTools2.DeclaredMethod("SandBox.View.SandBoxViewSubModule:OnInitialState"),
+            AccessTools2.DeclaredMethod(typeof(SandBoxViewSubModulePatch), nameof(OnInitialStatePrefix)));
 
         return false;
     }

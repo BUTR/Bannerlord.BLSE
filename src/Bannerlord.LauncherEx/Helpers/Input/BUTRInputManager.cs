@@ -99,7 +99,7 @@ internal class BUTRInputManager : IInputManager, IDisposable
         public InputKey GetControllerClickKey() => InputManager.GetControllerClickKey();
 #endif
 
-#if v110 || v120 || v130
+#if v110 || v120 || v134
     public void SetRumbleEffect(float[] lowFrequencyLevels, float[] lowFrequencyDurations, int numLowFrequencyElements, float[] highFrequencyLevels, float[] highFrequencyDurations, int numHighFrequencyElements) =>
         InputManager.SetRumbleEffect(lowFrequencyLevels, lowFrequencyDurations, numLowFrequencyElements, highFrequencyLevels, highFrequencyDurations, numHighFrequencyElements);
     public void SetTriggerFeedback(byte leftTriggerPosition, byte leftTriggerStrength, byte rightTriggerPosition, byte rightTriggerStrength) =>
@@ -111,7 +111,7 @@ internal class BUTRInputManager : IInputManager, IDisposable
     public void SetLightbarColor(float red, float green, float blue) => InputManager.SetLightbarColor(red, green, blue);
 #endif
 
-#if v120 || v130
+#if v120 || v134
     public TaleWorlds.InputSystem.Input.ControllerTypes GetControllerType() => InputManager.GetControllerType();
 
     public float GetGyroX() => InputManager.GetGyroX();
@@ -123,7 +123,7 @@ internal class BUTRInputManager : IInputManager, IDisposable
     public bool IsAnyTouchActive() => InputManager.IsAnyTouchActive();
 #endif
     
-#if v130
+#if v134
     public float GetNormalizedMouseMoveX() => InputManager.GetNormalizedMouseMoveX();
     public float GetNormalizedMouseMoveY() => InputManager.GetNormalizedMouseMoveY();
 #endif

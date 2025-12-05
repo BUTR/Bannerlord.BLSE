@@ -25,7 +25,8 @@ internal static class ModulePatch
         if (!res1) return false;
 
         var res2 = harmony.TryPatch(
-            AccessTools2.Method(typeof(Module), "InitializeSubModules"),
+            AccessTools2.Method(typeof(Module), "InitializeSubModules") ??
+            AccessTools2.Method(typeof(Module), "InitializeSubModuleBases"),
             prefix: AccessTools2.Method(typeof(ModulePatch), nameof(InitializeSubModulesPrefix)));
         if (!res2) return false;
 
@@ -38,7 +39,8 @@ internal static class ModulePatch
         OnInitializeSubModulesPrefix?.Invoke();
 
         _harmony?.Unpatch(
-            AccessTools2.Method(typeof(Module), "InitializeSubModules"),
+            AccessTools2.Method(typeof(Module), "InitializeSubModules") ??
+            AccessTools2.Method(typeof(Module), "InitializeSubModuleBases"),
             AccessTools2.Method(typeof(ModulePatch), nameof(InitializeSubModulesPrefix)));
     }
 

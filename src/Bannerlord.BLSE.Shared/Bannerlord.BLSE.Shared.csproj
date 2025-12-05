@@ -65,10 +65,10 @@
   <!-- Embedding multiple versions of LauncherEx -->
   <ItemGroup Condition="$(Configuration) == 'Release'">
     <!-- From highest to lowest. Don't ask why. -->
-    <GameAPIVersion Include="v1.3.0-v1.3.0" GameVersion="1.3.0" Version="v1.3.0" Flat="130" Visible="false" />
-    <GameAPIVersion Include="v1.2.0-v1.2.0" GameVersion="1.2.0" Version="v1.2.0" Flat="120" Visible="false" />
-    <GameAPIVersion Include="v1.1.0-v1.1.4" GameVersion="1.1.0" Version="v1.1.0" Flat="110" Visible="false" />
-    <GameAPIVersion Include="v1.0.0-v1.0.3" GameVersion="1.0.0" Version="v1.0.0" Flat="100" Visible="false" />
+    <GameAPIVersion Include="v1.3.0-v1.3.8"  GameVersion="1.3.4" Version="v1.3.4" Flat="130" Visible="false" />
+    <GameAPIVersion Include="v1.2.0-v1.2.12" GameVersion="1.2.0" Version="v1.2.0" Flat="120" Visible="false" />
+    <GameAPIVersion Include="v1.1.0-v1.1.4"  GameVersion="1.1.0" Version="v1.1.0" Flat="110" Visible="false" />
+    <GameAPIVersion Include="v1.0.0-v1.0.3"  GameVersion="1.0.0" Version="v1.0.0" Flat="100" Visible="false" />
     <EmbeddedResource Include="@(GameAPIVersion->'..\Bannerlord.LauncherEx\bin\$(Configuration)_%(Flat)\netstandard2.0\Bannerlord.LauncherEx.dll')" Visible="false">
       <Link>Bannerlord.LauncherEx_%(Version).dll</Link>
     </EmbeddedResource>

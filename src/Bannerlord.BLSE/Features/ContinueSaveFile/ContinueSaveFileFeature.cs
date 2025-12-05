@@ -28,10 +28,18 @@ public static class ContinueSaveFileFeature
     {
         if (_harmony is null) return;
 
+        // Potentially we need o check the game version here instead
         if (args.LoadedAssembly.GetName().Name == "SandBox")
         {
             SandBoxSubModulePatch.GetSaveGameArg = GetSaveFile;
             SandBoxSubModulePatch.Enable(_harmony);
+            InformationManagerPatch.Enable(_harmony);
+        }
+        
+        if (args.LoadedAssembly.GetName().Name == "SandBox.View")
+        {
+            SandBoxViewSubModulePatch.GetSaveGameArg = GetSaveFile;
+            SandBoxViewSubModulePatch.Enable(_harmony);
             InformationManagerPatch.Enable(_harmony);
         }
     }
