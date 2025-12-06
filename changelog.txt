@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.5.11
+Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x
+* Fixed crash related to Chinese, Japanese and Korean localizations\
+* Updated Tpac asset reading based on new fork https://github.com/hunharibo/TpacTool
+---------------------------------------------------------------------------------------------------
 Version: 1.5.10
 Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x
 * Fixed an issue with Standalone

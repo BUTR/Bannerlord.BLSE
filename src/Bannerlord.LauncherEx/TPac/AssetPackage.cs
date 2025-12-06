@@ -71,8 +71,20 @@ internal class AssetPackage
             assetItem.Version = assetVersion;
             assetItem.Name = stream.ReadSizedString();
 
+            // Updated code taken from https://github.com/hunharibo/TpacTool
             var metadataSize = stream.ReadUInt64();
-            assetItem.ReadMetadata(stream, (int) metadataSize);
+            var metadataStartPos = stream.BaseStream.Position;
+
+            assetItem.ReadMetadata(stream, (int)metadataSize);
+
+            var expectedPos = metadataStartPos + (long)metadataSize;
+            var actualPos = stream.BaseStream.Position;
+            if (actualPos != expectedPos)
+            {
+                // Force alignment if metadata reading didn't consume exact size
+                stream.BaseStream.Seek(expectedPos, SeekOrigin.Begin);
+            }
+
             var unknownMetadataChecknum = stream.ReadInt64();
 
             var dataSegmentNum = stream.ReadInt32();

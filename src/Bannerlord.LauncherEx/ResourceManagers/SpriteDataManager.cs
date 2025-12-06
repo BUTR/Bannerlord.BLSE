@@ -188,13 +188,39 @@ internal static class SpriteDataManager
         }
     }
 #elif v134
+    private sealed class SpriteGenericFromTexture : SpriteGeneric
+    {
+        private delegate void SetIsLoadedDelegate(SpriteCategory instance, bool value);
+        private static readonly SetIsLoadedDelegate? SetIsLoaded =
+            AccessTools2.GetPropertySetterDelegate<SetIsLoadedDelegate>(typeof(SpriteCategory), "IsLoaded");
+
+        private static SpritePart GetSpritePart(string name, Texture texture)
+        {
+            var data = new SpriteData(name);
+            var category = new SpriteCategory(name, 1)
+            {
+                SpriteSheets =
+                {
+                    texture,
+                },
+                SpriteSheetCount = 1,
+            };
+            SetIsLoaded?.Invoke(category, true);
+
+            return new SpritePart(name, category, texture.Width, texture.Height)
+            {
+                SheetID = 1,
+            };
+        }
+        public SpriteGenericFromTexture(string name, Texture texture) : base(name, GetSpritePart(name, texture), SpriteNinePatchParameters.Empty) { }
+    }
     internal class SpriteFromTexture : Sprite
     {
         private readonly Texture _texture;
         public override Texture Texture => _texture;
 
-        public SpriteFromTexture(Texture texture, int width, int height)
-            : base("Sprite", width, height, SpriteNinePatchParameters.Empty)
+        public SpriteFromTexture(string name, Texture texture, int width, int height)
+            : base(name, width, height, SpriteNinePatchParameters.Empty)
         {
             _texture = texture;
         }
@@ -217,9 +243,13 @@ internal static class SpriteDataManager
             ? new SpriteFromTexture(name, new Texture(gc.GetTexture(name)))
             : null;
 #elif v134
-        return GraphicsContextManager.Instance.TryGetTarget(out var gc) && gc is not null
-            ? new Texture(gc.GetTexture(name)) is { } tex ? new SpriteFromTexture(tex, tex.Width, tex.Height) : null!
-            : null;
+        if (GraphicsContextManager.Instance.TryGetTarget(out var gc) && gc is not null)
+            if (new Texture(gc.GetTexture(name)) is { } tex)
+                return new SpriteFromTexture(name, tex, tex.Width, tex.Height);
+            else
+                return (SpriteFromTexture) null!;
+        else
+            return (SpriteFromTexture?) null;
 #else
 #error DEFINE
 #endif
@@ -232,9 +262,13 @@ internal static class SpriteDataManager
             ? new SpriteGenericFromTexture(name, new Texture(gc.GetTexture(name)))
             : null;
 #elif v134
-        return GraphicsContextManager.Instance.TryGetTarget(out var gc) && gc is not null
-            ? new Texture(gc.GetTexture(name)) is { } tex ? new SpriteFromTexture(tex, tex.Width, tex.Height) : null!
-            : null;
+        if (GraphicsContextManager.Instance.TryGetTarget(out var gc) && gc is not null)
+            if (new Texture(gc.GetTexture(name)) is { } tex)
+                return new SpriteGenericFromTexture(name, new Texture(gc.GetTexture(name)));
+            else
+                return (SpriteFromTexture) null!;
+        else
+            return (SpriteFromTexture?) null;
 #else
 #error DEFINE
 #endif

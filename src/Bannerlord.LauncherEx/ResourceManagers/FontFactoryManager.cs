@@ -35,7 +35,8 @@ internal static class FontFactoryManager
 
     private delegate void SetSpriteNamesDelegate(SpriteData instance, Dictionary<string, Sprite> value);
     private static readonly SetSpriteNamesDelegate? SetSpriteNames =
-        AccessTools2.GetPropertySetterDelegate<SetSpriteNamesDelegate>(typeof(SpriteData), "SpriteNames");
+        AccessTools2.GetPropertySetterDelegate<SetSpriteNamesDelegate>(typeof(SpriteData), "SpriteNames") ??
+        AccessTools2.GetPropertySetterDelegate<SetSpriteNamesDelegate>(typeof(SpriteData), "Sprites");
 
     private delegate void AddFontDefinitionDelegate(FontFactory instance, string fontPath, string fontName, SpriteData spriteData);
     private static readonly AddFontDefinitionDelegate? AddFontDefinition =
@@ -77,7 +78,6 @@ internal static class FontFactoryManager
                 addFont(__instance, Path.Combine(BasePath.Name, "GUI", "GauntletUI", "Fonts", "NanumGothicKR") + "/", "NanumGothicKR", new SpriteData("NanumGothicKR").WithData("NanumGothicKR"));
                 break;
         }
-
     }
     private static bool GetMappedFontForLocalizationPrefix(ref FontFactory __instance, ref Font __result)
     {
