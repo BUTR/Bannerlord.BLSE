@@ -1,5 +1,6 @@
 ﻿using Bannerlord.BUTR.Shared.Extensions;
 using Bannerlord.LauncherEx.Adapters;
+using Bannerlord.LauncherEx.Extensions;
 using Bannerlord.LauncherManager;
 using Bannerlord.LauncherManager.External;
 using Bannerlord.LauncherManager.External.UI;
@@ -98,7 +99,7 @@ internal partial class BUTRLauncherManagerHandler : LauncherManagerHandler
         var state = _getState?.Invoke() ?? LauncherState.Empty;
 
         var userGameTypeData = state.IsSingleplayer ? _userDataManager.UserData.SingleplayerData : _userDataManager.UserData.MultiplayerData;
-        return new LoadOrder(userGameTypeData.ModDatas.Select((x, i) => new LoadOrderEntry(x.Id, string.Empty, x.IsSelected, false, i)));
+        return new LoadOrder(userGameTypeData.ModDatas.DistinctBy(x => x.Id).Select((x, i) => new LoadOrderEntry(x.Id, string.Empty, x.IsSelected, false, i)));
     }
 
     private void SaveTWLoadOrder(LoadOrder loadOrder)

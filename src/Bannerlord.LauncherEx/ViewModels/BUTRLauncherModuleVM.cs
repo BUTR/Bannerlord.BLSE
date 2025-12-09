@@ -26,7 +26,7 @@ internal sealed class BUTRLauncherModuleVM : BUTRViewModel, IModuleViewModel
     public int Index { get; set; }
 
     [BUTRDataSourceProperty]
-    public string Name => ModuleInfoExtended.Name;
+    public string Name => ProcessModuleName(ModuleInfoExtended.Name);
 
     [BUTRDataSourceProperty]
     public string VersionText => ModuleInfoExtended.Version.ToString();
@@ -236,4 +236,11 @@ internal sealed class BUTRLauncherModuleVM : BUTRViewModel, IModuleViewModel
 
 
     public override string ToString() => $"{ModuleInfoExtended}, IsSelected: {IsSelected}, IsValid: {IsValid}";
+    
+    // Really, TaleWorlds?
+    private static string ProcessModuleName(string originalModuleName) => originalModuleName switch
+    {
+        "NavalDLC" => "War Sails (NavalDLC)",
+        _ => originalModuleName,
+    };
 }
