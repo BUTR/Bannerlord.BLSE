@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.5.12
+Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x
+* NavalDLC should be named War Sails
+* Fixed bugs reported by Kriegtooth and Splashrandom
+---------------------------------------------------------------------------------------------------
 Version: 1.5.11
 Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x
 * Fixed crash related to Chinese, Japanese and Korean localizations\
