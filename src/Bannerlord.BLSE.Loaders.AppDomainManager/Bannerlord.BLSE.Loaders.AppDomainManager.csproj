@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <AssemblyName>Bannerlord.BLSE.AppDomainManager</AssemblyName>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Bannerlord.BLSE.Shared\Bannerlord.BLSE.Shared.csproj" Private="false" />
+  </ItemGroup>
+
+  <Target Name="PublishRoslynExecutableProjects" AfterTargets="Build">
+    <CallTarget Targets="Publish" />
+  </Target>
+  <Target Name="PostBuild" AfterTargets="Publish" Condition="Exists($(GameFolder))">
+    <ItemGroup>
+      <Files Include="$(MSBuildProjectDirectory)\$(OutputPath)\publish\$(AssemblyName).dll" />
+      <Files Include="$(MSBuildProjectDirectory)\_Root\bin\Win64_Shipping_Client\**\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(Files)" DestinationFolder="$(GameFolder)\bin\Win64_Shipping_Client" />
+  </Target>
+
+</Project>

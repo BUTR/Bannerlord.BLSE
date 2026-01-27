@@ -39,6 +39,7 @@ public static class Manager
     public static void Enable()
     {
         ProgramPatch.Enable(_launcherHarmony);
+        ParsePatch.Enable(_launcherHarmony);
         UserDataManagerPatch.Enable(_launcherHarmony);
         LauncherVMPatch.Enable(_launcherHarmony);
         LauncherModsVMPatch.Enable(_launcherHarmony);
