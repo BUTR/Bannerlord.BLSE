@@ -5,11 +5,6 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <AssemblyName>Bannerlord.BLSE.AppDomainManager</AssemblyName>
-    
-
-    <BuildShared>true</BuildShared>
-    <GameConfiguration Condition="$(GameConfiguration) == '' AND Exists('$(GameFolder)\bin\Win64_Shipping_Client')">Win64_Shipping_Client</GameConfiguration>
-    <GameConfiguration Condition="$(GameConfiguration) == '' AND Exists('$(GameFolder)\bin\Gaming.Desktop.x64_Shipping_Client')">Gaming.Desktop.x64_Shipping_Client</GameConfiguration>
   </PropertyGroup>
   
   <ItemGroup>
@@ -22,10 +17,9 @@
   <Target Name="PostBuild" AfterTargets="Publish" Condition="Exists($(GameFolder))">
     <ItemGroup>
       <Files Include="$(MSBuildProjectDirectory)\$(OutputPath)\publish\$(AssemblyName).dll" />
-      <FilesWin64 Include="$(MSBuildProjectDirectory)\_Root\bin\Win64_Shipping_Client\**\*" />
+      <Files Include="$(MSBuildProjectDirectory)\_Root\bin\Win64_Shipping_Client\**\*" />
     </ItemGroup>
-    <Copy Condition="$(GameConfiguration) == 'Win64_Shipping_Client'" SourceFiles="@(FilesWin64)" DestinationFolder="$(GameFolder)\bin\$(GameConfiguration)" />
-    <Copy SourceFiles="@(Files)" DestinationFolder="$(GameFolder)\bin\$(GameConfiguration)" />
+    <Copy SourceFiles="@(Files)" DestinationFolder="$(GameFolder)\bin\Win64_Shipping_Client" />
   </Target>
 
 </Project>
