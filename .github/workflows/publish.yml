@@ -7,6 +7,7 @@ on:
       - 'src/Bannerlord.LauncherEx/**.*'
       - 'src/Bannerlord.BLSE/**.*'
       - 'src/Bannerlord.BLSE.Shared/**.*'
+      - 'src/Bannerlord.BLSE.Loaders.AppDomainManager/**.*'
       - 'src/Bannerlord.BLSE.Loaders.Standalone/**.*'
       - 'src/Bannerlord.BLSE.Loaders.Launcher/**.*'
       - 'src/Bannerlord.BLSE.Loaders.LauncherEx/**.*'
@@ -58,6 +59,14 @@ jobs:
         uses: butr/actions-common-setup@v2
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Bannerlord.BLSE.Loaders.AppDomainManager (Win64_Shipping_Client)
+        run: |
+          mkdir bannerlord;
+          dotnet build src/Bannerlord.BLSE.Loaders.AppDomainManager/Bannerlord.BLSE.Loaders.AppDomainManager.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
+        env:
+          BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL: ${{ secrets.BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL }}
+        shell: pwsh
 
       - name: ${{matrix.project}} (${{matrix.configuration}})
         run: |
