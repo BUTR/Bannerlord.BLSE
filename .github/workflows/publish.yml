@@ -59,6 +59,9 @@ jobs:
           ]
         configuration:
           ["Win64_Shipping_Client", "Gaming.Desktop.x64_Shipping_Client"]
+        include:
+          - project: "Bannerlord.BLSE.Loaders.AppDomainManager"
+            configuration: "Win64_Shipping_Client"
     steps:
       - uses: actions/checkout@v5
 
@@ -74,10 +77,6 @@ jobs:
         run: dotnet build src/${{matrix.project}}/${{matrix.project}}.csproj --configuration Release -p:GameConfiguration="${{matrix.configuration}}" -p:GameFolder="$PWD/bannerlord" -p:BuildShared="false" /nowarn:MSB4011;
         env:
           BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL: ${{ secrets.BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL }}
-        shell: pwsh
-
-      - name: Bannerlord.BLSE.Loaders.AppDomainManager (Win64_Shipping_Client)
-        run: dotnet build src/Bannerlord.BLSE.Loaders.AppDomainManager/Bannerlord.BLSE.Loaders.AppDomainManager.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
         shell: pwsh
 
       - name: Upload Bannerlord folder
