@@ -3,14 +3,14 @@ name: Publish
 on:
   push:
     paths:
-      - '.github/workflows/publish.yml'
-      - 'src/Bannerlord.LauncherEx/**.*'
-      - 'src/Bannerlord.BLSE/**.*'
-      - 'src/Bannerlord.BLSE.Shared/**.*'
-      - 'src/Bannerlord.BLSE.Loaders.AppDomainManager/**.*'
-      - 'src/Bannerlord.BLSE.Loaders.Standalone/**.*'
-      - 'src/Bannerlord.BLSE.Loaders.Launcher/**.*'
-      - 'src/Bannerlord.BLSE.Loaders.LauncherEx/**.*'
+      - ".github/workflows/publish.yml"
+      - "src/Bannerlord.LauncherEx/**.*"
+      - "src/Bannerlord.BLSE/**.*"
+      - "src/Bannerlord.BLSE.Shared/**.*"
+      - "src/Bannerlord.BLSE.Loaders.AppDomainManager/**.*"
+      - "src/Bannerlord.BLSE.Loaders.Standalone/**.*"
+      - "src/Bannerlord.BLSE.Loaders.Launcher/**.*"
+      - "src/Bannerlord.BLSE.Loaders.LauncherEx/**.*"
   workflow_dispatch:
 
 env:
@@ -44,14 +44,24 @@ jobs:
           echo "$(bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt")" >> $GITHUB_OUTPUT
           echo "$EOF" >> $GITHUB_OUTPUT
         shell: bash
-  
+
   build:
     name: Build ${{matrix.project}} (${{matrix.configuration}})
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: [ 'Bannerlord.BLSE.Loaders.Standalone', 'Bannerlord.BLSE.Loaders.Launcher', 'Bannerlord.BLSE.Loaders.LauncherEx', 'Bannerlord.BLSE.Shared' ]
-        configuration: [ 'Win64_Shipping_Client', 'Gaming.Desktop.x64_Shipping_Client' ]
+        project:
+          [
+            "Bannerlord.BLSE.Loaders.Standalone",
+            "Bannerlord.BLSE.Loaders.Launcher",
+            "Bannerlord.BLSE.Loaders.LauncherEx",
+            "Bannerlord.BLSE.Shared",
+          ]
+        configuration:
+          ["Win64_Shipping_Client", "Gaming.Desktop.x64_Shipping_Client"]
+        include:
+          - project: "Bannerlord.BLSE.Loaders.AppDomainManager"
+            configuration: "Win64_Shipping_Client"
     steps:
       - uses: actions/checkout@v5
 
@@ -60,18 +70,11 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Bannerlord.BLSE.Loaders.AppDomainManager (Win64_Shipping_Client)
-        run: |
-          mkdir bannerlord;
-          dotnet build src/Bannerlord.BLSE.Loaders.AppDomainManager/Bannerlord.BLSE.Loaders.AppDomainManager.csproj --configuration Release -p:GameFolder="$PWD/bannerlord" /nowarn:MSB4011;
-        env:
-          BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL: ${{ secrets.BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL }}
+      - run: mkdir bannerlord;
         shell: pwsh
 
       - name: ${{matrix.project}} (${{matrix.configuration}})
-        run: |
-          mkdir bannerlord;
-          dotnet build src/${{matrix.project}}/${{matrix.project}}.csproj --configuration Release -p:GameConfiguration="${{matrix.configuration}}" -p:GameFolder="$PWD/bannerlord" -p:BuildShared="false" /nowarn:MSB4011;
+        run: dotnet build src/${{matrix.project}}/${{matrix.project}}.csproj --configuration Release -p:GameConfiguration="${{matrix.configuration}}" -p:GameFolder="$PWD/bannerlord" -p:BuildShared="false" /nowarn:MSB4011;
         env:
           BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL: ${{ secrets.BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL }}
         shell: pwsh
@@ -129,7 +132,7 @@ jobs:
     with:
       nexusmods_game_id: mountandblade2bannerlord
       nexusmods_mod_id: 1
-      mod_filename: 'Bannerlord Software Extender (BLSE)'
+      mod_filename: "Bannerlord Software Extender (BLSE)"
       mod_version: ${{ needs.get-changelog.outputs.mod_version }}
       mod_description: ${{ needs.get-changelog.outputs.mod_description }}
       artifact_name: bannerlord
