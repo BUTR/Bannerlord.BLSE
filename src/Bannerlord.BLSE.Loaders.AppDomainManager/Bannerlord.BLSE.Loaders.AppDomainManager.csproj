@@ -8,7 +8,9 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Bannerlord.BLSE.Shared\Bannerlord.BLSE.Shared.csproj" Private="false" />
+    <ProjectReference Include="..\Bannerlord.BLSE.Shared\Bannerlord.BLSE.Shared.csproj" Private="false" IncludeAssets="compile" PrivateAssets="all" />
+    <ProjectReference Include="..\Bannerlord.BLSE\Bannerlord.BLSE.csproj" Private="false" IncludeAssets="none" PrivateAssets="all" />
+    <ProjectReference Include="..\Bannerlord.LauncherEx\Bannerlord.LauncherEx.csproj" Private="false" IncludeAssets="none" PrivateAssets="all" />
   </ItemGroup>
 
   <Target Name="PublishRoslynExecutableProjects" AfterTargets="Build">
