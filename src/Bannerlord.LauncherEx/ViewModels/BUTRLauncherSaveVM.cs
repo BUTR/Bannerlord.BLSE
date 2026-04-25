@@ -110,6 +110,7 @@ internal sealed class BUTRLauncherSaveVM : BUTRViewModel
         }).ToArray();
 
         var existingModules = modules.Select(x => _getModuleByName(x.Name)).OfType<ModuleInfoExtended>().ToArray();
+        
         var nameDuplicates = existingModules.Select(x => x.Name).GroupBy(i => i).Where(g => g.Count() > 1).Select(g => g.Key).ToList();
         if (nameDuplicates.Count > 0)
         {
