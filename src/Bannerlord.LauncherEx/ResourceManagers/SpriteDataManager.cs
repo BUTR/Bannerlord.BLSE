@@ -187,7 +187,7 @@ internal static class SpriteDataManager
             outUVs[uvsStartIndex + 7] = minV;
         }
     }
-#elif v134
+#elif v134 || v140
     private sealed class SpriteGenericFromTexture : SpriteGeneric
     {
         private delegate void SetIsLoadedDelegate(SpriteCategory instance, bool value);
@@ -242,7 +242,7 @@ internal static class SpriteDataManager
         return GraphicsContextManager.Instance.TryGetTarget(out var gc) && gc is not null
             ? new SpriteFromTexture(name, new Texture(gc.GetTexture(name)))
             : null;
-#elif v134
+#elif v134 || v140
         if (GraphicsContextManager.Instance.TryGetTarget(out var gc) && gc is not null)
             if (new Texture(gc.GetTexture(name)) is { } tex)
                 return new SpriteFromTexture(name, tex, tex.Width, tex.Height);
@@ -261,7 +261,7 @@ internal static class SpriteDataManager
         return GraphicsContextManager.Instance.TryGetTarget(out var gc) && gc is not null
             ? new SpriteGenericFromTexture(name, new Texture(gc.GetTexture(name)))
             : null;
-#elif v134
+#elif v134 || v140
         if (GraphicsContextManager.Instance.TryGetTarget(out var gc) && gc is not null)
             if (new Texture(gc.GetTexture(name)) is { } tex)
                 return new SpriteGenericFromTexture(name, new Texture(gc.GetTexture(name)));

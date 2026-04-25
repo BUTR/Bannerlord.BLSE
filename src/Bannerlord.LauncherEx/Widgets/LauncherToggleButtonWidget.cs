@@ -150,7 +150,11 @@ internal sealed class LauncherToggleButtonWidget : ImageWidget
         }
     }
 
+#if v140
+    protected override void OnMouseReleased(bool isFromInput)
+#else
     protected override void OnMouseReleased()
+#endif
     {
         if (_clickState != ButtonClickState.HandlingClick) return;
 
@@ -189,7 +193,11 @@ internal sealed class LauncherToggleButtonWidget : ImageWidget
         }
     }
 
+#if v140
+    protected override void OnMouseAlternateReleased(bool isFromInput)
+#else
     protected override void OnMouseAlternateReleased()
+#endif
     {
         if (_clickState != ButtonClickState.HandlingAlternateClick) return;
 
