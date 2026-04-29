@@ -55,5 +55,37 @@ if (Files.Length > 0)
       </Code>
     </Task>
   </UsingTask>
-  
+
+  <UsingTask TaskName="VerifyGZip" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <Files ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.IO.Compression" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+foreach (ITaskItem item in Files)
+{
+    string path = item.GetMetadata("FullPath");
+    try
+    {
+        using (var fs = File.OpenRead(path))
+        using (var gz = new GZipStream(fs, CompressionMode.Decompress))
+        using (var ms = new MemoryStream())
+        {
+            gz.CopyTo(ms);
+            Log.LogMessage(MessageImportance.Normal, $"VerifyGZip OK: {path} ({ms.Length:N0} bytes decompressed)");
+        }
+    }
+    catch (Exception ex)
+    {
+        Log.LogError($"VerifyGZip FAILED for {path}: {ex.GetType().Name}: {ex.Message}");
+    }
+}
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
 </Project>
