@@ -8,6 +8,8 @@ using Bannerlord.LauncherManager.Utils;
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
+using Nito.AsyncEx;
+
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -431,12 +433,9 @@ internal sealed class LauncherVMMixin : ViewModelMixin<LauncherVMMixin, Launcher
         {
             var thread = new Thread(() =>
             {
-                _currentModuleListHandler.Import(result =>
-                {
-                    if (!result) return;
-                    UpdateAndSaveUserModsDataMethod(ViewModel, false);
-                    HintManager.ShowHint(new BUTRTextObject("{=eohqbvHU}Successfully imported list!"));
-                });
+                if (!AsyncContext.Run(() => _currentModuleListHandler.ImportAsync())) return;
+                UpdateAndSaveUserModsDataMethod(ViewModel, false);
+                HintManager.ShowHint(new BUTRTextObject("{=eohqbvHU}Successfully imported list!"));
             });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
@@ -446,12 +445,9 @@ internal sealed class LauncherVMMixin : ViewModelMixin<LauncherVMMixin, Launcher
         {
             var thread = new Thread(() =>
             {
-                _currentModuleListHandler.ImportSaveFile(saveName, result =>
-                {
-                    if (!result) return;
-                    UpdateAndSaveUserModsDataMethod(ViewModel, false);
-                    HintManager.ShowHint(new BUTRTextObject("{=eohqbvHU}Successfully imported list!"));
-                });
+                if (!AsyncContext.Run(() => _currentModuleListHandler.ImportSaveFileAsync(saveName))) return;
+                UpdateAndSaveUserModsDataMethod(ViewModel, false);
+                HintManager.ShowHint(new BUTRTextObject("{=eohqbvHU}Successfully imported list!"));
             });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
@@ -470,7 +466,7 @@ internal sealed class LauncherVMMixin : ViewModelMixin<LauncherVMMixin, Launcher
         {
             var thread = new Thread(() =>
             {
-                _currentModuleListHandler.Export();
+                AsyncContext.Run(() => _currentModuleListHandler.ExportAsync());
             });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
@@ -480,7 +476,7 @@ internal sealed class LauncherVMMixin : ViewModelMixin<LauncherVMMixin, Launcher
         {
             var thread = new Thread(() =>
             {
-                _currentModuleListHandler.ExportSaveFile(saveName);
+                AsyncContext.Run(() => _currentModuleListHandler.ExportSaveFileAsync(saveName));
             });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
@@ -495,7 +491,7 @@ internal sealed class LauncherVMMixin : ViewModelMixin<LauncherVMMixin, Launcher
 
         if (IsSavesDataSelected && SavesData?.Selected is { } saveVM)
         {
-            _launcherManagerHandler.SetGameParameterSaveFile(saveVM.Name);
+            AsyncContext.Run(() => _launcherManagerHandler.SetGameParameterSaveFileAsync(saveVM.Name));
             if (saveVM.HasWarning || saveVM.HasError)
             {
                 var description = new StringBuilder();
@@ -529,7 +525,7 @@ internal sealed class LauncherVMMixin : ViewModelMixin<LauncherVMMixin, Launcher
 
         if (mode == 1)
         {
-            _launcherManagerHandler.SetGameParameterContinueLastSaveFile(true);
+            AsyncContext.Run(() => _launcherManagerHandler.SetGameParameterContinueLastSaveFileAsync(true));
 
             ExecuteStartGame(ViewModel, 1);
             return;

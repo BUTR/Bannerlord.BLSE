@@ -1,4 +1,4 @@
-﻿using Bannerlord.LauncherEx.Helpers;
+using Bannerlord.LauncherEx.Helpers;
 using Bannerlord.LauncherEx.Helpers.Input;
 using Bannerlord.LauncherManager.External.UI;
 using Bannerlord.LauncherManager.Localization;
@@ -17,12 +17,12 @@ internal sealed class NotificationProviderImpl : INotificationProvider
 
     private readonly ConcurrentDictionary<string, object?> _ids = new();
 
-    public void SendNotification(string id, NotificationType type, string message, uint displayMs)
+    public Task SendNotificationAsync(string id, NotificationType type, string message, uint displayMs)
     {
         if (string.IsNullOrEmpty(id)) id = Guid.NewGuid().ToString();
 
         // Prevents message spam
-        if (_ids.TryAdd(id, null)) return;
+        if (_ids.TryAdd(id, null)) return Task.CompletedTask;
         using var cts = new CancellationTokenSource();
         _ = Task.Delay(TimeSpan.FromMilliseconds(displayMs), cts.Token).ContinueWith(x => _ids.TryRemove(id, out _), CancellationToken.None);
 
@@ -47,5 +47,6 @@ internal sealed class NotificationProviderImpl : INotificationProvider
                 cts.Cancel();
                 break;
         }
+        return Task.CompletedTask;
     }
 }

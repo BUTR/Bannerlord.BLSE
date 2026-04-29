@@ -1,7 +1,9 @@
-﻿using Bannerlord.LauncherManager.External;
+using Bannerlord.LauncherManager.External;
 
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Bannerlord.LauncherEx.Adapters;
 
@@ -9,15 +11,15 @@ internal sealed class FileSystemProviderImpl : IFileSystemProvider
 {
     public static readonly FileSystemProviderImpl Instance = new();
 
-    public byte[]? ReadFileContent(string filePath, int offset, int length)
+    public Task<byte[]?> ReadFileContentAsync(string filePath, int offset, int length)
     {
-        if (!File.Exists(filePath)) return null;
+        if (!File.Exists(filePath)) return Task.FromResult<byte[]?>(null);
 
         try
         {
             if (offset == 0 && length == -1)
             {
-                return File.ReadAllBytes(filePath);
+                return Task.FromResult<byte[]?>(File.ReadAllBytes(filePath));
             }
             else if (offset >= 0 && length > 0)
             {
@@ -25,21 +27,21 @@ internal sealed class FileSystemProviderImpl : IFileSystemProvider
                 var data = new byte[length];
                 fs.Seek(offset, SeekOrigin.Begin);
                 _ = fs.Read(data, 0, length);
-                return data;
+                return Task.FromResult<byte[]?>(data);
             }
             else
             {
-                return null;
+                return Task.FromResult<byte[]?>(null);
             }
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            //_logger.LogError(ex, "Bannerlord IO Read Operation failed! {Path}", filePath);
-            return null;
+            Trace.WriteLine($"Bannerlord.LauncherEx: Read failed for '{filePath}': {e}");
+            return Task.FromResult<byte[]?>(null);
         }
     }
 
-    public void WriteFileContent(string filePath, byte[]? data)
+    public Task WriteFileContentAsync(string filePath, byte[]? data)
     {
         try
         {
@@ -48,13 +50,19 @@ internal sealed class FileSystemProviderImpl : IFileSystemProvider
             else
                 File.WriteAllBytes(filePath, data);
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            //_logger.LogError(ex, "Bannerlord IO Write Operation failed! {Path}", filePath);
+            // Logged but not rethrown: callers like IssuesChecker don't wrap WriteFileContentAsync
+            // and would crash on propagation. Export paths verify the write by reading back, so
+            // user-visible failure surfaces there even with the swallow.
+            Trace.WriteLine($"Bannerlord.LauncherEx: Write failed for '{filePath}': {e}");
         }
+        return Task.CompletedTask;
     }
 
-    public string[]? ReadDirectoryFileList(string directoryPath) => Directory.Exists(directoryPath) ? Directory.GetFiles(directoryPath) : null;
+    public Task<string[]?> ReadDirectoryFileListAsync(string directoryPath) =>
+        Task.FromResult(Directory.Exists(directoryPath) ? Directory.GetFiles(directoryPath) : null);
 
-    public string[]? ReadDirectoryList(string directoryPath) => Directory.Exists(directoryPath) ? Directory.GetDirectories(directoryPath) : null;
+    public Task<string[]?> ReadDirectoryListAsync(string directoryPath) =>
+        Task.FromResult(Directory.Exists(directoryPath) ? Directory.GetDirectories(directoryPath) : null);
 }

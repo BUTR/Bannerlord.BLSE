@@ -1,4 +1,4 @@
-﻿using Bannerlord.BUTR.Shared.Extensions;
+using Bannerlord.BUTR.Shared.Extensions;
 using Bannerlord.LauncherEx.Adapters;
 using Bannerlord.LauncherEx.Extensions;
 using Bannerlord.LauncherManager;
@@ -9,6 +9,8 @@ using Bannerlord.ModuleManager;
 
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
+
+using Nito.AsyncEx;
 
 using System;
 using System.Collections.Generic;
@@ -48,24 +50,24 @@ internal partial class BUTRLauncherManagerHandler : LauncherManagerHandler
             AccessTools2.DeclaredPropertyGetter(typeof(LauncherUI), "AdditionalArgs"),
             postfix: new HarmonyMethod(AccessTools2.DeclaredMethod(typeof(BUTRLauncherManagerHandler), nameof(AdditionalArgsPostfix)), priority: 10000));
 
+        // Note: the new LauncherManager removed loadOrderPersistenceProvider — load/save of the
+        // user's saved order is now fully owned by BLSE. SaveTWLoadOrder is called directly from
+        // SetGameParametersLoadOrder, and LoadTWLoadOrder is exposed via the LoadLoadOrder()
+        // wrapper for the mixins to call at startup.
         Initialize(
             dialogProvider: DialogProviderImpl.Instance,
             notificationProvider: NotificationProviderImpl.Instance,
             fileSystemProvider: FileSystemProviderImpl.Instance,
             gameInfoProvider: GameInfoProviderImpl.Instance,
-            loadOrderPersistenceProvider: new CallbackLoadOrderPersistenceProvider(
-                loadLoadOrder: LoadTWLoadOrder,
-                saveLoadOrder: SaveTWLoadOrder
-            ),
             launcherStateProvider: new CallbackLauncherStateProvider(
-                setGameParameters: SetGameParametersCallback,
-                getOptions: GetTWOptions,
-                getState: GetStateCallback
+                setGameParameters: (executable, parameters, complete) => { SetGameParametersCallback(executable, parameters); complete(); },
+                getOptions: callback => callback(GetTWOptions()),
+                getState: callback => callback(GetStateCallback())
             ),
             loadOrderStateProvider: new CallbackLoadOrderStateProvider(
-                getAllModuleViewModels: GetAllModuleViewModelsCallback,
-                getModuleViewModels: GetModuleViewModelsCallback,
-                setModuleViewModels: SetModuleViewModelsCallback
+                getAllModuleViewModels: callback => callback(GetAllModuleViewModelsCallback()),
+                getModuleViewModels: callback => callback(GetModuleViewModelsCallback()),
+                setModuleViewModels: (vms, complete) => { SetModuleViewModelsCallback(vms); complete(); }
             ));
 
         SetGameStore(LauncherPlatform.PlatformType switch
@@ -94,7 +96,7 @@ internal partial class BUTRLauncherManagerHandler : LauncherManagerHandler
         _setModuleViewModels = setModuleViewModels;
     }
 
-    private LoadOrder LoadTWLoadOrder()
+    internal LoadOrder LoadTWLoadOrder()
     {
         var state = _getState?.Invoke() ?? LauncherState.Empty;
 
@@ -102,16 +104,32 @@ internal partial class BUTRLauncherManagerHandler : LauncherManagerHandler
         return new LoadOrder(userGameTypeData.ModDatas.DistinctBy(x => x.Id).Select((x, i) => new LoadOrderEntry(x.Id, string.Empty, x.IsSelected, false, i)));
     }
 
-    private void SaveTWLoadOrder(LoadOrder loadOrder)
+    internal void SaveTWLoadOrder(LoadOrder loadOrder)
     {
         if (_getState is null) return;
 
         var state = _getState();
         var userGameTypeData = state.IsSingleplayer ? _userDataManager.UserData.SingleplayerData : _userDataManager.UserData.MultiplayerData;
+
+        // Preserve entries for modules that were saved previously but weren't discovered this
+        // session (e.g., Steam Workshop offline, mod folder temporarily unavailable). Without
+        // this they get permanently dropped from the saved order and reappear at the end of the
+        // list on next launch — the "load order keeps resetting" symptom.
+        var newIds = new HashSet<string>(loadOrder.Select(x => x.Key));
+        var ghosts = userGameTypeData.ModDatas
+            .Where(x => !newIds.Contains(x.Id))
+            .GroupBy(x => x.Id)
+            .Select(g => g.First())
+            .ToList();
+
         userGameTypeData.ModDatas.Clear();
         foreach (var (id, entry) in loadOrder)
         {
             userGameTypeData.ModDatas.Add(new UserModData { Id = id, IsSelected = entry.IsSelected, });
+        }
+        foreach (var ghost in ghosts)
+        {
+            userGameTypeData.ModDatas.Add(ghost);
         }
 
         _userDataManager.UserData.GameType = state.IsSingleplayer ? GameType.Singleplayer : GameType.Multiplayer;
@@ -121,12 +139,17 @@ internal partial class BUTRLauncherManagerHandler : LauncherManagerHandler
     public LauncherOptions GetTWOptions() => new()
     {
         BetaSorting = LauncherSettings.BetaSorting,
-        FixCommonIssues = LauncherSettings.FixCommonIssues,
-        UnblockFiles = true, // TODO: Remove. Always unblock
-        Language = Manager.GetActiveLanguage(),
     };
 
-    public new bool TryOrderByLoadOrderTW(IEnumerable<string> loadOrder, Func<string, bool> isModuleSelected, [NotNullWhen(false)] out IReadOnlyList<string>? issues,
+    public bool TryOrderByLoadOrderTW(IEnumerable<string> loadOrder, Func<string, bool> isModuleSelected, [NotNullWhen(false)] out IReadOnlyList<string>? issues,
         out IReadOnlyList<IModuleViewModel> orderedModules, bool overwriteWhenFailure = false)
-        => base.TryOrderByLoadOrderTW(loadOrder, isModuleSelected, out issues, out orderedModules, overwriteWhenFailure);
+    {
+        // Sync facade over the new async TryOrderByLoadOrderTWAsync. Called from synchronous UI
+        // mixin code; AsyncContext.Run pumps continuations on a dedicated single-threaded context,
+        // avoiding deadlocks if the async path ever introduces real I/O or Task.Delay-style waits.
+        var result = AsyncContext.Run(() => base.TryOrderByLoadOrderTWAsync(loadOrder, isModuleSelected, overwriteWhenFailure));
+        issues = result.Result ? null : result.Issues ?? Array.Empty<string>();
+        orderedModules = result.OrderedModules;
+        return result.Result;
+    }
 }

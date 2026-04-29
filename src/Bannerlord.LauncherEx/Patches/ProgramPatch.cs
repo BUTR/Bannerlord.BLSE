@@ -3,6 +3,8 @@
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
+using Nito.AsyncEx;
+
 using TaleWorlds.MountAndBlade.Launcher.Library;
 
 namespace Bannerlord.LauncherEx.Patches;
@@ -23,7 +25,7 @@ internal static class ProgramPatch
     {
         if (LauncherSettings.FixCommonIssues)
         {
-            BUTRLauncherManagerHandler.Default.CheckForRootHarmony();
+            AsyncContext.Run(() => BUTRLauncherManagerHandler.Default.CheckForRootHarmonyAsync());
         }
 
         Manager.Disable();

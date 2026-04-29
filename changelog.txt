@@ -1,7 +1,13 @@
 ---------------------------------------------------------------------------------------------------
-Version: 1.6.5
+Version: 1.7.0
 Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x
+* BETA Release!
 * Improved decimal parsing, prevents crashing now
+* Fixed load order being reset when modules were temporarily missing
+* Fixed settings and load order sometimes failing to persist due to transient file I/O errors
+* Renamed "Beta Sorting" to "Strict Load Order" with a clearer description
+* Fallback path no longer discards the user's load order on validation failure
+* Fixed Moduel directory opening
 ---------------------------------------------------------------------------------------------------
 Version: 1.6.4
 Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x

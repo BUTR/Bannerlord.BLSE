@@ -111,8 +111,8 @@ internal sealed class BUTRLauncherOptionsVM : BUTRViewModel
         }));
         SettingProperties.Add(new SettingsPropertyVM(new SettingsPropertyDefinition
         {
-            DisplayName = new BUTRTextObject("{=QJSBiZdJ}Beta Sorting").ToString(),
-            HintText = new BUTRTextObject("{=HVhaqeb4}Uses the new sorting algorithm after v1.12.x. Disable to use the old algorithm").ToString(),
+            DisplayName = new BUTRTextObject("{=QJSBiZdJ}Strict Load Order").ToString(),
+            HintText = new BUTRTextObject("{=HVhaqeb4}Surface dependency conflicts in your saved load order instead of silently auto-correcting. Newly installed modules are also placed in a deterministic position (official first, then alphabetical).").ToString(),
             SettingType = SettingType.Bool,
             PropertyReference = new PropertyRef(typeof(LauncherSettings).GetProperty(nameof(LauncherSettings.BetaSorting))!, this)
         }));
@@ -330,8 +330,9 @@ internal sealed class BUTRLauncherOptionsVM : BUTRViewModel
         if (hasChanges)
         {
             File.WriteAllText(ConfigReader.GameConfigPath, sb.ToString());
-            var options = _launcherManagerHandler.GetTWOptions();
-            BUTRLocalizationManager.ActiveLanguage = options.Language;
+            // LauncherOptions no longer carries Language; read it directly from the freshly-written
+            // game options file via the same helper Manager.GetActiveLanguage uses elsewhere.
+            BUTRLocalizationManager.ActiveLanguage = Manager.GetActiveLanguage();
         }
     }
     private void SaveEngineOptions()

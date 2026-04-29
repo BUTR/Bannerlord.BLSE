@@ -5,6 +5,8 @@ using Bannerlord.LauncherManager.Models;
 using Bannerlord.LauncherManager.Utils;
 using Bannerlord.ModuleManager;
 
+using Nito.AsyncEx;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -179,7 +181,7 @@ internal sealed class BUTRLauncherSaveVM : BUTRViewModel
     [BUTRDataSourceMethod]
     public void ExecuteOpen()
     {
-        var saveFilePath = _launcherManagerHandler.GetSaveFilePath(_saveMetadata.Name);
+        var saveFilePath = AsyncContext.Run(() => _launcherManagerHandler.GetSaveFilePathAsync(_saveMetadata.Name));
         if (string.IsNullOrEmpty(saveFilePath) || !File.Exists(saveFilePath)) return;
 
         Process.Start("explorer.exe", $"/select,\"{saveFilePath}\"");

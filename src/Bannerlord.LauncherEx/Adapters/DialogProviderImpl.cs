@@ -1,4 +1,4 @@
-﻿using Bannerlord.LauncherEx.Helpers.Input;
+using Bannerlord.LauncherEx.Helpers.Input;
 using Bannerlord.LauncherManager.External.UI;
 using Bannerlord.LauncherManager.Localization;
 using Bannerlord.LauncherManager.Models;
@@ -6,6 +6,7 @@ using Bannerlord.LauncherManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bannerlord.LauncherEx.Adapters;
 
@@ -13,7 +14,7 @@ internal sealed class DialogProviderImpl : IDialogProvider
 {
     public static readonly DialogProviderImpl Instance = new();
 
-    public void SendDialog(DialogType type, string title, string message, IReadOnlyList<DialogFileFilter> filters, Action<string> onResult)
+    public Task<string> SendDialogAsync(DialogType type, string title, string message, IReadOnlyList<DialogFileFilter> filters)
     {
         switch (type)
         {
@@ -28,8 +29,7 @@ internal sealed class DialogProviderImpl : IDialogProvider
                     0,
                     0
                 );
-                onResult(result == MessageBoxResult.Ok ? "true" : "false");
-                return;
+                return Task.FromResult(result == MessageBoxResult.Ok ? "true" : "false");
             }
             case DialogType.FileOpen:
             {
@@ -45,8 +45,7 @@ internal sealed class DialogProviderImpl : IDialogProvider
                     Multiselect = false,
                     ValidateNames = true,
                 };
-                onResult(dialog.ShowDialog() ? dialog.FileName ?? string.Empty : string.Empty);
-                return;
+                return Task.FromResult(dialog.ShowDialog() ? dialog.FileName ?? string.Empty : string.Empty);
             }
             case DialogType.FileSave:
             {
@@ -62,9 +61,9 @@ internal sealed class DialogProviderImpl : IDialogProvider
 
                     ValidateNames = true,
                 };
-                onResult(dialog.ShowDialog() ? dialog.FileName : string.Empty);
-                return;
+                return Task.FromResult(dialog.ShowDialog() ? dialog.FileName : string.Empty);
             }
         }
+        return Task.FromResult(string.Empty);
     }
 }

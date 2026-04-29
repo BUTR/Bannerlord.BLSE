@@ -1,5 +1,7 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
+using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.LauncherManager.Models;
+
+using Nito.AsyncEx;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,37 +10,15 @@ namespace Bannerlord.LauncherEx;
 
 partial class BUTRLauncherManagerHandler
 {
-    public void SetGameParametersLoadOrder(IEnumerable<IModuleViewModel> modules) => SaveLoadOrder(GetFromViewModel(modules));
+    public void SetGameParametersLoadOrder(IEnumerable<IModuleViewModel> modules) => SaveTWLoadOrder(new LoadOrder(modules));
 
 
-    public override string GetGameVersion() => ApplicationVersionHelper.GameVersionStr();
+    public override Task<string> GetGameVersionAsync() => Task.FromResult(ApplicationVersionHelper.GameVersionStr());
 
-    public override int GetChangeset() => typeof(TaleWorlds.Library.ApplicationVersion).GetField("DefaultChangeSet")?.GetValue(null) as int? ?? 0;
+    public override Task<int> GetChangesetAsync() =>
+        Task.FromResult(typeof(TaleWorlds.Library.ApplicationVersion).GetField("DefaultChangeSet")?.GetValue(null) as int? ?? 0);
 
+    public LoadOrder LoadLoadOrder() => LoadTWLoadOrder();
 
-    // More of a reminder how the callbacks should be handled if needed in C#
-    public Task<bool> ShowWarning(string title, string contentPrimary, string contentSecondary)
-    {
-        var tcs = new TaskCompletionSource<bool>();
-        base.ShowWarning(title, contentPrimary, contentSecondary, tcs.SetResult);
-        return tcs.Task;
-    }
-
-    public Task<string> ShowFileOpen(string title, IReadOnlyList<DialogFileFilter> filters)
-    {
-        var tcs = new TaskCompletionSource<string>();
-        base.ShowFileOpen(title, filters, tcs.SetResult);
-        return tcs.Task;
-    }
-
-    public Task<string> ShowFileSave(string title, string fileName, IReadOnlyList<DialogFileFilter> filters)
-    {
-        var tcs = new TaskCompletionSource<string>();
-        base.ShowFileSave(title, fileName, filters, tcs.SetResult);
-        return tcs.Task;
-    }
-
-    public new LoadOrder LoadLoadOrder() => base.LoadLoadOrder();
-
-    public new IReadOnlyList<ModuleInfoExtendedWithMetadata> GetAllModules() => base.GetAllModules();
+    public IReadOnlyList<ModuleInfoExtendedWithMetadata> GetAllModules() => AsyncContext.Run(() => GetAllModulesAsync());
 }
