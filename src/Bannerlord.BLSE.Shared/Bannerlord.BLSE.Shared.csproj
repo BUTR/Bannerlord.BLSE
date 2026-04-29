@@ -12,6 +12,9 @@
     <GameConfiguration Condition="$(GameConfiguration) == '' AND Exists('$(GameFolder)\bin\Win64_Shipping_Client')">Win64_Shipping_Client</GameConfiguration>
     <GameConfiguration Condition="$(GameConfiguration) == '' AND Exists('$(GameFolder)\bin\Gaming.Desktop.x64_Shipping_Client')">Gaming.Desktop.x64_Shipping_Client</GameConfiguration>
 
+    <!-- Set to true via AdditionalProperties on a transitive ProjectReference to suppress PostBuildFramework's copy of Shared.dll into GameFolder. Used by Bannerlord.BLSE.Loaders.AppDomainManager so its CI matrix job does not publish a second Shared.dll into the artifact pool. -->
+    <PreventSharedCopy Condition="$(PreventSharedCopy) == ''">false</PreventSharedCopy>
+
     <ILRepackTargetConfigurations>Release</ILRepackTargetConfigurations>
     <ILRepackAllowDuplicateResources>false</ILRepackAllowDuplicateResources>
     <ILRepackMergeDebugSymbols>true</ILRepackMergeDebugSymbols>
@@ -47,7 +50,7 @@
     <ProjectReference Include="..\Bannerlord.LauncherEx\Bannerlord.LauncherEx.csproj" Private="false" IncludeAssets="compile" PrivateAssets="all" />
   </ItemGroup>
 
-  <Target Name="PostBuildFramework" AfterTargets="CopyFilesToOutputDirectory" Condition="Exists($(GameFolder))">
+  <Target Name="PostBuildFramework" AfterTargets="CopyFilesToOutputDirectory" Condition="Exists($(GameFolder)) AND '$(PreventSharedCopy)' != 'true'">
     <ItemGroup>
       <FilesDebug Include="Bannerlord.LauncherEx.dll" />
       <FilesDebug Include="Bannerlord.BLSE.dll" />
@@ -90,6 +93,8 @@
     </GZip>
     <Message Text="Source EmbeddedResources: @(EmbeddedResource)" Importance="High" />
     <Message Text="GZipped EmbeddedResources: @(GZipEmbeddedResource)" Importance="High" />
+    <!-- Round-trip every .gz to catch a truncated/corrupted resource at build time, before it is embedded and shipped. -->
+    <VerifyGZip Files="@(GZipEmbeddedResource)" />
     <ItemGroup>
       <EmbeddedResource Remove="@(EmbeddedResource)" />
       <EmbeddedResource Include="@(GZipEmbeddedResource)" />

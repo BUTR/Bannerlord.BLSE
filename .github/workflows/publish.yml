@@ -82,7 +82,7 @@ jobs:
       - name: Upload Bannerlord folder
         uses: actions/upload-artifact@v4
         with:
-          name: bannerlord-tmp-${{matrix.project}}-${{matrix.configuration}}
+          name: tmp-bannerlord-${{matrix.project}}-${{matrix.configuration}}
           path: ./bannerlord/
 
   gpu-hint:
@@ -100,7 +100,7 @@ jobs:
       - name: Download Bannerlord Temp artifact Pattern
         uses: actions/download-artifact@v5
         with:
-          pattern: bannerlord-tmp-*
+          pattern: tmp-bannerlord-*
           merge-multiple: true
           path: ./bannerlord
         continue-on-error: true
@@ -132,7 +132,7 @@ jobs:
     with:
       nexusmods_game_id: mountandblade2bannerlord
       nexusmods_mod_id: 1
-      nexusmods_file_group_id: 2649439
+      nexusmods_file_group_id: 2649439  
       mod_filename: "Bannerlord Software Extender (BLSE)"
       mod_version: ${{ needs.get-changelog.outputs.mod_version }}
       mod_description: ${{ needs.get-changelog.outputs.mod_description }}
@@ -187,4 +187,4 @@ jobs:
     steps:
       - uses: joutvhu/delete-artifact@v2
         with:
-          pattern: bannerlord-tmp-*
+          pattern: tmp-bannerlord-*

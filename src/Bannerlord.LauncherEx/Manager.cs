@@ -108,7 +108,15 @@ public static class Manager
         WidgetFactoryManager.CreateAndRegister("Launcher.SettingsPropertyStringView", Load("Bannerlord.LauncherEx.Resources.Prefabs.Properties.Launcher.SettingsPropertyStringView.xml"));
         WidgetFactoryManager.CreateAndRegister("Launcher.Options", Load("Bannerlord.LauncherEx.Resources.Prefabs.Launcher.Options.xml"));
         WidgetFactoryManager.CreateAndRegister("Launcher.Options.OptionTuple", Load("Bannerlord.LauncherEx.Resources.Prefabs.Launcher.Options.OptionTuple.xml"));
-        WidgetFactoryManager.CreateAndRegister("Launcher.Mods2", Load("Bannerlord.LauncherEx.Resources.Prefabs.Launcher.Mods.xml"));
+        var modsXml = Load("Bannerlord.LauncherEx.Resources.Prefabs.Launcher.Mods.xml");
+#if v140
+        // v1.4.x swapped the StackLayout VerticalBottomToTop / VerticalTopToBottom
+        // implementations. Use VerticalTopToBottom here so the rendered order matches
+        // what the original VerticalBottomToTop attribute produced on earlier versions.
+        if (modsXml.SelectSingleNode("//ListPanel[@Id='InnerPanel']") is XmlElement innerPanel)
+            innerPanel.SetAttribute("LayoutImp.LayoutMethod", "VerticalTopToBottom");
+#endif
+        WidgetFactoryManager.CreateAndRegister("Launcher.Mods2", modsXml);
         WidgetFactoryManager.CreateAndRegister("Launcher.Mods.ModuleTuple2", Load("Bannerlord.LauncherEx.Resources.Prefabs.Launcher.Mods.ModuleTuple.xml"));
         WidgetFactoryManager.CreateAndRegister("Launcher.Saves", Load("Bannerlord.LauncherEx.Resources.Prefabs.Launcher.Saves.xml"));
         WidgetFactoryManager.CreateAndRegister("Launcher.Saves.SaveTuple", Load("Bannerlord.LauncherEx.Resources.Prefabs.Launcher.Saves.SaveTuple.xml"));

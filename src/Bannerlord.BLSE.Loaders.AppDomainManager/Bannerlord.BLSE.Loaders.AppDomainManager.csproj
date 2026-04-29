@@ -8,7 +8,8 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Bannerlord.BLSE.Shared\Bannerlord.BLSE.Shared.csproj" Private="false" IncludeAssets="compile" PrivateAssets="all" />
+    <!-- The dedicated Bannerlord.BLSE.Shared matrix job is the sole publisher of Shared.dll. PreventSharedCopy=true tells the transitive Shared build to skip its PostBuildFramework copy so this matrix job does not drop a second Shared.dll into bannerlord/. -->
+    <ProjectReference Include="..\Bannerlord.BLSE.Shared\Bannerlord.BLSE.Shared.csproj" Private="false" IncludeAssets="compile" PrivateAssets="all" AdditionalProperties="PreventSharedCopy=true" />
     <ProjectReference Include="..\Bannerlord.BLSE\Bannerlord.BLSE.csproj" Private="false" IncludeAssets="none" PrivateAssets="all" />
     <ProjectReference Include="..\Bannerlord.LauncherEx\Bannerlord.LauncherEx.csproj" Private="false" IncludeAssets="none" PrivateAssets="all" />
   </ItemGroup>

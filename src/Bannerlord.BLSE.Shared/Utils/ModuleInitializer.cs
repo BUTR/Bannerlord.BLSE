@@ -4,11 +4,14 @@ using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.ModuleManager;
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 
 // ReSharper disable once CheckNamespace
@@ -137,37 +140,114 @@ and the Steam Workshop folder that can conflict with each other!
 
     private static Assembly? ResolveLauncherExAssemblies(AssemblyName assemblyName)
     {
+        var moduleAssembly = typeof(ModuleInitializer).Assembly;
         var @namespace = "Bannerlord.BLSE.Shared.";
-        var resources = typeof(ModuleInitializer).Assembly.GetManifestResourceNames().Select(x => x.Remove(0, @namespace.Length));
+        var resources = moduleAssembly.GetManifestResourceNames().Select(x => x.Remove(0, @namespace.Length));
         var versions = resources.Where(x => x.StartsWith("Bannerlord.LauncherEx_")).Select(x =>
         {
             var split = x.Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries);
-            return (@namespace + x, ApplicationVersion.TryParse(split[1], out var v) ? v : ApplicationVersion.Empty);
+            var versionPart = split[1];
+            var dllIdx = versionPart.IndexOf(".dll", StringComparison.OrdinalIgnoreCase);
+            if (dllIdx > 0) versionPart = versionPart.Substring(0, dllIdx);
+            return (@namespace + x, ApplicationVersion.TryParse(versionPart, out var v) ? v : ApplicationVersion.Empty);
         }).ToArray();
         var gv = ApplicationVersionHelper.GameVersion() ?? TaleWorlds.Library.ApplicationVersion.Empty;
         var gameVersion = new ApplicationVersion((ApplicationVersionType) gv.ApplicationVersionType, gv.Major, gv.Minor, gv.Revision, gv.ChangeSet);
 
-        string? toLoad = null;
-
-        var exactVersion = versions.FirstOrDefault(x => x.Item2.IsSame(gameVersion));
-        if (exactVersion.Item2 != ApplicationVersion.Empty)
-            toLoad = exactVersion.Item1;
-
         var comparer = new ApplicationVersionComparer();
-        var closestVersion = versions.Where(x => comparer.Compare(x.Item2, gameVersion) <= 0).MaxByOrDefault(x => x.Item2, comparer, out _);
-        if (closestVersion.Item2 != ApplicationVersion.Empty)
-            toLoad = closestVersion.Item1;
+        var orderedCandidates = versions
+            .OrderByDescending(x => x.Item2.IsSame(gameVersion))
+            .ThenBy(x => comparer.Compare(x.Item2, gameVersion) > 0 ? 1 : 0)
+            .ThenByDescending(x => x.Item2, comparer)
+            .Select(x => x.Item1)
+            .Where(x => !string.IsNullOrEmpty(x))
+            .ToList();
 
-        if (toLoad is not null)
+        var failures = new List<(string Resource, Exception Exception)>();
+        foreach (var candidate in orderedCandidates)
         {
-            using var resourceStream = typeof(ModuleInitializer).Assembly.GetManifestResourceStream(toLoad);
-            using var decompressStream = new GZipStream(resourceStream, CompressionMode.Decompress);
-            using var ms = new MemoryStream();
-            decompressStream.CopyTo(ms);
-            return Assembly.Load(ms.ToArray());
+            try
+            {
+                using var resourceStream = moduleAssembly.GetManifestResourceStream(candidate);
+                if (resourceStream is null) continue;
+                using var decompressStream = new GZipStream(resourceStream, CompressionMode.Decompress);
+                using var ms = new MemoryStream();
+                decompressStream.CopyTo(ms);
+                return Assembly.Load(ms.ToArray());
+            }
+            catch (Exception ex)
+            {
+                failures.Add((candidate, ex));
+            }
         }
 
+        if (failures.Count > 0)
+            ReportCorruption(moduleAssembly, failures);
+
         return null;
+    }
+
+    private static void ReportCorruption(Assembly moduleAssembly, List<(string Resource, Exception Exception)> failures)
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine("'Bannerlord.BLSE.Shared.dll' could not decompress its embedded LauncherEx assembly.");
+        sb.AppendLine("This usually means the file on disk does not match the official release - typically caused by a partial/failed extraction or by an antivirus rewriting the file.");
+        sb.AppendLine();
+
+        var dllPath = "<unknown>";
+        var dllSha = "<n/a>";
+        long dllSize = 0;
+        try
+        {
+            dllPath = moduleAssembly.Location;
+            if (!string.IsNullOrEmpty(dllPath) && File.Exists(dllPath))
+            {
+                dllSize = new FileInfo(dllPath).Length;
+                using var sha = SHA256.Create();
+                using var fs = File.OpenRead(dllPath);
+                dllSha = BitConverter.ToString(sha.ComputeHash(fs)).Replace("-", "");
+            }
+        }
+        catch { /* best-effort diagnostic */ }
+
+        sb.AppendLine($"DLL Path:     {dllPath}");
+        sb.AppendLine($"DLL Size:     {dllSize:N0} bytes");
+        sb.AppendLine($"DLL SHA-256:  {dllSha}");
+        sb.AppendLine();
+
+        foreach (var (resource, exception) in failures)
+        {
+            var resSha = "<n/a>";
+            long resSize = 0;
+            var firstBytes = "<n/a>";
+            try
+            {
+                using var resourceStream = moduleAssembly.GetManifestResourceStream(resource);
+                if (resourceStream is not null)
+                {
+                    using var ms = new MemoryStream();
+                    resourceStream.CopyTo(ms);
+                    var bytes = ms.ToArray();
+                    resSize = bytes.LongLength;
+                    using var sha = SHA256.Create();
+                    resSha = BitConverter.ToString(sha.ComputeHash(bytes)).Replace("-", "");
+                    var head = bytes.Length < 16 ? bytes.Length : 16;
+                    firstBytes = BitConverter.ToString(bytes, 0, head);
+                }
+            }
+            catch { /* best-effort diagnostic */ }
+            sb.AppendLine($"Resource:     {resource}");
+            sb.AppendLine($"  Size:       {resSize:N0} bytes");
+            sb.AppendLine($"  SHA-256:    {resSha}");
+            sb.AppendLine($"  First 16B:  {firstBytes}");
+            sb.AppendLine($"  Error:      {exception.GetType().Name}: {exception.Message}");
+            sb.AppendLine();
+        }
+
+        sb.AppendLine("Compare DLL SHA-256 against the value published with the BLSE release.");
+        sb.AppendLine("If they differ, reinstall BLSE manually with 7-Zip into your game's bin folder.");
+
+        MessageBoxDialog.Show(sb.ToString(), "BLSE: Bannerlord.BLSE.Shared.dll integrity error", MessageBoxButtons.Ok, MessageBoxIcon.Error);
     }
 
     private static Assembly? ResolveHarmonyAssembly(AssemblyName assemblyName)
