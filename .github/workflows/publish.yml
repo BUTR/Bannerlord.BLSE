@@ -29,7 +29,7 @@ jobs:
       mod_version: ${{ steps.changelog.outputs.mod_version }}
       mod_description: ${{ steps.changelog.outputs.mod_description }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Install and Run ChangelogParser
         id: changelog
@@ -63,7 +63,7 @@ jobs:
           - project: "Bannerlord.BLSE.Loaders.AppDomainManager"
             configuration: "Win64_Shipping_Client"
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Setup
         uses: butr/actions-common-setup@v2
@@ -90,7 +90,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Setup
         uses: butr/actions-common-setup@v2
