@@ -1,7 +1,6 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -25,6 +24,14 @@ internal static class ParsePatch
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
+    private static decimal SafeParseDecimal(string value)
+    {
+        if (decimal.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out var result))
+            return result;
+        return 0m;
+    }
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
     private static IEnumerable<CodeInstruction> ConstantDefinition_GetValue_Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         var instructionsList = instructions.ToList();
@@ -40,22 +47,16 @@ internal static class ParsePatch
         if (decimalParseString is null)
             return ReturnDefault("decimal.Parse(string) method not found");
 
-        var decimalParseStringProvider = AccessTools2.DeclaredMethod(typeof(decimal), nameof(decimal.Parse), [typeof(string), typeof(IFormatProvider)]);
-        if (decimalParseStringProvider is null)
-            return ReturnDefault("decimal.Parse(string, IFormatProvider) method not found");
-
-        var invariantCultureGetter = AccessTools2.DeclaredPropertyGetter(typeof(CultureInfo), nameof(CultureInfo.InvariantCulture));
-        if (invariantCultureGetter is null)
-            return ReturnDefault("CultureInfo.InvariantCulture getter not found");
+        var safeParseDecimal = AccessTools2.DeclaredMethod(typeof(ParsePatch), nameof(SafeParseDecimal));
+        if (safeParseDecimal is null)
+            return ReturnDefault("SafeParseDecimal method not found");
 
         var found = false;
         for (var i = 0; i < instructionsList.Count; i++)
         {
             if (instructionsList[i].opcode == OpCodes.Call && Equals(instructionsList[i].operand, decimalParseString))
             {
-                instructionsList.Insert(i, new CodeInstruction(OpCodes.Call, invariantCultureGetter));
-                i++;
-                instructionsList[i] = new CodeInstruction(OpCodes.Call, decimalParseStringProvider);
+                instructionsList[i] = new CodeInstruction(OpCodes.Call, safeParseDecimal);
                 found = true;
             }
         }
