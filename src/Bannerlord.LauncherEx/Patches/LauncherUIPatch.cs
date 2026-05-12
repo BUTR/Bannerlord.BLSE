@@ -1,4 +1,4 @@
-﻿using Bannerlord.LauncherEx.Helpers;
+using Bannerlord.LauncherEx.Helpers;
 
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
@@ -23,15 +23,19 @@ internal static class LauncherUIPatch
             postfix: AccessTools2.DeclaredMethod(typeof(LauncherUIPatch), nameof(InitializePostfix)));
         if (!res1) return false;
 
-        var res2 = harmony.TryPatch(
-            AccessTools2.DeclaredMethod(typeof(LauncherUI), "Update"),
-            postfix: AccessTools2.DeclaredMethod(typeof(LauncherUIPatch), nameof(UpdatePostfix)));
-        if (!res2) return false;
-
+        // Patch the cleanup point before installing BUTRInputManager.
+        // If LauncherUI.AdditionalArgs was removed or renamed in this game version,
+        // installing BUTRInputManager without a cleanup path would leave it active
+        // when the game starts, causing a native crash (e.g. at GauntletVideoPlaybackScreen).
         var res3 = harmony.TryPatch(
             AccessTools2.DeclaredPropertyGetter(typeof(LauncherUI), "AdditionalArgs"),
             postfix: AccessTools2.DeclaredMethod(typeof(LauncherUIPatch), nameof(AdditionalArgsPostfix)));
         if (!res3) return false;
+
+        var res2 = harmony.TryPatch(
+            AccessTools2.DeclaredMethod(typeof(LauncherUI), "Update"),
+            postfix: AccessTools2.DeclaredMethod(typeof(LauncherUIPatch), nameof(UpdatePostfix)));
+        if (!res2) return false;
 
         return true;
     }
