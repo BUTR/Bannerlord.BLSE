@@ -69,7 +69,7 @@
     <!-- GPU hint + 4 MB stack patch in one PE rewrite. See common.targets. -->
     <Exec Condition="!Exists('$(_BlseBuildTasksDll)')"
           Command="dotnet build &quot;$(_BlseBuildTasksProj)&quot; -c Release -nologo" />
-    <Exec Command="dotnet &quot;$(_BlseBuildTasksDll)&quot; &quot;$(MSBuildProjectDirectory)\$(OutputPath)publish\$(AssemblyName).exe&quot;" />
+    <Exec Command="dotnet &quot;$(_BlseBuildTasksDll)&quot; &quot;$(MSBuildProjectDirectory)/$(OutputPath)publish/$(AssemblyName).exe&quot;" />
   </Target>
   <Target Name="PostBuild" AfterTargets="PublishRoslynExecutableProjects" Condition="Exists($(GameFolder))">
     <ItemGroup>
