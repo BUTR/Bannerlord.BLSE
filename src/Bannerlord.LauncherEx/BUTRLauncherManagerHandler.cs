@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection.Emit;
 
 using TaleWorlds.MountAndBlade.Launcher.Library;
 using TaleWorlds.MountAndBlade.Launcher.Library.UserDatas;
@@ -46,7 +47,18 @@ internal partial class BUTRLauncherManagerHandler : LauncherManagerHandler
 
         _harmony.Patch(
             AccessTools2.DeclaredPropertyGetter(typeof(LauncherUI), "AdditionalArgs"),
-            postfix: new HarmonyMethod(AccessTools2.DeclaredMethod(typeof(BUTRLauncherManagerHandler), nameof(AdditionalArgsPostfix)), priority: 10000));
+            postfix: new HarmonyMethod(AccessTools2.DeclaredMethod(typeof(BUTRLauncherManagerHandler), nameof(AdditionalArgsPostfix))));
+
+        // v1.4.x moved ModuleListCode into LauncherUI.AdditionalArgs, making the
+        // three-level forwarding chain (Program.StartGame -> StandaloneUIDomain.AdditionalArgs
+        // -> LauncherUI.AdditionalArgs)
+        _harmony.TryPatch(
+            AccessTools2.DeclaredPropertyGetter(typeof(StandaloneUIDomain), "AdditionalArgs"),
+            postfix: AccessTools2.DeclaredMethod(typeof(BUTRLauncherManagerHandler), nameof(AdditionalArgsPostfix)));
+
+        _harmony.TryPatch(
+            AccessTools2.DeclaredMethod(typeof(Program), "StartGame"),
+            transpiler: AccessTools2.DeclaredMethod(typeof(BUTRLauncherManagerHandler), nameof(BlankTranspiler)));
 
         Initialize(
             dialogProvider: DialogProviderImpl.Instance,
@@ -81,6 +93,8 @@ internal partial class BUTRLauncherManagerHandler : LauncherManagerHandler
     {
         __result = Default._executableParameters;
     }
+
+    private static IEnumerable<CodeInstruction> BlankTranspiler(IEnumerable<CodeInstruction> instructions) => instructions;
 
     public void RegisterStateProvider(Func<LauncherState> getState)
     {
