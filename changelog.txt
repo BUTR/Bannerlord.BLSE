@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.6.7
+Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x
+* Increased stack reserve and commit according to vanilla Bannerlord
+---------------------------------------------------------------------------------------------------
 Version: 1.6.6
 Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x
 * Increased stack reserve and commit according to vanilla Bannerlord
