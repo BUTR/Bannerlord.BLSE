@@ -62,16 +62,12 @@
 
   <Target Name="PublishRoslynExecutableProjects" AfterTargets="Build">
     <CallTarget Targets="Publish" />
+    <!-- GPU hint + 4 MB stack patch in one PE rewrite. See common.targets. -->
+    <Exec Condition="!Exists('$(_BlseBuildTasksDll)')"
+          Command="dotnet build &quot;$(_BlseBuildTasksProj)&quot; -c Release -nologo" />
+    <Exec Command="dotnet &quot;$(_BlseBuildTasksDll)&quot; &quot;$(MSBuildProjectDirectory)\$(OutputPath)publish\$(AssemblyName).exe&quot;" />
   </Target>
-  <Target Name="PatchStackReserve" AfterTargets="Publish">
-    <!-- Match Bannerlord.exe's 4 MB main-thread stack. Video decoder
-         needs more than the .NET default 1 MB, otherwise the engine SOs at
-         the first PlayVideo call when our loader hosts the game.
-         Also set the CLR header IL_ONLY flag, which the .NET SDK leaves off
-         for our winexes but Bannerlord.exe has set. -->
-    <PatchPEStackReserve TargetFile="$(MSBuildProjectDirectory)\$(OutputPath)\publish\$(AssemblyName).exe" StackReserve="4194304" StackCommit="16384" SetILOnly="true" />
-  </Target>
-  <Target Name="PostBuild" AfterTargets="PatchStackReserve" Condition="Exists($(GameFolder))">
+  <Target Name="PostBuild" AfterTargets="PublishRoslynExecutableProjects" Condition="Exists($(GameFolder))">
     <ItemGroup>
       <Files Include="$(MSBuildProjectDirectory)\$(OutputPath)\publish\$(AssemblyName).exe" />
       <FilesWin64 Include="$(MSBuildProjectDirectory)\_Root\bin\Win64_Shipping_Client\**\*" />
