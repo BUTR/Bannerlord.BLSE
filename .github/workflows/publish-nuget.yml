@@ -23,7 +23,7 @@ jobs:
     name: Publish NuGet
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Pack Bannerlord.BLSE
         run: dotnet pack src/Bannerlord.BLSE/Bannerlord.BLSE.csproj --configuration Release -o "./packages";
