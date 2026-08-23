@@ -56,100 +56,40 @@ if (Files.Length > 0)
     </Task>
   </UsingTask>
 
-  <UsingTask TaskName="PatchPEStackReserve" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
-    <ParameterGroup>
-      <TargetFile ParameterType="System.String" Required="true" />
-      <StackReserve ParameterType="System.UInt64" Required="true" />
-      <StackCommit ParameterType="System.UInt64" Required="false" />
-      <SetILOnly ParameterType="System.Boolean" Required="false" />
-    </ParameterGroup>
-    <Task>
-      <Using Namespace="System" />
-      <Using Namespace="System.IO" />
-      <Code Type="Fragment" Language="cs">
-        <![CDATA[
-// Bannerlord.exe reserves a 4 MB main-thread stack; .NET SDK winexe defaults
-// to 1 MB. v1.4.3's video decoder path needs >1 MB of native stack, so when
-// our loader hosts the game the main thread runs out and SOs at the first
-// PlayVideo call. Bump the PE header SizeOfStackReserve to match. Optionally
-// also set the CLR header IL_ONLY flag (the .NET SDK leaves it off for our
-// loaders for reasons that aren't entirely clear; Bannerlord.exe has it set).
-var bytes = File.ReadAllBytes(TargetFile);
-var peOff = BitConverter.ToInt32(bytes, 0x3C);
-if (peOff <= 0 || peOff + 0x70 > bytes.Length || bytes[peOff] != 'P' || bytes[peOff + 1] != 'E')
-{
-    Log.LogError($"PatchPEStackReserve: '{TargetFile}' is not a valid PE file");
-    return false;
-}
-var coffOff = peOff + 4;
-var numSections = BitConverter.ToUInt16(bytes, coffOff + 0x02);
-var sizeOptHdr  = BitConverter.ToUInt16(bytes, coffOff + 0x10);
-var optOff = coffOff + 0x14;
-var magic = BitConverter.ToUInt16(bytes, optOff + 0x00);
-if (magic != 0x20B)
-{
-    Log.LogError($"PatchPEStackReserve: '{TargetFile}' is not PE32+ (magic 0x{magic:X4}); refusing to patch");
-    return false;
-}
+  <!--
+    Post-build PE modification of the BLSE loader exes. Handled by a small
+    console app in build/Bannerlord.BLSE.BuildTasks/ that, in a single
+    AsmResolver PE rewrite:
+      1. Adds NvOptimusEnablement / AmdPowerXpressRequestHighPerformance native
+         exports so NVIDIA Optimus and AMD PowerXpress route the process to the
+         discrete GPU.
+      2. Sets stack reserve to 4 MB and stack commit to 16 KB to match
+         Bannerlord.exe — the .NET SDK winexe default of 1 MB overflows on the
+         v1.4.3 video decoder's first PlayVideo call when our loader hosts the
+         game.
 
-// Stack reserve/commit live in the PE32+ optional header.
-var reserveOff = optOff + 0x48;
-var commitOff  = optOff + 0x50;
-var oldReserve = BitConverter.ToUInt64(bytes, reserveOff);
-Buffer.BlockCopy(BitConverter.GetBytes(StackReserve), 0, bytes, reserveOff, 8);
-if (StackCommit > 0)
-    Buffer.BlockCopy(BitConverter.GetBytes(StackCommit), 0, bytes, commitOff, 8);
+    The two were previously separate (managed-side stack patch + AsmResolver
+    GPU hint script run by the CI workflow) and the GPU hint pass undid the
+    stack patch — that's the bug this consolidation fixes. Also removes the
+    dotnet-script / build/gpu.csx dependency.
 
-var flagsMsg = string.Empty;
-if (SetILOnly)
-{
-    // COMDescriptor is data directory index 14 (each entry 8 bytes), at optOff+0x70 for PE32+.
-    var ddOff = optOff + 0x70;
-    var clrRva  = BitConverter.ToUInt32(bytes, ddOff + 14 * 8);
-    var clrSize = BitConverter.ToUInt32(bytes, ddOff + 14 * 8 + 4);
-    if (clrRva == 0 || clrSize < 0x48)
-    {
-        Log.LogMessage(MessageImportance.High, $"PatchPEStackReserve: '{Path.GetFileName(TargetFile)}' has no CLR header; skipping IL_ONLY");
-    }
-    else
-    {
-        // Resolve CLR header RVA -> file offset via section table.
-        var sectOff = optOff + sizeOptHdr;
-        var clrFileOff = 0;
-        for (var i = 0; i < numSections; i++)
-        {
-            var so = sectOff + i * 40;
-            var virtAddr = BitConverter.ToUInt32(bytes, so + 0x0C);
-            var virtSize = BitConverter.ToUInt32(bytes, so + 0x08);
-            var rawAddr  = BitConverter.ToUInt32(bytes, so + 0x14);
-            if (clrRva >= virtAddr && clrRva < virtAddr + virtSize)
-            {
-                clrFileOff = (int)(rawAddr + (clrRva - virtAddr));
-                break;
-            }
-        }
-        if (clrFileOff == 0)
-        {
-            Log.LogError($"PatchPEStackReserve: could not map CLR header RVA in '{TargetFile}'");
-            return false;
-        }
-        var flagsFileOff = clrFileOff + 0x10;
-        var oldFlags = BitConverter.ToUInt32(bytes, flagsFileOff);
-        var newFlags = oldFlags | 0x00000001u; // COMIMAGE_FLAGS_ILONLY
-        Buffer.BlockCopy(BitConverter.GetBytes(newFlags), 0, bytes, flagsFileOff, 4);
-        flagsMsg = $", CLR flags 0x{oldFlags:X8} -> 0x{newFlags:X8}";
-    }
-}
+    A console app rather than an MSBuild task assembly: <UsingTask> is parsed
+    at project-load time, so it cannot reference an assembly that the same
+    build session is about to produce (chicken-and-egg). Invoking via <Exec>
+    only requires the binary to exist by the time the Exec line runs, which
+    we ensure with a build-on-demand Exec just above it.
+  -->
+  <PropertyGroup>
+    <_BlseBuildTasksProj>$(MSBuildThisFileDirectory)Bannerlord.BLSE.BuildTasks\Bannerlord.BLSE.BuildTasks.csproj</_BlseBuildTasksProj>
+    <_BlseBuildTasksDll>$(MSBuildThisFileDirectory)Bannerlord.BLSE.BuildTasks\bin\Release\net8.0\Bannerlord.BLSE.BuildTasks.dll</_BlseBuildTasksDll>
+  </PropertyGroup>
 
-// Zero the PE checksum (PE+0x58, 4 bytes). Windows does not validate it for
-// user-mode executables, but a stale checksum can trip some AV heuristics.
-Array.Clear(bytes, peOff + 0x58, 4);
-File.WriteAllBytes(TargetFile, bytes);
-Log.LogMessage(MessageImportance.High, $"PatchPEStackReserve: '{Path.GetFileName(TargetFile)}' stack reserve {oldReserve:N0} -> {StackReserve:N0}{flagsMsg}");
-        ]]>
-      </Code>
-    </Task>
-  </UsingTask>
+  <!-- Loader csprojs invoke the finalizer inline as:
+         <Exec Condition="!Exists('$(_BlseBuildTasksDll)')"
+               Command="dotnet build &quot;$(_BlseBuildTasksProj)&quot; -c Release -nologo" />
+         <Exec Command="dotnet &quot;$(_BlseBuildTasksDll)&quot; &quot;...publish\$(AssemblyName).exe&quot;" />
+       — inlined rather than CallTarget'd because properties set in the caller's
+       Target body don't propagate through CallTarget reliably. -->
 
   <UsingTask TaskName="VerifyGZip" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
     <ParameterGroup>

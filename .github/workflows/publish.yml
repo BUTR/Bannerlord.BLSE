@@ -85,54 +85,28 @@ jobs:
           name: tmp-bannerlord-${{matrix.project}}-${{matrix.configuration}}
           path: ./bannerlord/
 
-  gpu-hint:
-    name: Add GPU Hints
+  merge-artifacts:
+    name: Merge Per-Project Artifacts
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-
-      - name: Setup
-        uses: butr/actions-common-setup@v2
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-
-      - name: Download Bannerlord Temp artifact Pattern
-        uses: actions/download-artifact@v5
-        with:
-          pattern: tmp-bannerlord-*
-          merge-multiple: true
-          path: ./bannerlord
-        continue-on-error: true
-
-      - name: Add Dedicated GPU Hint
-        run: |
-          dotnet tool install -g dotnet-script;
-
-          $fileNames = Get-ChildItem -Path "bannerlord/" -Recurse -Include *.exe;
-          foreach ($f in $fileNames) {
-            echo $f.FullName;
-            dotnet script build/gpu.csx -- "$f";
-          }
-        shell: pwsh
-
-      - name: Upload Bannerlord folder
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact/merge@v4
         with:
           name: bannerlord
-          path: ./bannerlord/
+          pattern: tmp-bannerlord-*
+          delete-merged: true
 
   ###########################
   #        NEXUSMODS        #
   ###########################
   publish-on-nexusmods:
     if: github.ref == 'refs/heads/master'
-    needs: [get-changelog, build, gpu-hint]
+    needs: [get-changelog, build, merge-artifacts]
     uses: BUTR/workflows/.github/workflows/release-nexusmods.yml@master
     with:
       nexusmods_game_id: mountandblade2bannerlord
       nexusmods_mod_id: 1
-      nexusmods_file_group_id: 2649439  
+      nexusmods_file_group_id: 2649439
       mod_filename: "Bannerlord Software Extender (BLSE)"
       mod_version: ${{ needs.get-changelog.outputs.mod_version }}
       mod_description: ${{ needs.get-changelog.outputs.mod_description }}
@@ -145,7 +119,7 @@ jobs:
   ###########################
   publish-on-github:
     if: github.ref == 'refs/heads/master'
-    needs: [get-changelog, build, gpu-hint]
+    needs: [get-changelog, build, merge-artifacts]
     uses: BUTR/workflows/.github/workflows/release-github.yml@master
     with:
       mod_id: Bannerlord.BLSE
@@ -158,7 +132,7 @@ jobs:
   ###########################
   publish-on-steam:
     if: false && github.ref == 'refs/heads/master'
-    needs: [get-changelog, build, gpu-hint]
+    needs: [get-changelog, build, merge-artifacts]
     runs-on: ubuntu-latest
     steps:
       - name: Download Module artifact
@@ -178,13 +152,3 @@ jobs:
           rootPath: build
           depot1Path: ./artifact
           releaseBranch: prerelease
-
-  cleanup-build-output:
-    name: Cleanup Build Output
-    needs: [publish-on-nexusmods, publish-on-github, publish-on-steam]
-    runs-on: ubuntu-latest
-    if: always()
-    steps:
-      - uses: joutvhu/delete-artifact@v2
-        with:
-          pattern: tmp-bannerlord-*
