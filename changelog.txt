@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.7.2
+* BETA Release!
+* Fixed LauncherEx not passing module list
+---------------------------------------------------------------------------------------------------
 Version: 1.7.1
 * BETA Release!
 * Fixed the menu being upside-down in LauncherEx

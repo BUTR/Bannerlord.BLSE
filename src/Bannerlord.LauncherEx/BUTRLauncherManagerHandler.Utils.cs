@@ -10,7 +10,16 @@ namespace Bannerlord.LauncherEx;
 
 partial class BUTRLauncherManagerHandler
 {
-    public void SetGameParametersLoadOrder(IEnumerable<IModuleViewModel> modules) => SaveTWLoadOrder(new LoadOrder(modules));
+    public void SetGameParametersLoadOrder(IEnumerable<IModuleViewModel> modules)
+    {
+        var loadOrder = new LoadOrder(modules);
+
+        // Persisting the order alone doesn't update the game arguments: the library assembles
+        // the _MODULES_* argument from its internal load order state, which is only set by
+        // SetGameParameterLoadOrderAsync. Without this call the game starts without the mods
+        SaveTWLoadOrder(loadOrder);
+        AsyncContext.Run(() => SetGameParameterLoadOrderAsync(loadOrder));
+    }
 
 
     public override Task<string> GetGameVersionAsync() => Task.FromResult(ApplicationVersionHelper.GameVersionStr());
