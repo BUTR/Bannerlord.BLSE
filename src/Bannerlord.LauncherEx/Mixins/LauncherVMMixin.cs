@@ -523,6 +523,10 @@ internal sealed class LauncherVMMixin : ViewModelMixin<LauncherVMMixin, Launcher
             return;
         }
 
+        // A save file picked in the Saves tab earlier (e.g. a warned load that was cancelled) leaves
+        // /continuesave set; combined with /continuegame it makes the game load two saves at once
+        AsyncContext.Run(() => _launcherManagerHandler.SetGameParameterSaveFileAsync(null));
+
         if (mode == 1)
         {
             AsyncContext.Run(() => _launcherManagerHandler.SetGameParameterContinueLastSaveFileAsync(true));

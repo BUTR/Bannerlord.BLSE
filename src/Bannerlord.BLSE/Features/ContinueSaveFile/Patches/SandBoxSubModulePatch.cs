@@ -62,6 +62,12 @@ internal static class SandBoxSubModulePatch
             return true;
         }
 
+        // Skipping the original method also skips its `_latestSaveLoaded = true` re-entry guard.
+        // OnInitialState is invoked again whenever the initial module screen reactivates, so without
+        // the guard a /continuegame launch would load the latest save on top of the running game
+        if (AccessTools2.FieldRefAccess<bool>(sandBoxSubModuleType, "_latestSaveLoaded") is { } latestSaveLoaded)
+            latestSaveLoaded(__instance) = true;
+
         using (var _ = new InformationManagerConfirmInquiryHandler())
             tryLoadSave(saveFile, startGame);
 
