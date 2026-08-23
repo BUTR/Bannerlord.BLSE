@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.7.1
+* BETA Release!
+* Fixed the menu being upside-down in LauncherEx
+---------------------------------------------------------------------------------------------------
 Version: 1.7.0
 Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x,v1.5.x
 * BETA Release!
@@ -9,6 +13,7 @@ Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x,v1.5.x
 * Fixed Moduel directory opening
 * LauncherEx was switched from OpenGL to DirectX (Why TW?)
 * Fixed infinite loading screen when the Continue button loaded a save with changed modules (#144)
+* Fixed launcher lists (mods, saves, options) rendering upside down on v1.4.0 and higher
 ---------------------------------------------------------------------------------------------------
 Version: 1.6.7
 Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x
