@@ -8,6 +8,7 @@ Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x,v1.5.x
 * Fallback path no longer discards the user's load order on validation failure
 * Fixed Moduel directory opening
 * LauncherEx was switched from OpenGL to DirectX (Why TW?)
+* Fixed infinite loading screen when the Continue button loaded a save with changed modules (#144)
 ---------------------------------------------------------------------------------------------------
 Version: 1.6.7
 Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x
