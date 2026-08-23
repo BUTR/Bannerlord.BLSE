@@ -187,16 +187,21 @@ internal sealed class BUTRLauncherModuleVM : BUTRViewModel, IModuleViewModel
     [BUTRDataSourceMethod]
     public void ExecuteOpen()
     {
+        // ModuleInfoExtendedWithMetadata.Path points at SubModule.xml; the button should open
+        // the containing module folder, not try to launch the XML file.
+        var moduleFolder = Path.GetDirectoryName(ModuleInfoExtended.Path);
+        if (string.IsNullOrEmpty(moduleFolder)) return;
+
         if (Integrations.IsModOrganizer2)
         {
             var explorer = Path.Combine(Integrations.ModOrganizer2Path!, "explorer++", "Explorer++.exe");
             if (!File.Exists(explorer)) return;
-            Process.Start(explorer, $"\"{ModuleInfoExtended.Path}\"");
+            Process.Start(explorer, $"\"{moduleFolder}\"");
             return;
         }
 
-        if (!Directory.Exists(ModuleInfoExtended.Path)) return;
-        Process.Start(ModuleInfoExtended.Path);
+        if (!Directory.Exists(moduleFolder)) return;
+        Process.Start(moduleFolder);
     }
 
     public void SetUpdateInfo(double compatibilityScore, double? recommendedCompatibilityScore, string? recommendedVersion)

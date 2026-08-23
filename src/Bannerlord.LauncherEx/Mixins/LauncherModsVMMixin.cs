@@ -8,6 +8,8 @@ using Bannerlord.ModuleManager;
 
 using Newtonsoft.Json;
 
+using Nito.AsyncEx;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -96,10 +98,10 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
 
         _launcherManagerHandler.RegisterModuleViewModelProvider(() => _modules, () => Modules2, SetViewModels);
 
-        _launcherManagerHandler.RefreshModules();
+        AsyncContext.Run(() => _launcherManagerHandler.RefreshModulesAsync());
         _allModuleInfos = _launcherManagerHandler.GetAllModules();
-      
-        var changeset = _launcherManagerHandler.GetChangeset();
+
+        var changeset = AsyncContext.Run(() => _launcherManagerHandler.GetChangesetAsync());
         foreach (var mie in _launcherManagerHandler.ExtendedModuleInfoCache.Values.OfType<ModuleInfoExtendedWithMetadata>())
         {
             var moduleInfoExtended = mie;
@@ -131,21 +133,21 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
         }
         */
 
-        if (_launcherManagerHandler.TryOrderByLoadOrder(loadOrder.Keys, x => loadOrder.TryGetValue(x, out var isSelected) && isSelected, out var issues, out var orderedModules))
+        var result = AsyncContext.Run(() => _launcherManagerHandler.TryOrderByLoadOrderAsync(loadOrder.Keys, x => loadOrder.TryGetValue(x, out var isSelected) && isSelected));
+        if (result.Result)
         {
-            SetViewModels(orderedModules);
+            SetViewModels(result.OrderedModules);
             IsForceSorted = false;
         }
         else
         {
             IsForceSorted = true;
-            ForceSortedHint = new LauncherHintVM(new BUTRTextObject("{=pZVVdI5d}The Load Order was re-sorted with the default algorithm!{NL}Reasons:{NL}{REASONS}").SetTextVariable("REASONS", string.Join("\n", issues)).ToString());
+            ForceSortedHint = new LauncherHintVM(new BUTRTextObject("{=pZVVdI5d}The Load Order was re-sorted with the default algorithm!{NL}Reasons:{NL}{REASONS}").SetTextVariable("REASONS", string.Join("\n", result.Issues ?? Array.Empty<string>())).ToString());
 
-            // Beta sorting algorithm will fail currently in some cases, use the TW fallback
-            _launcherManagerHandler.TryOrderByLoadOrderTW(Enumerable.Empty<string>(), x => loadOrder.TryGetValue(x, out var isSelected) && isSelected, out _, out orderedModules, true);
+            // Pass the user's saved order so TW with overwriteWhenFailure only nudges modules
+            // involved in the dependency violation, instead of discarding the order entirely.
+            _launcherManagerHandler.TryOrderByLoadOrderTW(loadOrder.Keys, x => loadOrder.TryGetValue(x, out var isSelected) && isSelected, out _, out var orderedModules, true);
             SetViewModels(orderedModules); // Set the ViewModels regarding the result
-
-            //TryOrderByLoadOrder(Enumerable.Empty<string>(), x => loadOrder.TryGetValue(x, out var isSelected) && isSelected);
         }
     }
 
@@ -155,7 +157,7 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
         foreach (var viewModel in orderedModuleViewModels.OfType<BUTRLauncherModuleVM>())
             Modules2.Add(viewModel);
 
-        _launcherManagerHandler.RefreshModules();
+        AsyncContext.Run(() => _launcherManagerHandler.RefreshModulesAsync());
         _allModuleInfos = _launcherManagerHandler.GetAllModules();
 
         // Validate all VM's after they were selected and ordered
@@ -181,9 +183,14 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
 
     private void ChangeModulePosition(BUTRLauncherModuleVM targetModuleVM, int insertIndex, Action<IReadOnlyCollection<string>>? onIssues = null)
     {
-        if (SortHelper.ChangeModulePosition(Modules2, _modulesLookup, targetModuleVM, insertIndex, onIssues))
+        var result = SortHelper.ChangeModulePosition(Modules2, _modulesLookup, targetModuleVM, insertIndex);
+        if (result.Success)
         {
             _launcherManagerHandler.SetGameParametersLoadOrder(Modules2);
+        }
+        else if (result.Issues.Count > 0)
+        {
+            onIssues?.Invoke(result.Issues);
         }
     }
 
@@ -223,7 +230,7 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
         //var sorted = Sort(Modules2.Select(x => x.ModuleInfoExtended)).Select(x => x.Id).ToList();
         //SortBy(sorted);
 
-        _launcherManagerHandler.RefreshModules();
+        AsyncContext.Run(() => _launcherManagerHandler.RefreshModulesAsync());
         _allModuleInfos = _launcherManagerHandler.GetAllModules();
         foreach (var moduleVM in Modules2)
             moduleVM.Refresh();
@@ -252,12 +259,19 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
     [BUTRDataSourceMethod]
     public void ExecuteUpdateCheck()
     {
+        var uploadUrlAttr = typeof(LauncherModsVMMixin).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().FirstOrDefault(a => a.Key == "BUTRCompatibilityScoreUrl");
+        if (uploadUrlAttr is null || string.IsNullOrEmpty(uploadUrlAttr.Value))
+        {
+            // The URL is baked in at build time from BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL.
+            // Local/dev builds without that env var won't have it — surface that to the user
+            // instead of silently no-opping.
+            HintManager.ShowHint(new BUTRTextObject("{=zXWdahH9_unavailable}Update recommendations are not available in this build.").ToString());
+            System.Diagnostics.Trace.WriteLine("Bannerlord.LauncherEx: ExecuteUpdateCheck — BUTRCompatibilityScoreUrl is not set in this build.");
+            return;
+        }
+
         try
         {
-            var uploadUrlAttr = typeof(LauncherModsVMMixin).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().FirstOrDefault(a => a.Key == "BUTRCompatibilityScoreUrl");
-            if (uploadUrlAttr is null)
-                return;
-
             var gameVersion = ApplicationVersionHelper.GameVersion() ?? ApplicationVersion.Empty;
             var selectedModules = Modules2.Select(x => new
             {
@@ -278,15 +292,21 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
             httpWebRequest.UserAgent = $"BLSE LauncherEx v{typeof(LauncherModsVMMixin).Assembly.GetName().Version}";
             httpWebRequest.Headers.Add("Tenant", "1");
 
-            using var writeStream = httpWebRequest.GetRequestStream();
-            writeStream.Write(data, 0, data.Length);
+            using (var writeStream = httpWebRequest.GetRequestStream())
+            {
+                writeStream.Write(data, 0, data.Length);
+            }
 
             using var response = httpWebRequest.GetResponse();
             using var stream = response.GetResponseStream();
             using var responseReader = new StreamReader(stream ?? Stream.Null);
-            var json = responseReader.ReadLine() ?? string.Empty;
+            var json = responseReader.ReadToEnd();
             var result = JsonConvert.DeserializeAnonymousType(json, responseDefinition);
-            if (result is null) return;
+            if (result is null)
+            {
+                HintManager.ShowHint(new BUTRTextObject("{=zXWdahH9_failed}Failed to fetch update recommendations: empty response.").ToString());
+                return;
+            }
 
             foreach (var moduleVM in Modules2)
                 moduleVM.RemoveUpdateInfo();
@@ -297,7 +317,13 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
                 moduleVM.SetUpdateInfo(module.Compatibility, module.RecommendedCompatibility, module.RecommendedModuleVersion);
             }
         }
-        catch (Exception) { /* ignore */ }
+        catch (Exception e)
+        {
+            // Was previously a silent catch — that's why "Get Update Recommendations doesn't work"
+            // reports came in with no diagnostic. Surface the failure to the user and log it.
+            HintManager.ShowHint(new BUTRTextObject("{=zXWdahH9_failed}Failed to fetch update recommendations: {EXCEPTION}").SetTextVariable("EXCEPTION", e.Message).ToString());
+            System.Diagnostics.Trace.WriteLine($"Bannerlord.LauncherEx: ExecuteUpdateCheck failed: {e}");
+        }
     }
 
     [BUTRDataSourceMethod]

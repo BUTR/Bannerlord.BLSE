@@ -22,8 +22,8 @@
     <string id="JT7QnJJA" text="Unblock Files" />
     <string id="VMIp4503" text="Unblock all .dll files on /Modules folder" />
     <string id="RDLKkiVk" text="Unblock" />
-    <string id="QJSBiZdJ" text="Beta Sorting" />
-    <string id="HVhaqeb4" text="Uses the new sorting algorithm after v1.12.x. Disable to use the old algorithm" />
+    <string id="QJSBiZdJ" text="Strict Load Order" />
+    <string id="HVhaqeb4" text="Surface dependency conflicts in your saved load order instead of silently auto-correcting. Newly installed modules are also placed in a deterministic position (official first, then alphabetical)." />
     <string id="1zt99vTt" text="Big Mode" />
     <string id="XUSDSpvf" text="Makes the launcher bigger in height" />
     <string id="IsR2rbnG" text="Restore Game Options Backup" />

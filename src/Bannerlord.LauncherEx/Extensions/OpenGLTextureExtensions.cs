@@ -1,4 +1,5 @@
-﻿using Bannerlord.LauncherEx.TPac;
+﻿#if v100 || v110 || v120 || v134 || v140
+using Bannerlord.LauncherEx.TPac;
 
 using HarmonyLib.BUTR.Extensions;
 
@@ -89,3 +90,4 @@ internal static class OpenGLTextureExtensions
         return true;
     }
 }
+#endif

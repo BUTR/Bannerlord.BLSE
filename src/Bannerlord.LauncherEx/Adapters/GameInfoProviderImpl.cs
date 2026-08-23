@@ -1,7 +1,8 @@
-﻿using Bannerlord.LauncherManager.External;
+using Bannerlord.LauncherManager.External;
 
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Bannerlord.LauncherEx.Adapters;
 
@@ -11,5 +12,5 @@ internal sealed class GameInfoProviderImpl : IGameInfoProvider
 
     private readonly string _installPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory!, "../", "../"));
 
-    public string GetInstallPath() => _installPath;
+    public Task<string> GetInstallPathAsync() => Task.FromResult(_installPath);
 }

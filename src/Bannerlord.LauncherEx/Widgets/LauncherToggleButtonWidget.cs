@@ -150,7 +150,7 @@ internal sealed class LauncherToggleButtonWidget : ImageWidget
         }
     }
 
-#if v140
+#if v140 || v151
     protected override void OnMouseReleased(bool isFromInput)
 #else
     protected override void OnMouseReleased()
@@ -193,7 +193,7 @@ internal sealed class LauncherToggleButtonWidget : ImageWidget
         }
     }
 
-#if v140
+#if v140 || v151
     protected override void OnMouseAlternateReleased(bool isFromInput)
 #else
     protected override void OnMouseAlternateReleased()

@@ -3,6 +3,8 @@ using Bannerlord.LauncherManager;
 using Bannerlord.LauncherManager.Localization;
 using Bannerlord.ModuleManager;
 
+using Nito.AsyncEx;
+
 using System;
 using System.Linq;
 
@@ -104,7 +106,7 @@ internal sealed class BUTRLauncherSavesVM : BUTRViewModel
     public void ExecuteRefresh()
     {
         Saves.Clear();
-        foreach (var saveFile in _launcherManagerHandler.GetSaveFiles())
+        foreach (var saveFile in AsyncContext.Run(() => _launcherManagerHandler.GetSaveFilesAsync()))
         {
             Saves.Add(new BUTRLauncherSaveVM(saveFile, SelectSave, _getModuleById, _getModuleByName));
         }

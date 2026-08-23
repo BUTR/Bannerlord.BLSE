@@ -10,6 +10,12 @@ using System.IO;
 
 using TaleWorlds.TwoDimension.Standalone;
 
+#if v151
+// The launcher renderer was rewritten from OpenGL to DirectX 11 in v1.5.1
+using GraphicsContext = TaleWorlds.TwoDimension.Standalone.DirectXGraphicsContext;
+using OpenGLTexture = TaleWorlds.TwoDimension.Standalone.DirectXTexture;
+#endif
+
 namespace Bannerlord.LauncherEx.ResourceManagers;
 
 internal static class GraphicsContextManager
@@ -21,6 +27,13 @@ internal static class GraphicsContextManager
 
     public static OpenGLTexture Create(string name, Stream stream)
     {
+#if v151
+        // No fallback: LoadFromStream consumes the stream, and DirectXTexture.FromFile
+        // throws on the grayscale+alpha PNGs our LoadFromStream handles anyway
+        var texture = new OpenGLTexture();
+        texture.LoadFromStream(name, stream);
+        return texture;
+#else
         var texture = new OpenGLTexture();
         if (texture.LoadFromStream(name, stream))
             return texture;
@@ -32,6 +45,7 @@ internal static class GraphicsContextManager
         File.Delete(path);
 
         return openGLTexture;
+#endif
     }
     private static OpenGLTexture CreateAssetTexture(string name, TPac.Texture assetTexture)
     {

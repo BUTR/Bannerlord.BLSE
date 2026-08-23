@@ -110,11 +110,13 @@ public static class Manager
         WidgetFactoryManager.CreateAndRegister("Launcher.Options.OptionTuple", Load("Bannerlord.LauncherEx.Resources.Prefabs.Launcher.Options.OptionTuple.xml"));
         var modsXml = Load("Bannerlord.LauncherEx.Resources.Prefabs.Launcher.Mods.xml");
 #if v140
-        // v1.4.x swapped the StackLayout VerticalBottomToTop / VerticalTopToBottom
-        // implementations. Use VerticalTopToBottom here so the rendered order matches
+        // TaleWorlds swapped the StackLayout VerticalBottomToTop / VerticalTopToBottom
+        // implementations in v1.4.x. Use VerticalTopToBottom here so the rendered order matches
         // what the original VerticalBottomToTop attribute produced on earlier versions.
         if (modsXml.SelectSingleNode("//ListPanel[@Id='InnerPanel']") is XmlElement innerPanel)
             innerPanel.SetAttribute("LayoutImp.LayoutMethod", "VerticalTopToBottom");
+        else
+            System.Diagnostics.Trace.WriteLine("Bannerlord.LauncherEx: Mods.xml InnerPanel ListPanel not found - mod order will render reversed on v1.4.x.");
 #endif
         WidgetFactoryManager.CreateAndRegister("Launcher.Mods2", modsXml);
         WidgetFactoryManager.CreateAndRegister("Launcher.Mods.ModuleTuple2", Load("Bannerlord.LauncherEx.Resources.Prefabs.Launcher.Mods.ModuleTuple.xml"));

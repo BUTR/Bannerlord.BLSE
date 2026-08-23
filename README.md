@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="Logo" src="https://media.discordapp.net/attachments/422092475163869201/1083742477250465843/BLSE_SMALL_SMALL.png" />
+  <img alt="Logo" src="https://raw.githubusercontent.com/BUTR/Bannerlord.BLSE/dev/resources/BLSE_SMALL.png" />
   <br>
   <a converter_ignore href="https://github.com/BUTR/Bannerlord.BLSE" ><img alt="Lines Of Code" src="https://aschey.tech/tokei/github/BUTR/Bannerlord.BLSE?category=code" /></a>
   <a converter_ignore href="https://www.codefactor.io/repository/github/butr/bannerlord.blse"><img src="https://www.codefactor.io/repository/github/butr/bannerlord.blse/badge" alt="CodeFactor" /></a>
@@ -8,11 +8,11 @@
   <br converter_ignore>
   <a converter_ignore href="https://github.com/BUTR/Bannerlord.BLSE/actions/workflows/test.yml?query=branch%3Amaster"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/BUTR/Bannerlord.BLSE/test.yml?branch=master&label=Game%20Stable%20and%20Beta"></a>
   <br converter_ignore>
-  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/badge/NexusMods-BLSE-yellow.svg" /></a>
-  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fmod-version%3FgameId%3D3174%26modId%3D1" /></a>
-  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fdownloads%3Ftype%3Dunique%26gameId%3D3174%26modId%3D1" /></a>
-  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fdownloads%3Ftype%3Dtotal%26gameId%3D3174%26modId%3D1" /></a>
-  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fdownloads%3Ftype%3Dviews%26gameId%3D3174%26modId%3D1" /></a>
+  <a converter_ignore href="https://nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/badge/NexusMods-BLSE-yellow.svg" /></a>
+  <a converter_ignore href="https://nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fmod-version%3FgameId%3D3174%26modId%3D1" /></a>
+  <a converter_ignore href="https://nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fdownloads%3Ftype%3Dunique%26gameId%3D3174%26modId%3D1" /></a>
+  <a converter_ignore href="https://nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fdownloads%3Ftype%3Dtotal%26gameId%3D3174%26modId%3D1" /></a>
+  <a converter_ignore href="https://nexusmods.com/mountandblade2bannerlord/mods/1" ><img alt="NexusMods BLSE" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fdownloads%3Ftype%3Dviews%26gameId%3D3174%26modId%3D1" /></a>
   <!--
   <br>
   <img src="https://staticdelivery.nexusmods.com/mods/3174/images/2513/2513-1612129311-35018174.png" width="800">
@@ -28,7 +28,7 @@ Mod Developers can use **Bannerlord.BLSE.Standalone.exe** to use the CLI to laun
 If you were a previous user of **BUTRLoader**, run **Bannerlord.BLSE.LauncherEx.exe** to get the same experience!
 
 Sources available at [GitHub](https://github.com/BUTR/Bannerlord.BLSE)﻿!  
-Credits to [Pickysaurus](https://www.nexusmods.com/users/31179975)﻿ for the BLSE and BUTR Logos!
+Credits to [Pickysaurus](https://nexusmods.com/users/31179975)﻿ for the BLSE and BUTR Logos!
 
 ## If you were searching for the following mods:
 * **BLSE.LoadingInterceptor**
@@ -52,7 +52,7 @@ Installing this will resolve your inability to select the mod. The following mod
 ## Installation with Vortex
 * Click the "Vortex" button in the top-right of this page.
 * Once installed and enabled, ensure you have deployed it by clicking "Deploy Mods" on the Mods toolbar.
-* Use the shortcut on the dashboard to start the game with BLSE. (Here's [How To](https://www.nexusmods.com/mountandblade2bannerlord/articles/766)﻿)
+* Use the shortcut on the dashboard to start the game with BLSE. (Here's [How To](https://nexusmods.com/mountandblade2bannerlord/articles/766)﻿)
 
 
 ## Features
@@ -103,7 +103,7 @@ Can opted-in by passing **/unblock** in command-line args.
 * **Issue Hint System** - the launcher displays an arrow that when expanded, will display why a mod can't be enabled. The issue can be a wrong dependency module version, binary incompatibility with the current game version
 * **Binary Compatibility Check** - the launcher will check whether the are ABI issues in the module with the current game version. ABI issues mean the module won't work in the game and will need a new updated version.
 * **Import/Export Mod List** - provides a way to export and import Mod Lists with the correct load order and module versions. If a module version is incorrect, with highlight that.
-* **Supports Mod Organizer 2** - full support for MO2 with its virtual FS. [Here's how to add BLSE to MO2](https://www.nexusmods.com/mountandblade2bannerlord/articles/768).
+* **Supports Mod Organizer 2** - full support for MO2 with its virtual FS. [Here's how to add BLSE to MO2](https://nexusmods.com/mountandblade2bannerlord/articles/768).
 
 ## Community Metadata
 We've added the following new attributes to SubModule.xml
@@ -142,23 +142,23 @@ BLSE adds support for a new tag DependedModuleMetadatas that allows you to bette
   <details>
   <summary>Xbox Game Pass PC</summary>
     <p>You need to copy content of '/bin/Gaming.Desktop.x64_Shipping_Client' from BLSE to 'Mount & Blade II- Bannerlord/Content/bin/Gaming.Desktop.x64_Shipping_Client'</p>
-    <img src="https://media.discordapp.net/attachments/422092475163869201/1088721252702765126/image.png" alt="BLSE Installation Path" width="500">
+    <img src="https://raw.githubusercontent.com/BUTR/Bannerlord.BLSE/refs/heads/dev/resources/FAQ-1.png" alt="BLSE Installation Path" width="500">
     <p>You need to copy content of 'Modules/Bannerlord.Harmony' from Harmony to 'Mount & Blade II- Bannerlord/Content/Modules/Bannerlord.Harmony'</p>
-    <img src="https://media.discordapp.net/attachments/422092475163869201/1088721253692616775/image.png" alt="Bannerlord.Harmony Installation Path" width="500">
+    <img src="https://raw.githubusercontent.com/BUTR/Bannerlord.BLSE/refs/heads/dev/resources/FAQ-2.png" alt="Bannerlord.Harmony Installation Path" width="500">
   </details>
   <details>
   <summary>Steam</summary>
     <p>You need to copy content of '/bin/Win64_Shipping_Client' from BLSE to 'Mount & Blade II Bannerlord/bin/Win64_Shipping_Client'</p>
-    <img src="https://media.discordapp.net/attachments/422092475163869201/1088721252962807818/image.png" alt="BLSE Installation Path" width="500">
+    <img src="https://raw.githubusercontent.com/BUTR/Bannerlord.BLSE/refs/heads/dev/resources/FAQ-3.png" alt="BLSE Installation Path" width="500">
     <p>You need to copy content of 'Modules/Bannerlord.Harmony' from Harmony to 'Mount & Blade II Bannerlord/Modules/Bannerlord.Harmony'</p>
-    <img src="https://media.discordapp.net/attachments/422092475163869201/1088721253478711407/image.png" alt="Bannerlord.Harmony Installation Path" width="500">
+    <img src="https://raw.githubusercontent.com/BUTR/Bannerlord.BLSE/refs/heads/dev/resources/FAQ-4.png" alt="Bannerlord.Harmony Installation Path" width="500">
   </details>
   <details>
   <summary>GOG</summary>
     <p>You need to copy content of '/bin/Win64_Shipping_Client' from BLSE to 'Mount & Blade II Bannerlord/bin/Win64_Shipping_Client'</p>
-    <img src="https://media.discordapp.net/attachments/422092475163869201/1088721253185097758/image.png" alt="BLSE Installation Path" width="500">
+    <img src="https://raw.githubusercontent.com/BUTR/Bannerlord.BLSE/refs/heads/dev/resources/FAQ-5.png" alt="BLSE Installation Path" width="500">
     <p>You need to copy content of 'Modules/Bannerlord.Harmony' from Harmony to 'Mount & Blade II Bannerlord/Modules/Bannerlord.Harmony'</p>
-    <img src="https://media.discordapp.net/attachments/422092475163869201/1088725020458614794/image.png" alt="Bannerlord.Harmony Installation Path" width="500">
+    <img src="https://raw.githubusercontent.com/BUTR/Bannerlord.BLSE/refs/heads/dev/resources/FAQ-6.png" alt="Bannerlord.Harmony Installation Path" width="500">
   </details>
 </p>
 
@@ -170,6 +170,6 @@ For Steam/GOG/Epic you need only `Win64_Shipping_Client`
 BLSE uses a storage that Steam/GOG/Epic versions of the game use. We do not support Xbox's Saves!  
 [PC Games has an article for save migration.](https://www.pcgamesn.com/xbox-game-pass-pc-steam)
 ### BLSE is not shown in Vortex's Tools!  
-You need to add it [manually](https://www.nexusmods.com/mountandblade2bannerlord/articles/766) for now!
+You need to add it [manually](https://nexusmods.com/mountandblade2bannerlord/articles/766) for now!
 ### Steam Workshop mods are not visible!  
 Try to launch the game once and exit, we have reports that it might help!

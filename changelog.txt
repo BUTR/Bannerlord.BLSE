@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.7.0
+Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x,v1.5.x
+* BETA Release!
+* Fixed load order being reset when modules were temporarily missing
+* Fixed settings and load order sometimes failing to persist due to transient file I/O errors
+* Renamed "Beta Sorting" to "Strict Load Order" with a clearer description
+* Fallback path no longer discards the user's load order on validation failure
+* Fixed Moduel directory opening
+* LauncherEx was switched from OpenGL to DirectX (Why TW?)
+---------------------------------------------------------------------------------------------------
 Version: 1.6.7
 Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x
 * Increased stack reserve and commit according to vanilla Bannerlord
