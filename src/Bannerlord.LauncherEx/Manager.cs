@@ -108,17 +108,7 @@ public static class Manager
         WidgetFactoryManager.CreateAndRegister("Launcher.SettingsPropertyStringView", Load("Bannerlord.LauncherEx.Resources.Prefabs.Properties.Launcher.SettingsPropertyStringView.xml"));
         WidgetFactoryManager.CreateAndRegister("Launcher.Options", Load("Bannerlord.LauncherEx.Resources.Prefabs.Launcher.Options.xml"));
         WidgetFactoryManager.CreateAndRegister("Launcher.Options.OptionTuple", Load("Bannerlord.LauncherEx.Resources.Prefabs.Launcher.Options.OptionTuple.xml"));
-        var modsXml = Load("Bannerlord.LauncherEx.Resources.Prefabs.Launcher.Mods.xml");
-#if v140
-        // TaleWorlds swapped the StackLayout VerticalBottomToTop / VerticalTopToBottom
-        // implementations in v1.4.x. Use VerticalTopToBottom here so the rendered order matches
-        // what the original VerticalBottomToTop attribute produced on earlier versions.
-        if (modsXml.SelectSingleNode("//ListPanel[@Id='InnerPanel']") is XmlElement innerPanel)
-            innerPanel.SetAttribute("LayoutImp.LayoutMethod", "VerticalTopToBottom");
-        else
-            System.Diagnostics.Trace.WriteLine("Bannerlord.LauncherEx: Mods.xml InnerPanel ListPanel not found - mod order will render reversed on v1.4.x.");
-#endif
-        WidgetFactoryManager.CreateAndRegister("Launcher.Mods2", modsXml);
+        WidgetFactoryManager.CreateAndRegister("Launcher.Mods2", Load("Bannerlord.LauncherEx.Resources.Prefabs.Launcher.Mods.xml"));
         WidgetFactoryManager.CreateAndRegister("Launcher.Mods.ModuleTuple2", Load("Bannerlord.LauncherEx.Resources.Prefabs.Launcher.Mods.ModuleTuple.xml"));
         WidgetFactoryManager.CreateAndRegister("Launcher.Saves", Load("Bannerlord.LauncherEx.Resources.Prefabs.Launcher.Saves.xml"));
         WidgetFactoryManager.CreateAndRegister("Launcher.Saves.SaveTuple", Load("Bannerlord.LauncherEx.Resources.Prefabs.Launcher.Saves.SaveTuple.xml"));
@@ -134,8 +124,41 @@ public static class Manager
         using var xmlReader = XmlReader.Create(stream, new XmlReaderSettings { IgnoreComments = true });
         var doc = new XmlDocument();
         doc.Load(xmlReader);
+
+#if !(v100 || v110 || v120 || v134)
+        // Game v1.4.0 rewrote TaleWorlds.GauntletUI's StackLayout and made the vertical
+        // LayoutMethods literal: on v1.3.x and older "VerticalBottomToTop" actually rendered
+        // top-to-bottom (and vice versa), and our prefabs are authored against those old
+        // semantics. Swap the two vertical methods at load time so every list keeps reading
+        // top-to-bottom on v1.4.0 and higher
+        if (doc.DocumentElement is not null)
+            SwapVerticalLayoutMethods(doc.DocumentElement);
+#endif
+
         return doc;
     }
+
+#if !(v100 || v110 || v120 || v134)
+    private static void SwapVerticalLayoutMethods(XmlNode node)
+    {
+        if (node.Attributes is not null)
+        {
+            foreach (XmlAttribute attribute in node.Attributes)
+            {
+                if (!attribute.Name.Equals("LayoutImp.LayoutMethod", StringComparison.Ordinal))
+                    continue;
+
+                if (attribute.Value.Equals("VerticalTopToBottom", StringComparison.Ordinal))
+                    attribute.Value = "VerticalBottomToTop";
+                else if (attribute.Value.Equals("VerticalBottomToTop", StringComparison.Ordinal))
+                    attribute.Value = "VerticalTopToBottom";
+            }
+        }
+
+        foreach (XmlNode child in node.ChildNodes)
+            SwapVerticalLayoutMethods(child);
+    }
+#endif
     private static Stream LoadStream(string embedPath)
     {
         return typeof(Manager).Assembly.GetManifestResourceStream(embedPath) ?? throw new Exception($"Could not find embed resource '{embedPath}'!");
