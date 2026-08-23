@@ -45,7 +45,7 @@ jobs:
           user: Aragas
 
       - name: Push to NuGet
-        run: dotnet nuget push "./packages/*.nupkg" -k ${{ steps.nuget-login.outputs.NUGET_API_KEY }} -s https://www.nuget.org
+        run: dotnet nuget push "./packages/*.nupkg" --skip-duplicate --api-key "${{ steps.nuget-login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json
         shell: pwsh
 
       - name: Push to GPR
