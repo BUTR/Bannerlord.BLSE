@@ -105,7 +105,7 @@ jobs:
     uses: BUTR/workflows/.github/workflows/release-nexusmods.yml@master
     with:
       nexusmods_game_id: mountandblade2bannerlord
-      nexusmods_mod_id: 1
+      nexusmods_mod_id: 13632226197505
       nexusmods_file_group_id: 2649439
       mod_filename: "Bannerlord Software Extender (BLSE)"
       mod_version: ${{ needs.get-changelog.outputs.mod_version }}
