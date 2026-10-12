@@ -97,11 +97,25 @@ jobs:
           delete-merged: true
 
   ###########################
+  #          SIGN           #
+  ###########################
+  # Signs our EXEs and DLLs in the bannerlord artifact with the Certum certificate, replacing it with the signed one.
+  sign:
+    if: github.ref == 'refs/heads/master'
+    needs: [merge-artifacts]
+    uses: BUTR/workflows/.github/workflows/sign-certum.yml@master
+    with:
+      artifact_name: bannerlord
+    secrets:
+      CODE_SIGNING_CLIENT_ID: ${{ secrets.CODE_SIGNING_CLIENT_ID }}
+      CODE_SIGNING_PRIVATE_KEY: ${{ secrets.CODE_SIGNING_PRIVATE_KEY }}
+
+  ###########################
   #        NEXUSMODS        #
   ###########################
   publish-on-nexusmods:
     if: github.ref == 'refs/heads/master'
-    needs: [get-changelog, build, merge-artifacts]
+    needs: [get-changelog, build, merge-artifacts, sign]
     uses: BUTR/workflows/.github/workflows/release-nexusmods.yml@master
     with:
       nexusmods_game_id: mountandblade2bannerlord
@@ -119,7 +133,7 @@ jobs:
   ###########################
   publish-on-github:
     if: github.ref == 'refs/heads/master'
-    needs: [get-changelog, build, merge-artifacts]
+    needs: [get-changelog, build, merge-artifacts, sign]
     uses: BUTR/workflows/.github/workflows/release-github.yml@master
     with:
       mod_id: Bannerlord.BLSE
@@ -132,7 +146,7 @@ jobs:
   ###########################
   publish-on-steam:
     if: false && github.ref == 'refs/heads/master'
-    needs: [get-changelog, build, merge-artifacts]
+    needs: [get-changelog, build, merge-artifacts, sign]
     runs-on: ubuntu-latest
     steps:
       - name: Download Module artifact
