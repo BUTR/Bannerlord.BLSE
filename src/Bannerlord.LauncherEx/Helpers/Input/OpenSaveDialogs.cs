@@ -1851,6 +1851,12 @@ internal class SaveFileDialog : FileDialog
     /// </Remarks>
     public bool OverwritePrompt { get; set; } = false; // OFN_OVERWRITEPROMPT
 
+    /// <summary>
+    ///  Gets or sets the extension (without the leading dot) appended when the user types a file name without one.
+    ///  The Explorer-style dialog uses the extension of the currently selected filter instead, falling back to this value.
+    /// </summary>
+    public string? DefaultExt { get; set; }
+
     public string? FileName { get; set; }
 
     public override bool ShowDialog()
@@ -1869,6 +1875,7 @@ internal class SaveFileDialog : FileDialog
             lpstrTitle = string.IsNullOrEmpty(Title) ? default : new StrPtrAuto(Title!),
             lpstrFile = fileName,
             nMaxFile = MAX_FILE_LENGTH,
+            lpstrDefExt = string.IsNullOrEmpty(DefaultExt) ? default : new StrPtrAuto(DefaultExt!),
             Flags = OFN.OFN_EXPLORER
         };
 
