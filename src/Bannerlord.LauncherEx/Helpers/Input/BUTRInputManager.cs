@@ -6,6 +6,8 @@ using System.Threading;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
 
+using Windows.Win32;
+
 namespace Bannerlord.LauncherEx.Helpers;
 
 // Can't believe I need to add a custom keyboard handler for the launcher
@@ -24,7 +26,8 @@ internal class BUTRInputManager : IInputManager, IDisposable
         _currentState.Dispose();
 
         _previousState = _currentState;
-        _currentState = Keyboard.GetState();
+        // Ignore keyboard input while another application is focused, e.g. when the launcher is minimized
+        _currentState = IsLauncherForeground() ? Keyboard.GetState() : KeyboardState.Empty;
 
         var previousPressedKeys = _previousState.GetPressedKeys();
         var currentPressedKeys = _currentState.GetPressedKeys();
@@ -41,6 +44,17 @@ internal class BUTRInputManager : IInputManager, IDisposable
         {
             ReleasedChars[i] = default;
         }
+    }
+
+    private static readonly uint CurrentProcessId = (uint) Process.GetCurrentProcess().Id;
+    private static unsafe bool IsLauncherForeground()
+    {
+        var foregroundHWnd = PInvoke.GetForegroundWindow();
+        if (foregroundHWnd.IsNull) return false;
+
+        uint processId = 0;
+        PInvoke.GetWindowThreadProcessId(foregroundHWnd, &processId);
+        return processId == CurrentProcessId;
     }
 
     public bool IsMouseActive() => InputManager.IsMouseActive();

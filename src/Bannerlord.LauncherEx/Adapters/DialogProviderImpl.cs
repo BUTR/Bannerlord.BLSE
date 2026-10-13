@@ -51,11 +51,14 @@ internal sealed class DialogProviderImpl : IDialogProvider
             {
                 var fileName = message;
                 var filter = string.Join("|", filters.Select(x => $"{x.Name} {string.Join(", ", x.Extensions)}|{string.Join(", ", x.Extensions)}"));
+                // Without a default extension, a name typed without one is saved as-is and the export writes nothing
+                var defaultExt = filters.SelectMany(x => x.Extensions).Select(x => x.TrimStart('*', '.')).FirstOrDefault(x => x.Length > 0 && x.IndexOfAny(new[] { '*', '?' }) < 0);
                 var dialog = new SaveFileDialog
                 {
                     Title = title,
                     Filter = filter,
                     FileName = fileName,
+                    DefaultExt = defaultExt,
 
                     CheckPathExists = false,
 

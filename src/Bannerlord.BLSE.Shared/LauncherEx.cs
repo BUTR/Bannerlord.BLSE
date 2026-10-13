@@ -49,6 +49,14 @@ public static class LauncherEx
             SymbolExtensions2.GetMethodInfo((string[] args_) => TaleWorlds.Starter.Library.Program.Main(args_)),
             transpiler: SymbolExtensions2.GetMethodInfo(static () => MainTranspiler(null!)));
 
+        // The launcher checks for "/no_watchdog" (the game itself checks "no_watchdog") and otherwise
+        // attaches Watchdog.exe to our process as a debugger, which can hang or kill the launcher
+        if (settings is not { UseVanillaCrashHandler: true } && !args.Contains("/no_watchdog"))
+        {
+            Array.Resize(ref args, args.Length + 1);
+            args[args.Length - 1] = "/no_watchdog";
+        }
+
         if (args.Contains("/noexceptions"))
         {
             ProgramEx.Main(args);
