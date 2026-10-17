@@ -108,16 +108,6 @@ internal abstract class ViewModelMixin<TViewModelMixin, TViewModel>
         ViewModel?.OnPropertyChanged(propertyName);
     }
 
-    protected void OnPropertyChangedWithValue<T>(T value, [CallerMemberName] string? propertyName = null) where T : class
-    {
-#if v100 || v101 || v102 || v103
-            ViewModel?.OnPropertyChangedWithValue((object) value, propertyName);
-#elif v110 || v111
-            ViewModel?.OnPropertyChangedWithValue<T>(value, propertyName);
-#endif
-
-    }
-
     protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
         if (EqualityComparer<T>.Default.Equals(field, value))

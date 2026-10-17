@@ -33,7 +33,7 @@ internal static class GraphicsContextManager
         var texture = new OpenGLTexture();
         texture.LoadFromStream(name, stream);
         return texture;
-#else
+#elif v100 || v110 || v120 || v134 || v140
         var texture = new OpenGLTexture();
         if (texture.LoadFromStream(name, stream))
             return texture;
@@ -45,6 +45,8 @@ internal static class GraphicsContextManager
         File.Delete(path);
 
         return openGLTexture;
+#else
+#error DEFINE
 #endif
     }
     private static OpenGLTexture CreateAssetTexture(string name, TPac.Texture assetTexture)
