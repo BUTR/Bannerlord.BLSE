@@ -91,6 +91,20 @@ if (Files.Length > 0)
        — inlined rather than CallTarget'd because properties set in the caller's
        Target body don't propagate through CallTarget reliably. -->
 
+  <!-- ILRepack.FullAuto merges into the obj\ assembly in place. When CoreCompile is up to date that assembly is
+       already merged and merging it again duplicates every type, so only merge what was just compiled -->
+  <Target Name="RecordIntermediateAssemblyWriteTime" BeforeTargets="CoreCompile">
+    <PropertyGroup>
+      <_IntermediateAssemblyPath>@(IntermediateAssembly->'%(FullPath)')</_IntermediateAssemblyPath>
+      <_IntermediateAssemblyWriteTime Condition="Exists('$(_IntermediateAssemblyPath)')">$([System.IO.File]::GetLastWriteTime('$(_IntermediateAssemblyPath)').Ticks)</_IntermediateAssemblyWriteTime>
+    </PropertyGroup>
+  </Target>
+  <Target Name="SkipILRepackWhenNotCompiled" AfterTargets="CoreCompile" Condition="$(_IntermediateAssemblyWriteTime) != ''">
+    <PropertyGroup Condition="$(_IntermediateAssemblyWriteTime) == $([System.IO.File]::GetLastWriteTime('$(_IntermediateAssemblyPath)').Ticks)">
+      <ILRepackBuildEnable>False</ILRepackBuildEnable>
+    </PropertyGroup>
+  </Target>
+
   <UsingTask TaskName="VerifyGZip" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
     <ParameterGroup>
       <Files ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />

@@ -28,6 +28,12 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      # Bannerlord.LauncherEx builds once per game version, which needs .NET SDK 10.0.300
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
       - name: Pack Bannerlord.BLSE
         run: dotnet pack src/Bannerlord.BLSE/Bannerlord.BLSE.csproj --configuration Release -o "./packages";
         shell: pwsh
@@ -75,13 +81,19 @@ jobs:
         with:
           user: Aragas
 
+      # nuget.org only accepts a package signature from a certificate registered there, it gets the packages with
+      # the signed binaries but without one
       - name: Push to NuGet
         run: dotnet nuget push "./packages/*.nupkg" --skip-duplicate --api-key "${{ steps.nuget-login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json
         shell: pwsh
 
+      # GPR gets the package-signed copies the signing added
       - name: Push to GPR
         run: |
-          for f in ./packages/*.nupkg
+          shopt -s nullglob
+          packages=(./packages/package-signed/*.nupkg)
+          if [ ${#packages[@]} -eq 0 ]; then echo "No package-signed packages found"; exit 1; fi
+          for f in "${packages[@]}"
           do
             curl -vX PUT -u "vslee:${{secrets.GITHUB_TOKEN}}" -F package=@$f https://nuget.pkg.github.com/BUTR/
           done

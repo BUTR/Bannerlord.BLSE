@@ -8,10 +8,11 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <!-- The dedicated Bannerlord.BLSE.Shared matrix job is the sole publisher of Shared.dll. PreventSharedCopy=true tells the transitive Shared build to skip its PostBuildFramework copy so this matrix job does not drop a second Shared.dll into bannerlord/. -->
-    <ProjectReference Include="..\Bannerlord.BLSE.Shared\Bannerlord.BLSE.Shared.csproj" Private="false" IncludeAssets="compile" PrivateAssets="all" AdditionalProperties="PreventSharedCopy=true" />
+    <!-- The dedicated Bannerlord.BLSE.Shared matrix job is the sole publisher of Shared.dll, this project's CI job passes
+         -p:PreventSharedCopy=true so it does not drop a second Shared.dll into bannerlord/. Not set here, as a property only
+         this reference passes makes a solution build build Shared twice at the same time into the same folders -->
+    <ProjectReference Include="..\Bannerlord.BLSE.Shared\Bannerlord.BLSE.Shared.csproj" Private="false" IncludeAssets="compile" PrivateAssets="all" />
     <ProjectReference Include="..\Bannerlord.BLSE\Bannerlord.BLSE.csproj" Private="false" IncludeAssets="none" PrivateAssets="all" />
-    <ProjectReference Include="..\Bannerlord.LauncherEx\Bannerlord.LauncherEx.csproj" Private="false" IncludeAssets="none" PrivateAssets="all" />
   </ItemGroup>
 
   <Target Name="PublishRoslynExecutableProjects" AfterTargets="Build">
