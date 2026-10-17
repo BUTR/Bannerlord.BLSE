@@ -27,9 +27,9 @@ partial class BUTRLauncherManagerHandler
         return Task.FromResult(result);
     }
 
-    public override Task<SaveMetadata?> GetSaveMetadataAsync(string fileName, ReadOnlyMemory<byte> data)
+    public override Task<SaveMetadata?> GetSaveMetadataAsync(string fileName, byte[] data)
     {
-        using var stream = new MemoryStream(data.ToArray());
+        using var stream = new MemoryStream(data);
         var metadata = MetaData.Deserialize(stream);
         var dict = new SaveMetadata(fileName);
         foreach (var key in metadata.Keys)

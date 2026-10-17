@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.7.5
+Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x,v1.5.x
+* Fixed "Failed to find the necessary game files!" when BLSE was started from a shortcut or tool with a different working folder
+* The error now shows the folder that was checked and detects BLSE being installed one folder too deep
+* Fixed importing a Novus preset flagging Native and the other official modules as version mismatches
+* Fixed errors when any installed module declares a two-part version such as "v1.2"
+---------------------------------------------------------------------------------------------------
 Version: 1.7.4
 Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x,v1.5.x
 * Fixed the game's Watchdog attaching to the launcher, causing it to freeze and close
