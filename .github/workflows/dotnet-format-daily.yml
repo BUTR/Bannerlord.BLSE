@@ -9,6 +9,12 @@ jobs:
   dotnet-format:
     runs-on: ubuntu-latest
     steps:
+      # global.json requires .NET SDK 10.0.300, the format action only installs older SDKs
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
       - name: Code Formatting
         uses: butr/actions-code-format-setup@v1
         with:

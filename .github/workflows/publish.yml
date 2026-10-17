@@ -62,6 +62,8 @@ jobs:
         include:
           - project: "Bannerlord.BLSE.Loaders.AppDomainManager"
             configuration: "Win64_Shipping_Client"
+            # The Bannerlord.BLSE.Shared job is the sole publisher of Shared.dll
+            build-args: "-p:PreventSharedCopy=true"
     steps:
       - uses: actions/checkout@v5
 
@@ -70,11 +72,17 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
 
+      # Bannerlord.LauncherEx builds once per game version, which needs .NET SDK 10.0.300
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
       - run: mkdir bannerlord;
         shell: pwsh
 
       - name: ${{matrix.project}} (${{matrix.configuration}})
-        run: dotnet build src/${{matrix.project}}/${{matrix.project}}.csproj --configuration Release -p:GameConfiguration="${{matrix.configuration}}" -p:GameFolder="$PWD/bannerlord" -p:BuildShared="false" /nowarn:MSB4011;
+        run: dotnet build src/${{matrix.project}}/${{matrix.project}}.csproj --configuration Release -p:GameConfiguration="${{matrix.configuration}}" -p:GameFolder="$PWD/bannerlord" -p:BuildShared="false" ${{matrix.build-args}} /nowarn:MSB4011;
         env:
           BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL: ${{ secrets.BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL }}
         shell: pwsh

@@ -5,6 +5,8 @@ Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x,v1.5.x
 * The error now shows the folder that was checked and detects BLSE being installed one folder too deep
 * Fixed importing a Novus preset flagging Native and the other official modules as version mismatches
 * Fixed errors when any installed module declares a two-part version such as "v1.2"
+* LauncherEx is now shipped with compiler optimizations enabled, it was previously built without them
+* Bannerlord.BLSE.Shared.dll is ~3 MB smaller, unused libraries are no longer bundled into it
 ---------------------------------------------------------------------------------------------------
 Version: 1.7.4
 Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x,v1.5.x

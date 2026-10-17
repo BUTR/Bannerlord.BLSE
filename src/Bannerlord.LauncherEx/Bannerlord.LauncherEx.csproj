@@ -1,7 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <!-- One build per game API version. The alias is the game version the build is compiled against and
+         becomes the name of the resource Bannerlord.BLSE.Shared embeds it as -->
+    <TargetFrameworks>v1.0.0;v1.1.0;v1.2.0;v1.3.4;v1.4.0;v1.5.1</TargetFrameworks>
     <LangVersion>12.0</LangVersion>
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
@@ -22,10 +24,30 @@
     <ILRepackCopyAttributes>false</ILRepackCopyAttributes>
   </PropertyGroup>
 
-  <PropertyGroup Condition="$(Configuration) == 'Debug'">
-    <GameVersion>1.5.1</GameVersion>
+  <!-- Every alias is netstandard2.0. Several aliases of the same framework need NuGet 7.6 / .NET SDK 10.0.300 -->
+  <PropertyGroup Condition="$(TargetFramework.StartsWith('v'))">
+    <TargetFrameworkIdentifier>.NETStandard</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkMoniker>.NETStandard,Version=v2.0</TargetFrameworkMoniker>
+    <GameVersion>$(TargetFramework.Substring(1))</GameVersion>
   </PropertyGroup>
-  
+
+  <!-- Pinned, a floating version silently changes what we ship once a newer package is published -->
+  <PropertyGroup>
+    <GameReferenceAssembliesVersion Condition="$(TargetFramework) == 'v1.0.0'">1.0.0.44071</GameReferenceAssembliesVersion>
+    <GameReferenceAssembliesVersion Condition="$(TargetFramework) == 'v1.1.0'">1.1.0.127341</GameReferenceAssembliesVersion>
+    <GameReferenceAssembliesVersion Condition="$(TargetFramework) == 'v1.2.0'">1.2.0.21654-beta</GameReferenceAssembliesVersion>
+    <GameReferenceAssembliesVersion Condition="$(TargetFramework) == 'v1.3.4'">1.3.4.102430</GameReferenceAssembliesVersion>
+    <GameReferenceAssembliesVersion Condition="$(TargetFramework) == 'v1.4.0'">1.4.0.112726-beta</GameReferenceAssembliesVersion>
+    <GameReferenceAssembliesVersion Condition="$(TargetFramework) == 'v1.5.1'">1.5.1.120547-beta</GameReferenceAssembliesVersion>
+  </PropertyGroup>
+
+  <!-- A NuGet package holds one build per framework, so only v1.0.0 goes into it -->
+  <PropertyGroup Condition="$(TargetFramework) != '' AND $(TargetFramework) != 'v1.0.0'">
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+  </PropertyGroup>
+
 
   <PropertyGroup>
     <GameVersionFlat>$([System.String]::Copy('$(GameVersion)').Replace('.',''))</GameVersionFlat>
@@ -54,7 +76,9 @@
     <PackageReference Include="ILRepack" Version="2.0.44" PrivateAssets="all" />
     <PackageReference Include="ILRepack.FullAuto" Version="1.6.0" PrivateAssets="all" />
 
-    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
+    <!-- Exact version, a missing one fails the restore instead of resolving a higher one. That makes NU1601 impossible
+         here, and NuGet before 7.9 (Rider's built-in restore) reports it for every alias but the first one -->
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="[$(GameReferenceAssembliesVersion)]" NoWarn="NU1601" PrivateAssets="all" Condition="$(GameReferenceAssembliesVersion) != ''" />
 
     <!-- Bannerlord.BUTR.Shared needs the package, but Bannerlord.LauncherManager provides the types already -->
     <PackageReference Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" PrivateAssets="all" IncludeAssets="none" />
@@ -102,6 +126,34 @@
       </AssemblyAttribute>
     </ItemGroup>
     <Warning Condition="$(BUTRCompatibilityScoreUrl) == ''" Text="Environment variable 'BANNERLORD_BUTR_COMPATIBILITY_SCORE_URL' is not set!" />
+  </Target>
+
+  <!-- Builds every game version and returns the DLLs with the alias they were built for.
+       Bannerlord.BLSE.Shared calls it through its ProjectReference to embed them -->
+  <Target Name="GetGameVersionBuilds" DependsOnTargets="_PrepareGameVersionProjects" Returns="@(_GameVersionBuildOutput)">
+    <MSBuild Projects="@(_GameVersionProject)" Targets="GetGameVersionBuild" BuildInParallel="$(BuildInParallel)">
+      <Output TaskParameter="TargetOutputs" ItemName="_GameVersionBuildOutput" />
+    </MSBuild>
+  </Target>
+  <!-- An IDE build (BuildingInsideVisualStudio, Rider too) builds LauncherEx itself and asks a ProjectReference for
+       GetTargetPath instead of its Targets. The SDK has none for the outer build of several TargetFrameworks, so this
+       one returns what GetGameVersionBuilds would without building. The SDK's own replaces it in the inner builds -->
+  <Target Name="GetTargetPath" DependsOnTargets="_PrepareGameVersionProjects" Returns="@(_GameVersionBuildOutput)">
+    <MSBuild Projects="@(_GameVersionProject)" Targets="GetGameVersionTargetPath" BuildInParallel="$(BuildInParallel)">
+      <Output TaskParameter="TargetOutputs" ItemName="_GameVersionBuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="_PrepareGameVersionProjects">
+    <ItemGroup>
+      <_GameVersionTargetFramework Include="$(TargetFrameworks)" />
+      <_GameVersionProject Include="$(MSBuildProjectFullPath)" AdditionalProperties="TargetFramework=%(_GameVersionTargetFramework.Identity)" />
+    </ItemGroup>
+  </Target>
+  <Target Name="GetGameVersionBuild" DependsOnTargets="Build;GetGameVersionTargetPath" Returns="@(_GameVersionBuildOutput)" />
+  <Target Name="GetGameVersionTargetPath" Returns="@(_GameVersionBuildOutput)">
+    <ItemGroup>
+      <_GameVersionBuildOutput Include="$(TargetPath)" GameVersionAlias="$(TargetFramework)" />
+    </ItemGroup>
   </Target>
 
 </Project>
