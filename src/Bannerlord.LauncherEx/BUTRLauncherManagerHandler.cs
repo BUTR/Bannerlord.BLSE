@@ -1,4 +1,4 @@
-using Bannerlord.BUTR.Shared.Extensions;
+﻿using Bannerlord.BUTR.Shared.Extensions;
 using Bannerlord.LauncherEx.Adapters;
 using Bannerlord.LauncherEx.Extensions;
 using Bannerlord.LauncherManager;

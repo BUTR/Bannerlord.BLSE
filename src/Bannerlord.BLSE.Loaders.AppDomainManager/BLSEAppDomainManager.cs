@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 
 namespace Bannerlord.BLSE.Loaders.AppDomainManager;
@@ -15,7 +15,7 @@ internal sealed class BLSEAppDomainManager : System.AppDomainManager
             isEpicGamesStore = File.Exists("../../Modules/Native/epic.target");
         }
         catch { /* ignore */ }
-        
+
         if (!isEpicGamesStore)
             return;
 

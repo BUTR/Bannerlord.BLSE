@@ -54,7 +54,7 @@ internal class Texture : AssetItem
     public override void ReadMetadata(BinaryReader stream, int totalSize)
     {
         var startPos = stream.BaseStream.Position;
-        
+
         var version = stream.ReadUInt32();
         var BillboardMaterial = stream.ReadGuid();
         var UnknownUint1 = stream.ReadUInt32();
@@ -82,7 +82,7 @@ internal class Texture : AssetItem
             var UnknownUint6 = stream.ReadUInt32();
             var UnknownUint7 = stream.ReadUInt32();
         }
-        
+
         var currentPos = stream.BaseStream.Position;
         var bytesRead = currentPos - startPos;
         var remaining = totalSize - bytesRead;
@@ -104,13 +104,13 @@ internal class Texture : AssetItem
             var UnknownUlong2 = stream.ReadUInt64();
             remaining -= 8;
         }
-        
+
         if (version >= 3)
         {
             stream.ReadBytes(32);
             remaining -= 32;
         }
-        
+
         // Ensure we consume exactly totalSize bytes by reading any remaining data
         currentPos = stream.BaseStream.Position;
         bytesRead = currentPos - startPos;
@@ -118,7 +118,7 @@ internal class Texture : AssetItem
 
         if (remaining > 0)
         {
-            stream.ReadBytes((int)remaining);
+            stream.ReadBytes((int) remaining);
         }
         else if (remaining < 0)
         {

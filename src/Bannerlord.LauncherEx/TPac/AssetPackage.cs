@@ -75,9 +75,9 @@ internal class AssetPackage
             var metadataSize = stream.ReadUInt64();
             var metadataStartPos = stream.BaseStream.Position;
 
-            assetItem.ReadMetadata(stream, (int)metadataSize);
+            assetItem.ReadMetadata(stream, (int) metadataSize);
 
-            var expectedPos = metadataStartPos + (long)metadataSize;
+            var expectedPos = metadataStartPos + (long) metadataSize;
             var actualPos = stream.BaseStream.Position;
             if (actualPos != expectedPos)
             {

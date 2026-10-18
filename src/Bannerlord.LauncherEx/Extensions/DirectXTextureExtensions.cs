@@ -1,4 +1,4 @@
-#if v151
+﻿#if v151
 using Bannerlord.LauncherEx.ResourceManagers;
 using Bannerlord.LauncherEx.TPac;
 

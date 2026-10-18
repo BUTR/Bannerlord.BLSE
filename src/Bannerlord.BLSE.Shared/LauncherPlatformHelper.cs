@@ -12,7 +12,7 @@ internal static class LauncherPlatformHelper
 {
     private delegate void InitializeV1();
     private delegate void InitializeV2(List<string> args);
-    
+
     private static readonly InitializeV1? _initializeV1;
     private static readonly InitializeV2? _initializeV2;
 
