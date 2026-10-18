@@ -17,12 +17,12 @@ namespace Bannerlord.BLSE.Shared;
 public static class AppDomainManager
 {
     private static readonly Harmony _featureHarmony = new("bannerlord.blse.features");
-  
+
     public static void Initialize()
     {
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.OSVersion.Version.Major >= 6)
             PInvoke.SetProcessDPIAware();
-        
+
         LauncherExceptionHandler.Watch();
 
         InterceptorFeature.Enable(_featureHarmony);

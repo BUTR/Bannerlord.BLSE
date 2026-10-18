@@ -1,4 +1,4 @@
-using Bannerlord.LauncherEx.Helpers;
+﻿using Bannerlord.LauncherEx.Helpers;
 using Bannerlord.LauncherEx.Helpers.Input;
 using Bannerlord.LauncherManager.External.UI;
 using Bannerlord.LauncherManager.Localization;

@@ -1,4 +1,4 @@
-using Bannerlord.LauncherEx.Extensions;
+﻿using Bannerlord.LauncherEx.Extensions;
 using Bannerlord.LauncherManager.Models;
 
 using System;

@@ -241,7 +241,7 @@ internal sealed class BUTRLauncherModuleVM : BUTRViewModel, IModuleViewModel
 
 
     public override string ToString() => $"{ModuleInfoExtended}, IsSelected: {IsSelected}, IsValid: {IsValid}";
-    
+
     // Really, TaleWorlds?
     private static string ProcessModuleName(string originalModuleName) => originalModuleName switch
     {

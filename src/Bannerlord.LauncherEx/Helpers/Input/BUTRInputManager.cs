@@ -110,7 +110,7 @@ internal class BUTRInputManager : IInputManager, IDisposable
     public bool IsControllerConnected() => InputManager.IsControllerConnected();
 
 #if v100 || v110
-        public InputKey GetControllerClickKey() => InputManager.GetControllerClickKey();
+    public InputKey GetControllerClickKey() => InputManager.GetControllerClickKey();
 #endif
 
 #if v110 || v120 || v134 || v140 || v151

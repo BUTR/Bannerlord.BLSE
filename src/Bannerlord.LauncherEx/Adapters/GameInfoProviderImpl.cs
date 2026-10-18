@@ -1,4 +1,4 @@
-using Bannerlord.LauncherManager.External;
+﻿using Bannerlord.LauncherManager.External;
 
 using System;
 using System.IO;

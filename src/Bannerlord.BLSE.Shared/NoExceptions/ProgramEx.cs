@@ -37,8 +37,8 @@ public sealed class ProgramEx
             resourceDepot.StartWatchingChangesInDepot();
 
             User32.GetClientRect(User32.GetDesktopWindow(), out var lpRect);
-            float num = (float)lpRect.Height / 1350f;
-            var graphicsForm = new GraphicsForm((int)(num * 1154f), (int)(num * 701f), resourceDepot, true, true, true, "M&B II: Bannerlord");
+            float num = (float) lpRect.Height / 1350f;
+            var graphicsForm = new GraphicsForm((int) (num * 1154f), (int) (num * 701f), resourceDepot, true, true, true, "M&B II: Bannerlord");
             var standaloneUIDomain = new StandaloneUIDomain(graphicsForm, resourceDepot);
             var windowsFrameworkEx = new WindowsFrameworkEx { ThreadConfig = WindowsFrameworkThreadConfig.NoThread };
 

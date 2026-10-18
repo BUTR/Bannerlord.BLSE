@@ -58,7 +58,7 @@ public static class Standalone
 
         if (hasModules || string.IsNullOrEmpty(saveFile))
             return;
-        
+
         try
         {
             // We need the initialization for Steam discovery to work

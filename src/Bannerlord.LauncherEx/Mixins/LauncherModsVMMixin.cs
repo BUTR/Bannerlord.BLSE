@@ -105,12 +105,12 @@ internal sealed class LauncherModsVMMixin : ViewModelMixin<LauncherModsVMMixin, 
         foreach (var mie in _launcherManagerHandler.ExtendedModuleInfoCache.Values.OfType<ModuleInfoExtendedWithMetadata>())
         {
             var moduleInfoExtended = mie;
-            
+
             var version = moduleInfoExtended.Version;
             if (moduleInfoExtended.IsOfficial && version.ChangeSet == 0)
                 version = new ModuleManager.ApplicationVersion(version.ApplicationVersionType, version.Major, version.Minor, version.Revision, changeset);
             moduleInfoExtended = moduleInfoExtended with { Version = version };
-            
+
             var moduleVM = new BUTRLauncherModuleVM(moduleInfoExtended, ToggleModuleSelection, ValidateModule, GetPossibleProviders);
             _modules.Add(moduleVM);
             _modulesLookup[moduleVM.ModuleInfoExtended.Id] = moduleVM;
