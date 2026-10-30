@@ -23,7 +23,7 @@
     <string id="VMIp4503" text="/Modules klasöründeki tüm .dll dosyalarının engellemesini kaldırın"/>
     <string id="RDLKkiVk" text="Engeli Kaldır"/>
     <string id="QJSBiZdJ" text="Kesin Yükleme Sırası"/>
-    <string id="HVhaqeb4" text="Kayıtlı yükleme sıranızdaki bağımlılık çakışmalarını sessizce otomatik olarak düzeltmek yerine kullanıcıya bildirir. Ayrıca yeni kurulan modüller öngörülebilir bir konuma (önce resmî modüller, ardından alfabetik olarak) yerleştirilir."/>
+    <string id="HVhaqeb4" text="Kayıtlı yükleme sıranızdaki bağımlılık çakışmalarını sessizce otomatik olarak düzeltmek yerine kullanıcıya bildirir. Ayrıca yeni kurulan modüller öngörülebilir bir konuma (önce resmi modüller, ardından alfabetik olarak) yerleştirilir."/>
     <string id="1zt99vTt" text="Büyük Mod"/>
     <string id="XUSDSpvf" text="Başlatıcıyı daha büyük hale getirir"/>
     <string id="IsR2rbnG" text="Oyun Seçenekleri Yedeklemesini Geri Yükle"/>
